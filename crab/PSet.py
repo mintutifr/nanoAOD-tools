@@ -7,7 +7,8 @@ process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring(),
 #	lumisToProcess=cms.untracked.VLuminosityBlockRange("254231:1-254231:24")
 )
 process.source.fileNames = [
-	'../../NanoAOD/test/lzma.root' ##you can change only this line
+#	'../../NanoAOD/test/lzma.root' ##you can change only this line
+	'root://cms-xrd-global.cern.ch//store/mc/RunIISummer16NanoAOD/TTJets_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/NANOAODSIM/PUMoriond17_05Feb2018_94X_mcRun2_asymptotic_v2-v1/40000/2CE738F9-C212-E811-BD0E-EC0D9A8222CE.root'
 ]
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(10))
 process.output = cms.OutputModule("PoolOutputModule", fileName = cms.untracked.string('tree.root'))
