@@ -1,20 +1,17 @@
-#Genral
-Jme Module check the recomdation file 
+1. Genral
 
+	Jme Module check the recomdation file 
 
+2. Specific
 
+     1. Btagging evoluvation
 
-
-
-
-
-
-#Specific
-     #Btagging evoluvation
      		#EfficiencyModule.py
      		1. Check the efficiency are calculted with the recommaded lose, midium and tight criteria  at "https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation"
 		2. check we are using correct Module producer while creating efficiency file "EfficiencyConstr_2016"
-     #Tree crab
+
+     2. Tree crab
+
      		#MainModule.py
      		1. chose the right module Run "Year" as function
 		2. Look at the correctorlly written dleverd luminocity "TotalLumi" for the lepton sale factor
@@ -35,6 +32,8 @@ Jme Module check the recomdation file
 		3.check the JER recomandation at "https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution#Run2_JER_uncertainty_correlation" if the reco chaged the put the new taball in data and chage the "jerTagsMC" in jetmetHelperRun2.py
 
 
-#Warnings
+3. Warnings
+
 	1. python/postprocessing/modules/common/PrefireCorr16.py is not there in new setup
+
 	2. jecredo option has been removed check why------> Does't matter because redo option was for fat jets not for AK4 jets 
