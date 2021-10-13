@@ -191,7 +191,7 @@ class MainProducer(Module):
 	    #print "Jet_dR_Ljet_Isoel = " , Jet_dR_Ljet_Isoel
 	    #print "Jet_dR_Ljet_AntiIsoel = ",Jet_dR_Ljet_AntiIsoel
 	elif(self.MC == False and self.dataset == "singleMuon"):
-	    print self.dataset
+	    #print self.dataset
 	    Jet_dR_Ljet_Isomu,Jet_dR_Ljet_AntiIsomu = ([]for i in range(2)) 
 	    if(True):
 		 for lep in muons :
