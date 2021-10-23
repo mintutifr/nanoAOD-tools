@@ -22,6 +22,7 @@ mv src $CMSSW_BASE/src
 mv module $CMSSW_BASE/module
 mv python $CMSSW_BASE/python
 
+#export X509_USER_PROXY=/tmp/x509up_u106474
 echo Found Proxy in: $X509_USER_PROXY
 python crab_script_Minitree.py $1
 fi
