@@ -332,3 +332,4 @@ cutflowModuleConstr_2J1T0_el_data_2017 =  lambda : cutflow(2,1,False,"el",False,
 
 cutflowModuleConstr_2J0T1_mu_mc_2016 =  lambda : cutflow(2,0,True,"mu",True,'2016')
 cutflowModuleConstr_2J0T0_mu_mc_2016 =  lambda : cutflow(2,0,False,"mu",True,'2016')
+cutflowModuleConstr_2J0T1_mu_data_2016 =  lambda : cutflow(2,0,True,"mu",False,'2016')
