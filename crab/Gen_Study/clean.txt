@@ -1,0 +1,5 @@
+drop *
+keep top_mass_gen
+keep Event_wgt
+keep L1PreFiringWeight_Nom
+keep mtwMass
