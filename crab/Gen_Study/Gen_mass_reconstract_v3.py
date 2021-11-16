@@ -38,8 +38,8 @@ class EfficiencyModule(Module):
 	tau_to_mu_flag = False	
 	for genpart in Genparts:
 	    #if((abs(genpart.pdgId)==5)):
-	    tau_to_el_flag = False
-	    tau_to_mu_flag = False
+	    #tau_to_el_flag = False
+	    #tau_to_mu_flag = False
 	    if((abs(genpart.pdgId)==11 or abs(genpart.pdgId)==13) or abs(genpart.pdgId)==5):
 		motheridx =  genpart.genPartIdxMother
 		PDG = genpart.pdgId
