@@ -15,7 +15,7 @@ def replacemachine(fileName, sourceText, replaceText):
     	sys.stdout.write(line)
     print "All went well, the modifications are done"
     ##################################################################
-regions = ['2J0T1','2J1T0']#['2J1T1','2J1T0']#['2J0T1','2J0T0']#['3J1T1','3J1T0']#['3J2T1','3J2T0'] 
+regions = ['2J1T1','2J1T0']#['2J1T1','2J1T0']#['2J0T1','2J0T0']#['3J1T1','3J1T0']#['3J2T1','3J2T0'] 
 for region in regions:
 	region_tag = '    region_tag = "'+region+'"\n'
 	replacemachine('crab_submission_Minitree_data.py','region_tag =',region_tag)
