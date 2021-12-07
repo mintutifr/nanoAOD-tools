@@ -9,9 +9,9 @@ year   = sys.argv [1]
 date   = datetime.datetime.now()
 
 if(year == '2016'):
-    outputDir = "/store/user/mikumar/RUN2/Gen_topwidthV2/SIXTEEN/MC/"
-    Datasets = Datasets_Alt_MC_2016
-    RequestName = RequestName_Alt_MC_2016
+    outputDir = "/store/user/mikumar/RUN2/Gen_topwidthTTbarULV9/SIXTEEN/MC/"
+    Datasets = Datasets_Alt_MC_TTbar_2016
+    RequestName = RequestName_Alt_MC_TTbar_2016
 if(year == '2017'):
     outputDir = "/store/user/mikumar/RUN2/Gen_topwidth/SIXTEEN/MC/"
     Datasets = Datasets_Alt_MC_2017
@@ -47,7 +47,7 @@ for i in range(0,len(Datasets)):
     replacemachine(cfgfile,'config.JobType.inputFiles =', update_InputFiles )
 
     cmd_crab_submit = "crab submit -c crab_cfg_skimTree.py"
-    os.system(cmd_crab_submit)  
+    #os.system(cmd_crab_submit)  
  
     #cmd_crab_kill = "crab kill -d crab_"+RequestName[i]
     #os.system(cmd_crab_kill)
@@ -57,4 +57,4 @@ for i in range(0,len(Datasets)):
 
 
     print "DONE -----",RequestName[i],"--------------------------------------------------------------------------------------------"
-    time.sleep(10) 
+    #time.sleep(10) 

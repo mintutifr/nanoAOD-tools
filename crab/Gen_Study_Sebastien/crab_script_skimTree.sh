@@ -22,6 +22,9 @@ mv src $CMSSW_BASE/src
 mv module $CMSSW_BASE/module
 mv python $CMSSW_BASE/python
 
+#export X509_USER_PROXY=/afs/cern.ch/user/m/mikumar/x509up_u106474
+export X509_USER_PROXY=/home/mikumar/
+
 echo Found Proxy in: $X509_USER_PROXY
 python crab_script_skimTree.py $1
 fi
