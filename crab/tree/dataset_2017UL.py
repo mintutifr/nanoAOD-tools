@@ -110,18 +110,22 @@ RequestName_Alt_MC_2017 = [
                         'ttbar_FullyLeptonic_widthx0p7','ttbar_FullyLeptonic_widthx0p85','ttbar_FullyLeptonic_widthx1p15','ttbar_FullyLeptonic_widthx1p3',
 ]
 
-Datasets_SingleMuon_data_2017 =['/SingleMuon/Run2017B-02Apr2020-v1/NANOAOD',
-				'/SingleMuon/Run2017C-02Apr2020-v1/NANOAOD',
-				'/SingleMuon/Run2017D-02Apr2020-v1/NANOAOD',
-				'/SingleMuon/Run2017E-02Apr2020-v1/NANOAOD',
-				'/SingleMuon/Run2017F-02Apr2020-v1/NANOAOD']
-
+Datasets_SingleMuon_data_2017 =[
+		'/SingleMuon/Run2017B-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
+		'/SingleMuon/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
+		'/SingleMuon/Run2017D-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
+		'/SingleMuon/Run2017E-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
+		'/SingleMuon/Run2017F-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD'
+#		'/SingleMuon/Run2017G-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',  # Era Run2017G is the 5 TeV Run
+#		'/SingleMuon/Run2017H-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',  # Era Run2017H is low PU
+]
 RequestName_SingleMuon_data_2017 = ['Run2017B_mu','Run2017C_mu','Run2017D_mu','Run2017E_mu','Run2017F_mu']
 
-Datasets_SingleElectron_data_2017 =   [	'/SingleElectron/Run2017B-02Apr2020-v1/NANOAOD',
-					'/SingleElectron/Run2017C-02Apr2020-v1/NANOAOD',
-					'/SingleElectron/Run2017D-02Apr2020-v1/NANOAOD',
-					'/SingleElectron/Run2017E-02Apr2020-v1/NANOAOD',
-					'/SingleElectron/Run2017F-02Apr2020-v1/NANOAOD']
-
+Datasets_SingleElectron_data_2017 =   [	
+		'/SingleElectron/Run2017B-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
+		'/SingleElectron/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
+		'/SingleElectron/Run2017D-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
+		'/SingleElectron/Run2017E-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
+		'/SingleElectron/Run2017F-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD'
+]
 RequestName_SingleElectron_data_2017 = ['Run2017B_el','Run2017C_el','Run2017D_el','Run2017E_el','Run2017F_el']
