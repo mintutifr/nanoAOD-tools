@@ -41,7 +41,7 @@ def Breitwignerfit(h,input_file):
 	#define roodata hist
 	data = R.RooDataHist("data","data",R.RooArgList(mtop),h)
 	#define fame to plot
-        frame = mtop.frame(R.RooFit.Bins(16),R.RooFit.Title("mtop"))
+        frame = mtop.frame(R.RooFit.Bins(20),R.RooFit.Title("mtop"))
 	#plot data on fame
         data.plotOn(frame,R.RooFit.MarkerSize(0.9) )
 	#deine papameter to  dfinet the breit wigner shape
@@ -85,11 +85,11 @@ def Breitwignerfit(h,input_file):
 	#fitModel_hist.Scale(Norm.getVal()/fitModel_hist.Integral())
 
 
-	fitData_hist= data.createHistogram("fitData",mtop, R.RooFit.Binning(16))
+	fitData_hist= data.createHistogram("fitData",mtop, R.RooFit.Binning(20))
 	fitData_hist.Sumw2()
 	fitData_hist.SetNameTitle("Data_Hist","")
 
-	fitModel_hist= model.createHistogram("fitModel",mtop, R.RooFit.Binning(16))
+	fitModel_hist= model.createHistogram("fitModel",mtop, R.RooFit.Binning(20))
 	fitModel_hist.Sumw2()
 	fitModel_hist.SetNameTitle("Model_Hist","");
 	fitModel_hist.Scale(Norm.getVal()/fitModel_hist.Integral())
@@ -136,7 +136,7 @@ def Breitwignerfit(h,input_file):
         c.SetNdivisions(4)
         c.SetTickSize(0.01)
         d = gr_mu.GetXaxis()
-        d.SetNdivisions(16)
+        d.SetNdivisions(20)
         d.SetTickSize(0.03)
 	
 	gr_mu.Draw("APE1")
@@ -150,13 +150,13 @@ if __name__ == "__main__":
 	#get_hist("top_mass_reconstracted_el.root")
 	#DIR = "/grid_mnt/t3storage3/mikumar/Run2/SIXTEEN/minitree/Mc/Gen/"
 	DIR = "/grid_mnt/t3storage3/mikumar/Run2/SIXTEEN/minitree/Mc/Gen/"
-	input_file = "Minitree_Tchannel_wtop0p7"
-	h1 = R.TH1D("top_mass","top_mass",16,169.0,177.0)	
+	input_file = "Minitree_Tchannel_wtop1p3"
+	h1 = R.TH1D("top_mass","top_mass",20,169.0,177.0)	
 	h1.Sumw2()
 	treename = "Events"
 	Var = "top_mass_gen"
 	cut = ""
-	for input_file in ["Minitree_Tbarchannel_wtop1p3"]:#,"Minitree_Tbarchannel_wtop1p15","Minitree_Tbarchannel_wtop0p85","Minitree_Tbarchannel_wtop0p7","Minitree_Tchannel_wtop1p15","Minitree_Tchannel_wtop0p85","Minitree_Tchannel_wtop0p7"]:
+	for input_file in ["Minitree_TTTo2L2Nu_widthx1p15"]:#["Minitree_Tbarchannel_wtop1p3"]:#,"Minitree_Tbarchannel_wtop1p15","Minitree_Tbarchannel_wtop0p85","Minitree_Tbarchannel_wtop0p7","Minitree_Tchannel_wtop1p15","Minitree_Tchannel_wtop0p85","Minitree_Tchannel_wtop0p7"]:
 	#for input_file in ["tCh_top_w0p7_full"]:
 		hist = get_hitogram_from_tree(DIR,input_file,treename,h1,Var,cut)
 		#hist.Scale(1/hist.Integral())
