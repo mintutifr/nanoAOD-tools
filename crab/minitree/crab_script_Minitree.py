@@ -9,7 +9,7 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.common.muonScaleResProduce
 from MinitreeModule import *
 from cut_strings import *
 
-treecut = cut_1L0TJet_2J1T0_mu_2016
+treecut = cut_1L0TJet_2J1T1_mu_2016
 
 #inputFiles=["6E1B25E9-BBAE-B14F-92C1-FDC95C9EC4A2_Skim.root"]
 #/store/user/mikumar/RUN2/Tree_crab/Sixteen/Data_mu/Run2016C_mu/SingleMuon/Tree_July_four_twenty_sixteen_Run2016C_mu/200704_054545/0000/tree_1.root"]
@@ -23,7 +23,7 @@ treecut = cut_1L0TJet_2J1T0_mu_2016
 p=PostProcessor(".",
 		inputFiles(),
 		treecut,
-		modules=[MinitreeModuleConstr2J1T0_mu_data_2016()],
+		modules=[MinitreeModuleConstr2J1T1_mu_data_2016()],
 		outputbranchsel="keep_and_drop_mu_Minitree.txt",
 		provenance=True,
 		fwkJobReport=True,
