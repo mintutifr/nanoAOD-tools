@@ -43,10 +43,10 @@ def replacemachine(fileName, sourceText, replaceText):
     ##################################################################
 
 for i in range(0,len(Datasets)):
-    region_tag = "2J1T0"
+    region_tag = "2J1T1"
     update_RequestName = "config.General.requestName = '"+RequestName[i]+"_Minitree_"+region_tag+"_"+year+"'\n" 
     update_Dataset = "config.Data.inputDataset = '"+Datasets[i]+"'\n"
-    update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+region_tag+"_"+lep+RequestName[i]+"'\n"
+    update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+"1L0TJet"+region_tag+"_"+lep+RequestName[i]+"'\n"
     #update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+"1L0T_"+region_tag+"_"+lep+"/"+RequestName[i]+"'\n"
     update_DatasetTag = "config.Data.outputDatasetTag = 'MiniTree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_"+RequestName[i]+"'\n"
     update_InputFiles = "config.JobType.inputFiles = ['crab_script_Minitree.py','../../scripts/haddnano.py','Mc_prob_cal_forBweght.py','foxwol_n_fourmomentumSolver.py','MinitreeModule.py','cut_strings.py','keep_and_drop_mu_Minitree.txt','keep_and_drop_el_Minitree.txt']\n"    
@@ -74,7 +74,7 @@ for i in range(0,len(Datasets)):
     replacemachine(module_cut,'outputbranchsel=', branchsel )
 
     cmd_crab_submit = "crab submit -c crab_cfg_Minitree.py"
-    #os.system(cmd_crab_submit)  
+    os.system(cmd_crab_submit)  
  
     #cmd_crab_kill = "crab kill -d crab_"+RequestName[i]
     #os.system(cmd_crab_kill)
