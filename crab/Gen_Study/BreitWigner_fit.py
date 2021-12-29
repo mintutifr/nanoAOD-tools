@@ -220,7 +220,8 @@ def BreitwignerWOfit(h):
 
 if __name__ == "__main__":
 	#get_hist("top_mass_reconstracted_el.root")
-	input_file = "/home/mikumar/t3store3/workarea/CMSSW_9_4_9/src/PhysicsTools/NanoAODTools/crab/Rootfiles/Gen_mass_tree_tchannel_mu.root"
+	input_file = "/grid_mnt/t3storage3/mikumar/Run2/SIXTEEN/minitree/Mc/Gen/Minitree_TTTo2L2Nu_widthx0p7.root"
+	#"/home/mikumar/t3store3/workarea/CMSSW_9_4_9/src/PhysicsTools/NanoAODTools/crab/Rootfiles/Gen_mass_tree_tchannel_mu.root"
 	h1 = R.TH1D("top_mass","top_mass",52,166.0,179.0)	
 	treename = "Events"
 	Var = "top_mass_gen"
