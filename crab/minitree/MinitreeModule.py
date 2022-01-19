@@ -169,11 +169,11 @@ class MinitreeProducer(Module):
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
 	if(self.isMC==True):	
-		x_sec = 1350
+		x_sec = 2890800
 		Lumi=1.0
                 if(self.dataYear=="2016"):Lumi = 35882.5
 		elif(self.dataYear=="2017"):Lumi = 41529.5
-		NEvents = 7380341
+		NEvents = 22455794
 
 	        Xsec_wgt = (x_sec*Lumi)/NEvents
 	#print Xsec_wgt
@@ -694,24 +694,23 @@ MinitreeModuleConstr3J2T0_mu_data_2017 = lambda : MinitreeProducer(3,2,False,'mu
 MinitreeModuleConstr3J2T0_el_mc_2017 = lambda : MinitreeProducer(3,2,False,'el',True,'2017')
 MinitreeModuleConstr3J2T0_el_data_2017 = lambda : MinitreeProducer(3,2,False,'el',False,'2017')
 
-#---------------------------------------------------------------------------------------------------
-#1L0TJet_
-MinitreeModuleConstr1L0TJet_2J1T1_mu_mc_2016 = lambda : MinitreeProducer(2,1,True,'mu',True,'2016')
-MinitreeModuleConstr1L0TJet_2J1T1_mu_data_2016 = lambda : MinitreeProducer(2,1,True,'mu',False,'2016')
-MinitreeModuleConstr1L0TJet_2J1T1_el_mc_2016 = lambda : MinitreeProducer(2,1,True,'el',True,'2016')
-MinitreeModuleConstr1L0TJet_2J1T1_el_data_2016 = lambda : MinitreeProducer(2,1,True,'el',False,'2016')
+#------------------------------------------ 2J1L0T---------------------------------------------------------
+MinitreeModuleConstr2J1L0T1_mu_mc_2016 = lambda : MinitreeProducer(2,1,True,'mu',True,'2016')
+MinitreeModuleConstr2J1L0T1_mu_data_2016 = lambda : MinitreeProducer(2,1,True,'mu',False,'2016')
+MinitreeModuleConstr2J1L0T1_el_mc_2016 = lambda : MinitreeProducer(2,1,True,'el',True,'2016')
+MinitreeModuleConstr2J1L0T1_el_data_2016 = lambda : MinitreeProducer(2,1,True,'el',False,'2016')
 
-MinitreeModuleConstr1L0TJet_2J1T0_mu_mc_2016 = lambda : MinitreeProducer(2,1,False,'mu',True,'2016')
-MinitreeModuleConstr1L0TJet_2J1T0_mu_data_2016 = lambda : MinitreeProducer(2,1,False,'mu',False,'2016')
-MinitreeModuleConstr1L0TJet_2J1T0_el_mc_2016 = lambda : MinitreeProducer(2,1,False,'el',True,'2016')
-MinitreeModuleConstr1L0TJet_2J1T0_el_data_2016 = lambda : MinitreeProducer(2,1,False,'el',False,'2016')
+MinitreeModuleConstr2J1L0T0_mu_mc_2016 = lambda : MinitreeProducer(2,1,False,'mu',True,'2016')
+MinitreeModuleConstr2J1L0T0_mu_data_2016 = lambda : MinitreeProducer(2,1,False,'mu',False,'2016')
+MinitreeModuleConstr2J1L0T0_el_mc_2016 = lambda : MinitreeProducer(2,1,False,'el',True,'2016')
+MinitreeModuleConstr2J1L0T0_el_data_2016 = lambda : MinitreeProducer(2,1,False,'el',False,'2016')
 
-MinitreeModuleConstr1L0TJet_2J1T1_mu_mc_2017 = lambda : MinitreeProducer(2,1,True,'mu',True,'2017')
-MinitreeModuleConstr1L0TJet_2J1T1_mu_data_2017 = lambda : MinitreeProducer(2,1,True,'mu',False,'2017')
-MinitreeModuleConstr1L0TJet_2J1T1_el_mc_2017 = lambda : MinitreeProducer(2,1,True,'el',True,'2017')
-MinitreeModuleConstr1L0TJet_2J1T1_el_data_2017 = lambda : MinitreeProducer(2,1,True,'el',False,'2017')
+MinitreeModuleConstr2J1L0T1_mu_mc_2017 = lambda : MinitreeProducer(2,1,True,'mu',True,'2017')
+MinitreeModuleConstr2J1L0T1_mu_data_2017 = lambda : MinitreeProducer(2,1,True,'mu',False,'2017')
+MinitreeModuleConstr2J1L0T1_el_mc_2017 = lambda : MinitreeProducer(2,1,True,'el',True,'2017')
+MinitreeModuleConstr2J1L0T1_el_data_2017 = lambda : MinitreeProducer(2,1,True,'el',False,'2017')
 
-MinitreeModuleConstr1L0TJet_2J1T0_mu_mc_2017 = lambda : MinitreeProducer(2,1,False,'mu',True,'2017')
-MinitreeModuleConstr1L0TJet_2J1T0_mu_data_2017 = lambda : MinitreeProducer(2,1,False,'mu',False,'2017')
-MinitreeModuleConstr1L0TJet_2J1T0_el_mc_2017 = lambda : MinitreeProducer(2,1,False,'el',True,'2017')
-MinitreeModuleConstr1L0TJet_2J1T0_el_data_2017 = lambda : MinitreeProducer(2,1,False,'el',False,'2017')
+MinitreeModuleConstr2J1L0T1_mu_mc_2017 = lambda : MinitreeProducer(2,1,False,'mu',True,'2017')
+MinitreeModuleConstr2J1L0T1_mu_data_2017 = lambda : MinitreeProducer(2,1,False,'mu',False,'2017')
+MinitreeModuleConstr2J1L0T1_el_mc_2017 = lambda : MinitreeProducer(2,1,False,'el',True,'2017')
+MinitreeModuleConstr2J1L0T1_el_data_2017 = lambda : MinitreeProducer(2,1,False,'el',False,'2017')
