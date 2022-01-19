@@ -1,7 +1,7 @@
 import fileinput, string, sys, os, time, subprocess
 
 from dataset_2016_phy3 import *
-from dataset_2017_phy3 import *
+#from dataset_2017_phy3 import *
 #from dataset_2016_phy3 import*
 if len(sys.argv) != 2:
         print "USAGE: %s <Data year>"%(sys.argv [0])
@@ -31,7 +31,7 @@ if(year == '2017'):
 
 print "Dataset size = ",len(Datasets)," RequestName size = ",len(RequestName)
 for i in range(0,len(Datasets)):
-    RN = "crab_"+RequestName[i]+"_Minitree_2J1T0_2016"
+    RN = "crab_"+RequestName[i]+"_Minitree_2J1T1_2016"
     cmd_crab_status = "crab status -d "+RN
     os.system(cmd_crab_status)  
     p = subprocess.Popen(cmd_crab_status, stdout=subprocess.PIPE, shell=True)
