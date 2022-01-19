@@ -6,7 +6,7 @@ config = Configuration()
 config.section_("General")
 
 #2016 MC
-config.General.requestName = 'Run2016H_mu_Minitree_2J1T1_2016'
+config.General.requestName = 'Run2016H_el_Minitree_2J0T0_2016'
 
 config.General.transferLogs=True
 config.section_("JobType")
@@ -19,7 +19,7 @@ config.JobType.inputFiles = ['crab_script_Minitree.py','../../scripts/haddnano.p
 config.JobType.sendPythonFolder	 = True
 config.section_("Data")
 
-config.Data.inputDataset = '/SingleMuon/mikumar-Tree_12_Oct21_Run2016H_mu-a73a1c2d67cfafe3e3eae6836e89c2e1/USER'
+config.Data.inputDataset = '/SingleElectron/mikumar-Tree_october_Seventeen_Run2016H_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER'
 
 config.Data.inputDBS = 'phys03'
 #config.Data.inputDBS = 'global'
@@ -28,11 +28,11 @@ config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1
 #config.Data.totalUnits = 1
 
-config.Data.outLFNDirBase = '/store/user/mikumar/RUN2/MiniTree_crab/SIXTEEN/Data_new/1L0TJet2J1T1_muRun2016H_mu'
+config.Data.outLFNDirBase = '/store/user/mikumar/RUN2/MiniTree_crab/SIXTEEN/Data_new/2J0T0_el/Run2016H_el'
 
 config.Data.publication = False
 
-config.Data.outputDatasetTag = 'MiniTree_23_Dec21_Run2016H_mu'
+config.Data.outputDatasetTag = 'MiniTree_18_Jan22_Run2016H_el'
 
 config.section_("Site")
 config.Site.storageSite = "T2_IN_TIFR"
