@@ -5,7 +5,7 @@ config = Configuration()
 
 config.section_("General")
 
-config.General.requestName = 'Run2016H_mu_Tree'
+config.General.requestName = 'Run2016H_el_Tree'
 
 config.General.transferLogs=True
 config.section_("JobType")
@@ -18,7 +18,7 @@ config.JobType.inputFiles = ['ElectronSF','MuonSF','crab_script_skimTree.py','sc
 config.JobType.sendPythonFolder=True
 config.section_("Data")
 
-config.Data.inputDataset = '/SingleMuon/Run2016H-02Apr2020-v1/NANOAOD'
+config.Data.inputDataset = '/SingleElectron/Run2016H-02Apr2020-v1/NANOAOD'
 
 #config.Data.inputDBS = 'phys03'
 config.Data.inputDBS = 'global'
@@ -26,15 +26,15 @@ config.Data.inputDBS = 'global'
 #config.Data.splitting = 'Automatic'
 config.Data.splitting = 'LumiBased'
 config.Data.unitsPerJob = 150
-config.Data.totalUnits = 1
+#config.Data.totalUnits = 1
 config.Data.lumiMask = 'Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt'
 #config.Data.lumiMask = "/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt" 
 
-config.Data.outLFNDirBase = '/store/user/mikumar/RUN2/Tree_crab/SIXTEEN/Data_mu_new/Run2016H_mu'
+config.Data.outLFNDirBase = '/store/user/mikumar/RUN2/Tree_crab/SIXTEEN/Data_el_new/Run2016H_el'
 
 config.Data.publication = True
 
-config.Data.outputDatasetTag = 'Tree_03_Dec21_Run2016H_mu'
+config.Data.outputDatasetTag = 'Tree_20_Jan22_Run2016H_el'
 
 config.section_("Site")
 config.Site.storageSite = "T2_IN_TIFR"

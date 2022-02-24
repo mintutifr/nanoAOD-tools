@@ -77,6 +77,14 @@ Datasets_SingleMuon_data_2016 = [
 
 RequestName_SingleMuon_data_2016 = ['Run2016B_ver2_mu','Run2016C_mu','Run2016D_mu','Run2016E_mu','Run2016F_mu','Run2016G_mu','Run2016H_mu']
 
-Datasets_SingleElectron_data_2016 = ['/SingleElectron/mikumar-Tree_october_Seventeen_Run2016B_vert2_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER', '/SingleElectron/mikumar-Tree_october_Seventeen_Run2016C_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER', '/SingleElectron/mikumar-Tree_october_Seventeen_Run2016D_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER', '/SingleElectron/mikumar-Tree_october_Seventeen_Run2016E_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER', '/SingleElectron/mikumar-Tree_october_Seventeen_Run2016F_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER', '/SingleElectron/mikumar-Tree_october_Seventeen_Run2016G_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER', '/SingleElectron/mikumar-Tree_october_Seventeen_Run2016H_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER']
+Datasets_SingleElectron_data_2016 = [
+		"/SingleElectron/mikumar-Tree_20_Jan22_Run2016B_ver2_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER",
+              	"/SingleElectron/mikumar-Tree_20_Jan22_Run2016C_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER",
+              	"/SingleElectron/mikumar-Tree_20_Jan22_Run2016D_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER",
+              	"/SingleElectron/mikumar-Tree_20_Jan22_Run2016E_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER",
+              	"/SingleElectron/mikumar-Tree_20_Jan22_Run2016F_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER",
+              	"/SingleElectron/mikumar-Tree_20_Jan22_Run2016G_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER",
+              	"/SingleElectron/mikumar-Tree_20_Jan22_Run2016H_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER"]
+#'/SingleElectron/mikumar-Tree_october_Seventeen_Run2016B_vert2_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER', '/SingleElectron/mikumar-Tree_october_Seventeen_Run2016C_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER', '/SingleElectron/mikumar-Tree_october_Seventeen_Run2016D_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER', '/SingleElectron/mikumar-Tree_october_Seventeen_Run2016E_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER', '/SingleElectron/mikumar-Tree_october_Seventeen_Run2016F_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER', '/SingleElectron/mikumar-Tree_october_Seventeen_Run2016G_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER', '/SingleElectron/mikumar-Tree_october_Seventeen_Run2016H_el-a73a1c2d67cfafe3e3eae6836e89c2e1/USER']
 
 RequestName_SingleElectron_data_2016 = ['Run2016B_ver2_el','Run2016C_el','Run2016D_el','Run2016E_el','Run2016F_el','Run2016G_el','Run2016H_el']
