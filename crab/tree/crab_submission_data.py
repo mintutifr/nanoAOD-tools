@@ -11,7 +11,7 @@ lep    = sys.argv [2]
 date   = datetime.datetime.now()
 
 if(year == '2016'):
-    outputDir = "/store/user/mikumar/RUN2/Tree_crab/SIXTEEN/Data_mu_new/"#+lep+"/"
+    outputDir = "/store/user/mikumar/RUN2/Tree_crab/SIXTEEN/Data_el_new/"#+lep+"/"
     if(lep=="mu"):
     	Datasets = Datasets_SingleMuon_data_2016
     	RequestName = RequestName_SingleMuon_data_2016
@@ -71,7 +71,7 @@ for i in range(0,len(Datasets)):
     replacemachine(scriptfile,'modules=', update_module )
 
     cmd_crab_submit = "crab submit -c crab_cfg_skimTree.py"
-    #os.system(cmd_crab_submit)  
+    os.system(cmd_crab_submit)  
  
     #cmd_crab_kill = "crab kill -d crab_"+RequestName[i]
     #os.system(cmd_crab_kill)
@@ -80,5 +80,5 @@ for i in range(0,len(Datasets)):
     #os.system(cmd_rm_dir)
 
 
-    #time.sleep(20) 
     print "DONE -----",RequestName[i],"--------------------------------------------------------------------------------------------"
+    time.sleep(10) 

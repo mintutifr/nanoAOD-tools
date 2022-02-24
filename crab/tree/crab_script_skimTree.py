@@ -20,7 +20,7 @@ treecut = "nJet>0 && Jet_pt>20 && (Sum$(Muon_pt>20)>0 || Sum$(Electron_pt>30)>0)
 p=PostProcessor(".",
 		inputFiles(),
 		treecut,
-		modules=[MainModuleConstr_data_2016_singleMuon(),jmeCorrectionsRun2016H_DATA_AK4CHS()],
+		modules=[MainModuleConstr_data_2016_singleElectron(),jmeCorrectionsRun2016H_DATA_AK4CHS()],
 		outputbranchsel="keep_and_drop.txt",
 		provenance=True,
 		fwkJobReport=True,

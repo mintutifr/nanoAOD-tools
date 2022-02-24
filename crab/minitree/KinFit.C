@@ -393,8 +393,9 @@ void PerfomFit(TLorentzVector lep,TLorentzVector nu){
 	m_nu(1,1) = resEta*resEta; // eta
 	m_nu(2,2) = resPhi*resPhi; // phi
 
-	cout<<"lepton cov m trac = ["<<m_lep(0,0)<<","<<m_lep(1,1)<<","<<m_lep(2,2)<<endl;
-	cout<<"neutrino cov m trac = ["<<m_nu(0,0)<<","<<m_nu(1,1)<<","<<m_nu(2,2)<<endl;
+	cout<<"cov m trac = [et (m(0,0)), eta (m(1,1)), phi (m(2,2))"<<endl;
+	cout<<"lepton cov m trac = ["<<m_lep(0,0)<<","<<m_lep(1,1)<<","<<m_lep(2,2)<<"]"<<endl;
+	cout<<"neutrino cov m trac = ["<<m_nu(0,0)<<","<<m_nu(1,1)<<","<<m_nu(2,2)<<"]"<<endl;
 	
 	TAbsFitParticle* _lep;
 	TAbsFitParticle* _nu;
@@ -440,10 +441,11 @@ void PerfomFit(TLorentzVector lep,TLorentzVector nu){
 void KinFit(){
 	cout<<"begin event ....."<<endl;
 	Double_t Chi2 = 11.;
-	cout<<"lep = [-77.92, 16.24, 117.64, 142.87]"<<endl;
-	cout<<"nu = [15.41, 28.78, 6.06, 34.08]"<<endl;
 	TLorentzVector lep(-77.92, 16.24, 117.64, 142.87);
 	TLorentzVector nu(15.41, 28.78, 6.06, 34.08);
+	cout<<"lep = ["<<lep.X()<<","<<lep.Y()<<","<<lep.Z()<<","<<lep.E()<<"]"<<endl;
+        cout<<"nu = ["<<nu.X()<<","<<nu.Y()<<","<<nu.Z()<<","<<nu.E()<<"]"<<endl;
+	cout<<"Fitting ...."<<endl;
 	PerfomFit(lep,nu);
 	cout<<"..... end event"<<endl;
 	

@@ -22,7 +22,7 @@ def search_string_in_file(file_name, string_to_search):
 		string = line.rstrip()
 		#list_of_results.append(string[18:]) #Output dataset:
                 #list_of_results.append(string[25:]) #Number of events read:
-		list_of_results.append(string[30:-11]) #root://cms-xrd-global.cern.ch/
+		list_of_results.append(string[30:]) #root://cms-xrd-global.cern.ch/
     # Return list of tuples containing line numbers and lines where string is found
     return list_of_results
 
@@ -30,4 +30,4 @@ listdataset = search_string_in_file(inputfile,"root://cms-xrd-global.cern.ch/")
 print "size of array = ",len(listdataset)
 #print listdataset
 for i in range(0,len(listdataset)):
-    print listdataset[i]
+    print listdataset[i].rsplit("/",1)[0]+"/"
