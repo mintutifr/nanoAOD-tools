@@ -72,11 +72,13 @@ datasets_Alt_MC_2018 =[
                 #'/TTToSemiLeptonic_wtop0p85_TuneCP5_13TeV-powheg-pythia8/',
                 #'/TTToSemiLeptonic_wtop1p15_TuneCP5_13TeV-powheg-pythia8/',
                 #'/TTToSemiLeptonic_wtop1p3_TuneCP5_13TeV-powheg-pythia8/',
-	
+
+		'/TTTo2L2Nu_widthx0p55_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM',	
 		'/TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM',
 		'/TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM',
 		'/TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM',
 		'/TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM',
+		'/TTTo2L2Nu_widthx1p45_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM'
 
 ]
 
