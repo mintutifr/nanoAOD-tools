@@ -82,10 +82,13 @@ Datasets_Alt_MC_2016 =[
                 #'/TTToSemiLeptonic_wtop1p15_TuneCP5_13TeV-powheg-pythia8/',
                 #'/TTToSemiLeptonic_wtop1p3_TuneCP5_13TeV-powheg-pythia8/',
 
+
+		'/TTTo2L2Nu_widthx0p55_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM',
 		'/TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM',
 		'/TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM',
 		'/TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM',
 		'/TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv2-106X_mcRun2_asymptotic_v15-v1/NANOAODSIM',
+		'/TTTo2L2Nu_widthx1p45_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM'
 ]
 
 RequestName_Alt_MC_2016 = [
