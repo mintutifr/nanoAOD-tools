@@ -6,9 +6,17 @@ def PrintTrueflags(flags):
         for key in flags.keys():
             if(flags[key]==True):
             	print key ,":",#flags[key]
+	print
 	#print "exit"
 	
-
+def isflagTrue(flags,spesific_flag):
+	trueflags = []
+	return_flag = False
+        for key in flags.keys():
+            if(flags[key]==True and key == spesific_flag):
+		return_flag = True
+	return return_flag	 
+                
 def Binary_flags(n):
     Raw_binaryNum = list(map(int, str(bin(n))[2:]))
     #print Raw_binaryNum
@@ -64,6 +72,57 @@ def findMother(motheridx,Genparts):
             else: ID = ID+1
 	
 	return motherPDG,Gmotheridx,GmotherPDG
- 
+
+def findDaughter(idx,pdg,Genparts):
+	daugher_id = []
+	daugher_pdg = []
+	first_mother_id = []
+	first_mother_pdg = []
+	ID = 0
+	for Genpart in Genparts: 
+	    #if(ID==idx or isflagTrue(Binary_flags(Genpart.statusFlags),"fromHardProcess")==False): continue;
+	    if(ID==idx):  
+		ID = ID+1
+		continue
+	    elif(abs(Genpart.pdgId)==11 or abs(Genpart.pdgId)==12 or abs(Genpart.pdgId)==13 or abs(Genpart.pdgId)==14 or abs(Genpart.pdgId)==5):
+	    	motheridx = Genpart.genPartIdxMother
+	    	motherPDG,Gmotheridx,GmotherPDG = findMother(motheridx,Genparts)
+		first_mother = motherPDG
+		#if(abs(Genpart.pdgId)==14): print "first mother of nutrino(",Genpart.pdgId,") : ", first_mother
+		#if(abs(Genpart.first_mother)==14): print 
+	    	if(idx==motheridx and isflagTrue(Binary_flags(Genpart.statusFlags),"isPrompt") and isflagTrue(Binary_flags(Genpart.statusFlags),"fromHardProcess")):
+		     daugher_id.append(ID)
+		     daugher_pdg.append(Genpart.pdgId)
+		     first_mother_pdg.append(first_mother)
+		     
+		     
+	    	else:
+		     while(idx!=motheridx and GmotherPDG !=-1):
+                     	PDG = motherPDG
+                     	motheridx = Gmotheridx
+		     	motherPDG,Gmotheridx,GmotherPDG = findMother(motheridx,Genparts)
+		     	if(idx==motheridx and isflagTrue(Binary_flags(Genpart.statusFlags),"isPrompt") and isflagTrue(Binary_flags(Genpart.statusFlags),"fromHardProcess")):
+			    daugher_id.append(ID)
+			    daugher_pdg.append(Genpart.pdgId)
+			    first_mother_pdg.append(first_mother)
+				
+	    ID = ID+1
+
+	    """for i in range(0,len(daugher_pdg)):
+		part_pdg = daugher_pdg[i]
+		part_id = daugher_id[i] 
+		if(abs(part_pdg)==14):
+		    ID2 = 0
+		    print "child of ",part_pdg," : "
+		    for Genpart in Genparts:        
+			if(ID2==part_id):
+                    	    print "child of ",part_pdg,"(",Genpart.genPartIdxMother,") : ", Genpart.pdgId," "
+		    ID2=ID2+1"""
+
+	return daugher_id,daugher_pdg,first_mother_pdg
+
+
+
 #PrintTrueflags(Binary_flags(4481))
+#print(isflagTrue(Binary_flags(4481),"isLastCopy"))
 #PrintTrueflags(Binary_flags(2433))
