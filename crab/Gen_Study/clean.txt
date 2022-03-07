@@ -64,3 +64,40 @@ keep    Px_nu_gen
 keep    Py_nu_gen
 keep    Pz_nu_gen
 
+
+
+keep    bQurkPt_kin
+keep    bQurkEta_kin
+keep    bQurkPhi_kin
+keep    bQurkMass_kin
+
+
+keep    mtwMass_kin
+keep    topPt_kin
+keep    topEta_kin
+keep    topPhi_kin
+keep    topMass_kin
+
+
+keep    MuonPt_kin
+keep    MuonEta_kin
+keep    MuonPhi_kin
+keep    MuonMass_kin
+
+
+keep    ElectronPt_kin
+keep    ElectronEta_kin
+keep    ElectronPhi_kin
+keep    ElectronMass_kin
+
+keep    Pt_nu_kin
+keep    Eta_nu_kin
+keep    Phi_nu_kin
+keep    Mass_nu_kin
+
+keep    Px_nu_kin
+keep    Py_nu_kin
+keep    Pz_nu_kin
+
+keep    findmuon
+keep	findelectron
