@@ -19,7 +19,7 @@ keep   ElectronMass
 keep   Px_nu
 keep   Py_nu
 keep   Pz_nu
-
+keep   Pt_nu
 
 keep    bJetMass
 keep    bJetPt
@@ -71,6 +71,9 @@ keep    bQurkEta_kin
 keep    bQurkPhi_kin
 keep    bQurkMass_kin
 
+keep 	findtau
+
+keep    topMass_fromTau
 
 keep    mtwMass_kin
 keep    topPt_kin

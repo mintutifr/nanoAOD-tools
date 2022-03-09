@@ -58,6 +58,7 @@ class MainProducer(Module):
 	self.out.branch("Px_nu_gen", "F")
 	self.out.branch("Py_nu_gen", "F")
 	self.out.branch("Pz_nu_gen", "F")
+	self.out.branch("Pt_nu","F")
 
 	self.out.branch("mtwMass_gen", "F")
 
@@ -97,7 +98,9 @@ class MainProducer(Module):
 
 	self.out.branch("findmuon", "F")
 	self.out.branch("findelectron", "F")
+	self.out.branch("findtau", "F")
 
+	self.out.branch("topMass_fromTau","F")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -158,7 +161,9 @@ class MainProducer(Module):
 				self.out.fillBranch("ElectronEta_gen", ElectronEta_gen)
 				self.out.fillBranch("ElectronPhi_gen", ElectronPhi_gen)
 				self.out.fillBranch("ElectronMass_gen", ElectronMass_gen)
-				self.out.fillBranch("findelectron", 1.0)
+				self.out.fillBranch("findelectron", 1)
+				self.out.fillBranch("findmuon", 0)
+
 
 			if(abs(daugher_pdg[i])==13 and abs(mother_pdg[i])==24 and self.lepton_flv == 'mu'):
 				MuonPt_gen = genpart.pt
@@ -174,7 +179,8 @@ class MainProducer(Module):
 				self.out.fillBranch("MuonEta_gen", MuonEta_gen)
 				self.out.fillBranch("MuonPhi_gen", MuonPhi_gen)
 				self.out.fillBranch("MuonMass_gen", MuonMass_gen)
-				self.out.fillBranch("findmuon", 1.0)
+				self.out.fillBranch("findmuon", 1)
+				self.out.fillBranch("findelectron", 0)
 
 			if((abs(daugher_pdg[i])==12 or abs(daugher_pdg[i])==14) and abs(mother_pdg[i])==24):
 				Pt_nu_gen = genpart.pt
@@ -208,17 +214,26 @@ class MainProducer(Module):
 				self.out.fillBranch("bQurkPhi_gen", bQurkPhi_gen)
 				self.out.fillBranch("bQurkMass_gen", bQurkMass_gen)
 
-
+			
 	w4v_gen = lepton4v_gen + Nu4v_gen
 
 	#print "Wmass = ",w4v_gen.M()
-	#mtwMass_gen = math.sqrt(abs(pow((MuonPt_gen+Pt_nu_gen),2)-pow((MuonPt_gen*math.cos(MuonPhi_gen)+Pt_nu_gen*math.cos(Phi_nu_gen)),2)-pow((MuonPt_gen*math.sin(MuonPhi_gen)+Pt_nu_gen*math.sin(Phi_nu_gen)),2)))
 	mtwMass_gen = math.sqrt(abs(pow((lepton4v_gen.Pt()+Nu4v_gen.Pt()),2)-pow((lepton4v_gen.Pt()*math.cos(lepton4v_gen.Phi())+Nu4v_gen.Pt()*math.cos(Nu4v_gen.Phi())),2)-pow((lepton4v_gen.Pt()*math.sin(lepton4v_gen.Phi())+Nu4v_gen.Pt()*math.sin( Nu4v_gen.Phi())),2)))
 
 	self.out.fillBranch("mtwMass_gen", mtwMass_gen)
 
 	top4v_gen = w4v_gen + bJet4v_gen
 
+	if(lepton4v_gen.M()==0.0): 
+		#print "mu  pt : ",lepton4v_gen.Pt()," eta : ", lepton4v_gen.Eta()," phi : ",lepton4v_gen.Phi()," mass : ",lepton4v_gen.M()
+		#print "nu  pt : ",Nu4v_gen.Pt()," eta : ", Nu4v_gen.Eta()," phi : ",Nu4v_gen.Phi()," mass : ",Nu4v_gen.M()
+		#print "b   pt : ",bJet4v_gen.Pt()," eta : ", bJet4v_gen.Eta()," phi : ",bJet4v_gen.Phi()," mass : ",bJet4v_gen.M()
+
+		self.out.fillBranch("findtau", 1)	
+		self.out.fillBranch("topMass_fromTau", getattr(event,'topMass'))
+	else:
+		self.out.fillBranch("findtau", 0)
+		self.out.fillBranch("topMass_fromTau", 0)	
 	#print "top mass = ",top4v_gen.M()
 	self.out.fillBranch("topPt_gen", top4v_gen.Pt())
 	self.out.fillBranch("topEta_gen", top4v_gen.Eta())
@@ -298,11 +313,13 @@ class MainProducer(Module):
 	top4v_kin = w4v_kin + bJet4v_kin
 
         #print "top mass = ",top4v_gen.M()
+	
         self.out.fillBranch("topPt_kin", top4v_kin.Pt())
         self.out.fillBranch("topEta_kin", top4v_kin.Eta())
         self.out.fillBranch("topPhi_kin", top4v_kin.Phi())
         self.out.fillBranch("topMass_kin", top4v_kin.M())
 
+	self.out.fillBranch("Pt_nu", getattr(event,'MET_pt'))
 	"""ID2 = 0
 	for Genpart in Genparts:
 	    motheridx = Genpart.genPartIdxMother
@@ -327,14 +344,14 @@ class MainProducer(Module):
 MainModuleConstr_Gen = lambda : MainProducer('mu')
 
 treecut = "nJet>0 && Jet_pt>20 && (Sum$(Muon_pt>20)>0 || Sum$(Electron_pt>30)>0)"
-treecutEN = "Entry$<10"#(nMuon>0 || nElectron>0)" # && (Muon_pt>5 || Electron_pt>10) (nMuon>0 || nElectron>0)"
+treecutEN = "Entry$<100"#(nMuon>0 || nElectron>0)" # && (Muon_pt>5 || Electron_pt>10) (nMuon>0 || nElectron>0)"
 
 inputFiles=[	"/grid_mnt/t3storage3/mikumar/Run2/SIXTEEN/minitree/Mc_dR/2J1T1/final/Minitree_Tbarchannel_2J1T1_mu.root"]#,
-		#"/grid_mnt/t3storage3/mikumar/Run2/SIXTEEN/minitree/Mc_dR/2J1T1/final/Minitree_Tchannel_2J1T1_mu.root"]
+#		"/grid_mnt/t3storage3/mikumar/Run2/SIXTEEN/minitree/Mc_dR/2J1T1/final/Minitree_Tchannel_2J1T1_mu.root"]
 
 p=PostProcessor(".",
 		inputFiles,
-		treecutEN,
+		#treecutEN,
 		modules=[MainModuleConstr_Gen()],
 		outputbranchsel="clean.txt",
 		provenance=True,
