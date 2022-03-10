@@ -6,7 +6,7 @@
 
      1. Btagging evoluvation
 
-     		#EfficiencyModule.py
+     		#EfficiencyModule.py (we are not using it now this was for fix wp only and now we moved to iterativeFit)
      		1. Check the efficiency are calculted with the recommaded lose, midium and tight criteria  at "https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation"
 		2. check we are using correct Module producer while creating efficiency file "EfficiencyConstr_2016"
 
@@ -36,4 +36,66 @@
 
 	1. python/postprocessing/modules/common/PrefireCorr16.py is not there in new setup
 
-	2. jecredo option has been removed check why------> Does't matter because redo option was for fat jets not for AK4 jets 
+	2. jecredo option has been removed check why------> Does't matter because redo option was for fat jets not for AK4 jets
+
+4. Recomdation 
+
+    UL16preAPV
+
+	Btagging
+
+	https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16preVFP
+	DeepJet=DeepFlavour
+		input csv file:
+			reshaping_deepJet_106XUL16preVFP_v2.csv    	csv (iterativeFit shape correction)
+			wp_deepJet_106XUL16preVFP_v2.csv		csv (WP only) 
+				
+			loose 	0.0508 
+			medium 	0.2598 
+			tight 	0.6502
+						
+			measurement_types we are using : comb b / comb c /  incl  check ???
+	For precision measurements on top physics, it is recommended to use the "mujets" scale factors, as statistically independent. 
+
+    UL2016postVFiP
+
+        Btagging
+
+	https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
+	DeepJet=DeepFlavour 	
+			reshaping_deepJet_106XUL16postVFP_v3.csv	csv (iterativeFit shape correction)
+			wp_deepJet_106XUL16postVFP_v3.csv		csv (WP only)
+				
+			loose 	0.0480 
+			medium 	0.2489
+			tight 	0.6377
+	For precision measurements on top physics, it is recommended to use the "mujets" scale factors, as statistically independent.  
+
+    UL17 
+	
+	Btagging
+
+	https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
+        DeepJet=DeepFlavour 
+                input csv file: 
+                        reshaping_deepJet_106XUL17_v3.csv       csv (iterativeFit shape correction)
+                        wp_deepJet_106XUL17_v3.csv              csv (WP only)
+
+                        loose   0.0532  
+                        medium  0.3040           
+                        tight   0.7476
+	For precision measurements on top physics, it is recommended to use the "mujets" scale factors, as statistically independent. 
+ 
+    UL18
+
+	Btagging
+
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
+	DeepJet=DeepFlavour
+			reshaping_deepJet_106XUL18_v2.csv	csv (iterativeFit shape correction)
+			wp_deepJet_106XUL18_v2.csv		csv (WP only)
+			
+			loose 	0.0490 
+			medium 	0.2783 
+			tight 	0.7100 
+	For precision measurements on top physics, it is recommended to use the "mujets" scale factors, as statistically independent. 	 
