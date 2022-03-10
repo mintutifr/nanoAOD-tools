@@ -131,6 +131,24 @@ class btagSFProducer(Module):
                     },
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
+		'UL2016preVFP': {
+                    'inputFileName': "reshaping_deepJet_106XUL16preVFP_v2.csv",
+                    'measurement_types': {
+                        0: "comb",  # b
+                        1: "comb",  # c
+                        2: "incl"   # light
+                    },
+                    'supported_wp': ["shape_corr"]
+                },
+		'UL2016postVFP': {
+                    'inputFileName': "reshaping_deepJet_106XUL16postVFP_v3.csv",
+                    'measurement_types': {
+                        0: "comb",  # b
+                        1: "comb",  # c
+                        2: "incl"   # light
+                    },
+                    'supported_wp': ["shape_corr"]
+                },
                 '2017': {
                     'inputFileName': "DeepFlavour_94XSF_V3_B_F.csv",
                     'measurement_types': {
@@ -141,13 +159,13 @@ class btagSFProducer(Module):
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
                 'UL2017': {
-                    'inputFileName': "DeepJet_106XUL17SF.csv",
+                    'inputFileName': "reshaping_deepJet_106XUL17_v3.csv",
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
                         2: "incl"   # light
                     },
-                    'supported_wp': ["L", "M", "T", "shape_corr"]
+                    'supported_wp': ["shape_corr"]
                 },
                 '2018': {
                     'inputFileName': "DeepJet_102XSF_V1.csv",
@@ -159,13 +177,13 @@ class btagSFProducer(Module):
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
                 'UL2018': {
-                    'inputFileName': "DeepJet_106XUL18SF.csv",
+                    'inputFileName': "reshaping_deepJet_106XUL18_v2.csv",
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
                         2: "incl"   # light
                     },
-                    'supported_wp': ["L", "M", "T", "shape_corr"]
+                    'supported_wp': ["shape_corr"]
                 },
             },
             'cmva': {
@@ -180,7 +198,7 @@ class btagSFProducer(Module):
                 }
             }
         }
-
+	
         supported_algos = []
         for algo in list(supported_btagSF.keys()):
             if self.era in list(supported_btagSF[algo].keys()):
@@ -189,8 +207,11 @@ class btagSFProducer(Module):
             if self.era in list(supported_btagSF[self.algo].keys()):
                 if self.inputFileName is None:
                     self.inputFileName = supported_btagSF[self.algo][self.era]['inputFileName']
+		print  self.inputFileName
                 self.measurement_types = supported_btagSF[self.algo][self.era]['measurement_types']
+		print self.measurement_types 
                 self.supported_wp = supported_btagSF[self.algo][self.era]['supported_wp']
+		print self.supported_wp
             else:
                 raise ValueError("ERROR: Algorithm '%s' not supported for era = '%s'! Please choose among { %s }." % (
                     self.algo, self.era, supported_algos))
