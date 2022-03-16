@@ -125,7 +125,7 @@
                 inputfile:
                          Summer20UL16_JRV3_MC.tar.gz
 
-        jerData (2016)
+	jerData (2016)
 
                 https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
                 inputfile:
@@ -175,7 +175,7 @@
                 inputfile:
                          Summer19UL17_JRV2_MC.tar.gz
 
-        jerData (Summer19UL17)
+	jerData (Summer19UL17)
 
                 https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
                 inputfile:
@@ -223,7 +223,7 @@
                 inputfile:
                        	Summer19UL18_JRV2_MC.tar.gz
 
-        jerData (Summer19UL18)
+	jerData (Summer19UL18)
 
                 https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
                 inputfile:
