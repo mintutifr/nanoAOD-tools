@@ -38,11 +38,9 @@
 
 	2. jecredo option has been removed check why------> Does't matter because redo option was for fat jets not for AK4 jets
 
-4. Recomdation 
+4. Recomdation  UL16preVFP 
 
-    UL16preVFP ( RunIISummer20UL16 )
-
-	Btagging
+	Btagging (RunIISummer20UL16)
 
 		https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16preVFP
 		DeepJet=DeepFlavour 
@@ -83,9 +81,9 @@
                 inputfile:
                       	 Summer20UL16APV_JRV3_DATA.tar.gz
 
-    UL16postVFP ( RunIISummer20UL16 )
+5. Recomdation UL16postVFP 
 
-        Btagging
+        Btagging ( RunIISummer20UL16)
 
 		https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
 		DeepJet=DeepFlavour 	
@@ -123,9 +121,9 @@
                 inputfile:
                          Summer20UL16_JRV3_DATA.tar.gz
 
-    UL17 ( RunIISummer19UL17 )
+6. Recomdation  UL17 
 	
-	Btagging
+	Btagging (RunIISummer19UL17 )
 
 		https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
         	DeepJet=DeepFlavour 
@@ -168,9 +166,9 @@
                 inputfile:
                         Summer19UL17_JRV2_DATA.tar.gz
 
-    UL18 ( RunIISummer19UL18 )
+7. Recomdation UL18
 
-	Btagging
+	Btagging (RunIISummer19UL18)
 
 		https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
 		DeepJet=DeepFlavour
