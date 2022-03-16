@@ -86,6 +86,27 @@
                 inputfile:
                       	 Summer20UL16APV_JRV3_DATA.tar.gz
 
+	Pileup weight / minimum bias x-sec (When using UltraLegacy samples)
+	
+		https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
+		inputfiles:
+			/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/PileUp/UltraLegacy/
+
+		In all those directories you will find (as indicated in the file name) histograms corresponding to the following values of the pp inelastic cross section: 
+		69200 ub (recommended central value), 66000 ub (central value - 4.6%), 72400 ub (central value + 4.6%), 80000 ub (conventional value used for the public plots, 
+		agreed with ATLAS years ago).
+
+		(100 bins from PrelLum13TeV not reommended ) In Nanoaod tool we are using the following file where up down variation root files are add in subdiretories  :
+			pufile_dataUL2016 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-UL2016-100bins_withVar.root" 
+						three histogram namly : 
+								KEY: TH1F	pileup;1	
+								KEY: TH1F	pileup_plus;1	
+								KEY: TH1F	pileup_minus;1		
+			pufile_mcUL2016 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2016.root" 
+						one histogram namely:
+								KEY: TH1F	pu_mc;1
+
+	
 5. Recomdation UL16postVFP 
 
         Btagging ( RunIISummer20UL16)
@@ -130,6 +151,20 @@
                 https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
                 inputfile:
                          Summer20UL16_JRV3_DATA.tar.gz
+
+	Pileup weight / minimum bias x-sec (When using UltraLegacy samples)
+
+                https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
+                inputfiles:
+                        /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/PileUp/UltraLegacy/
+
+                In all those directories you will find (as indicated in the file name) histograms corresponding to the following values of the pp inelastic cross section:
+                69200 ub (recommended central value), 66000 ub (central value - 4.6%), 72400 ub (central value + 4.6%), 80000 ub (conventional value used for the public plots,
+                agreed with ATLAS years ago).
+
+                (100 bins from PrelLum13TeV not reommended )In Nanoaod tool we are using the following file where up down variation root files are add in subdiretories (100 bin from recommded) :
+			pufile_dataUL2016 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-UL2016-100bins_withVar.root"
+                        pufile_mcUL2016 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2016.root"	
 
 6. Recomdation  UL17 
 	
@@ -181,6 +216,20 @@
                 inputfile:
                         Summer19UL17_JRV2_DATA.tar.gz
 
+	Pileup weight / minimum bias x-sec( did not say )
+
+                https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
+                inputfiles:
+                        /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/PileUp/UltraLegacy/
+
+	        In all those directories you will find (as indicated in the file name) histograms corresponding to the following values of the pp inelastic cross section:
+                69200 ub (recommended central value), 66000 ub (central value - 4.6%), 72400 ub (central value + 4.6%), 80000 ub (conventional value used for the public plots,
+                agreed with ATLAS years ago).
+
+                (100 bins from PrelLum13TeV not reommended )In Nanoaod tool we are using the following file where up down variation root files are add in subdiretories  :
+			pufile_dataUL2017 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-UL2017-100bins_withVar.root" 
+			pufile_mcUL2017 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2017.root"			
+
 7. Recomdation UL18
 
 	Btagging (RunIISummer19UL18)
@@ -228,3 +277,17 @@
                 https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
                 inputfile:
                         Summer19UL18_JRV2_DATA.tar.gz
+	
+	 Pileup weight / minimum bias x-sec (When using UltraLegacy samples)
+
+                https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
+                inputfiles:
+                        /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/PileUp/UltraLegacy/i
+
+		In all those directories you will find (as indicated in the file name) histograms corresponding to the following values of the pp inelastic cross section:
+                69200 ub (recommended central value), 66000 ub (central value - 4.6%), 72400 ub (central value + 4.6%), 80000 ub (conventional value used for the public plots,
+                agreed with ATLAS years ago).
+
+                (100 bins from PrelLum13TeV not reommended ) In Nanoaod tool we are using the following file where up down variation root files are add in subdiretories  :
+			pufile_dataUL2018 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-UL2018-100bins_withVar.root"
+			pufile_mcUL2018 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2018.root"	
