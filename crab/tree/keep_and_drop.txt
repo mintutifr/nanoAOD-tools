@@ -151,6 +151,6 @@ keep Muon_SF_Iso_IDDown
 keep Muon_SF_Iso_TrigUp
 keep Muon_SF_Iso_TrigDown
 
-keep Jet_btagSF_deepcsv*
+keep Jet_btagSF_*
 keep puWeight
 keep LHEWeight*
