@@ -60,14 +60,19 @@
 	
 	jecTagsMC (Summer19UL16APV_V7_MC)	
 
-			inputfile: Summer19UL16APV_V7_MC.tar.gz     GT:Summer19UL16APV_V7_MC.tar.gz   (GT for Summer20UL samples is 106X_mcRun2_asymptotic_preVFP_v11)
+			inputfile: 
+				Summer19UL16APV_V7_MC.tar.gz     
+			GT:
+				Summer19UL16APV_V7_MC.tar.gz   
+				(GT for Summer20UL samples is 106X_mcRun2_asymptotic_preVFP_v11)
 
 	jecTagsData (Summer19UL16_V7_DATA  )
 
                 https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
                         inputfiles:
                                 Summer19UL16_V7_all.tar.gz
-                        GT:     106X_dataRun2_v35
+                        GT:     
+				106X_dataRun2_v35
 	
 	jerMC (2016)
 
@@ -100,14 +105,19 @@
 
 	jecTagsMC (Summer19UL16_V7_MC)
 	
-		 inputfile: Summer19UL16_V7_MC.tar.gz   GT: 106X_mcRun2_asymptotic_v17 (GT for Summer20UL samples is 106X_mcRun2_asymptotic_v17)
+		inputfile: 
+			Summer19UL16_V7_MC.tar.gz   
+		GT: 
+			106X_mcRun2_asymptotic_v17 
+			(GT for Summer20UL samples is 106X_mcRun2_asymptotic_v17)
 
 	jecTagsData (Summer19UL16_V7_DATA  )
 
                 https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
                         inputfiles:
 				Summer19UL16_V7_all.tar.gz
-			GT: 	106X_dataRun2_v35
+			GT: 	
+				106X_dataRun2_v35
 
 	jerMC (2016)
 
@@ -141,7 +151,11 @@
 	
 	jecTagsMC (Summer19UL17 V5 )
 		
-		inputfile: Summer19UL17_V5_MC.tar.gz   GT: 106X_mc2017_realistic_v8  (GT for Summer20UL samples is 106X_mc2017_realistic_v9)
+		inputfile: 
+			Summer19UL17_V5_MC.tar.gz   
+		GT: 	
+			106X_mc2017_realistic_v8  
+			(GT for Summer20UL samples is 106X_mc2017_realistic_v9)
 
 	jecTagsData (Summer19UL17 )
 
@@ -152,7 +166,8 @@
                                 Summer19UL17_RunD_V5_DATA.tar.gz
                                 Summer19UL17_RunE_V5_DATA.tar.gz
                                 Summer19UL17_RunF_V5_DATA.tar.gz
-                        GT:     106X_dataRun2_v33
+                        GT:     
+				106X_dataRun2_v33
 
  	jerMC (Summer19UL17)
 
@@ -185,7 +200,11 @@
 
 	jecTagsMC (Summer19UL18 V5)
 
-                inputfile: Summer19UL18_V5_MC.tar.gz   GT: 106X_upgrade2018_realistic_v15_L1v1  (GT for Summer20UL samples is 106X_upgrade2018_realistic_v16_L1v1)
+                inputfile: 
+			Summer19UL18_V5_MC.tar.gz   
+		GT: 
+			106X_upgrade2018_realistic_v15_L1v1  
+			(GT for Summer20UL samples is 106X_upgrade2018_realistic_v16_L1v1)
 
 	jecTagsData (Summer19UL18 )
 
@@ -195,8 +214,8 @@
                                 Summer19UL18_RunB_V5_DATA.tar.gz
                                 Summer19UL18_RunC_V5_DATA.tar.gz
                                 Summer19UL18_RunD_V5_DATA.tar.gz
-
-                        GT :    106X_dataRun2_v33 (GT for Summer20UL samples is )
+                        GT :    
+				106X_dataRun2_v33 (GT for Summer20UL samples is )
 
 	jerMC (Summer19UL18)
 
