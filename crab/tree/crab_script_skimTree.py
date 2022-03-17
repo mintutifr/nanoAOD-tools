@@ -20,7 +20,7 @@ inputFiles=["/afs/cern.ch/user/m/mikumar/work/private/NanoAOD_new/CMSSW_10_6_0/s
 p=PostProcessor(".",
 		inputFiles,
 		treecut,
-		modules=[btagSF2017()],
+		modules=[puWeight_UL2016()],
 		outputbranchsel="keep_and_drop.txt",
 		provenance=True,
 		fwkJobReport=True,
