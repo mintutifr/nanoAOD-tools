@@ -86,6 +86,12 @@
                 inputfile:
                       	 Summer20UL16APV_JRV3_DATA.tar.gz
 
+	MET
+		https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
+ 
+		The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
+		The jets that are used to correct MET are also required to have electromagnetic energy fraction smaller than 0.9 and not to be overlapping with the pf muon candidate. 
+
 	Pileup weight / minimum bias x-sec (When using UltraLegacy samples)
 	
 		https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
@@ -152,6 +158,12 @@
                 inputfile:
                          Summer20UL16_JRV3_DATA.tar.gz
 
+	 MET
+                https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
+
+                The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
+                The jets that are used to correct MET are also required to have electromagnetic energy fraction smaller than 0.9 and not to be overlapping with the pf muon candidate.
+
 	Pileup weight / minimum bias x-sec (When using UltraLegacy samples)
 
                 https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
@@ -216,6 +228,12 @@
                 inputfile:
                         Summer19UL17_JRV2_DATA.tar.gz
 
+	 MET
+                https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
+
+                The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
+                The jets that are used to correct MET are also required to have electromagnetic energy fraction smaller than 0.9 and not to be overlapping with the pf muon candidate.
+
 	Pileup weight / minimum bias x-sec( did not say )
 
                 https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
@@ -277,6 +295,12 @@
                 https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
                 inputfile:
                         Summer19UL18_JRV2_DATA.tar.gz
+
+	 MET
+                https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
+
+                The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
+                The jets that are used to correct MET are also required to have electromagnetic energy fraction smaller than 0.9 and not to be overlapping with the pf muon candidate.
 	
 	 Pileup weight / minimum bias x-sec (When using UltraLegacy samples)
 
