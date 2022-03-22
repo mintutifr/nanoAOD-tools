@@ -79,7 +79,7 @@ def elScaleFactor(pt, scEta, lead_Jet_pt, wp, syst,ID_Tight_fSFName,Trigger_Tigh
 	fSFSB.Delete()
     
     return elSF
-def muonScaleFactor(filepath,pt,eta,iso,lumiTotal,syst,dataYear):
+def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
     eta = abs(eta)
     if(iso >0.06 and iso<0.2): return -999
     ROOT.gStyle.SetOptStat(0)
@@ -150,7 +150,8 @@ def muonScaleFactor(filepath,pt,eta,iso,lumiTotal,syst,dataYear):
             for bb in range(0,len(period)):
                 Period=period[bb]
 		#print Period
-                fSFName=filepath+Period+"_"+SF+"_SF_0p06.root"
+		fSFName=filter(lambda x: Period+"_"+SF+"_SF_0p06.root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
+                #fSFName=filepath+Period+"_"+SF+"_SF_0p06.root"
 		#print  sf , " " ,fsfname , dirname , "/pt_abseta_ratio"
 		#print  "hSF[",aa,"][",bb,"]"
                 fSF[aa][bb]=ROOT.TFile.Open(fSFName,"Read")
@@ -160,11 +161,13 @@ def muonScaleFactor(filepath,pt,eta,iso,lumiTotal,syst,dataYear):
             for bb in range(0,len(period)):
                 Period=period[bb]
 		#print Period
-                if(dataYear=='2016'):fSFName=filepath+Period+"_"+SF+".root"
-		#print fSFName
+                if(dataYear=='2016'):fSFName=filter(lambda x: Period+"_"+SF+".root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
+		#if(dataYear=='2016'):fSFName=filepath+Period+"_"+SF+".root"
 		#print  "hSF[",aa,"][",bb,"]"
-		if(dataYear=='2017'):fSFName=filepath+Period+"_SF_"+SF+".root"
+		if(dataYear=='2017'):fSFName=filter(lambda x: Period+"_SF_"+SF+".root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
+		#if(dataYear=='2017'):fSFName=filepath+Period+"_SF_"+SF+".root"
                 fSF[aa][bb]=ROOT.TFile.Open(fSFName,"Read")
+		print fSFName
 		#print  SF , " " ,fSFName , dirName , "/pt_abseta_ratio"
                 if(dataYear=='2016'):hSF[aa][bb]=fSF[aa][bb].Get(dirName+"/pt_abseta_ratio")
 		if(dataYear=='2017'):hSF[aa][bb]=fSF[aa][bb].Get("NUM_TightID_DEN_genTracks")
@@ -269,19 +272,54 @@ def create_elSF(dataYear,pt_, scEta_, lead_Jet_pt_, wp_, syst_):
     elSF = elScaleFactor(pt_, scEta_, lead_Jet_pt_, wp_, syst_,ID_Tight_el_fSFName_,Trigger_Tight_el_fSFName_,veto_el_fSFName_,dataYear)
     return elSF	
 
-mu_fpath = {'2016' : 'MuonSF/2016/EfficienciesAndSF_',
-            '2017' : 'MuonSF/2017/EfficienciesAndSF_',
-            '2018' : 'filepath'}
+mu_InFiles = {'2016' : [
+			'MuonSF/2016/EfficienciesAndSF_BCDEF_ID_SF_0p06.root',
+			'MuonSF/2016/EfficienciesAndSF_GH_ID_SF_0p06.root',
+
+			'MuonSF/2016/EfficienciesAndSF_BCDEF_ID.root',
+			'MuonSF/2016/EfficienciesAndSF_GH_ID.root',
+
+			'MuonSF/2016/EfficienciesAndSF_BCDEF_ISO_SF_0p06.root',
+			'MuonSF/2016/EfficienciesAndSF_GH_ISO_SF_0p06.root',
+
+			'MuonSF/2016/EfficienciesAndSF_BCDEF_Iso.root',
+			'MuonSF/2016/EfficienciesAndSF_GH_Iso.root',
+
+			'MuonSF/2016/EfficienciesAndSF_BCDEF_Trigger_SF_0p06.root',
+			'MuonSF/2016/EfficienciesAndSF_GH_Trigger_SF_0p06.root',
+		       ],
+              '2017' : [
+			'MuonSF/2017/EfficienciesAndSF_BC_ID_SF_0p06.root',   
+			'MuonSF/2017/EfficienciesAndSF_DE_ID_SF_0p06.root',
+			'MuonSF/2017/EfficienciesAndSF_F_ID_SF_0p06.root',
+ 
+			'MuonSF/2017/EfficienciesAndSF_BC_SF_ID.root',
+			'MuonSF/2017/EfficienciesAndSF_DE_SF_ID.root',
+			'MuonSF/2017/EfficienciesAndSF_F_SF_ID.root',
+
+			'MuonSF/2017/EfficienciesAndSF_BC_ISO_SF_0p06.root',
+			'MuonSF/2017/EfficienciesAndSF_DE_ISO_SF_0p06.root',  
+			'MuonSF/2017/EfficienciesAndSF_F_ISO_SF_0p06.root',
+
+			'MuonSF/2017/EfficienciesAndSF_BC_SF_ISO.root',
+			'MuonSF/2017/EfficienciesAndSF_DE_SF_ISO.root',
+			'MuonSF/2017/EfficienciesAndSF_F_SF_ISO.root',
+
+			'MuonSF/2017/EfficienciesAndSF_BC_TRI_SF_0p06.root',
+			'MuonSF/2017/EfficienciesAndSF_F_TRI_SF_0p06.root'
+			'MuonSF/2017/EfficienciesAndSF_DE_TRI_SF_0p06.root',
+		       ],
+              '2018' : 'filepath'}
 
 
 def create_muSF(dataYear,pt_,eta_,iso_,lumiTotal_,syst_):
 	dataYear = str(dataYear)
-        sf_fpath= mu_fpath[dataYear]
-	#print sf_fpath
-	muSF = muonScaleFactor(sf_fpath,pt_,eta_,iso_,lumiTotal_,syst_,dataYear) 
+        sf_InFiles= mu_InFiles[dataYear]
+	#print sf_InFiles
+	muSF = muonScaleFactor(sf_InFiles,pt_,eta_,iso_,lumiTotal_,syst_,dataYear) 
         return muSF	
 #print "-------------------------------------------------------"
 #print create_elSF('2017',300,None,50,'Tight','noSyst')
 #create_muSF('2016',21.1176013947,0.6142578125,0.3,3485,'noSyst')
-#print create_muSF('2016',50.1176013947,0.6142578125,0.03,3485,'noSyst')
+#print create_muSF('2017',50.1176013947,0.6142578125,0.3,3485,'noSyst')
 #print "-------------------------------------------------------"			
