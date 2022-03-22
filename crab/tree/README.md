@@ -87,6 +87,7 @@
                       	 Summer20UL16APV_JRV3_DATA.tar.gz
 
 	MET
+
 		https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
  
 		The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
@@ -112,7 +113,37 @@
 						one histogram namely:
 								KEY: TH1F	pu_mc;1
 
+	MuonPog
 	
+		https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonUL2016#Medium_pT_from_15_to_120_GeV
+		scale factor = (L(BCDEF)*sf(BCDEF) + L(GH)*sf(GH))/(L(BCDEF)+L(GH)) 
+
+		Input files:
+			ID:
+				Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root #BCDEF
+				Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root ##GH	
+
+			ISO:
+				Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ISO.root ##BCDEF
+				Efficiencies_muon_generalTracks_Z_Run2016_UL_ISO.root #GH
+
+			TRI:
+				Trigger efficiency: provided in json formet only
+
+	EgammaPog
+
+		https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2016_preVFP
+		
+		Input files:
+			Cut Based ID 	Veto : 
+						/eos/cms/store/group/phys_egamma/SF-Repository/UL16/preVFP/Electrons/Veto/egammaEffi.txt_Ele_Veto_preVFP_EGM2D.root 	
+	
+			Cut Based ID    Tight :
+						/eos/cms/store/group/phys_egamma/SF-Repository/UL16/preVFP/Electrons/Tight/egammaEffi.txt_Ele_Tight_preVFP_EGM2D.root
+	
+			Cut Based ID    Trigger :
+						can we use the same which we have used in lagecy samples
+
 5. Recomdation UL16postVFP 
 
         Btagging ( RunIISummer20UL16)
@@ -159,6 +190,7 @@
                          Summer20UL16_JRV3_DATA.tar.gz
 
 	 MET
+
                 https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
 
                 The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
@@ -177,6 +209,39 @@
                 (100 bins from PrelLum13TeV not reommended )In Nanoaod tool we are using the following file where up down variation root files are add in subdiretories (100 bin from recommded) :
 			pufile_dataUL2016 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-UL2016-100bins_withVar.root"
                         pufile_mcUL2016 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2016.root"	
+
+	MuonPog
+	
+		https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonUL2016#Medium_pT_from_15_to_120_GeV
+		scale factor = (L(BCDEF)*sf(BCDEF) + L(GH)*sf(GH))/(L(BCDEF)+L(GH)) 
+		
+                Input files:
+                        ID:
+                                Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root #BCDEF
+                                Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root ##GH
+
+                        ISO:
+                                Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ISO.root ##BCDEF
+                                Efficiencies_muon_generalTracks_Z_Run2016_UL_ISO.root #GH
+
+                        TRI:
+                                Trigger efficiency: provided in json formet only
+
+	EgammaPog
+
+                https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2016_postVF
+
+                Input files:
+                        Cut Based ID    Veto :
+                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL16/postVFP/Electrons/Veto/egammaEffi.txt_Ele_Veto_postVFP_EGM2D.root
+
+                        Cut Based ID    Tight :
+                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL16/postVFP/Electrons/Tight/egammaEffi.txt_Ele_Tight_postVFP_EGM2D.root
+
+                        Cut Based ID    Trigger :
+                                                can we use the same which we have used in lagecy samples
+
+
 
 6. Recomdation  UL17 
 	
@@ -229,6 +294,7 @@
                         Summer19UL17_JRV2_DATA.tar.gz
 
 	 MET
+
                 https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
 
                 The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
@@ -247,6 +313,34 @@
                 (100 bins from PrelLum13TeV not reommended )In Nanoaod tool we are using the following file where up down variation root files are add in subdiretories  :
 			pufile_dataUL2017 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-UL2017-100bins_withVar.root" 
 			pufile_mcUL2017 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2017.root"			
+
+	MuonPog
+		
+		https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonLegacy2017#Medium_pT_from_15_to_120_GeV
+
+                Input files:
+                        ID:
+				RunBCDEF_SF_ID_syst.root # BCDEF
+
+                        ISO:
+				RunBCDEF_SF_ISO_syst.root #BCDEF
+	
+                        TRI:
+				EfficienciesAndSF_RunBtoF_Nov17Nov2017.root #BCDEF
+
+	EgammaPog
+
+                https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2017
+
+                Input files:
+                        Cut Based ID    Veto :
+                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL17/Electrons/Veto/egammaEffi.txt_EGM2D_Veto_UL17.root
+
+                        Cut Based ID    Tight :
+                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL17/Electrons/Tight/egammaEffi.txt_EGM2D_Tight_UL17.root
+
+                        Cut Based ID    Trigger :
+                                                can we use the same which we have used in lagecy samples
 
 7. Recomdation UL18
 
@@ -314,4 +408,39 @@
 
                 (100 bins from PrelLum13TeV not reommended ) In Nanoaod tool we are using the following file where up down variation root files are add in subdiretories  :
 			pufile_dataUL2018 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-UL2018-100bins_withVar.root"
-			pufile_mcUL2018 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2018.root"	
+			pufile_mcUL2018 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2018.root"
+	
+	MuonPog
+	
+		https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonLegacy2018#Medium_pT_from_15_to_120_GeV
+
+	 	Input files:
+                        ID:
+				RunABCD_SF_ID.root
+
+                        ISO:
+				RunABCD_SF_ISO.root
+
+                        TRI:
+				EfficienciesAndSF_2018Data_BeforeMuonHLTUpdate.root
+				EfficienciesAndSF_2018Data_AfterMuonHLTUpdate.root
+				
+				The lumi-weighted average of the two scale factors can be applied to the whole period:
+    				run < 316361: 8950.82 \pb referred as before HLT update
+				run >= 316361: 50789.75 \pb referred as after HLT update
+    				brilcalc lumi -b "STABLE BEAMS" -u "/pb" --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_BRIL.json -i /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt 
+
+	EgammaPog
+
+                https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2018
+
+                Input files:
+                        Cut Based ID    Veto :
+                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL18/Electrons/Veto/egammaEffi.txt_Ele_Veto_EGM2D.root
+
+                        Cut Based ID    Tight :
+                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL18/Electrons/Tight/egammaEffi.txt_Ele_Tight_EGM2D.root
+
+                        Cut Based ID    Trigger :
+                                                can we use the same which we have used in lagecy samples
+
