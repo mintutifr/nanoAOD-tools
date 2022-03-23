@@ -233,10 +233,13 @@
 
                 Input files:
                         Cut Based ID    Veto :
-                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL16/postVFP/Electrons/Veto/egammaEffi.txt_Ele_Veto_postVFP_EGM2D.root
+                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL16/postVFP/Electrons/Veto/egammaEffi.txt_Ele_Veto_postVFP_EGM2D.root (recommonded)
+						scp  /eos/cms/store/group/phys_egamma/SF-Repository/UL16/postVFP/Electrons/Veto/egammaEffi.txt_EGM2D.root egammaEffi.txt_Ele_Veto_postVFP_EGM2D.root 
 
                         Cut Based ID    Tight :
-                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL16/postVFP/Electrons/Tight/egammaEffi.txt_Ele_Tight_postVFP_EGM2D.root
+                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL16/postVFP/Electrons/Tight/egammaEffi.txt_Ele_Tight_postVFP_EGM2D.root (recommonded)
+						scp /eos/cms/store/group/phys_egamma/SF-Repository/UL16/postVFP/Electrons/Tight/egammaEffi.txt_EGM2D.root egammaEffi.txt_Ele_Tight_postVFP_EGM2D.root
+
 
                         Cut Based ID    Trigger :
                                                 can we use the same which we have used in lagecy samples
@@ -334,10 +337,13 @@
 
                 Input files:
                         Cut Based ID    Veto :
-                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL17/Electrons/Veto/egammaEffi.txt_EGM2D_Veto_UL17.root
+                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL17/Electrons/Veto/egammaEffi.txt_EGM2D_Veto_UL17.root (recommonded)
+						scp /eos/cms/store/group/phys_egamma/SF-Repository/UL17/Electrons/Veto/passingVeto94XV2/egammaEffi.txt_EGM2D.root egammaEffi.txt_EGM2D_Veto_UL17.root
+
 
                         Cut Based ID    Tight :
                                                 /eos/cms/store/group/phys_egamma/SF-Repository/UL17/Electrons/Tight/egammaEffi.txt_EGM2D_Tight_UL17.root
+						scp /eos/cms/store/group/phys_egamma/SF-Repository/UL17/Electrons/Tight/passingTight94XV2/egammaEffi.txt_EGM2D.root egammaEffi.txt_EGM2D_Tight_UL17.root
 
                         Cut Based ID    Trigger :
                                                 can we use the same which we have used in lagecy samples
@@ -432,14 +438,16 @@
 
 	EgammaPog
 
-                https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2018
+            	https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2018 
 
                 Input files:
                         Cut Based ID    Veto :
-                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL18/Electrons/Veto/egammaEffi.txt_Ele_Veto_EGM2D.root
+                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL18/Electrons/Veto/egammaEffi.txt_Ele_Veto_EGM2D.root (recommndetion)
+						scp /eos/cms/store/group/phys_egamma/SF-Repository/UL18/Electrons/Veto/passingVeto94XV2/egammaEffi.txt_EGM2D.root egammaEffi.txt_Ele_Veto_EGM2D.root
 
                         Cut Based ID    Tight :
                                                 /eos/cms/store/group/phys_egamma/SF-Repository/UL18/Electrons/Tight/egammaEffi.txt_Ele_Tight_EGM2D.root
+						scp /eos/cms/store/group/phys_egamma/SF-Repository/UL18/Electrons/Tight/passingTight94XV2/egammaEffi.txt_EGM2D.root egammaEffi.txt_Ele_Tight_EGM2D.root
 
                         Cut Based ID    Trigger :
                                                 can we use the same which we have used in lagecy samples
