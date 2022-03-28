@@ -114,21 +114,31 @@
 								KEY: TH1F	pu_mc;1
 
 	MuonPog
-	
+		
+		https://twiki.cern.ch/twiki/bin/view/CMS/MuonPOG	
 		https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonUL2016#Medium_pT_from_15_to_120_GeV
 		scale factor = (L(BCDEF)*sf(BCDEF) + L(GH)*sf(GH))/(L(BCDEF)+L(GH)) 
 
 		Input files:
 			ID:
-				Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root #BCDEF
-				Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root ##GH	
+				Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root #BCDEF (required for ISO>0.2)
+				Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root ##GH	(required for ISO>0.2)
+		
+				EfficienciesAndSF_Run2016_UL_HIPM_ID_SF_0p06.root (personly created for iso<0.06 and need to update this is taken from lagecy samples and renamed acc.) 
+				EfficienciesAndSF_Run2016_UL_ID_SF_0p06.root (personly created for iso<0.06 and need to update this taken from lagecy samples and renamed acc.)				
 
 			ISO:
-				Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ISO.root ##BCDEF
-				Efficiencies_muon_generalTracks_Z_Run2016_UL_ISO.root #GH
+				Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ISO.root ##BCDEF (remonnded but we are not using them for iso>0.2 and we retrun SF=1) 
+				Efficiencies_muon_generalTracks_Z_Run2016_UL_ISO.root #GH (remonnded but we are not using them for iso>0.2 and we retrun SF=1)
+
+				EfficienciesAndSF_Run2016_UL_HIPM_ISO_SF_0p06.roo (personly created for iso<0.06 and need to update this is taken from lagecy samples and renamed acc.)
+                        	EfficienciesAndSF_Run2016_UL_ISO_SF_0p06.roo  (personly created for iso<0.06 and need to update this taken from lagecy samples and renamed acc.)	
 
 			TRI:
-				Trigger efficiency: provided in json formet only
+				Trigger efficiency: provided in json formet only ((remonnded but we are not using them for iso>0.2 and we retrun SF=1))
+
+				EfficienciesAndSF_Run2016_UL_HIPM_Trigger_SF_0p06.root (personly created for iso<0.06 and need to update this is taken from lagecy samples and renamed acc.)
+				EfficienciesAndSF_Run2016_UL_Trigger_SF_0p06.root (personly created for iso<0.06 and need to update this taken from lagecy samples and renamed acc.)
 
 	EgammaPog
 
@@ -215,17 +225,26 @@
 		https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonUL2016#Medium_pT_from_15_to_120_GeV
 		scale factor = (L(BCDEF)*sf(BCDEF) + L(GH)*sf(GH))/(L(BCDEF)+L(GH)) 
 		
-                Input files:
+		Input files:
                         ID:
-                                Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root #BCDEF
-                                Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root ##GH
+                                Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root #BCDEF (required for ISO>0.2)
+                                Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root ##GH       (required for ISO>0.2)
+
+                                EfficienciesAndSF_Run2016_UL_HIPM_ID_SF_0p06.root (personly created for iso<0.06 and need to update this is taken from lagecy samples and renamed acc.)
+                                EfficienciesAndSF_Run2016_UL_ID_SF_0p06.root (personly created for iso<0.06 and need to update this taken from lagecy samples and renamed acc.)
 
                         ISO:
-                                Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ISO.root ##BCDEF
-                                Efficiencies_muon_generalTracks_Z_Run2016_UL_ISO.root #GH
+                                Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ISO.root ##BCDEF (remonnded but we are not using them for iso>0.2 and we retrun SF=1)
+                                Efficiencies_muon_generalTracks_Z_Run2016_UL_ISO.root #GH (remonnded but we are not using them for iso>0.2 and we retrun SF=1)
+
+                                EfficienciesAndSF_Run2016_UL_HIPM_ISO_SF_0p06.roo (personly created for iso<0.06 and need to update this is taken from lagecy samples and renamed acc.)
+                                EfficienciesAndSF_Run2016_UL_ISO_SF_0p06.roo  (personly created for iso<0.06 and need to update this taken from lagecy samples and renamed acc.)
 
                         TRI:
-                                Trigger efficiency: provided in json formet only
+                                Trigger efficiency: provided in json formet only ((remonnded but we are not using them for iso>0.2 and we retrun SF=1))
+
+                                EfficienciesAndSF_Run2016_UL_HIPM_Trigger_SF_0p06.root (personly created for iso<0.06 and need to update this is taken from lagecy samples and renamed acc.)
+                                EfficienciesAndSF_Run2016_UL_Trigger_SF_0p06.root (personly created for iso<0.06 and need to update this taken from lagecy samples and renamed acc.)
 
 	EgammaPog
 
@@ -242,9 +261,7 @@
 
 
                         Cut Based ID    Trigger :
-                                                can we use the same which we have used in lagecy samples
-
-
+                                                corrently using root file form lagecy samples #need to update
 
 6. Recomdation  UL17 
 	
@@ -323,13 +340,28 @@
 
                 Input files:
                         ID:
-				RunBCDEF_SF_ID_syst.root # BCDEF
+				RunBCDEF_SF_ID_syst.root # BCDEF (required for ISO>0.2)
+
+				EfficienciesAndSF_BC_ID_SF_0p06.root #BC (personly created for iso<0.06 and need to update this is taken from lagecy samples)
+                        	EfficienciesAndSF_DE_ID_SF_0p06.root #DE (personly created for iso<0.06 and need to update this is taken from lagecy samples)
+                        	EfficienciesAndSF_F_ID_SF_0p06.root #F (personly created for iso<0.06 and need to update this is taken from lagecy samples)
 
                         ISO:
-				RunBCDEF_SF_ISO_syst.root #BCDEF
+				RunBCDEF_SF_ISO_syst.root #BCDEF (remonnded but we are not using them for iso>0.2 and we retrun SF=1)
+
+				EfficienciesAndSF_BC_ISO_SF_0p06.root #BC (personly created for iso<0.06 and need to update this is taken from lagecy samples)
+                        	EfficienciesAndSF_DE_ISO_SF_0p06.root #DE (personly created for iso<0.06 and need to update this is taken from lagecy samples)
+                        	EfficienciesAndSF_F_ISO_SF_0p06.root #F (personly created for iso<0.06 and need to update this is taken from lagecy samples)
+ 
 	
                         TRI:
-				EfficienciesAndSF_RunBtoF_Nov17Nov2017.root #BCDEF
+				EfficienciesAndSF_RunBtoF_Nov17Nov2017.root #BCDEF  (remonnded but we are not using them for iso>0.2 and we retrun SF=1)
+
+				EfficienciesAndSF_BC_TRI_SF_0p06.root #BC (personly created for iso<0.06 and need to update this is taken from lagecy samples)
+                        	EfficienciesAndSF_F_TRI_SF_0p06.root #DE (personly created for iso<0.06 and need to update this is taken from lagecy samples)
+                        	EfficienciesAndSF_DE_TRI_SF_0p06.root #F (personly created for iso<0.06 and need to update this is taken from lagecy samples)
+
+
 
 	EgammaPog
 
@@ -346,7 +378,7 @@
 						scp /eos/cms/store/group/phys_egamma/SF-Repository/UL17/Electrons/Tight/passingTight94XV2/egammaEffi.txt_EGM2D.root egammaEffi.txt_EGM2D_Tight_UL17.root
 
                         Cut Based ID    Trigger :
-                                                can we use the same which we have used in lagecy samples
+					corrently using root file form lagecy samples #need to update                                                
 
 7. Recomdation UL18
 
@@ -422,14 +454,15 @@
 
 	 	Input files:
                         ID:
-				RunABCD_SF_ID.root
+				RunABCD_SF_ID.root (required for ISO>0.2)
+
 
                         ISO:
 				RunABCD_SF_ISO.root
 
                         TRI:
-				EfficienciesAndSF_2018Data_BeforeMuonHLTUpdate.root
-				EfficienciesAndSF_2018Data_AfterMuonHLTUpdate.root
+				EfficienciesAndSF_2018Data_BeforeMuonHLTUpdate.root  (remonnded but we are not using them for iso>0.2 and we retrun SF=1)
+				EfficienciesAndSF_2018Data_AfterMuonHLTUpdate.root    (remonnded but we are not using them for iso>0.2 and we retrun SF=1)
 				
 				The lumi-weighted average of the two scale factors can be applied to the whole period:
     				run < 316361: 8950.82 \pb referred as before HLT update
@@ -450,5 +483,5 @@
 						scp /eos/cms/store/group/phys_egamma/SF-Repository/UL18/Electrons/Tight/passingTight94XV2/egammaEffi.txt_EGM2D.root egammaEffi.txt_Ele_Tight_EGM2D.root
 
                         Cut Based ID    Trigger :
-                                                can we use the same which we have used in lagecy samples
+                                                #need to update
 
