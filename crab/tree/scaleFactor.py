@@ -412,8 +412,8 @@ def create_muSF(dataYear,pt_,eta_,iso_,lumiTotal_,syst_):
 	muSF = muonScaleFactor(sf_InFiles,pt_,eta_,iso_,lumiTotal_,syst_,dataYear) 
         return muSF	
 #print "-------------------------------------------------------"
-#print create_elSF('UL2018',300,1.3,50,'Tight','noSyst')
-#print create_elSF('UL2018',300,1.3,50,'Veto','noSyst')
+#print create_elSF('UL2016preVFP',300,-1.3,50,'Tight','noSyst')
+#print create_elSF('UL2016preVFP',300,-1.3,50,'Veto','noSyst')
 #create_muSF('2016',21.1176013947,0.6142578125,0.3,3485,'noSyst')
-print create_muSF('UL2017',60.1176013947,1.0142578125,0.3,3485,'noSyst')
+#print create_muSF('UL2017',60.1176013947,-2.0142578125,0.3,3485,'noSyst')
 #print "-------------------------------------------------------"			
