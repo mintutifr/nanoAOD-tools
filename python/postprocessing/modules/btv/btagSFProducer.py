@@ -3,9 +3,9 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collect
 import ROOT
 import os
 from itertools import chain
-#ROOT.gROOT.ProcessLine('.L BTagCalibrationStandalone.cpp+')
 
 ROOT.PyConfig.IgnoreCommandLineOptions = True
+
 
 def is_relevant_syst_for_shape_corr(flavor_btv, syst, jesSystsForShape=["jes"]):
     """Returns true if a flavor/syst combination is relevant"""
@@ -93,7 +93,7 @@ class btagSFProducer(Module):
                     },
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
-                'UL2017': {
+		'UL2017': {
                     'inputFileName': "DeepCSV_106XUL17SF.csv",
                     'measurement_types': {
                         0: "comb",  # b
@@ -111,7 +111,7 @@ class btagSFProducer(Module):
                     },
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
-                'UL2018': {
+		'UL2018': {
                     'inputFileName': "DeepCSV_106XUL18SF.csv",
                     'measurement_types': {
                         0: "comb",  # b
@@ -131,35 +131,8 @@ class btagSFProducer(Module):
                     },
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
-		'UL2016preVFP': {
-                    'inputFileName': "reshaping_deepJet_106XUL16preVFP_v2.csv",
-                    'measurement_types': {
-                        0: "comb",  # b
-                        1: "comb",  # c
-                        2: "incl"   # light
-                    },
-                    'supported_wp': ["shape_corr"]
-                },
-		'UL2016postVFP': {
-                    'inputFileName': "reshaping_deepJet_106XUL16postVFP_v3.csv",
-                    'measurement_types': {
-                        0: "comb",  # b
-                        1: "comb",  # c
-                        2: "incl"   # light
-                    },
-                    'supported_wp': ["L", "M", "T","shape_corr"]
-                },
                 '2017': {
                     'inputFileName': "DeepFlavour_94XSF_V3_B_F.csv",
-                    'measurement_types': {
-                        0: "comb",  # b
-                        1: "comb",  # c
-                        2: "incl"   # light
-                    },
-                    'supported_wp': ["L", "M", "T", "shape_corr"]
-                },
-                'UL2017': {
-                    'inputFileName': "DeepJet_106XUL17SF_V2p1.csv",
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
@@ -176,8 +149,8 @@ class btagSFProducer(Module):
                     },
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
-                'UL2018': {
-                    'inputFileName': "DeepJet_106XUL18SF_V1p1.csv",
+		'UL2016preVFP': {
+                    'inputFileName': "reshaping_deepJet_106XUL16preVFP_v2_modified.csv",
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
@@ -185,6 +158,33 @@ class btagSFProducer(Module):
                     },
                     'supported_wp': ["shape_corr"]
                 },
+                'UL2016postVFP': {
+                    'inputFileName': "reshaping_deepJet_106XUL16postVFP_v3_modified.csv",
+                    'measurement_types': {
+                        0: "comb",  # b
+                        1: "comb",  # c
+                        2: "incl"   # light
+                    },
+                    'supported_wp': ["L", "M", "T","shape_corr"]
+                },
+                'UL2017': {
+                    'inputFileName': "reshaping_deepJet_106XUL17_v3_modified.csv",
+                    'measurement_types': {
+                        0: "comb",  # b
+                        1: "comb",  # c
+                        2: "incl"   # light
+                    },
+                    'supported_wp': ["L", "M", "T", "shape_corr"]
+                },
+                'UL2018': {
+                    'inputFileName': "reshaping_deepJet_106XUL18_v2_modified.csv",
+                    'measurement_types': {
+                        0: "comb",  # b
+                        1: "comb",  # c
+                        2: "incl"   # light
+                    },
+                    'supported_wp': ["shape_corr"]
+                },	
             },
             'cmva': {
                 '2016': {
@@ -198,7 +198,7 @@ class btagSFProducer(Module):
                 }
             }
         }
-	
+
         supported_algos = []
         for algo in list(supported_btagSF.keys()):
             if self.era in list(supported_btagSF[algo].keys()):
@@ -207,11 +207,8 @@ class btagSFProducer(Module):
             if self.era in list(supported_btagSF[self.algo].keys()):
                 if self.inputFileName is None:
                     self.inputFileName = supported_btagSF[self.algo][self.era]['inputFileName']
-		print  self.inputFileName
                 self.measurement_types = supported_btagSF[self.algo][self.era]['measurement_types']
-		print self.measurement_types 
                 self.supported_wp = supported_btagSF[self.algo][self.era]['supported_wp']
-		print self.supported_wp
             else:
                 raise ValueError("ERROR: Algorithm '%s' not supported for era = '%s'! Please choose among { %s }." % (
                     self.algo, self.era, supported_algos))
@@ -262,16 +259,12 @@ class btagSFProducer(Module):
                     branchNames[central_or_syst] = baseBranchName + \
                         '_' + central_or_syst
             self.branchNames_central_and_systs[wp] = branchNames
-	    print self.branchNames_central_and_systs[wp]," : ", wp
 
     def beginJob(self):
         # initialize BTagCalibrationReader
         # (cf. https://twiki.cern.ch/twiki/bin/viewauth/CMS/BTagCalibration )
-	print self.algo, type(self.algo)
-	print os.path.join(self.inputFilePath, self.inputFileName), type(os.path.join(self.inputFilePath, self.inputFileName))
         self.calibration = ROOT.BTagCalibration(
             self.algo, os.path.join(self.inputFilePath, self.inputFileName))
-	print "initialized BTagCalibrationReader"
         self.readers = {}
         for wp in self.selectedWPs:
             wp_btv = {"l": 0, "m": 1, "t": 2,
@@ -286,15 +279,12 @@ class btagSFProducer(Module):
                 v_systs.push_back(syst)
             reader = ROOT.BTagCalibrationReader(wp_btv, 'central', v_systs)
             for flavor_btv in [0, 1, 2]:
-		print wp," ",flavor_btv
                 if wp == "shape_corr":
                     reader.load(self.calibration, flavor_btv, 'iterativefit')
                 else:
                     reader.load(self.calibration, flavor_btv,
                                 self.measurement_types[flavor_btv])
-		    print self.measurement_types[flavor_btv]
             self.readers[wp_btv] = reader
-	print self.readers
 
     def endJob(self):
         pass

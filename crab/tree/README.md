@@ -121,7 +121,7 @@
 
 		Input files:
 			ID:
-				Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root #BCDEF (required for ISO>0.2)
+				Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root #BCDEF (required for ISO>0.2) (reading "hist NUM_TightID_DEN_TrackerMuons_abseta_pt" ?? old "MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/pt_abseta_ratio")
 				Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root ##GH	(required for ISO>0.2)
 		
 				EfficienciesAndSF_Run2016_UL_HIPM_ID_SF_0p06.root (personly created for iso<0.06 and need to update this is taken from lagecy samples and renamed acc.) 
@@ -227,7 +227,7 @@
 		
 		Input files:
                         ID:
-                                Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root #BCDEF (required for ISO>0.2)
+                                Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root #BCDEF (required for ISO>0.2) (reading hist "NUM_TightID_DEN_TrackerMuons_abseta_pt" ?? old "MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/pt_abseta_ratio")
                                 Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root ##GH       (required for ISO>0.2)
 
                                 EfficienciesAndSF_Run2016_UL_HIPM_ID_SF_0p06.root (personly created for iso<0.06 and need to update this is taken from lagecy samples and renamed acc.)
@@ -252,7 +252,7 @@
 
                 Input files:
                         Cut Based ID    Veto :
-                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL16/postVFP/Electrons/Veto/egammaEffi.txt_Ele_Veto_postVFP_EGM2D.root (recommonded)
+                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL16/postVFP/Electrons/Veto/egammaEffi.txt_Ele_Veto_postVFP_EGM2D.root (recommonded) (histogram reading "EGamma_SF2D")
 						scp  /eos/cms/store/group/phys_egamma/SF-Repository/UL16/postVFP/Electrons/Veto/egammaEffi.txt_EGM2D.root egammaEffi.txt_Ele_Veto_postVFP_EGM2D.root 
 
                         Cut Based ID    Tight :
@@ -340,7 +340,7 @@
 
                 Input files:
                         ID:
-				RunBCDEF_SF_ID_syst.root # BCDEF (required for ISO>0.2)
+				RunBCDEF_SF_ID_syst.root # BCDEF (required for ISO>0.2) (reading "NUM_TightID_DEN_genTracks_pt_abseta" ?? old "NUM_TightID_DEN_genTracks")
 
 				EfficienciesAndSF_BC_ID_SF_0p06.root #BC (personly created for iso<0.06 and need to update this is taken from lagecy samples)
                         	EfficienciesAndSF_DE_ID_SF_0p06.root #DE (personly created for iso<0.06 and need to update this is taken from lagecy samples)
@@ -369,7 +369,7 @@
 
                 Input files:
                         Cut Based ID    Veto :
-                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL17/Electrons/Veto/egammaEffi.txt_EGM2D_Veto_UL17.root (recommonded)
+                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL17/Electrons/Veto/egammaEffi.txt_EGM2D_Veto_UL17.root (recommonded) (histogram reading "EGamma_SF2D")
 						scp /eos/cms/store/group/phys_egamma/SF-Repository/UL17/Electrons/Veto/passingVeto94XV2/egammaEffi.txt_EGM2D.root egammaEffi.txt_EGM2D_Veto_UL17.root
 
 
@@ -475,7 +475,7 @@
 
                 Input files:
                         Cut Based ID    Veto :
-                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL18/Electrons/Veto/egammaEffi.txt_Ele_Veto_EGM2D.root (recommndetion)
+                                                /eos/cms/store/group/phys_egamma/SF-Repository/UL18/Electrons/Veto/egammaEffi.txt_Ele_Veto_EGM2D.root (recommndetion) (histogram reading "EGamma_SF2D")
 						scp /eos/cms/store/group/phys_egamma/SF-Repository/UL18/Electrons/Veto/passingVeto94XV2/egammaEffi.txt_EGM2D.root egammaEffi.txt_Ele_Veto_EGM2D.root
 
                         Cut Based ID    Tight :
