@@ -39,6 +39,15 @@
 	2. jecredo option has been removed check why------> Does't matter because redo option was for fat jets not for AK4 jets
 
 4. Recomdation  UL16preVFP 
+	
+	pdmv
+                https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
+                https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis
+ 
+		Global Tags:
+
+    			Data: 106X_dataRun2_v35
+    			MC 2016APV: 106X_mcRun2_asymptotic_preVFP_v11
 
 	Btagging (RunIISummer20UL16)
 
@@ -156,6 +165,15 @@
 
 5. Recomdation UL16postVFP 
 
+	pdmv 
+		https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
+		https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis
+	
+		Global Tags:
+
+    			Data: 106X_dataRun2_v35
+    			MC 2016: 106X_mcRun2_asymptotic_v17
+
         Btagging ( RunIISummer20UL16)
 
 		https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
@@ -264,6 +282,15 @@
                                                 corrently using root file form lagecy samples #need to update
 
 6. Recomdation  UL17 
+
+	pdmv
+                https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
+                https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis
+ 
+		Global Tags:
+
+    			Data: 106X_dataRun2_v35
+    			MC 2017: 106X_mc2017_realistic_v9
 	
 	Btagging (RunIISummer19UL17 )
 
@@ -382,6 +409,15 @@
 
 7. Recomdation UL18
 
+	pdmv
+                https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
+                https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis 
+
+		Global Tags:
+
+    			Data: 106X_dataRun2_v35
+    			MC 2018: 106X_upgrade2018_realistic_v16_L1v1
+ 
 	Btagging (RunIISummer19UL18)
 
 		https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
