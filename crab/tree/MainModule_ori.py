@@ -23,8 +23,31 @@ class MainProducer(Module):
 	self.out.branch("Jet_dR_Ljet_AntiIsomu",  "F",lenVar="101")
 	self.out.branch("Jet_dR_Ljet_Isoel",  "F",lenVar="102")
 	self.out.branch("Jet_dR_Ljet_AntiIsoel",  "F",lenVar="103")
-	self.out.branch("Electron_EtaSC",  "F",lenVar="nElectron")
 
+	if(True):
+	    self.out.branch("Electron_EtaSC",  "F",lenVar="nElectron")
+
+
+	    if(self.MC):
+		self.out.branch("Electron_SF_Iso",  "F",lenVar="nElectron")
+		self.out.branch("Electron_SF_Iso_IDUp",  "F",lenVar="nElectron")
+		self.out.branch("Electron_SF_Iso_IDDown",  "F",lenVar="nElectron")
+		self.out.branch("Electron_SF_Iso_TrigUp",  "F",lenVar="nElectron")
+		self.out.branch("Electron_SF_Iso_TrigDown",  "F",lenVar="nElectron")
+		self.out.branch("Electron_SF_Veto",  "F",lenVar="nElectron")
+		self.out.branch("Electron_SF_Veto_IDUp",  "F",lenVar="nElectron")
+		self.out.branch("Electron_SF_Veto_IDDown",  "F",lenVar="nElectron")
+		self.out.branch("Electron_SF_Veto_TrigUp",  "F",lenVar="nElectron")
+		self.out.branch("Electron_SF_Veto_TrigDown",  "F",lenVar="nElectron")
+	if(self.MC):
+	    self.out.branch("Muon_SF_Iso",  "F",lenVar="nMuon")
+	    self.out.branch("Muon_SF_IsoUp",  "F",lenVar="nMuon")
+	    self.out.branch("Muon_SF_IsoDown",  "F",lenVar="nMuon")
+	    self.out.branch("Muon_SF_Iso_IDUp",  "F",lenVar="nMuon")
+	    self.out.branch("Muon_SF_Iso_IDDown",  "F",lenVar="nMuon")
+            self.out.branch("Muon_SF_Iso_TrigUp",  "F",lenVar="nMuon")
+	    self.out.branch("Muon_SF_Iso_TrigDown",  "F",lenVar="nMuon")
+		
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -43,15 +66,28 @@ class MainProducer(Module):
                 '2017' : 37,
                 '2018' : None}
 	if(self.MC):
-	    Ele_EtaSC = [] 
+	    if(self.datayear=='2016'): TotalLumi=35855
+	    elif(self.datayear=='2017'):TotalLumi=41529
+	    elif(self.datayear=='2018'):TotalLumi=41520 
+	    Ele_EtaSC,Electron_SF_Iso,Electron_SF_Iso_IDUp,Electron_SF_Iso_IDDown,Electron_SF_Iso_TrigUp,Electron_SF_Iso_TrigDown,Electron_SF_Veto,Electron_SF_Veto_IDUp,Electron_SF_Veto_IDDown,Electron_SF_Veto_TrigUp,Electron_SF_Veto_TrigDown=([]for i in range(11))
+	    Muon_SF_Iso,Muon_SF_IsoUp,Muon_SF_IsoDown,Muon_SF_Iso_IDUp,Muon_SF_Iso_IDDown,Muon_SF_Iso_TrigUp,Muon_SF_Iso_TrigDown,Muon_SF_Veto,Muon_SF_Veto_IDUp,Muon_SF_Veto_IDDown,Muon_SF_Veto_TrigUp,Muon_SF_Veto_TrigDown=([]for i in range(12))	
 	    Jet_dR_Ljet_Isomu,Jet_dR_Ljet_AntiIsomu,Jet_dR_Ljet_Isoel,Jet_dR_Ljet_AntiIsoel = ([]for i in range(4))
 	    if(True):
 		 count=0
 		 Jetpt = getattr(event,'Jet_pt')
 		 jetpt = Jetpt[0]
 		 for lep in electrons :
-		    #print "elPt : ",lep.pt, "elSCEta : ",lep.deltaEtaSC + lep.eta
 		    Ele_EtaSC.append(lep.deltaEtaSC + lep.eta)
+		    Electron_SF_Iso.append(create_elSF(self.datayear,lep.pt,Ele_EtaSC[count],jetpt,"Tight","noSyst"))
+		    Electron_SF_Iso_IDUp.append(create_elSF(self.datayear,lep.pt,Ele_EtaSC[count],jetpt,"Tight","IDUp")) 
+		    Electron_SF_Iso_IDDown.append(create_elSF(self.datayear,lep.pt,Ele_EtaSC[count],jetpt,"Tight","IDDown"))
+		    Electron_SF_Iso_TrigUp.append(create_elSF(self.datayear,lep.pt,Ele_EtaSC[count],jetpt,"Tight","TrigUp"))
+		    Electron_SF_Iso_TrigDown.append(create_elSF(self.datayear,lep.pt,Ele_EtaSC[count],jetpt,"Tight","TrigDown"))
+		    Electron_SF_Veto.append(create_elSF(self.datayear,lep.pt,Ele_EtaSC[count],jetpt,"Veto","noSyst"))
+		    Electron_SF_Veto_IDUp.append(create_elSF(self.datayear,lep.pt,Ele_EtaSC[count],jetpt,"Veto","IDUp"))
+		    Electron_SF_Veto_IDDown.append(create_elSF(self.datayear,lep.pt,Ele_EtaSC[count],jetpt,"Veto","IDDown"))
+		    Electron_SF_Veto_TrigUp.append(create_elSF(self.datayear,lep.pt,Ele_EtaSC[count],jetpt,"Veto","TrigUp"))
+		    Electron_SF_Veto_TrigDown.append(create_elSF(self.datayear,lep.pt,Ele_EtaSC[count],jetpt,"Veto","TrigDown"))
 		    if(len(Jet_dR_Ljet_Isoel)==len(Jet_dR_Ljet_AntiIsoel) and lep.pt>pt_Thes_el[self.datayear] and abs(lep.eta)<2.1 and lep.cutBased>=1 and (abs(Ele_EtaSC[count])<1.4442 or abs(Ele_EtaSC[count])>1.5660) and ((abs(Ele_EtaSC[count])<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(Ele_EtaSC[count])> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10))):
 			el4v = ROOT.TLorentzVector(0.,0.,0.,0.)
 			el4v = lep.p4()
@@ -70,16 +106,32 @@ class MainProducer(Module):
 
 
 		    count=count+1
-		 #print 'elSF_Iso=',Electron_SF_Iso
+		 #print 'elSF_Veto=',Electron_SF_Iso
 		 #print "Antijet dr =", Jet_dR_Ljet_AntiIsoel
 		 self.out.fillBranch("Electron_EtaSC", Ele_EtaSC)
+		 self.out.fillBranch("Electron_SF_Iso", Electron_SF_Iso)
+		 self.out.fillBranch("Electron_SF_Iso_IDUp",Electron_SF_Iso_IDUp)
+		 self.out.fillBranch("Electron_SF_Iso_IDDown",Electron_SF_Iso_IDDown)
+		 self.out.fillBranch("Electron_SF_Iso_TrigUp",Electron_SF_Iso_TrigUp)
+		 self.out.fillBranch("Electron_SF_Iso_TrigDown",Electron_SF_Iso_TrigDown)
+		 self.out.fillBranch("Electron_SF_Veto", Electron_SF_Veto)
+		 self.out.fillBranch("Electron_SF_Veto_IDUp",Electron_SF_Veto_IDUp)
+		 self.out.fillBranch("Electron_SF_Veto_IDDown",Electron_SF_Veto_IDDown)
+		 self.out.fillBranch("Electron_SF_Veto_TrigUp",Electron_SF_Veto_TrigUp)
+		 self.out.fillBranch("Electron_SF_Veto_TrigDown",Electron_SF_Veto_TrigDown)
 	    self.out.fillBranch("Jet_dR_Ljet_Isoel",Jet_dR_Ljet_Isoel)
 	    self.out.fillBranch("Jet_dR_Ljet_AntiIsoel",Jet_dR_Ljet_AntiIsoel)
 	    if(True):
 		 for lep in muons :
 		    #if(lep.pt<=5):print lep.pt
 		    #print lep.pt
-		    #print "muPt : ",lep.pt, "muEta : ", lep.eta
+		    Muon_SF_Iso.append(create_muSF(self.datayear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi,"noSyst"))
+		    Muon_SF_IsoUp.append(create_muSF(self.datayear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi,"IsoUp"))
+		    Muon_SF_IsoDown.append(create_muSF(self.datayear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi,"IsoDown"))
+		    Muon_SF_Iso_IDUp.append(create_muSF(self.datayear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi,"IDUp")) 
+		    Muon_SF_Iso_IDDown.append(create_muSF(self.datayear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi,"IDDown"))
+		    Muon_SF_Iso_TrigUp.append(create_muSF(self.datayear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi,"TrigUp"))
+		    Muon_SF_Iso_TrigDown.append(create_muSF(self.datayear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi,"TrigDown"))
 		    if(len(Jet_dR_Ljet_Isomu)== len(Jet_dR_Ljet_AntiIsomu) and lep.pt>pt_Thes_mu[self.datayear] and abs(lep.eta)<2.4 and (lep.pfRelIso04_all<0.06 or lep.pfRelIso04_all>0.2) and lep.tightId==1):
 			muon4v = ROOT.TLorentzVector(0.,0.,0.,0.)
 			muon4v = lep.p4()
@@ -97,6 +149,13 @@ class MainProducer(Module):
 				#Jet_dR_Ljet_Isomu.append(999.0)
 		    #print 'Muon_SF_Iso = ',Muon_SF_Iso
 		    #if(nolepton>1):print(nolepton," jets = ",len(jets), " Jet_dR_Ljet_Isomu = ", len(Jet_dR_Ljet_Isomu)," Jet_dR_Ljet_AntiIsomu = ",len(Jet_dR_Ljet_AntiIsomu) )
+		 self.out.fillBranch("Muon_SF_Iso", Muon_SF_Iso)
+		 self.out.fillBranch("Muon_SF_IsoUp", Muon_SF_IsoUp)
+		 self.out.fillBranch("Muon_SF_IsoDown", Muon_SF_IsoDown)
+		 self.out.fillBranch("Muon_SF_Iso_IDUp",Muon_SF_Iso_IDUp)
+		 self.out.fillBranch("Muon_SF_Iso_IDDown",Muon_SF_Iso_IDDown)
+		 self.out.fillBranch("Muon_SF_Iso_TrigUp",Muon_SF_Iso_TrigUp)
+		 self.out.fillBranch("Muon_SF_Iso_TrigDown",Muon_SF_Iso_TrigDown)
 	    self.out.fillBranch("Jet_dR_Ljet_Isomu",Jet_dR_Ljet_Isomu)
 	    self.out.fillBranch("Jet_dR_Ljet_AntiIsomu",Jet_dR_Ljet_AntiIsomu)
 
