@@ -8,7 +8,6 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collect
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from Mc_prob_cal_forBweght import *
 from foxwol_n_fourmomentumSolver import *
-from scaleFactor import *
 
 def mk_safe(fct, *args):
     try:
@@ -45,7 +44,7 @@ class MinitreeProducer(Module):
 	self.letopn_flv = letopn_flv
 	self.isMC = isMC
 	self.dataYear = dataYear
-	
+
 	"""rc_corrections={
                 '2016' : 'RoccoR2016.txt',
                 '2017' : 'RoccoR2017.txt',
@@ -73,24 +72,11 @@ class MinitreeProducer(Module):
 	     self.out.branch("MuonMass","F")
 	     self.out.branch("MuonE","F")
 	     self.out.branch("MuonCharge","I")
-	     self.out.branch("nMuon_sel",  "I")
-
-	     if(self.isMC==True):
-		self.out.branch("muSF","F")
-	     	self.out.branch("Muon_SF_Iso",  "F")
-             	self.out.branch("Muon_SF_IsoUp",  "F")
-             	self.out.branch("Muon_SF_IsoDown",  "F")
-             	self.out.branch("Muon_SF_Iso_IDUp",  "F")
-             	self.out.branch("Muon_SF_Iso_IDDown",  "F")
-             	self.out.branch("Muon_SF_Iso_TrigUp",  "F")
-             	self.out.branch("Muon_SF_Iso_TrigDown",  "F")
-	     	self.out.branch("Muon_RelIso", "F")
-		self.out.branch("nMuon_sel",  "I")
-
 	     """self.out.branch("Muon_corrected_pt", "F")
              self.out.branch("Muon_correctedUp_pt", "F")
              self.out.branch("Muon_correctedDown_pt", "F")
 	     self.out.branch("mtwMass_RC_corr", "F")"""	
+	     if(self.isMC==True):self.out.branch("muSF","F")
 	
 	if(self.letopn_flv == 'el'):
              self.out.branch("ElectronPt","F")
@@ -100,20 +86,7 @@ class MinitreeProducer(Module):
 	     self.out.branch("ElectronMass","F")
 	     self.out.branch("ElectronE","F") 	
 	     self.out.branch("ElectronCharge","I")
-	     self.out.branch("Electron_CutbasedID",  "I")
-	     self.out.branch("nElectron_sel",  "I")
-	     if(self.isMC==True):
-		self.out.branch("elSF","F")
-	     	self.out.branch("Electron_SF_Iso",  "F")
-             	self.out.branch("Electron_SF_Iso_IDUp",  "F")
-             	self.out.branch("Electron_SF_Iso_IDDown",  "F")
-             	self.out.branch("Electron_SF_Iso_TrigUp",  "F")
-             	self.out.branch("Electron_SF_Iso_TrigDown",  "F")
-             	self.out.branch("Electron_SF_Veto",  "F")
-             	self.out.branch("Electron_SF_Veto_IDUp",  "F")
-             	self.out.branch("Electron_SF_Veto_IDDown",  "F")
-             	self.out.branch("Electron_SF_Veto_TrigUp",  "F")
-             	self.out.branch("Electron_SF_Veto_TrigDown",  "F")
+	     if(self.isMC==True):self.out.branch("elSF","F")
 	self.out.branch("Px_nu","F")
 	self.out.branch("Py_nu","F")
 	self.out.branch("Pz_nu","F")
@@ -124,7 +97,6 @@ class MinitreeProducer(Module):
         self.out.branch("abs_bJetEta",  "F")
         self.out.branch("bJetPhi",  "F")
         self.out.branch("bJetdeepCSV",  "F")
-	self.out.branch("nbjet_sel",  "I")
         if(self.isMC==True):self.out.branch("bJethadronFlavour",  "F")
 
 	self.out.branch("lJetMass",  "F")
@@ -133,7 +105,6 @@ class MinitreeProducer(Module):
         self.out.branch("abs_lJetEta",  "F")
         self.out.branch("lJetPhi",  "F")
         self.out.branch("lJetdeepCSV",  "F")
-	self.out.branch("nljet_sel",  "I")
         if(self.isMC==True):self.out.branch("lJethadronFlavour",  "F")
 
 	if(self.Total_Njets == 3 and  (self.BTag_Njets == 1 or self.BTag_Njets == 2)):
@@ -143,7 +114,6 @@ class MinitreeProducer(Module):
             self.out.branch("abs_oJetEta",  "F")
             self.out.branch("oJetPhi",  "F")
             self.out.branch("oJetdeepCSV",  "F")
-	    self.out.branch("nojet_sel",  "I")
             if(self.isMC==True):self.out.branch("oJethadronFlavour",  "F")
 
 	self.out.branch("FW1", "F")
@@ -213,176 +183,51 @@ class MinitreeProducer(Module):
 	leptonSF = 0
 	leptonCharge = 0
 	#print self.letopn_flv
-
-
-
-
-	######---------------------  Scale factor calculation begin  -------------------------################
-
-
-
-	#print "self.isMC = ",self.isMC
- 	pt_Thes_mu={
-                '2016' : 26,
-                '2017' : 30,
-                '2018' : None}
-	pt_Thes_el={
-                '2016' : 35,
-                '2017' : 37,
-                '2018' : None}
-	
-	if(self.isMC):
-	    TotalLumi={
-                '2016' : 35855,
-                '2017' : 41529,
-                '2018' : 41520}
-
-	    Ele_EtaSC,Electron_SF_Iso,Electron_SF_Iso_IDUp,Electron_SF_Iso_IDDown,Electron_SF_Iso_TrigUp,Electron_SF_Iso_TrigDown,Electron_SF_Veto,Electron_SF_Veto_IDUp,Electron_SF_Veto_IDDown,Electron_SF_Veto_TrigUp,Electron_SF_Veto_TrigDown,Electron_CutbasedID=(-999 for i in range(12))
-	    Muon_SF_Iso,Muon_SF_IsoUp,Muon_SF_IsoDown,Muon_SF_Iso_IDUp,Muon_SF_Iso_IDDown,Muon_SF_Iso_TrigUp,Muon_SF_Iso_TrigDown,Muon_SF_Veto,Muon_SF_Veto_IDUp,Muon_SF_Veto_IDDown,Muon_SF_Veto_TrigUp,Muon_SF_Veto_TrigDown,Muon_RelIso=(-999 for i in range(13))	
-	    if(self.letopn_flv=="el"):
-		 count=0
-		 Jetpt = getattr(event,'Jet_pt')
-		 jetpt = Jetpt[0]
-
-		 nElectron_sel = -1
-		 for lep in electrons :
-		    nElectron_sel = nElectron_sel+1
-		    if(  (self.Isolation==True) and lep.pt>pt_Thes_el[self.dataYear] and abs(lep.eta)<2.1 and lep.cutBased==4 and (abs(lep.EtaSC)<1.4442 or abs(lep.EtaSC)>1.5660) and ((abs(lep.EtaSC)<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(lep.EtaSC)> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10)) ):
-
-		    	Electron_SF_Iso = create_elSF(self.dataYear,lep.pt,lep.EtaSC,jetpt,"Tight","noSyst")
-		    	Electron_SF_Iso_IDUp = create_elSF(self.dataYear,lep.pt,lep.EtaSC,jetpt,"Tight","IDUp")
-		    	Electron_SF_Iso_IDDown = create_elSF(self.dataYear,lep.pt,lep.EtaSC,jetpt,"Tight","IDDown")
-		    	Electron_SF_Iso_TrigUp = create_elSF(self.dataYear,lep.pt,lep.EtaSC,jetpt,"Tight","TrigUp")
-		    	Electron_SF_Iso_TrigDown = create_elSF(self.dataYear,lep.pt,lep.EtaSC,jetpt,"Tight","TrigDown")
-
-			lepton4v=lep.p4()
-                    	leptonCharge = lep.charge
-			leptonSF = Electron_SF_Iso
-                    	ElectronSCEta = lep.EtaSC
-			Electron_CutbasedID = lep.cutBased
-
-
-		 	#print 'elSF_Iso=',Electron_SF_Iso
-			self.out.fillBranch("nElectron_sel",nElectron_sel)
-			self.out.fillBranch("Electron_CutbasedID",Electron_CutbasedID)
-		 	self.out.fillBranch("Electron_SF_Iso", Electron_SF_Iso)
-		 	self.out.fillBranch("Electron_SF_Iso_IDUp",Electron_SF_Iso_IDUp)
-		 	self.out.fillBranch("Electron_SF_Iso_IDDown",Electron_SF_Iso_IDDown)
-		 	self.out.fillBranch("Electron_SF_Iso_TrigUp",Electron_SF_Iso_TrigUp)
-		 	self.out.fillBranch("Electron_SF_Iso_TrigDown",Electron_SF_Iso_TrigDown)
-
-		    elif( (self.Isolation==False) and lep.pt>pt_Thes_el[self.dataYear] and abs(lep.eta)<2.1 and lep.cutBased!=4 and lep.cutBased>=1 and (abs(lep.EtaSC)<1.4442 or abs(lep.EtaSC)>1.5660) and ((abs(lep.EtaSC)<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(lep.EtaSC)> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10)) ):
-
-		    	Electron_SF_Veto = create_elSF(self.dataYear,lep.pt,lep.EtaSC,jetpt,"Veto","noSyst")
-		    	Electron_SF_Veto_IDUp = create_elSF(self.dataYear,lep.pt,lep.EtaSC,jetpt,"Veto","IDUp")
-		    	Electron_SF_Veto_IDDown = create_elSF(self.dataYear,lep.pt,lep.EtaSC,jetpt,"Veto","IDDown")
-		    	Electron_SF_Veto_TrigUp = create_elSF(self.dataYear,lep.pt,lep.EtaSC,jetpt,"Veto","TrigUp")
-		    	Electron_SF_Veto_TrigDown = create_elSF(self.dataYear,lep.pt,lep.EtaSC,jetpt,"Veto","TrigDown")
-		
-	
-			lepton4v=lep.p4()
-                    	leptonCharge = lep.charge
-			leptonSF = Electron_SF_Veto
-                    	ElectronSCEta = lep.EtaSC
-			Electron_CutbasedID = lep.cutBased
-
-		 	#print 'elSF_Iso=',Electron_SF_Veto
-			self.out.fillBranch("nElectron_sel",nElectron_sel)
-                        self.out.fillBranch("Electron_CutbasedID",Electron_CutbasedID)
-		 	self.out.fillBranch("Electron_SF_Veto", Electron_SF_Veto)
-		 	self.out.fillBranch("Electron_SF_Veto_IDUp",Electron_SF_Veto_IDUp)
-		 	self.out.fillBranch("Electron_SF_Veto_IDDown",Electron_SF_Veto_IDDown)
-		 	self.out.fillBranch("Electron_SF_Veto_TrigUp",Electron_SF_Veto_TrigUp)
-		 	self.out.fillBranch("Electron_SF_Veto_TrigDown",Electron_SF_Veto_TrigDown)
-
-	    if(self.letopn_flv=="mu"):
-		 nMuon_sel = -1
-		 for lep in muons :
-		    nMuon_sel = nMuon_sel+1
-		    #print lep.pt
-		    if(   ((self.Isolation==True)  and lep.pt>pt_Thes_mu[self.dataYear] and abs(lep.eta)<2.4 and lep.pfRelIso04_all<0.06 and lep.tightId==1)   or
-			  ((self.Isolation==False) and lep.pt>pt_Thes_mu[self.dataYear] and abs(lep.eta)<2.4 and lep.pfRelIso04_all>0.2  and lep.tightId==1)    ):
-
-			  Muon_RelIso = lep.pfRelIso04_all
-		    	  Muon_SF_Iso = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"noSyst")
-		    	  Muon_SF_IsoUp = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"IsoUp")
-		    	  Muon_SF_IsoDown = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"IsoDown")
-		    	  Muon_SF_Iso_IDUp = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"IDUp") 
-		    	  Muon_SF_Iso_IDDown = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"IDDown")
-		    	  Muon_SF_Iso_TrigUp = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"TrigUp")
-		    	  Muon_SF_Iso_TrigDown = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"TrigDown")
-
-                    	  lepton4v=lep.p4()
-                    	  leptonCharge = lep.charge
-			  leptonSF = Muon_SF_Iso
-		 	  #print 'muSF_Iso = ',Muon_SF_Iso
-
-			  self.out.fillBranch("nMuon_sel",nMuon_sel)
-		 	  self.out.fillBranch("Muon_RelIso", Muon_RelIso)
-		 	  self.out.fillBranch("Muon_SF_Iso", Muon_SF_Iso)
-		 	  self.out.fillBranch("Muon_SF_IsoUp", Muon_SF_IsoUp)
-		 	  self.out.fillBranch("Muon_SF_IsoDown", Muon_SF_IsoDown)
-		 	  self.out.fillBranch("Muon_SF_Iso_IDUp",Muon_SF_Iso_IDUp)
-		 	  self.out.fillBranch("Muon_SF_Iso_IDDown",Muon_SF_Iso_IDDown)
-		 	  self.out.fillBranch("Muon_SF_Iso_TrigUp",Muon_SF_Iso_TrigUp)
-		 	  self.out.fillBranch("Muon_SF_Iso_TrigDown",Muon_SF_Iso_TrigDown)
-		 
-	    #print "----------------------------------------------------------------->"
-
-	    ######---------------------  Scale factor calculation begin  -------------------------################
-
-
-
-
-
-
-
-
-
-
-
-	########## -----------------------   isolated lapton selection for data --------------------###################
-
-	if(self.letopn_flv=="mu" and self.isMC==False):
+	if(self.letopn_flv=="mu"):
+	    pt_Thes={
+		'2016' : 26,
+		'2017' : 30,
+		'2018' : None}
 	    for lep in muons:
 		#print "muonpt = %s muoneta = %s muoniso = %s muonid = %s iso = %s"%(lep.pt,lep.eta,lep.pfRelIso04_all,lep.tightId,self.Isolation)
-		if((self.Isolation==True) and lep.pt>pt_Thes_mu[self.dataYear] and abs(lep.eta)<2.4 and lep.pfRelIso04_all<0.06 and lep.tightId==1):
+		if((self.Isolation==True) and lep.pt>pt_Thes[self.dataYear] and abs(lep.eta)<2.4 and lep.pfRelIso04_all<0.06 and lep.tightId==1):
 		    lepton4v=lep.p4()
 		    leptonCharge = lep.charge
+		    if(self.isMC==True):
+			leptonSF = lep.SF_Iso
+			"""#																		Rochestor correction
+			MuonPt_corr,MuonPt_corr_error = MuonRC_cal_MC(self._roccor,Collection(event, "GenPart"), lep.genPartIdx, lep.charge, lep.pt, lep.eta, lep.phi, lep.nTrackerLayers)
+		    else:
+			MuonPt_corr,MuonPt_corr_error = MuonRC_cal_Data(self._roccor,lep.charge, lep.pt, lep.eta, lep.phi)"""
 		    #print "musf = ",leptonSF
 		    #print "mu phi = ",lep.phi
-		elif((self.Isolation==False) and lep.pt>pt_Thes_mu[self.dataYear] and abs(lep.eta)<2.4 and lep.pfRelIso04_all>0.2 and lep.tightId==1):
+		elif((self.Isolation==False) and lep.pt>pt_Thes[self.dataYear] and abs(lep.eta)<2.4 and lep.pfRelIso04_all>0.2 and lep.tightId==1):
 		    #print "criteria passed"
 		    lepton4v=lep.p4()
 		    leptonCharge = lep.charge
+		    if(self.isMC==True):
+			leptonSF = lep.SF_Iso
+			"""#																		Rochestor correction
+			MuonPt_corr,MuonPt_corr_error = MuonRC_cal_MC(self._roccor,Collection(event, "GenPart"), lep.genPartIdx, lep.charge, lep.pt, lep.eta, lep.phi, lep.nTrackerLayers)
+		    else:
+			MuonPt_corr,MuonPt_corr_error = MuonRC_cal_Data(self._roccor,lep.charge, lep.pt, lep.eta, lep.phi)"""
 
-	if(self.letopn_flv=="el" and self.isMC==False):
+	if(self.letopn_flv=="el"):
+            pt_Thes={
+                '2016' : 35,
+                '2017' : 37,
+                '2018' : None}
             for lep in electrons:
-		if((self.Isolation==True) and lep.pt>pt_Thes_el[self.dataYear] and abs(lep.eta)<2.1 and lep.cutBased==4 and (abs(lep.EtaSC)<1.4442 or abs(lep.EtaSC)>1.5660) and ((abs(lep.EtaSC)<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(lep.EtaSC)> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10))):
+		if((self.Isolation==True) and lep.pt>pt_Thes[self.dataYear] and abs(lep.eta)<2.1 and lep.cutBased==4 and (abs(lep.EtaSC)<1.4442 or abs(lep.EtaSC)>1.5660) and ((abs(lep.EtaSC)<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(lep.EtaSC)> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10))):
 		    lepton4v=lep.p4()
 		    ElectronSCEta = lep.EtaSC
 		    leptonCharge = lep.charge
-		    Electron_CutbasedID = lep.cutBased
-                    self.out.fillBranch("Electron_CutbasedID",Electron_CutbasedID)
-
-		if((self.Isolation==False) and lep.pt>pt_Thes_el[self.dataYear] and abs(lep.eta)<2.1 and lep.cutBased!=4 and lep.cutBased>=1 and (abs(lep.EtaSC)<1.4442 or abs(lep.EtaSC)>1.5660) and ((abs(lep.EtaSC)<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(lep.EtaSC)> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10))):
+		    if(self.isMC==True):leptonSF = lep.SF_Iso
+		if((self.Isolation==False) and lep.pt>pt_Thes[self.dataYear] and abs(lep.eta)<2.1 and lep.cutBased!=4 and lep.cutBased>=1 and (abs(lep.EtaSC)<1.4442 or abs(lep.EtaSC)>1.5660) and ((abs(lep.EtaSC)<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(lep.EtaSC)> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10))):
 		    lepton4v=lep.p4()	
 		    ElectronSCEta = lep.EtaSC
 		    leptonCharge = lep.charge
-		    Electron_CutbasedID = lep.cutBased
-                    self.out.fillBranch("Electron_CutbasedID",Electron_CutbasedID)
-
-
-
-	######### ------------------------- lepton selction done -------------------------------  ####################
-
-
-
-
-
-
-
-	####### -------------------------  nu_z and mtw calcualtion ---------------------------  ###############
+		    if(self.isMC==True):leptonSF = lep.SF_Veto
 		
 	#print "muonpx = %s muonpy = %s muonpz = %s muonE = %s"%(lepton4v.Px(),lepton4v.Py(),lepton4v.Pz(),lepton4v.E())
 	leptonPt = lepton4v.Pt()
@@ -400,24 +245,16 @@ class MinitreeProducer(Module):
 	Py_nu = met*math.sin(metphi)
 	mtwMass = math.sqrt(abs(pow((leptonPt+met),2)-pow((leptonPt*math.cos(leptonPhi)+met*math.cos(metphi)),2)-pow((leptonPt*math.sin(leptonPhi)+met*math.sin(metphi)),2)));
 	
+	"""if(self.letopn_flv == 'mu'): # Rochester correction
+	    mtwMass_RC_corr = math.sqrt(abs(pow((MuonPt_corr+met),2)-pow((leptonPt*math.cos(leptonPhi)+met*math.cos(metphi)),2)-pow((MuonPt_corr*math.sin(leptonPhi)+met*math.sin(metphi)),2)));"""
 
         neutrino4v = ROOT.TLorentzVector()
         neutrino4v = solveNu4Momentum(lepton4v,met*math.cos(metphi),met*math.sin(metphi))
-	Pz_nu = neutrino4v.Pz() 
-
-
-	############ -----------------  nu_z and mtw calcualtion done ----------------------################
-
-
-
-
-
-
-	###########  -------------------  jet slection ---------------------- ##########################
-
-
 	
+	Pz_nu = neutrino4v.Pz() 
 	jets = Collection(event, "Jet")
+        
+
 
 	#for jet in jet_id:
 	    #print jet.pt
@@ -438,29 +275,29 @@ class MinitreeProducer(Module):
 		#print lepton4v.DeltaR(njet4n)
 	#print "jet_id = ",jet_id
 	Tight_b_tab_crite={
-                '2016' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
-                '2017' : 0.7476, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
-                '2018' : 0.7100} # https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
+                '2016' : 0.7527,
+                '2017' : 0.8001, #https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
+                '2018' : None}
 	Lose_b_tab_crite={
-                '2016' : 0.0480,
-                '2017' : 0.0532,
-                '2018' : 0.0490}
+                '2016' : 0.1241,
+                '2017' : 0.1522,
+                '2018' : None}
 	for jet in jet_id:
 	    njet4v.SetPtEtaPhiM(jet.pt,jet.eta,jet.phi,jet.mass)
             #print lepton4v.DeltaR(njet4v)
-	    #print jet.btagDeepFlavB," ",jet.eta
+	    #print jet.btagDeepB," ",jet.eta
 	#print getattr(event,'event');
 	
-	for jet in filter(lambda j:(j.btagDeepFlavB>Tight_b_tab_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
+	for jet in filter(lambda j:(j.btagDeepB>Tight_b_tab_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
 	    btagjet_id.append(jet) 
 	#print "btagJet_id = ", btagjet_id
         #if(len(btagjet_id)):	return True
 	if(self.Total_Njets == 2 and  self.BTag_Njets == 1 and len(btagjet_id)==0):
-		for jet in filter(lambda j:(j.btagDeepFlavB>Lose_b_tab_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
+		for jet in filter(lambda j:(j.btagDeepB>Lose_b_tab_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
 			btagjet_id.append(jet)
 		#print len(btagjet_id)
 
-	print len(jet_id)," ",len(btagjet_id)
+
 	#print "--------------------------------------2 J 1 T-----------------------------"
 	if( self.Total_Njets == 2 and  self.BTag_Njets == 1):
 	    #print "--------------------------------------2 J 1 T-----------------------------"
@@ -482,13 +319,13 @@ class MinitreeProducer(Module):
 	    #print "--------------------------------------2 J 0 T-----------------------------"
 	    for jet in jet_id:
 	    	if(jet==jet_id[0]): 
-		    deepjet_score0 =jet.btagDeepFlavB
+		    deepcsv_score0 =jet.btagDeepB
 		    eta0 = abs(jet.eta)
 		if(jet==jet_id[1]): 
-		    deepjet_score1 =jet.btagDeepFlavB
+		    deepcsv_score1 =jet.btagDeepB
 		    eta1 = abs(jet.eta)
-	    #print  "score0 = %s; score1 = %s" %( deepjet_score0,deepjet_score1)
-	    if(deepjet_score0<-1.0 and deepjet_score1<-1.0):
+	    #print  "score0 = %s; score1 = %s" %( deepcsv_score0,deepcsv_score1)
+	    if(deepcsv_score0<-1.0 and deepcsv_score1<-1.0):
 		if(eta0<eta1):
 		    for jet in jet_id:
 			if(jet==jet_id[0]):
@@ -509,7 +346,7 @@ class MinitreeProducer(Module):
 			     if(self.isMC==True):lJethadronFlavour=jet.hadronFlavour
 	    else:
 		#print "both score are not less than -1"
-		if(deepjet_score0 > deepjet_score1):
+		if(deepcsv_score0 > deepcsv_score1):
 		    #print "jet0 score > jet1 score "
 		    for jet in jet_id:
                         if(jet==jet_id[0]):
@@ -624,19 +461,6 @@ class MinitreeProducer(Module):
 	topMass=top4v.M()
 	topPt=top4v.Pt()
 
-	njet_sel = -1
-	Jetpt = getattr(event,'Jet_pt')
-	JetEta = getattr(event,'Jet_eta')
-	Jetphi = getattr(event,'Jet_phi')
-	for jet in jets:
-	    njet_sel = njet_sel+1
-	    if(Jetpt[njet_sel]==bJetPt and JetEta[njet_sel]==bJetEta and Jetphi[njet_sel]==bJetPhi): nbjet_sel = njet_sel
-	    if(Jetpt[njet_sel]==lJetPt and JetEta[njet_sel]==lJetEta and Jetphi[njet_sel]==lJetPhi): nljet_sel = njet_sel
-	    if(self.Total_Njets==3):
-		 if(Jetpt[njet_sel]==oJetPt and JetEta[njet_sel]==oJetEta and Jetphi[njet_sel]==oJetPhi): nojet_sel = njet_sel
-		
-	
-
 	mlb = (lepton4v+bJet4v).M()
 	E_lb = (lepton4v+bJet4v).E()
 	p_lb = (lepton4v+bJet4v).P()
@@ -701,7 +525,6 @@ class MinitreeProducer(Module):
         self.out.fillBranch("abs_bJetEta", abs_bJetEta )
         self.out.fillBranch("bJetPhi", bJetPhi )
         self.out.fillBranch("bJetdeepCSV", bJetdeepCSV )
-	self.out.fillBranch("nbjet_sel",nbjet_sel)
         if(self.isMC==True):self.out.fillBranch("bJethadronFlavour", bJethadronFlavour )
 
         self.out.fillBranch("lJetMass", lJetMass )
@@ -710,7 +533,6 @@ class MinitreeProducer(Module):
         self.out.fillBranch("abs_lJetEta", abs_lJetEta )
         self.out.fillBranch("lJetPhi", lJetPhi )
         self.out.fillBranch("lJetdeepCSV", lJetdeepCSV )
-	self.out.fillBranch("nljet_sel", nljet_sel)
         if(self.isMC==True):self.out.fillBranch("lJethadronFlavour", lJethadronFlavour )
 
 	if(self.Total_Njets == 3 and  (self.BTag_Njets == 1 or self.BTag_Njets == 2)):
@@ -720,7 +542,6 @@ class MinitreeProducer(Module):
             self.out.fillBranch("abs_oJetEta", abs_oJetEta )
             self.out.fillBranch("oJetPhi", oJetPhi )
             self.out.fillBranch("oJetdeepCSV", oJetdeepCSV )
-	    self.out.fillBranch("nojet_sel", nojet_sel)
             if(self.isMC==True):self.out.fillBranch("oJethadronFlavour", oJethadronFlavour )	
 	self.out.fillBranch("Px_nu", Px_nu)
 	self.out.fillBranch("Py_nu", Py_nu)
