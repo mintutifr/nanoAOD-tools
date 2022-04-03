@@ -83,61 +83,61 @@ def Probability_2(syst,selected_jet):
 	shape_sf_product = 1
         if(syst=='jes_up'):
 	    for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_up_jes
+                shape_sf_product *= jet.btagSF_deepjet_shape_up_jes
         elif(syst=='jes_down'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_down_jes
+                shape_sf_product *= jet.btagSF_deepjet_shape_down_jes
 	elif(syst=='hfstats2_up'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_up_hfstats2
+                shape_sf_product *= jet.btagSF_deepjet_shape_up_hfstats2
         elif(syst=='hfstats2_down'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_down_hfstats2
+                shape_sf_product *= jet.btagSF_deepjet_shape_down_hfstats2
         elif(syst=='hfstats1_up'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_up_hfstats1
+                shape_sf_product *= jet.btagSF_deepjet_shape_up_hfstats1
         elif(syst=='hfstats1_down'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_down_hfstats1
+                shape_sf_product *= jet.btagSF_deepjet_shape_down_hfstats1
 	elif(syst=='lfstats2_up'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_up_lfstats2
+                shape_sf_product *= jet.btagSF_deepjet_shape_up_lfstats2
         elif(syst=='lfstats2_down'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_down_lfstats2
+                shape_sf_product *= jet.btagSF_deepjet_shape_down_lfstats2
 	elif(syst=='lfstats1_up'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_up_lfstats1
+                shape_sf_product *= jet.btagSF_deepjet_shape_up_lfstats1
         elif(syst=='lfstats1_down'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_down_lfstats1
+                shape_sf_product *= jet.btagSF_deepjet_shape_down_lfstats1
 	elif(syst=='cferr2_up'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_up_cferr2
+                shape_sf_product *= jet.btagSF_deepjet_shape_up_cferr2
         elif(syst=='cferr2_down'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_down_cferr2
+                shape_sf_product *= jet.btagSF_deepjet_shape_down_cferr2
 	elif(syst=='cferr1_up'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_up_cferr1
+                shape_sf_product *= jet.btagSF_deepjet_shape_up_cferr1
         elif(syst=='cferr1_down'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_down_cferr1
+                shape_sf_product *= jet.btagSF_deepjet_shape_down_cferr1
 	elif(syst=='hf_up'): 
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_up_hf
+                shape_sf_product *= jet.btagSF_deepjet_shape_up_hf
 	elif(syst=='hf_down'): 
 	    for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_down_hf
+                shape_sf_product *= jet.btagSF_deepjet_shape_down_hf
 	elif(syst=='lf_up'):
 	    for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_up_lf
+                shape_sf_product *= jet.btagSF_deepjet_shape_up_lf
 	elif(syst=='lf_down'):
             for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape_down_lf
+                shape_sf_product *= jet.btagSF_deepjet_shape_down_lf
 	elif(syst=='Central'):
 	   for jet in selected_jet :
-                shape_sf_product *= jet.btagSF_deepcsv_shape
+                shape_sf_product *= jet.btagSF_deepjet_shape
 
     	return shape_sf_product
 
