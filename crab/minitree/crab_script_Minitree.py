@@ -5,11 +5,12 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import *
 #this takes care of converting the input files from CRAB
 from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputFiles,runsAndLumis
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.muonScaleResProducer import *
+from jme import *
 
 from MinitreeModule import *
 from cut_strings import *
 
-treecut = cut_2J0T1_el_2016
+treecut = cut_3J1T1_el_2017+" && Entry$<10000"
 
 #inputFiles=["6E1B25E9-BBAE-B14F-92C1-FDC95C9EC4A2_Skim.root"]
 #/store/user/mikumar/RUN2/Tree_crab/Sixteen/Data_mu/Run2016C_mu/SingleMuon/Tree_July_four_twenty_sixteen_Run2016C_mu/200704_054545/0000/tree_1.root"]
@@ -23,11 +24,12 @@ treecut = cut_2J0T1_el_2016
 #inputFiles=["/afs/cern.ch/user/m/mikumar/work/private/NanoAOD_new/CMSSW_10_6_0/src/Inputroot_files/mintree/wP1Jets/tree_10.root"]
 #inputFiles=["/afs/cern.ch/user/m/mikumar/work/private/NanoAOD_new/CMSSW_10_6_0/src/Inputroot_files/mintree/single_Electrondata_2016_runC/tree_10.root"]
 #inputFiles=["/afs/cern.ch/user/m/mikumar/work/private/NanoAOD_new/CMSSW_10_6_0/src/Inputroot_files/mintree/single_Electrondata_2016_runH/tree_317.root"]
+inputFiles=["/afs/cern.ch/user/m/mikumar/work/private/NanoAOD_new/CMSSW_10_6_0/src/PhysicsTools/NanoAODTools/crab/tree/06314878-0D6B-544B-9E2C-C5EDCD0666D3_2017_Skim.root"]
 p=PostProcessor(".",
-		inputFiles(),
+		inputFiles,
 		treecut,
-		modules=[MinitreeModuleConstr2J0T1_el_data_2016()],
-		outputbranchsel="keep_and_drop_el_Minitree.txt",
+		modules=[MinitreeModuleConstr3J1T1_el_mc_2017()],
+		outputbranchsel="keep_and_drop_mu_Minitree.txt",
 		provenance=True,
 		fwkJobReport=True,
 		jsonInput=runsAndLumis())
