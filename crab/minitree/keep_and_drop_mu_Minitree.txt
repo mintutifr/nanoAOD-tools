@@ -31,4 +31,5 @@ keep Jet_pt_jes*
 keep Jet_mass_jes*
 keep MET_pt_jes*
 keep MET_phi_jes*
+keep Electron_SF*
 drop Jet_btagSF_deepcsv*
