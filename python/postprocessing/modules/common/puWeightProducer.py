@@ -166,7 +166,7 @@ pufile_dataUL2016_preVFP = "%s/src/PhysicsTools/NanoAODTools/python/postprocessi
     'CMSSW_BASE']
 pufile_mcUL2016_preVFP = "%s/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-MC-UL2016-preVFP-99bins.root" % os.environ[
     'CMSSW_BASE']
-puWeight_UL2016 = lambda: puWeightProducer(pufile_mcUL2016_preVFP,
+puWeight_UL2016preVFP = lambda: puWeightProducer(pufile_mcUL2016_preVFP,
                                            pufile_dataUL2016_preVFP,
                                            "pu_mc",
                                            "pileup",
@@ -181,7 +181,7 @@ pufile_dataUL2016_postVFP = "%s/src/PhysicsTools/NanoAODTools/python/postprocess
     'CMSSW_BASE']
 pufile_mcUL2016_postVFP = "%s/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-MC-UL2016-postVFP-99bins.root" % os.environ[
     'CMSSW_BASE']
-puWeight_UL2016 = lambda: puWeightProducer(pufile_mcUL2016_postVFP,
+puWeight_UL2016postVFP = lambda: puWeightProducer(pufile_mcUL2016_postVFP,
                                            pufile_dataUL2016_postVFP,
                                            "pu_mc",
                                            "pileup",
@@ -194,7 +194,7 @@ puAutoWeight_UL2016 = lambda: puWeightProducer(
 # 2017
 pufile_dataUL2017 = "%s/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-goldenJSON-13tev-UL2017-99bins.root" % os.environ[
     'CMSSW_BASE']
-pufile_mcUL2017 = "%s/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2017.root" % os.environ[
+pufile_mcUL2017 = "%s/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2017_new.root" % os.environ[ #in new file i have removed the 100 the bin 
     'CMSSW_BASE']
 puWeight_UL2017 = lambda: puWeightProducer(pufile_mcUL2017,
                                            pufile_dataUL2017,
