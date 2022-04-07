@@ -41,8 +41,8 @@
 4. Recomdation  UL16preVFP 
 	
 	pdmv
-                https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
-                https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis
+        https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
+        https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis
  
 		Global Tags:
 
@@ -50,8 +50,8 @@
     			MC 2016APV: 106X_mcRun2_asymptotic_preVFP_v11
 
 	Btagging (RunIISummer20UL16)
+	https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16preVFP
 
-		https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16preVFP
 		DeepJet=DeepFlavour 
 		input csv file:
 			reshaping_deepJet_106XUL16preVFP_v2.csv (problem)    	csv (iterativeFit shape correction)
@@ -68,6 +68,7 @@
 	          For precision measurements on top physics, it is recommended to use the "mujets" scale factors, as statistically independent. 
 	
 	jecTagsMC (Summer19UL16APV_V7_MC)	
+        https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
 
 			inputfile: 
 				Summer19UL16APV_V7_MC.tar.gz     
@@ -76,35 +77,34 @@
 				(GT for Summer20UL samples is 106X_mcRun2_asymptotic_preVFP_v11)
 
 	jecTagsData (Summer19UL16_V7_DATA  )
+        https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
                         inputfiles:
                                 Summer19UL16_V7_all.tar.gz
                         GT:     
 				106X_dataRun2_v35
 	
 	jerMC (2016)
+	https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
 
-		https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
 		inputfile:
 			Summer20UL16APV_JRV3_MC.tar.gz
 
 	jerData (2016)
+        https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
                 inputfile:
                       	 Summer20UL16APV_JRV3_DATA.tar.gz
 
 	MET
-
-		https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
  
 		The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
 		The jets that are used to correct MET are also required to have electromagnetic energy fraction smaller than 0.9 and not to be overlapping with the pf muon candidate. 
 
 	Pileup weight / minimum bias x-sec (When using UltraLegacy samples)
-	
-		https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
+	https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
+
 		inputfiles:
 			/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/PileUp/UltraLegacy/
 
@@ -123,9 +123,9 @@
 								KEY: TH1F	pu_mc;1
 
 	MuonPog
-		
-		https://twiki.cern.ch/twiki/bin/view/CMS/MuonPOG	
-		https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonUL2016#Medium_pT_from_15_to_120_GeV
+	https://twiki.cern.ch/twiki/bin/view/CMS/MuonPOG	
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonUL2016#Medium_pT_from_15_to_120_GeV
+
 		scale factor = (L(BCDEF)*sf(BCDEF) + L(GH)*sf(GH))/(L(BCDEF)+L(GH)) 
 
 		Input files:
@@ -150,8 +150,7 @@
 				EfficienciesAndSF_Run2016_UL_Trigger_SF_0p06.root (personly created for iso<0.06 and need to update this taken from lagecy samples and renamed acc.)
 
 	EgammaPog
-
-		https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2016_preVFP
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2016_preVFP
 		
 		Input files:
 			Cut Based ID 	Veto : 
@@ -166,8 +165,8 @@
 5. Recomdation UL16postVFP 
 
 	pdmv 
-		https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
-		https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis
+	https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
+	https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis
 	
 		Global Tags:
 
@@ -175,8 +174,8 @@
     			MC 2016: 106X_mcRun2_asymptotic_v17
 
         Btagging ( RunIISummer20UL16)
+	https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
 
-		https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
 		DeepJet=DeepFlavour 	
 		input csv file:
 			reshaping_deepJet_106XUL16postVFP_v3.csv (problem)	csv (iterativeFit shape correction)
@@ -190,6 +189,7 @@
 		For precision measurements on top physics, it is recommended to use the "mujets" scale factors, as statistically independent.  
 
 	jecTagsMC (Summer19UL16_V7_MC)
+	https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
 	
 		inputfile: 
 			Summer19UL16_V7_MC.tar.gz   
@@ -198,35 +198,34 @@
 			(GT for Summer20UL samples is 106X_mcRun2_asymptotic_v17)
 
 	jecTagsData (Summer19UL16_V7_DATA  )
+	https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
                         inputfiles:
 				Summer19UL16_V7_all.tar.gz
 			GT: 	
 				106X_dataRun2_v35
 
 	jerMC (2016)
+	https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
                 inputfile:
                          Summer20UL16_JRV3_MC.tar.gz
 
 	jerData (2016)
+	https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
                 inputfile:
                          Summer20UL16_JRV3_DATA.tar.gz
 
-	 MET
-
-                https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
+	MET
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
 
                 The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
                 The jets that are used to correct MET are also required to have electromagnetic energy fraction smaller than 0.9 and not to be overlapping with the pf muon candidate.
 
 	Pileup weight / minimum bias x-sec (When using UltraLegacy samples)
+	https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
                 inputfiles:
                         /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/PileUp/UltraLegacy/
 
@@ -239,8 +238,8 @@
                         pufile_mcUL2016 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2016.root"	
 
 	MuonPog
-	
-		https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonUL2016#Medium_pT_from_15_to_120_GeV
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonUL2016#Medium_pT_from_15_to_120_GeV
+
 		scale factor = (L(BCDEF)*sf(BCDEF) + L(GH)*sf(GH))/(L(BCDEF)+L(GH)) 
 		
 		Input files:
@@ -265,8 +264,7 @@
                                 EfficienciesAndSF_Run2016_UL_Trigger_SF_0p06.root (personly created for iso<0.06 and need to update this taken from lagecy samples and renamed acc.)
 
 	EgammaPog
-
-                https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2016_postVF
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2016_postVF
 
                 Input files:
                         Cut Based ID    Veto :
@@ -284,8 +282,8 @@
 6. Recomdation  UL17 
 
 	pdmv
-                https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
-                https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis
+        https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
+        https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis
  
 		Global Tags:
 
@@ -293,8 +291,8 @@
     			MC 2017: 106X_mc2017_realistic_v9
 	
 	Btagging (RunIISummer19UL17 )
+	https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
 
-		https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
         	DeepJet=DeepFlavour 
                 input csv file: 
                         reshaping_deepJet_106XUL17_v3.csv (problem because of chages applied)       csv (iterativeFit shape correction)
@@ -309,6 +307,7 @@
 		For precision measurements on top physics, it is recommended to use the "mujets" scale factors, as statistically independent. 
 	
 	jecTagsMC (Summer19UL17 V5 )
+	https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
 		
 		inputfile: 
 			Summer19UL17_V5_MC.tar.gz   
@@ -317,8 +316,8 @@
 			(GT for Summer20UL samples is 106X_mc2017_realistic_v9)
 
 	jecTagsData (Summer19UL17 )
+	https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
                         inputfiles:
                                 Summer19UL17_RunB_V5_DATA.tar.gz
                                 Summer19UL17_RunC_V5_DATA.tar.gz
@@ -329,27 +328,26 @@
 				106X_dataRun2_v33
 
  	jerMC (Summer19UL17)
+        https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
                 inputfile:
                          Summer19UL17_JRV2_MC.tar.gz
 
 	jerData (Summer19UL17)
+        https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
                 inputfile:
                         Summer19UL17_JRV2_DATA.tar.gz
 
-	 MET
-
-                https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
+	MET
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
 
                 The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
                 The jets that are used to correct MET are also required to have electromagnetic energy fraction smaller than 0.9 and not to be overlapping with the pf muon candidate.
 
 	Pileup weight / minimum bias x-sec( did not say )
+        https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
                 inputfiles:
                         /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/PileUp/UltraLegacy/
 
@@ -362,8 +360,7 @@
 			pufile_mcUL2017 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2017.root"			
 
 	MuonPog
-		
-		https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonLegacy2017#Medium_pT_from_15_to_120_GeV
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonLegacy2017#Medium_pT_from_15_to_120_GeV
 
                 Input files:
                         ID:
@@ -391,8 +388,7 @@
 
 
 	EgammaPog
-
-                https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2017
+        https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2017
 
                 Input files:
                         Cut Based ID    Veto :
@@ -410,8 +406,8 @@
 7. Recomdation UL18
 
 	pdmv
-                https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
-                https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis 
+        https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
+        https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis 
 
 		Global Tags:
 
@@ -419,8 +415,8 @@
     			MC 2018: 106X_upgrade2018_realistic_v16_L1v1
  
 	Btagging (RunIISummer19UL18)
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
 
-		https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
 		DeepJet=DeepFlavour
 			reshaping_deepJet_106XUL18_v2.csv (problem because of chages applied) 	csv (iterativeFit shape correction)
 			wp_deepJet_106XUL18_v2.csv	(problem because of chages applied) 	csv (WP only)
@@ -434,6 +430,7 @@
 		For precision measurements on top physics, it is recommended to use the "mujets" scale factors, as statistically independent. 	 
 
 	jecTagsMC (Summer19UL18 V5)
+        https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
 
                 inputfile: 
 			Summer19UL18_V5_MC.tar.gz   
@@ -442,8 +439,8 @@
 			(GT for Summer20UL samples is 106X_upgrade2018_realistic_v16_L1v1)
 
 	jecTagsData (Summer19UL18 )
+        https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC
                         inputfiles:
                                 Summer19UL18_RunA_V5_DATA.tar.gz
                                 Summer19UL18_RunB_V5_DATA.tar.gz
@@ -453,26 +450,26 @@
 				106X_dataRun2_v33 (GT for Summer20UL samples is )
 
 	jerMC (Summer19UL18)
+        https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
                 inputfile:
                        	Summer19UL18_JRV2_MC.tar.gz
 
 	jerData (Summer19UL18)
+        https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
                 inputfile:
                         Summer19UL18_JRV2_DATA.tar.gz
 
 	 MET
-                https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
+         https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
 
                 The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
                 The jets that are used to correct MET are also required to have electromagnetic energy fraction smaller than 0.9 and not to be overlapping with the pf muon candidate.
 	
 	 Pileup weight / minimum bias x-sec (When using UltraLegacy samples)
+         https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
 
-                https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
                 inputfiles:
                         /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/PileUp/UltraLegacy/i
 
@@ -485,8 +482,7 @@
 			pufile_mcUL2018 = "/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2018.root"
 	
 	MuonPog
-	
-		https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonLegacy2018#Medium_pT_from_15_to_120_GeV
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonLegacy2018#Medium_pT_from_15_to_120_GeV
 
 	 	Input files:
                         ID:
@@ -506,8 +502,7 @@
     				brilcalc lumi -b "STABLE BEAMS" -u "/pb" --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_BRIL.json -i /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt 
 
 	EgammaPog
-
-            	https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2018 
+       	https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2018 
 
                 Input files:
                         Cut Based ID    Veto :
