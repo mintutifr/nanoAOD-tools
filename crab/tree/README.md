@@ -180,7 +180,7 @@
     			Data: 106X_dataRun2_v35
     			MC 2016: 106X_mcRun2_asymptotic_v17
 
-        Btagging ( RunIISummer20UL16)
+	Btagging ( RunIISummer20UL16)
 	https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
 
 		DeepJet=DeepFlavour 	
