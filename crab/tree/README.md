@@ -38,7 +38,7 @@
 
 	2. jecredo option has been removed check why------> Does't matter because redo option was for fat jets not for AK4 jets
 
-4. Recomdation  UL16preVFP 
+4. Recomdation  UL16preVFP
 	
 	pdmv
         https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
@@ -162,6 +162,13 @@
 			Cut Based ID    Trigger :
 						can we use the same which we have used in lagecy samples
 
+	LumiSectionsJSONFile
+	https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideGoodLumiSectionsJSONFile (json file paths are taken from here)
+	https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#CurRec (these recommadation seems old)
+	https://twiki.cern.ch/twiki/bin/view/CMS/PdmVDataReprocessingUL2016 (RunNumbers)
+	
+		Golden Json file : 2016 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt 
+
 5. Recomdation UL16postVFP 
 
 	pdmv 
@@ -278,6 +285,12 @@
 
                         Cut Based ID    Trigger :
                                                 corrently using root file form lagecy samples #need to update
+	LumiSectionsJSONFile
+        https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideGoodLumiSectionsJSONFile (json file paths are taken from here)
+        https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#CurRec (these recommadation seems old)
+        https://twiki.cern.ch/twiki/bin/view/CMS/PdmVDataReprocessingUL2016 (RunNumbers)
+
+		Golden Json file : 2016 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt
 
 6. Recomdation  UL17 
 
@@ -402,6 +415,12 @@
 
                         Cut Based ID    Trigger :
 					corrently using root file form lagecy samples #need to update                                                
+	LumiSectionsJSONFile
+        https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideGoodLumiSectionsJSONFile (json file paths are taken from here)
+        https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#CurRec (these recommadation seems old)
+        https://twiki.cern.ch/twiki/bin/view/CMS/PdmVDataReprocessingUL2017 (RunNumbers)
+
+		 Golden Json file : 2017 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/Legacy_2017/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt
 
 7. Recomdation UL18
 
@@ -515,4 +534,10 @@
 
                         Cut Based ID    Trigger :
                                                 #need to update
+	LumiSectionsJSONFile
+        https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideGoodLumiSectionsJSONFile (json file paths are taken from here)
+        https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#CurRec (these recommadation seems old)
+        https://twiki.cern.ch/twiki/bin/view/CMS/PdmVDataReprocessingUL2018 (RunNumbers)
+		
+		 Golden Json file : 2018 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/Legacy_2018/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt 
 
