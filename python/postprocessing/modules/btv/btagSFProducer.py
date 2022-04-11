@@ -187,7 +187,7 @@ class btagSFProducer(Module):
                         1: "comb",  # c
                         2: "incl"   # light
                     },
-                    'supported_wp': ["L", "M", "T","shape_corr"]
+                    'supported_wp': ["shape_corr"]
                 },
                 'UL2017': {
                     'inputFileName': "reshaping_deepJet_106XUL17_v3_modified.csv",
@@ -196,7 +196,7 @@ class btagSFProducer(Module):
                         1: "comb",  # c
                         2: "incl"   # light
                     },
-                    'supported_wp': ["L", "M", "T", "shape_corr"]
+                    'supported_wp': ["shape_corr"]
                 },
                 'UL2018': {
 <<<<<<< HEAD
