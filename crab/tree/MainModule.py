@@ -3,7 +3,6 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
-from scaleFactor import *
 
 class MainProducer(Module):
     def __init__(self,MC,datayear,dataset):
@@ -37,11 +36,21 @@ class MainProducer(Module):
 	pt_Thes_mu = {
                 '2016' : 26,
                 '2017' : 30,
-                '2018' : None}
+                '2018' : None,
+		'UL2016preVFP' : 26,
+		'UL2016postVFP' : 26,
+                'UL2017' : 30,
+                'UL2018' : None}
+
 	pt_Thes_el={
                 '2016' : 35,
                 '2017' : 37,
-                '2018' : None}
+                '2018' : None,
+		'UL2016preVFP' : 35,
+                'UL2016postVFP' : 35,
+                'UL2017' : 37,
+                'UL2018' : None}
+
 	if(self.MC):
 	    Ele_EtaSC = [] 
 	    Jet_dR_Ljet_Isomu,Jet_dR_Ljet_AntiIsomu,Jet_dR_Ljet_Isoel,Jet_dR_Ljet_AntiIsoel = ([]for i in range(4))
@@ -158,10 +167,11 @@ class MainProducer(Module):
 
 # define modules using the pt_Thes_mu[self.datayear]syntax 'name = lambda : constructor' to avoid having them loaded when not needed
 
-MainModuleConstr_mc_2016 = lambda : MainProducer(True,'2016',None)
-MainModuleConstr_data_2016_singleMuon = lambda : MainProducer(False,'2016','singleMuon')
-MainModuleConstr_data_2016_singleElectron = lambda : MainProducer(False,'2016','singleElectron')
+MainModuleConstr_mc_UL2016preVFP = lambda : MainProducer(True,'UL2016preVFP',None)
+MainModuleConstr_mc_UL2016postVFP = lambda : MainProducer(True,'UL2016postVFP',None)
+MainModuleConstr_data_UL2016postVFP_singleMuon = lambda : MainProducer(False,'UL2016postVFP','singleMuon')
+MainModuleConstr_data_UL2016postVFP_singleElectron = lambda : MainProducer(False,'UL2016postVFP','singleElectron')
 
-MainModuleConstr_mc_2017 = lambda : MainProducer(True,'2017',None)
-MainModuleConstr_data_2017_singleMuon = lambda : MainProducer(False,'2017','singleMuon')
-MainModuleConstr_data_2017_singleElectron = lambda : MainProducer(False,'2017','singleElectron')
+MainModuleConstr_mc_UL2017 = lambda : MainProducer(True,'UL2017',None)
+MainModuleConstr_data_UL2017_singleMuon = lambda : MainProducer(False,'UL2017','singleMuon')
+MainModuleConstr_data_UL2017_singleElectron = lambda : MainProducer(False,'UL2017','singleElectron')
