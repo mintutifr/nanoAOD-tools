@@ -35,8 +35,6 @@ keep GenPart*
 keep GenJet*
 
 keep Generator*
-drop nGenJetAK8
-drop GenJetAK8*
 
 keep PSWeight*
 
@@ -118,7 +116,6 @@ keep Jet_nMuons
 keep Jet_area
 keep Jet_bRegCorr
 keep Jet_bRegRes
-
  
 keep MET*
 keep PuppiMET*
@@ -136,3 +133,8 @@ keep Electron_EtaSC
 keep Jet_btagSF_*
 keep puWeight*
 keep LHEWeight*
+
+#------------------related to jme calculation--------------#
+keep RawMET*
+keep fixedGridRhoFastjetAll
+keep Jet_rawFactor
