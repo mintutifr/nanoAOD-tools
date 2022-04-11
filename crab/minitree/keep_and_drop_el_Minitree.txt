@@ -2,26 +2,14 @@ drop Muon*
 
 drop Electron_EtaSC
 drop 100
-drop dR_Ljet_Isomu
 drop 101
-drop dR_Ljet_AntiIsomu
 drop 102
-drop dR_Ljet_Isoel
 drop 103
-drop dR_Ljet_AntiIsoel
 
-drop Electron_deltaEtaSC
-drop Electron_eta
-drop Electron_mass
-drop Electron_phi
-drop Electron_pt
-drop Electron_charge
 
 drop Electron_dr03EcalRecHitSumEt	
 drop Electron_dr03TkSumPt
-drop Electron_dxy
 drop Electron_dxyErr
-drop Electron_dz
 drop Electron_dzErr
 drop Electron_hoe
 drop Electron_miniPFRelIso_all
@@ -31,9 +19,5 @@ drop Electron_pfRelIso03_chg
 drop Electron_r9
 drop Electron_cutBased
 drop 2
-keep Jet_pt_jes*
-keep Jet_mass_jes* 
-keep MET_pt_jes*
-keep MET_phi_jes*
 keep Muon_SF*
-keep Jet_btagSF_deepcsv*
+keep Jet_btagSF_deepjet*
