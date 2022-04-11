@@ -199,11 +199,11 @@ class MinitreeProducer(Module):
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
 	if(self.isMC==True):	
-		x_sec = 2890800
+		x_sec = 136.02
 		Lumi=1.0
-                if(self.dataYear=="2016"):Lumi = 35882.5
+                if(self.dataYear=="2016" or self.dataYear == "UL2016preVFP" or self.dataYear == "UL2016postVFP"):Lumi = 35882.5
 		elif(self.dataYear=="2017"):Lumi = 41529.5
-		NEvents = 22455794
+		NEvents = 31848000
 
 	        Xsec_wgt = (x_sec*Lumi)/NEvents
 	#print Xsec_wgt
@@ -223,19 +223,31 @@ class MinitreeProducer(Module):
 
 	#print "self.isMC = ",self.isMC
  	pt_Thes_mu={
-                '2016' : 26,
+		'2016' : 26,
                 '2017' : 30,
-                '2018' : None}
+                '2018' : None,
+                'UL2016preVFP' : 26,
+		'UL2016postVFP' : 26,
+                'UL2017' : 30,
+                'UL2018' : None}
 	pt_Thes_el={
                 '2016' : 35,
                 '2017' : 37,
-                '2018' : None}
+                '2018' : None,
+		'UL2016preVFP' : 35,
+                'UL2016postVFP' : 35,
+                'UL2017' : 37,
+                'UL2018' : None}
 	
 	if(self.isMC):
 	    TotalLumi={
                 '2016' : 35855,
                 '2017' : 41529,
-                '2018' : 41520}
+                '2018' : 41520,
+		'UL2016preVFP' : 35855,
+                'UL2016postVFP' : 35855,
+                'UL2017' : 41529,
+                'UL2018' : 41520}
 
 	    Ele_EtaSC,Electron_SF_Iso,Electron_SF_Iso_IDUp,Electron_SF_Iso_IDDown,Electron_SF_Iso_TrigUp,Electron_SF_Iso_TrigDown,Electron_SF_Veto,Electron_SF_Veto_IDUp,Electron_SF_Veto_IDDown,Electron_SF_Veto_TrigUp,Electron_SF_Veto_TrigDown,Electron_CutbasedID=(-999 for i in range(12))
 	    Muon_SF_Iso,Muon_SF_IsoUp,Muon_SF_IsoDown,Muon_SF_Iso_IDUp,Muon_SF_Iso_IDDown,Muon_SF_Iso_TrigUp,Muon_SF_Iso_TrigDown,Muon_SF_Veto,Muon_SF_Veto_IDUp,Muon_SF_Veto_IDDown,Muon_SF_Veto_TrigUp,Muon_SF_Veto_TrigDown,Muon_RelIso=(-999 for i in range(13))	
@@ -438,13 +450,15 @@ class MinitreeProducer(Module):
 		#print lepton4v.DeltaR(njet4n)
 	#print "jet_id = ",jet_id
 	Tight_b_tab_crite={
-                '2016' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
-                '2017' : 0.7476, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
-                '2018' : 0.7100} # https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
+                'UL2016preVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
+		'UL2016postVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
+                'UL2017' : 0.7476, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
+                'UL2018' : 0.7100} # https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
 	Lose_b_tab_crite={
-                '2016' : 0.0480,
-                '2017' : 0.0532,
-                '2018' : 0.0490}
+                'UL2016preVFP' : 0.0480,
+		'UL2016postVFP' :0.0480,
+                'UL2017' : 0.0532,
+                'UL2018' : 0.0490}
 	for jet in jet_id:
 	    njet4v.SetPtEtaPhiM(jet.pt,jet.eta,jet.phi,jet.mass)
             #print lepton4v.DeltaR(njet4v)
@@ -808,6 +822,41 @@ MinitreeModuleConstr2J1T0_mu_data_2017 = lambda : MinitreeProducer(2,1,False,'mu
 MinitreeModuleConstr2J1T0_el_mc_2017 = lambda : MinitreeProducer(2,1,False,'el',True,'2017')
 MinitreeModuleConstr2J1T0_el_data_2017 = lambda : MinitreeProducer(2,1,False,'el',False,'2017')
 
+
+
+#-----------------------------------------------  UL -----------------------------------------#
+
+
+MinitreeModuleConstr2J1T1_mu_mc_UL2016preVFP = lambda : MinitreeProducer(2,1,True,'mu',True,'UL2016preVFP')
+MinitreeModuleConstr2J1T1_mu_data_UL2016preVFP = lambda : MinitreeProducer(2,1,True,'mu',False,'UL2016preVFP')
+MinitreeModuleConstr2J1T1_el_mc_UL2016preVFP = lambda : MinitreeProducer(2,1,True,'el',True,'UL2016preVFP')
+MinitreeModuleConstr2J1T1_el_data_UL2016preVFP = lambda : MinitreeProducer(2,1,True,'el',False,'UL2016preVFP')
+
+MinitreeModuleConstr2J1T1_mu_mc_UL2016postVFP = lambda : MinitreeProducer(2,1,True,'mu',True,'UL2016postVFP')
+MinitreeModuleConstr2J1T1_mu_data_UL2016postVFP = lambda : MinitreeProducer(2,1,True,'mu',False,'UL2016postVFP')
+MinitreeModuleConstr2J1T1_el_mc_UL2016postVFP = lambda : MinitreeProducer(2,1,True,'el',True,'UL2016postVFP')
+MinitreeModuleConstr2J1T1_el_data_UL2016postVFP = lambda : MinitreeProducer(2,1,True,'el',False,'UL2016postVFP')
+
+MinitreeModuleConstr2J1T0_mu_mc_UL2016preVFP = lambda : MinitreeProducer(2,1,False,'mu',True,'UL2016preVFP')
+MinitreeModuleConstr2J1T0_mu_data_UL2016preVFP = lambda : MinitreeProducer(2,1,False,'mu',False,'UL2016preVFP')
+MinitreeModuleConstr2J1T0_el_mc_UL2016preVFP = lambda : MinitreeProducer(2,1,False,'el',True,'UL2016preVFP')
+MinitreeModuleConstr2J1T0_el_data_UL2016preVFP = lambda : MinitreeProducer(2,1,False,'el',False,'UL2016preVFP')
+
+MinitreeModuleConstr2J1T0_mu_mc_UL2016postVFP = lambda : MinitreeProducer(2,1,False,'mu',True,'UL2016postVFP')
+MinitreeModuleConstr2J1T0_mu_data_UL2016postVFP = lambda : MinitreeProducer(2,1,False,'mu',False,'UL2016postVFP')
+MinitreeModuleConstr2J1T0_el_mc_UL2016postVFP = lambda : MinitreeProducer(2,1,False,'el',True,'UL2016postVFP')
+MinitreeModuleConstr2J1T0_el_data_UL2016postVFP = lambda : MinitreeProducer(2,1,False,'el',False,'UL2016postVFP')
+
+MinitreeModuleConstr2J1T1_mu_mc_UL2017 = lambda : MinitreeProducer(2,1,True,'mu',True,'UL2017')
+MinitreeModuleConstr2J1T1_mu_data_UL2017 = lambda : MinitreeProducer(2,1,True,'mu',False,'UL2017')
+MinitreeModuleConstr2J1T1_el_mc_UL2017 = lambda : MinitreeProducer(2,1,True,'el',True,'UL2017')
+MinitreeModuleConstr2J1T1_el_data_UL2017 = lambda : MinitreeProducer(2,1,True,'el',False,'UL2017')
+
+MinitreeModuleConstr2J1T0_mu_mc_UL2017 = lambda : MinitreeProducer(2,1,False,'mu',True,'UL2017')
+MinitreeModuleConstr2J1T0_mu_data_UL2017 = lambda : MinitreeProducer(2,1,False,'mu',False,'UL2017')
+MinitreeModuleConstr2J1T0_el_mc_UL2017 = lambda : MinitreeProducer(2,1,False,'el',True,'UL2017')
+MinitreeModuleConstr2J1T0_el_data_UL2017 = lambda : MinitreeProducer(2,1,False,'el',False,'UL2017')
+
 #----------------------------------------------2J0T------------------------------------------------
 
 MinitreeModuleConstr2J0T1_mu_mc_2016 = lambda : MinitreeProducer(2,0,True,'mu',True,'2016')
@@ -829,6 +878,28 @@ MinitreeModuleConstr2J0T0_mu_mc_2017 = lambda : MinitreeProducer(2,0,False,'mu',
 MinitreeModuleConstr2J0T0_mu_data_2017 = lambda : MinitreeProducer(2,0,False,'mu',False,'2017')
 MinitreeModuleConstr2J0T0_el_mc_2017 = lambda : MinitreeProducer(2,0,False,'el',True,'2017')
 MinitreeModuleConstr2J0T0_el_data_2017 = lambda : MinitreeProducer(2,0,False,'el',False,'2017')
+
+#--------------------------------------------   UL   ------------------------------------------------#
+
+MinitreeModuleConstr2J0T1_mu_mc_UL2016preVFP = lambda : MinitreeProducer(2,0,True,'mu',True,'UL2016preVFP')
+MinitreeModuleConstr2J0T1_mu_data_UL2016preVFP = lambda : MinitreeProducer(2,0,True,'mu',False,'UL2016preVFP')
+MinitreeModuleConstr2J0T1_el_mc_UL2016preVFP = lambda : MinitreeProducer(2,0,True,'el',True,'UL2016preVFP')
+MinitreeModuleConstr2J0T1_el_data_UL2016preVFP = lambda : MinitreeProducer(2,0,True,'el',False,'UL2016preVFP')
+
+MinitreeModuleConstr2J0T0_mu_mc_UL2016preVFP = lambda : MinitreeProducer(2,0,False,'mu',True,'UL2016preVFP')
+MinitreeModuleConstr2J0T0_mu_data_UL2016preVFP = lambda : MinitreeProducer(2,0,False,'mu',False,'UL2016preVFP')
+MinitreeModuleConstr2J0T0_el_mc_UL2016preVFP = lambda : MinitreeProducer(2,0,False,'el',True,'UL2016preVFP')
+MinitreeModuleConstr2J0T0_el_data_UL2016preVFP = lambda : MinitreeProducer(2,0,False,'el',False,'UL2016preVFP')
+
+MinitreeModuleConstr2J0T1_mu_mc_UL2016postVFP = lambda : MinitreeProducer(2,0,True,'mu',True,'UL2016postVFP')
+MinitreeModuleConstr2J0T1_mu_data_UL2016postVFP = lambda : MinitreeProducer(2,0,True,'mu',False,'UL2016postVFP')
+MinitreeModuleConstr2J0T1_el_mc_UL2016postVFP = lambda : MinitreeProducer(2,0,True,'el',True,'UL2016postVFP')
+MinitreeModuleConstr2J0T1_el_data_UL2016postVFP = lambda : MinitreeProducer(2,0,True,'el',False,'UL2016postVFP')
+
+MinitreeModuleConstr2J0T0_mu_mc_UL2016postVFP = lambda : MinitreeProducer(2,0,False,'mu',True,'UL2016postVFP')
+MinitreeModuleConstr2J0T0_mu_data_UL2016postVFP = lambda : MinitreeProducer(2,0,False,'mu',False,'UL2016postVFP')
+MinitreeModuleConstr2J0T0_el_mc_UL2016postVFP = lambda : MinitreeProducer(2,0,False,'el',True,'UL2016postVFP')
+MinitreeModuleConstr2J0T0_el_data_UL2016postVFP = lambda : MinitreeProducer(2,0,False,'el',False,'UL2016postVFP')
 
 #----------------------------------------------3J1T-----------------------------------------------
 

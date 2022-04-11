@@ -200,7 +200,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
 	    if(dataYear=='UL2016' and iso >=0.2): # for iso<0.06 we are using persionlly created file axies are reverted
             	if(pt >= hSF[sf_][prod].GetYaxis().GetXmax()): pt = hSF[sf_][prod].GetYaxis().GetXmax() - 1.0
 	    else:
-		 if(pt >= hSF[sf_][prod].GetXaxis().GetXmax()): pt = hSF[sf_][prod].GetrXaxis().GetXmax() - 1.0
+		 if(pt >= hSF[sf_][prod].GetXaxis().GetXmax()): pt = hSF[sf_][prod].GetXaxis().GetXmax() - 1.0
 	    #print "SF = ", SF
 	    #print "Period = ", Period
 	    #print "pt = ",pt
