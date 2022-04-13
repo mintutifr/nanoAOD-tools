@@ -39,6 +39,7 @@
 	2. jecredo option has been removed check why------> Does't matter because redo option was for fat jets not for AK4 jets
 
 4. Crab submission for MC skimtree
+
         1. Lines in crab_cfg_skimTree.py must check before submission:
                 for MC:
                         config.Data.splitting = 'FileBased'
