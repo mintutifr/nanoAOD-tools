@@ -118,4 +118,22 @@ Datasets_sys_MC_UL2016APV = {
 		'Tbarchannel_erdON' : '/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_erdON_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM',
 }
 
+Datasets_SingleMuon_data_UL2016 ={
+	'Run2016B-ver1_mu' : '/SingleMuon/Run2016B-ver1_HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
+	'Run2016B-ver2_mu' : '/SingleMuon/Run2016B-ver2_HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
+	'Run2016C-HIPM_mu' : '/SingleMuon/Run2016C-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
+	'Run2016D-HIPM_mu' : '/SingleMuon/Run2016D-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
+	'Run2016E-HIPM_mu' : '/SingleMuon/Run2016E-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
+	'Run2016F-HIPM_mu' : '/SingleMuon/Run2016F-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
+}
+
+
+Datasets_SingleElectron_data_UL2016APV =   {
+	'Run2016B-ver1_el' : '/SingleElectron/Run2016B-ver1_HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
+	'Run2016B-ver2_el' : '/SingleElectron/Run2016B-ver2_HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
+	'Run2016C-HIPM_el' : '/SingleElectron/Run2016C-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
+	'Run2016D-HIPM_el' : '/SingleElectron/Run2016D-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
+	'Run2016E-HIPM_el' : '/SingleElectron/Run2016E-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
+	'Run2016F-HIPM_el' : '/SingleElectron/Run2016F-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
+}
 

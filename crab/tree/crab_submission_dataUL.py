@@ -2,7 +2,7 @@ import fileinput, string, sys, os, time, datetime
 import argparse as arg 
 
 parser = arg.ArgumentParser(description='inputs discription')
-parser.add_argument('-y', '--year', dest='years', type=str, nargs=1, help="Year [ UL2016postVFP, UL2017, UL2018]")
+parser.add_argument('-y', '--year', dest='years', type=str, nargs=1, help="Year [ UL2016preVFP , UL2016postVFP , UL2017 , UL2018]")
 parser.add_argument('-l', '--lep', dest='leptons', type=str, nargs=1, help="lepton [ el , mu ]")
 
 
@@ -12,7 +12,7 @@ if (args.years == None or args.leptons == None):
         print "USAGE: %s [-h] [-y <Data year> -l <lepton>]"%(sys.argv [0])
         sys.exit (1)
 
-if args.years[0] not in ['UL2016postVFP','UL2017','UL2018']:
+if args.years[0] not in ['UL2016preVFP','UL2016postVFP','UL2017','UL2018']:
     print('Error: Incorrect choice of year, use -h for help')
     exit()
 
@@ -26,6 +26,14 @@ print "lepton = ",args.leptons[0]
 lep    = args.leptons[0]
 year   = args.years[0]
 date   = datetime.datetime.now()
+
+if(year == 'UL2016preVFP'):                                                                         
+    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Data_preVFP_"+lep+"/check/"          
+    from dataset_UL2016postVFP import *
+    if(lep=="mu"):
+        Datasets = Datasets_SingleMuon_data_UL2016APV                                                   
+    if(lep=="el"):
+        Datasets = Datasets_SingleElectron_data_UL2016APV 
 
 if(year == 'UL2016postVFP'):
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Data_postVFP_"+lep+"/check/"
@@ -59,18 +67,20 @@ def replacemachine(fileName, sourceText, replaceText):
     print "All went well, the modifications are done"
     ##################################################################
 
-for i in range(0,1):#len(RequestNames)):
+for i in range(0,4):#len(RequestNames)):
     RequestName = RequestNames[i]
     Dataset = Datasets[RequestName]
     print Dataset
     print RequestName
-    update_RequestName = "config.General.requestName = '"+RequestName+"_Tree'\n" 
+    update_RequestName = "config.General.requestName = '"+RequestName+"_Tree_"+year+"'\n" 
     update_Dataset = "config.Data.inputDataset = '"+Dataset+"'\n"
     update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+RequestName+"'\n"
     update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_"+RequestName+"'\n"
     if(year=='UL2016postVFP'): update_Golgonjsonfile = "config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt'\n"
     elif(year=='UL2017'): update_Golgonjsonfile = "config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/Legacy_2017/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt'\n"
     elif(year=='UL2017'): update_Golgonjsonfile = "config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/Legacy_2018/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt'\n"
+    update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"
+
  
 #    update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_october_Seventeen_"+RequestName[i]+"'\n"
     update_InputFiles = "config.JobType.inputFiles = ['crab_script_skimTree.py','btv.py','../../scripts/haddnano.py','keep_and_drop.txt','MainModule.py']\n"    
@@ -86,6 +96,7 @@ for i in range(0,1):#len(RequestNames)):
     replacemachine(cfgfile,'config.Data.outputDatasetTag =', update_DatasetTag )
     replacemachine(cfgfile,'config.JobType.inputFiles =', update_InputFiles )
     replacemachine(cfgfile,'config.Data.lumiMask =', update_Golgonjsonfile )
+    replacemachine(cfgfile,'config.Site.storageSite =', update_site )
     replacemachine(scriptfile,'modules=', update_module )
 
     cmd_crab_submit = "crab submit -c crab_cfg_skimTree.py"

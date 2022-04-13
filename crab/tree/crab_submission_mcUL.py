@@ -33,7 +33,7 @@ if(year == 'UL2017'):
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SEVENTEEN/MC/check/"
     Datasets = Datasets_MC_UL2017
 
-RequestName = Datasets.keys()
+RequestNames = Datasets.keys()
 print "len(Datasets) = ",len(Datasets)
 
 cfgfile = "crab_cfg_skimTree.py"
@@ -50,11 +50,13 @@ def replacemachine(fileName, sourceText, replaceText):
 
 #print RequestName
 for i in range(0,1):#len(Datasets)):
-    print RequestName[i], " : ",Datasets[RequestName[i]]
-    update_RequestName = "config.General.requestName = '"+RequestName[i]+"_Tree_"+year+"'\n" 
-    update_Dataset = "config.Data.inputDataset = '"+Datasets[RequestName[i]]+"'\n"
-    update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+RequestName[i]+"'\n"
-    update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName[i]+"_check'\n"
+    RequestName = RequestNames[i]
+    Dataset = Datasets[RequestName]
+    print RequestName, " : ",Dataset
+    update_RequestName = "config.General.requestName = '"+RequestName+"_Tree_"+year+"'\n" 
+    update_Dataset = "config.Data.inputDataset = '"+Dataset+"'\n"
+    update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+RequestName+"'\n"
+    update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName+"_check'\n"
     update_InputFiles = "config.JobType.inputFiles = ['crab_script_skimTree.py','../../scripts/haddnano.py','keep_and_drop.txt','MainModule.py','btv.py']\n"    
     update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"
     update_module = "\t\tmodules=[MainModuleConstr_mc_"+year+"(),btagSF"+year+"(),puWeight_"+year+"()],\n"
@@ -82,6 +84,6 @@ for i in range(0,1):#len(Datasets)):
     #os.system(cmd_rm_dir)
 
 
-    print "DONE -----",RequestName[i],"--------------------------------------------------------------------------------------------"
+    print "DONE -----",RequestName,"--------------------------------------------------------------------------------------------"
     #time.sleep(10) 
     

@@ -38,7 +38,31 @@
 
 	2. jecredo option has been removed check why------> Does't matter because redo option was for fat jets not for AK4 jets
 
-4. Recomdation  UL16preVFP
+4. Crab submission for MC skimtree
+        1. Lines in crab_cfg_skimTree.py must check before submission:
+                for MC:
+                        config.Data.splitting = 'FileBased'
+                        config.Data.unitsPerJob = 1
+                        config.Data.publication = True
+                for data:
+                        config.Data.splitting = 'LumiBased'
+                        config.Data.unitsPerJob = 150
+                        config.Data.lumiMask = <path to Json file>
+                        config.Data.publication = True
+
+		these chages chages has to be done before we run "crab_submission_mcUL.py" or "crab_submission_dataUL.py" since these file can not modify the line starting with "#"
+                other configuration are taken care by "crab_submission_mcUL.py" and "crab_submission_dataUL.py" file
+
+        2. Crab submission for UL mc samples can be done using "crab_submission_mcUL.py" file using the following commond:
+
+                python crab_submission_mcUL.py  -y UL2016preVFP -h (-y stands for year -h stands for help, Script have to run without -h option otherwise it prints the help option only)
+
+                for new User user name <mikumar> and the site name <T2_IN_TIFR> must be changes accordingly
+
+                        a. outputDir = "/store/user/<username>/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP/check/"
+                        b. config.Site.storageSite = "<sitename>" (need to chage storege unit accordingly)
+
+5. Recomdation  UL16preVFP
 	
 	pdmv
         https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
@@ -169,7 +193,7 @@
 	
 		Golden Json file : 2016 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt 
 
-5. Recomdation UL16postVFP 
+6. Recomdation UL16postVFP 
 
 	pdmv 
 	https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
@@ -292,7 +316,7 @@
 
 		Golden Json file : 2016 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt
 
-6. Recomdation  UL17 
+7. Recomdation  UL17 
 
 	pdmv
         https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
@@ -422,7 +446,7 @@
 
 		 Golden Json file : 2017 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/Legacy_2017/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt
 
-7. Recomdation UL18
+8. Recomdation UL18
 
 	pdmv
         https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
@@ -540,4 +564,5 @@
         https://twiki.cern.ch/twiki/bin/view/CMS/PdmVDataReprocessingUL2018 (RunNumbers)
 		
 		 Golden Json file : 2018 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/Legacy_2018/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt 
+
 
