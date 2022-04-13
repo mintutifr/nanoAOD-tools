@@ -107,12 +107,6 @@ Datasets_sys_MC_UL2016 ={
 }		
 
 Datasets_SingleMuon_data_UL2016 ={
-	'Run2016B-ver1_mu' : '/SingleMuon/Run2016B-ver1_HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
-	'Run2016B-ver2_mu' : '/SingleMuon/Run2016B-ver2_HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
-	'Run2016C-HIPM_mu' : '/SingleMuon/Run2016C-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
-	'Run2016D-HIPM_mu' : '/SingleMuon/Run2016D-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
-	'Run2016E-HIPM_mu' : '/SingleMuon/Run2016E-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
-	'Run2016F-HIPM_mu' : '/SingleMuon/Run2016F-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
 	'Run2016F_mu'      : '/SingleMuon/Run2016F-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
 	'Run2016G_mu'      : '/SingleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
 	'Run2016H_mu'      : '/SingleMuon/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD'	
@@ -120,12 +114,6 @@ Datasets_SingleMuon_data_UL2016 ={
 
 
 Datasets_SingleElectron_data_UL2016 =   {
-	'Run2016B-ver1_el' : '/SingleElectron/Run2016B-ver1_HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
-	'Run2016B-ver2_el' : '/SingleElectron/Run2016B-ver2_HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
-	'Run2016C-HIPM_el' : '/SingleElectron/Run2016C-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
-	'Run2016D-HIPM_el' : '/SingleElectron/Run2016D-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
-	'Run2016E-HIPM_el' : '/SingleElectron/Run2016E-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
-	'Run2016F-HIPM_el' : '/SingleElectron/Run2016F-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
 	'Run2016F_el'      : '/SingleElectron/Run2016F-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
 	'Run2016G_el'      : '/SingleElectron/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD',
 	'Run2016H_el'      : '/SingleElectron/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD'
