@@ -1,44 +1,12 @@
-1. Genral
-
-	Jme Module check the recomdation file 
-
-2. Specific
-
-     1. Btagging evoluvation
-
-     		#EfficiencyModule.py (we are not using it now this was for fix wp only and now we moved to iterativeFit)
-     		1. Check the efficiency are calculted with the recommaded lose, midium and tight criteria  at "https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation"
-		2. check we are using correct Module producer while creating efficiency file "EfficiencyConstr_2016"
-
-     2. Tree crab
-
-     		#MainModule.py
-     		1. chose the right module Run "Year" as function
-		2. Look at the correctorlly written dleverd luminocity "TotalLumi" for the lepton sale factor
-		
-		#scaleFactor.py
-		1. Check the paths for the efficiency file are correctly provided "mu_fpath" and "el_fpath"
-
-	 	#btagSFProducer.py
-	 	1. check the recomandaion for the csv file at "https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation" if reco chage then put new csv file in data and update module with new file name
-	 	2. check the Module producer we are going to run "btagSF2016"
- 
-		#puWeightProducer.py
-		1.check you runing right module "puWeight_2016()"
-
-		#jmeModule
-		1.check the JEC recomation at "https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC" if it reco change the then put the new tar ball in data and chage the "jecTagsMC and jecTagsDATA" in jetmetHelperRun2.py
-		2.if JEC reco chage the check the "globalTag" in  jetmetUncertainties.py
-		3.check the JER recomandation at "https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution#Run2_JER_uncertainty_correlation" if the reco chaged the put the new taball in data and chage the "jerTagsMC" in jetmetHelperRun2.py
 
 
-3. Warnings
+1. Warnings
 
-	1. python/postprocessing/modules/common/PrefireCorr16.py is not there in new setup
+	1. python/postprocessing/modules/common/PrefireCorr16.py is not there in new setup ------> No worries prefire weights are provided in nanoaod files
 
 	2. jecredo option has been removed check why------> Does't matter because redo option was for fat jets not for AK4 jets
 
-4. Crab submission for MC skimtree
+2. Crab submission for MC skimtree
 
 	1. Lines in crab_cfg_skimTree.py must check before submission:
                 for MC:
@@ -63,7 +31,7 @@
                         a. outputDir = "/store/user/<username>/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP/check/"
                         b. config.Site.storageSite = "<sitename>" (need to chage storege unit accordingly)
 
-5. Recomdation  UL16preVFP
+3. Recomdation  UL16preVFP
 	
 	pdmv
         https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
@@ -194,7 +162,7 @@
 	
 		Golden Json file : 2016 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt 
 
-6. Recomdation UL16postVFP 
+4. Recomdation UL16postVFP 
 
 	pdmv 
 	https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
@@ -317,7 +285,7 @@
 
 		Golden Json file : 2016 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt
 
-7. Recomdation  UL17 
+5. Recomdation  UL17 
 
 	pdmv
         https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
@@ -447,7 +415,7 @@
 
 		 Golden Json file : 2017 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/Legacy_2017/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt
 
-8. Recomdation UL18
+6. Recomdation UL18
 
 	pdmv
         https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
@@ -567,3 +535,31 @@
 		 Golden Json file : 2018 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/Legacy_2018/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt 
 
 
+6. Specific check while swiching b/w year data and mc processing 
+
+     1. Btagging evoluvation
+
+     		#EfficiencyModule.py (we are not using it now this was for fix wp only and now we moved to iterativeFit)
+     		1. Check the efficiency are calculted with the recommaded lose, midium and tight criteria  at "https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation"
+		2. check we are using correct Module producer while creating efficiency file "EfficiencyConstr_2016"
+
+     2. Tree crab
+
+     		#MainModule.py
+     		1. chose the right module Run "Year" as function
+		2. Look at the correctorlly written dleverd luminocity "TotalLumi" for the lepton sale factor
+		
+		#scaleFactor.py
+		1. Check the paths for the efficiency file are correctly provided "mu_fpath" and "el_fpath"
+
+	 	#btagSFProducer.py
+	 	1. check the recomandaion for the csv file at "https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation" if reco chage then put new csv file in data and update module with new file name
+	 	2. check the Module producer we are going to run "btagSF2016"
+ 
+		#puWeightProducer.py
+		1.check you runing right module "puWeight_2016()"
+
+		#jmeModule
+		1.check the JEC recomation at "https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC" if it reco change the then put the new tar ball in data and chage the "jecTagsMC and jecTagsDATA" in jetmetHelperRun2.py
+		2.if JEC reco chage the check the "globalTag" in  jetmetUncertainties.py
+		3.check the JER recomandation at "https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution#Run2_JER_uncertainty_correlation" if the reco chaged the put the new taball in data and chage the "jerTagsMC" in jetmetHelperRun2.py
