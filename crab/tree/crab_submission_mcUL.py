@@ -49,20 +49,19 @@ def replacemachine(fileName, sourceText, replaceText):
     ##################################################################
 
 #print RequestName
-for i in range(0,3):#len(Datasets)):
+for i in range(0,1):#len(Datasets)):
     print RequestName[i], " : ",Datasets[RequestName[i]]
     update_RequestName = "config.General.requestName = '"+RequestName[i]+"_Tree_"+year+"'\n" 
     update_Dataset = "config.Data.inputDataset = '"+Datasets[RequestName[i]]+"'\n"
     update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+RequestName[i]+"'\n"
     update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName[i]+"_check'\n"
     update_InputFiles = "config.JobType.inputFiles = ['crab_script_skimTree.py','../../scripts/haddnano.py','keep_and_drop.txt','MainModule.py','btv.py']\n"    
-    #if(year == 'UL2016preAPV'):update_module = "\t\tmodules=[MainModuleConstr_mc_UL2016preVFP(),btagSF2016preVFP(),puWeight_UL2016preVFP],\n"
-    #if(year == 'UL2016postAPV'):update_module = "\t\tmodules=[MainModuleConstr_mc_UL2016postVFP(),btagSF2016postVFP(),puWeight_UL2016postVFP],\n"
-    #if(year == 'UL2017'):update_module = "\t\tmodules=[MainModuleConstr_mc_2017(),btagSF2017(),puWeight_UL2017()],\n"
-    #if(year == 'UL2017'):update_module = "\t\tmodules=[MainModuleConstr_mc_2018(),btagSF2018(),puWeight_UL2018()],\n"
+    update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"
     update_module = "\t\tmodules=[MainModuleConstr_mc_"+year+"(),btagSF"+year+"(),puWeight_"+year+"()],\n"
+
     print "RequestName = ",update_RequestName ,"\tDatasets = ",update_Dataset,"\tDirBase = ",update_DirBase,"\tDatasetTag = ",update_DatasetTag 
     print "InputFiles = ",update_InputFiles
+    print  update_site
     print  update_module
 
     replacemachine(cfgfile,'config.General.requestName =', update_RequestName)
@@ -70,6 +69,7 @@ for i in range(0,3):#len(Datasets)):
     replacemachine(cfgfile,'config.Data.outLFNDirBase =', update_DirBase )
     replacemachine(cfgfile,'config.Data.outputDatasetTag =', update_DatasetTag )
     replacemachine(cfgfile,'config.JobType.inputFiles =', update_InputFiles )
+    replacemachine(cfgfile,'config.Site.storageSite =', update_site )
     replacemachine(scriptfile,'modules=', update_module ) 
 
     cmd_crab_submit = "crab submit -c "+cfgfile
