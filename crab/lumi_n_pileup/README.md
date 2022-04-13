@@ -1,3 +1,6 @@
+#Run Dependent Pileup distribition can we created 
+pileupCalc.py -i RunC_UL2017.txt --inputLumiJSON pileup_latest.txt --calcMode true --minBiasXsec 69200 --maxPileupBin 99 --numPileupBins 99 MyDataPileupHistogram_RunC_UL2017.root
+
 #To Make new files for paticular runs look at the following twiki
 https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideGoodLumiSectionsJSONFile
 
@@ -7,18 +10,17 @@ https://twiki.cern.ch/twiki/bin/view/CMS/BrilcalcQuickStart
 	export PATH=$HOME/.local/bin:/cvmfs/cms-bril.cern.ch/brilconda/bin:$PATH
 	pip install --user --upgrade brilws
 	
-#To get the latest tag for the calculation visit the following page
-https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#CurRec
-
-	brilcalc lumi --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_PHYSICS.json -u /fb -i Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt
 	
 #Golden jeson file
 https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideGoodLumiSectionsJSONFile
 /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/
 
+#To get the latest tag for the calculation visit the following page
+https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#CurRec
 
-#Run Dependent Pileup distribition can we created 
-pileupCalc.py -i RunC_UL2017.txt --inputLumiJSON pileup_latest.txt --calcMode true --minBiasXsec 69200 --maxPileupBin 99 --numPileupBins 99 MyDataPileupHistogram_RunC_UL2017.root
+	brilcalc lumi --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_PHYSICS.json -u /fb -i Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt
+	brilcalc lumi --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_PHYSICS.json -u /fb -i Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt
+	brilcalc lumi --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_PHYSICS.json -u /fb -i Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt 
 
 |UL206			|Lumi (1/ub)	|Lumi (1/pb)|
 |:---------------------:|:-------------:|:----------|
@@ -46,3 +48,12 @@ pileupCalc.py -i RunC_UL2017.txt --inputLumiJSON pileup_latest.txt --calcMode tr
 |2017 RUN E	|9314581016		|9.314581016|
 |2017 RUN F	|13539905374		|13.53990537|
 |All era	|41479680528		|41.47968053|
+
+
+|UL2018		|Lumi (1/ub)		|Lumi ( 1/fb| 
+|:-------------:|:---------------------:|:----------|
+|2017 RUN A	|14027614284		|14.02761428|
+|2017 RUN B	|7066552169		|7.066552169|
+|2017 RUN C	|6898816878		|6.898816878|
+|2017 RUN D	|31229758296		|31.2297583 |
+|All era	|59222741627		|59.22274163|
