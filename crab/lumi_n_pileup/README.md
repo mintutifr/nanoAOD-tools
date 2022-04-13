@@ -4,12 +4,45 @@ https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideGoodLumiSectionsJSONFile
 #To set the brill cal inviroment vist the following page
 https://twiki.cern.ch/twiki/bin/view/CMS/BrilcalcQuickStart
 
+	export PATH=$HOME/.local/bin:/cvmfs/cms-bril.cern.ch/brilconda/bin:$PATH
+	pip install --user --upgrade brilws
+	
 #To get the latest tag for the calculation visit the following page
 https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#CurRec
 
+	brilcalc lumi --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_PHYSICS.json -u /fb -i Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt
+	
 #Golden jeson file
 https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideGoodLumiSectionsJSONFile
 /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/
 
+
 #Run Dependent Pileup distribition can we created 
 pileupCalc.py -i RunC_UL2017.txt --inputLumiJSON pileup_latest.txt --calcMode true --minBiasXsec 69200 --maxPileupBin 99 --numPileupBins 99 MyDataPileupHistogram_RunC_UL2017.root
+
+|UL206			|Lumi (1/ub)	|Lumi (1/pb)|
+|:---------------------:|:-------------:|:----------|
+|2016 RUN B_ver1	|0		|0	    |
+|2016 RUN B_ver2	|5829427727	|5.829427727|
+|2016 RUN C		|2621304822	|2.621304822|
+|2016 RUN D		|4286031797	|4.286031797|
+|2016 RUN E		|4065974751	|4.065974751|
+|2016 RUN F_HIPM	|2718489255	|2.718489255|
+|Total BCDEF		|19521228352	|19.52122835|
+|2016 RUN F		|418771191	|0.418771191|
+|2016 RUN G		|7653261227	|7.653261227|
+|2016 RUN H		|8740119304	|8.740119304|
+|total FGH		|16812151722	|16.81215172|
+|All era		|36333380074	|36.33338007|
+
+
+
+|UL2017		|Lumi (1/ub)		|Lumi ( 1/fb)|
+|:-------------:|:---------------------:|:----------|
+|2017 RUN A	|0			|0
+|2017 RUN B	|4803371586		|4.803371586|
+|2017 RUN C	|9574029838		|9.574029838|
+|2017 RUN D	|4247792714		|4.247792714|
+|2017 RUN E	|9314581016		|9.314581016|
+|2017 RUN F	|13539905374		|13.53990537|
+|All era	|41479680528		|41.47968053|
