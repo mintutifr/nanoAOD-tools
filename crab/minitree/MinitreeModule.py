@@ -229,7 +229,7 @@ class MinitreeProducer(Module):
                 'UL2016preVFP' : 26,
 		'UL2016postVFP' : 26,
                 'UL2017' : 30,
-                'UL2018' : None}
+                'UL2018' : None} #need to check the trigger
 	pt_Thes_el={
                 '2016' : 35,
                 '2017' : 37,
@@ -237,17 +237,17 @@ class MinitreeProducer(Module):
 		'UL2016preVFP' : 35,
                 'UL2016postVFP' : 35,
                 'UL2017' : 37,
-                'UL2018' : None}
+                'UL2018' : None} #need to check the trigger
 	
 	if(self.isMC):
 	    TotalLumi={
                 '2016' : 35855,
                 '2017' : 41529,
                 '2018' : 41520,
-		'UL2016preVFP' : 35855,
-                'UL2016postVFP' : 35855,
+		'UL2016preVFP' :  19521,
+                'UL2016postVFP' : 16812,
                 'UL2017' : 41529,
-                'UL2018' : 41520}
+                'UL2018' : 59222}
 
 	    Ele_EtaSC,Electron_SF_Iso,Electron_SF_Iso_IDUp,Electron_SF_Iso_IDDown,Electron_SF_Iso_TrigUp,Electron_SF_Iso_TrigDown,Electron_SF_Veto,Electron_SF_Veto_IDUp,Electron_SF_Veto_IDDown,Electron_SF_Veto_TrigUp,Electron_SF_Veto_TrigDown,Electron_CutbasedID=(-999 for i in range(12))
 	    Muon_SF_Iso,Muon_SF_IsoUp,Muon_SF_IsoDown,Muon_SF_Iso_IDUp,Muon_SF_Iso_IDDown,Muon_SF_Iso_TrigUp,Muon_SF_Iso_TrigDown,Muon_SF_Veto,Muon_SF_Veto_IDUp,Muon_SF_Veto_IDDown,Muon_SF_Veto_TrigUp,Muon_SF_Veto_TrigDown,Muon_RelIso=(-999 for i in range(13))	
@@ -474,7 +474,7 @@ class MinitreeProducer(Module):
 			btagjet_id.append(jet)
 		#print len(btagjet_id)
 
-	print len(jet_id)," ",len(btagjet_id)
+	#print len(jet_id)," ",len(btagjet_id)
 	#print "--------------------------------------2 J 1 T-----------------------------"
 	if( self.Total_Njets == 2 and  self.BTag_Njets == 1):
 	    #print "--------------------------------------2 J 1 T-----------------------------"
