@@ -23,11 +23,11 @@ if args.samples[0] not in ['Mc', 'Data']:
 elif args.samples[0] == "Data" and args.leptons[0] not in ['mu','el']:
     print('Error: Incorrect choice of lepton type, use -h for help')
     exit()
+elif args.samples[0] == "Data": lep = args.leptons[0]
 
 print "year = ",args.inputs[0]
 year   = args.inputs[0]
 sample = args.samples[0]
-lep = args.leptons[0]
 
 if(year == 'UL2016preVFP'):
     from dataset_UL2016preVFP import *
@@ -67,7 +67,7 @@ for i in range(0,len(RequestNames)):
     resubmit_job = 'NO'
     if(output.count("failed")>=2):resubmit_job = raw_input("enouter 'failed' twice should I resubmit the job : ")
     if(resubmit_job=="yes" or resubmit_job=="1"):
-	cmd_crab_resubmit = "crab resubmit -d "+RN #+" --maxjobruntime 2750"
+	cmd_crab_resubmit = "crab resubmit -d "+RN  #" --maxmemory 4000"#+" --maxjobruntime 2750"
 	os.system(cmd_crab_resubmit)
     print "DONE ---------------------------crab status---------------------------------------------------------------------"
     cmd_crab_report = "crab report -d "+RN

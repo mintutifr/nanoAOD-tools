@@ -28,15 +28,15 @@ year   = args.years[0]
 date   = datetime.datetime.now()
 
 if(year == 'UL2016preVFP'):                                                                         
-    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Data_preVFP_"+lep+"/check/"          
-    from dataset_UL2016postVFP import *
+    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Data_preVFP_"+lep+"/"          
+    from dataset_UL2016preVFP import *
     if(lep=="mu"):
         Datasets = Datasets_SingleMuon_data_UL2016APV                                                   
     if(lep=="el"):
         Datasets = Datasets_SingleElectron_data_UL2016APV 
 
 if(year == 'UL2016postVFP'):
-    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Data_postVFP_"+lep+"/check/"
+    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Data_postVFP_"+lep+"/"
     from dataset_UL2016postVFP import *
     if(lep=="mu"):
     	Datasets = Datasets_SingleMuon_data_UL2016
@@ -67,7 +67,7 @@ def replacemachine(fileName, sourceText, replaceText):
     print "All went well, the modifications are done"
     ##################################################################
 
-for i in range(0,4):#len(RequestNames)):
+for i in range(0,len(RequestNames)):
     RequestName = RequestNames[i]
     Dataset = Datasets[RequestName]
     print Dataset
@@ -76,9 +76,9 @@ for i in range(0,4):#len(RequestNames)):
     update_Dataset = "config.Data.inputDataset = '"+Dataset+"'\n"
     update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+RequestName+"'\n"
     update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_"+RequestName+"'\n"
-    if(year=='UL2016postVFP'): update_Golgonjsonfile = "config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt'\n"
+    if(year=='UL2016postVFP' or year=='UL2016preVFP'): update_Golgonjsonfile = "config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt'\n"
     elif(year=='UL2017'): update_Golgonjsonfile = "config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/Legacy_2017/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt'\n"
-    elif(year=='UL2017'): update_Golgonjsonfile = "config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/Legacy_2018/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt'\n"
+    elif(year=='UL2018'): update_Golgonjsonfile = "config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/Legacy_2018/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt'\n"
     update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"
 
  
@@ -100,7 +100,7 @@ for i in range(0,4):#len(RequestNames)):
     replacemachine(scriptfile,'modules=', update_module )
 
     cmd_crab_submit = "crab submit -c crab_cfg_skimTree.py"
-    #os.system(cmd_crab_submit)  
+    os.system(cmd_crab_submit)  
  
     #cmd_crab_kill = "crab kill -d crab_"+RequestName[i]
     #os.system(cmd_crab_kill)
