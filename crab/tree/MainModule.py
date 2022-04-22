@@ -169,7 +169,11 @@ class MainProducer(Module):
 
 MainModuleConstr_mc_UL2016preVFP = lambda : MainProducer(True,'UL2016preVFP',None)
 MainModuleConstr_mc_UL2016postVFP = lambda : MainProducer(True,'UL2016postVFP',None)
+
+MainModuleConstr_data_UL2016preVFP_singleMuon = lambda : MainProducer(False,'UL2016preVFP','singleMuon')
 MainModuleConstr_data_UL2016postVFP_singleMuon = lambda : MainProducer(False,'UL2016postVFP','singleMuon')
+
+MainModuleConstr_data_UL2016preVFP_singleElectron = lambda : MainProducer(False,'UL2016preVFP','singleElectron')
 MainModuleConstr_data_UL2016postVFP_singleElectron = lambda : MainProducer(False,'UL2016postVFP','singleElectron')
 
 MainModuleConstr_mc_UL2017 = lambda : MainProducer(True,'UL2017',None)
