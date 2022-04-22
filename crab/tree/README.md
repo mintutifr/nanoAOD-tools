@@ -2,13 +2,13 @@
 
 ## Warnings
 
-	1. python/postprocessing/modules/common/PrefireCorr16.py is not there in new setup ------> No worries prefire weights are provided in nanoaod files
+* python/postprocessing/modules/common/PrefireCorr16.py is not there in new setup ------> No worries prefire weights are provided in nanoaod files
 
-	2. jecredo option has been removed check why------> Does't matter because redo option was for fat jets not for AK4 jets
+* jecredo option has been removed check why------> Does't matter because redo option was for fat jets not for AK4 jets
 
 ## Crab submission for MC skimtree
 
-	1. Lines in crab_cfg_skimTree.py must check before submission:
+* Lines in crab_cfg_skimTree.py must check before submission:
                 for MC:
                         config.Data.splitting = 'FileBased'
                         config.Data.unitsPerJob = 1
@@ -22,7 +22,7 @@
 		these chages chages has to be done before we run "crab_submission_mcUL.py" or "crab_submission_dataUL.py" since these file can not modify the line starting with "#"
 		other configuration are taken care by "crab_submission_mcUL.py" and "crab_submission_dataUL.py" file
 
-	2. Crab submission for UL mc samples can be done using "crab_submission_mcUL.py" file using the following commond:
+* Crab submission for UL mc samples can be done using "crab_submission_mcUL.py" file using the following commond:
 
 		python crab_submission_mcUL.py  -y UL2016preVFP -h (-y stands for year -h stands for help, Script have to run without -h option otherwise it prints the help option only)
 
@@ -33,16 +33,14 @@
 
 ## Recomdation  UL16preVFP
 	
-	pdmv
-        https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
-        https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis
+* pdmv  https://twiki.cern.ch/twiki/bin/view/CMS/PdmV  https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis
  
 		Global Tags:
 
     			Data: 106X_dataRun2_v35
     			MC 2016APV: 106X_mcRun2_asymptotic_preVFP_v11
 
-	Btagging (RunIISummer20UL16)
+*	Btagging (RunIISummer20UL16)
 	https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16preVFP
 
 		DeepJet=DeepFlavour 
@@ -565,10 +563,10 @@
 		3.check the JER recomandation at "https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution#Run2_JER_uncertainty_correlation" if the reco chaged the put the new taball in data and chage the "jerTagsMC" in jetmetHelperRun2.py
 
 ## Get the data set name for minitree submission
-	1. Use "check_crab_status.py" file to check the crab status for all the submitted dataset
-	2. Save the output of the "check_crab_status.py" in .txt or .py file
-	3. Run "find_phy3_dataset.py" with saved file as a input. This will find and print the array of phys3 datset names.
+* Use "check_crab_status.py" file to check the crab status for all the submitted dataset
+* Save the output of the "check_crab_status.py" in .txt or .py file
+* Run "find_phy3_dataset.py" with saved file as a input. This will find and print the array of phys3 datset names.
 
 ## Invalidation of wrongly produced dataset
-	1. Get the  array of the wrongly produced dataset as mension above
-	2. copy and pest the the array in "invalidate.py" file as datasets = [your array of datasets] and run it with python. 
+* Get the  array of the wrongly produced dataset as mension above
+* copy and pest the the array in "invalidate.py" file as datasets = [your array of datasets] and run it with python. 
