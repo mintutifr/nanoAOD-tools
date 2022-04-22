@@ -20,17 +20,17 @@ date   = datetime.datetime.now()
 
 if(year == 'UL2016preVFP'):
     from dataset_UL2016preVFP import *
-    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP/check/"
-    Datasets = Datasets_MC_UL2016APV
+    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP/"
+    Datasets = Datasets_MC_UL2016APV_bkg
 
 if(year == 'UL2016postVFP'):
     from dataset_UL2016postVFP import *
-    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/MC_postVFP/check/"
+    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/MC_postVFP/"
     Datasets = Datasets_MC_UL2016
 
 if(year == 'UL2017'):
     from dataset_UL2017 import *
-    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SEVENTEEN/MC/check/"
+    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SEVENTEEN/MC/"
     Datasets = Datasets_MC_UL2017
 
 RequestNames = Datasets.keys()
