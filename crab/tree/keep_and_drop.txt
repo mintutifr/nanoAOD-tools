@@ -138,3 +138,6 @@ keep LHEWeight*
 keep RawMET*
 keep fixedGridRhoFastjetAll
 keep Jet_rawFactor
+keep Jet_muonSubtrFactor
+keep nCorrT1METJet
+keep CorrT1METJet*
