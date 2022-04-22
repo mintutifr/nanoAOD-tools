@@ -1,12 +1,12 @@
+# crab sumission and validation of the skim trees
 
-
-1. Warnings
+## Warnings
 
 	1. python/postprocessing/modules/common/PrefireCorr16.py is not there in new setup ------> No worries prefire weights are provided in nanoaod files
 
 	2. jecredo option has been removed check why------> Does't matter because redo option was for fat jets not for AK4 jets
 
-2. Crab submission for MC skimtree
+## Crab submission for MC skimtree
 
 	1. Lines in crab_cfg_skimTree.py must check before submission:
                 for MC:
@@ -31,7 +31,7 @@
                         a. outputDir = "/store/user/<username>/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP/check/"
                         b. config.Site.storageSite = "<sitename>" (need to chage storege unit accordingly)
 
-3. Recomdation  UL16preVFP
+## Recomdation  UL16preVFP
 	
 	pdmv
         https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
@@ -162,7 +162,7 @@
 	
 		Golden Json file : 2016 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt 
 
-4. Recomdation UL16postVFP 
+## Recomdation UL16postVFP 
 
 	pdmv 
 	https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
@@ -285,7 +285,7 @@
 
 		Golden Json file : 2016 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt
 
-5. Recomdation  UL17 
+## Recomdation  UL17 
 
 	pdmv
         https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
@@ -415,7 +415,7 @@
 
 		 Golden Json file : 2017 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/Legacy_2017/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt
 
-6. Recomdation UL18
+## Recomdation UL18
 
 	pdmv
         https://twiki.cern.ch/twiki/bin/view/CMS/PdmV
@@ -535,7 +535,7 @@
 		 Golden Json file : 2018 data: visit lxplus and it is located at /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/Legacy_2018/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt 
 
 
-6. Specific check while swiching b/w year data and mc processing 
+## Specific check while swiching b/w year data and mc processing 
 
      1. Btagging evoluvation
 
@@ -563,3 +563,12 @@
 		1.check the JEC recomation at "https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC" if it reco change the then put the new tar ball in data and chage the "jecTagsMC and jecTagsDATA" in jetmetHelperRun2.py
 		2.if JEC reco chage the check the "globalTag" in  jetmetUncertainties.py
 		3.check the JER recomandation at "https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution#Run2_JER_uncertainty_correlation" if the reco chaged the put the new taball in data and chage the "jerTagsMC" in jetmetHelperRun2.py
+
+## Get the data set name for minitree submission
+	1. Use "check_crab_status.py" file to check the crab status for all the submitted dataset
+	2. Save the output of the "check_crab_status.py" in .txt or .py file
+	3. Run "find_phy3_dataset.py" with saved file as a input. This will find and print the array of phys3 datset names.
+
+## Invalidation of wrongly produced dataset
+	1. Get the  array of the wrongly produced dataset as mension above
+	2. copy and pest the the array in "invalidate.py" file as datasets = [your array of datasets] and run it with python. 
