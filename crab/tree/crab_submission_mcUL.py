@@ -21,8 +21,7 @@ date   = datetime.datetime.now()
 if(year == 'UL2016preVFP'):
     from dataset_UL2016preVFP import *
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP/"
-    Datasets = Datasets_MC_UL2016APV_bkg
-
+    Datasets = Datasets_MC_UL2016APV
 if(year == 'UL2016postVFP'):
     from dataset_UL2016postVFP import *
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/MC_postVFP/"
@@ -34,6 +33,7 @@ if(year == 'UL2017'):
     Datasets = Datasets_MC_UL2017
 
 RequestNames = Datasets.keys()
+print RequestNames
 print "len(Datasets) = ",len(Datasets)
 
 cfgfile = "crab_cfg_skimTree.py"
@@ -49,7 +49,7 @@ def replacemachine(fileName, sourceText, replaceText):
     ##################################################################
 
 #print RequestName
-for i in range(0,1):#len(Datasets)):
+for i in range(0,len(Datasets)):
     RequestName = RequestNames[i]
     Dataset = Datasets[RequestName]
     print RequestName, " : ",Dataset
@@ -75,7 +75,7 @@ for i in range(0,1):#len(Datasets)):
     replacemachine(scriptfile,'modules=', update_module ) 
 
     cmd_crab_submit = "crab submit -c "+cfgfile
-    #os.system(cmd_crab_submit)  
+    os.system(cmd_crab_submit)  
  
     #cmd_crab_kill = "crab kill -d crab_"+RequestName[i]
     #os.system(cmd_crab_kill)
@@ -85,5 +85,5 @@ for i in range(0,1):#len(Datasets)):
 
 
     print "DONE -----",RequestName,"--------------------------------------------------------------------------------------------"
-    #time.sleep(10) 
+    time.sleep(3) 
     
