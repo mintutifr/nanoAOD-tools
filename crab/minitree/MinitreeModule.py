@@ -9,6 +9,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from Mc_prob_cal_forBweght import *
 from foxwol_n_fourmomentumSolver import *
 from scaleFactor import *
+ROOT.gInterpreter.ProcessLine('#include "KinFit.C"')
 
 def mk_safe(fct, *args):
     try:
@@ -75,6 +76,11 @@ class MinitreeProducer(Module):
 	     self.out.branch("MuonCharge","I")
 	     self.out.branch("nMuon_sel",  "I")
 
+	     self.out.branch("MuonPt_kin", "F")
+	     self.out.branch("MuonEta_kin", "F")
+             self.out.branch("MuonPhi_kin", "F")
+             self.out.branch("MuonMass_kin", "F")
+
 	     if(self.isMC==True):
 		self.out.branch("muSF","F")
 	     	self.out.branch("Muon_SF_Iso",  "F")
@@ -102,6 +108,12 @@ class MinitreeProducer(Module):
 	     self.out.branch("ElectronCharge","I")
 	     self.out.branch("Electron_CutbasedID",  "I")
 	     self.out.branch("nElectron_sel",  "I")
+
+	     self.out.branch("ElectronPt_kin", "F")
+             self.out.branch("ElectronEta_kin", "F")
+             self.out.branch("ElectronPhi_kin", "F")
+             self.out.branch("ElectronMass_kin", "F")
+
 	     if(self.isMC==True):
 		self.out.branch("elSF","F")
 	     	self.out.branch("Electron_SF_Iso",  "F")
@@ -117,7 +129,19 @@ class MinitreeProducer(Module):
 	self.out.branch("Px_nu","F")
 	self.out.branch("Py_nu","F")
 	self.out.branch("Pz_nu","F")
+
+	self.out.branch("Pt_nu_kin", "F")
+        self.out.branch("Eta_nu_kin", "F")
+        self.out.branch("Phi_nu_kin", "F")
+        self.out.branch("Mass_nu_kin", "F")
+	
+	self.out.branch("Px_nu_kin", "F")
+        self.out.branch("Py_nu_kin", "F")
+        self.out.branch("Pz_nu_kin", "F")
+
         self.out.branch("mtwMass","F")
+	self.out.branch("mtwMass_kin", "F")
+	
 	self.out.branch("bJetMass",  "F")
         self.out.branch("bJetPt",  "F")
         self.out.branch("bJetEta",  "F")
@@ -151,6 +175,12 @@ class MinitreeProducer(Module):
 	self.out.branch("FW3", "F")
 
 	self.out.branch("topMass", "F")
+
+	self.out.branch("topPt_kin", "F")
+        self.out.branch("topEta_kin", "F")
+        self.out.branch("topPhi_kin", "F")
+        self.out.branch("topMass_kin", "F")
+
 	self.out.branch("topPt", "F")
 	self.out.branch("cosThetaStar", "F")
 	self.out.branch("cosThetaStar", "F")
@@ -210,6 +240,9 @@ class MinitreeProducer(Module):
 	muons = Collection(event, "Muon")
 	electrons = Collection(event, "Electron")
 	lepton4v = ROOT.TLorentzVector()
+	lepton4v_kin = ROOT.TLorentzVector()
+        Nu4v_kin = ROOT.TLorentzVector()
+	w4v_kin = ROOT.TLorentzVector()
 	leptonSF = 0
 	leptonCharge = 0
 	#print self.letopn_flv
@@ -411,7 +444,6 @@ class MinitreeProducer(Module):
 	#print "math.sin(leptonPhi) = ",math.sin(leptonPhi)," ",leptonPhi
 	Py_nu = met*math.sin(metphi)
 	mtwMass = math.sqrt(abs(pow((leptonPt+met),2)-pow((leptonPt*math.cos(leptonPhi)+met*math.cos(metphi)),2)-pow((leptonPt*math.sin(leptonPhi)+met*math.sin(metphi)),2)));
-	
 
         neutrino4v = ROOT.TLorentzVector()
         neutrino4v = solveNu4Momentum(lepton4v,met*math.cos(metphi),met*math.sin(metphi))
@@ -421,7 +453,37 @@ class MinitreeProducer(Module):
 	############ -----------------  nu_z and mtw calcualtion done ----------------------################
 
 
+	#############-----------------   kinfit --------------------------#############
+	kinfit_vec_comp_XYZE = ROOT.PerfomFit(lepton4v,neutrino4v)
 
+
+        lepton4v_kin.SetPxPyPzE(kinfit_vec_comp_XYZE.at(0),kinfit_vec_comp_XYZE.at(1),kinfit_vec_comp_XYZE.at(2),kinfit_vec_comp_XYZE.at(3))
+        Nu4v_kin.SetPxPyPzE(kinfit_vec_comp_XYZE.at(4),kinfit_vec_comp_XYZE.at(5),kinfit_vec_comp_XYZE.at(6),kinfit_vec_comp_XYZE.at(7))
+
+	if(self.letopn_flv=='mu'):
+                self.out.fillBranch("MuonPt_kin", lepton4v_kin.Pt())
+                self.out.fillBranch("MuonEta_kin", lepton4v_kin.Eta())
+                self.out.fillBranch("MuonPhi_kin", lepton4v_kin.Phi())
+                self.out.fillBranch("MuonMass_kin", lepton4v_kin.M())
+        elif(self.letopn_flv=='el'):
+                 self.out.fillBranch("ElectronPt_kin", lepton4v_kin.Pt())
+                 self.out.fillBranch("ElectronEta_kin", lepton4v_kin.Eta())
+                 self.out.fillBranch("ElectronPhi_kin", lepton4v_kin.Phi())
+                 self.out.fillBranch("ElectronMass_kin", lepton4v_kin.M())
+
+	self.out.fillBranch("Pt_nu_kin", Nu4v_kin.Pt())
+        self.out.fillBranch("Eta_nu_kin", Nu4v_kin.Eta())
+        self.out.fillBranch("Phi_nu_kin", Nu4v_kin.Phi())
+        self.out.fillBranch("Mass_nu_kin", Nu4v_kin.M())
+
+        self.out.fillBranch("Px_nu_kin", Nu4v_kin.Px())
+        self.out.fillBranch("Py_nu_kin", Nu4v_kin.Py())
+        self.out.fillBranch("Pz_nu_kin", Nu4v_kin.Pz())	
+		
+	mtwMass_kin = math.sqrt(abs(pow((lepton4v_kin.Pt()+Nu4v_kin.Pt()),2)-pow((lepton4v_kin.Pt()*math.cos(lepton4v_kin.Phi())+Nu4v_kin.Pt()*math.cos(Nu4v_kin.Phi())),2)-pow((lepton4v_kin.Pt()*math.sin(lepton4v_kin.Phi())+Nu4v_kin.Pt()*math.sin( Nu4v_kin.Phi())),2)))
+
+	w4v_kin = lepton4v_kin + Nu4v_kin	
+	##########--------------------------kifit done ------------------- ##################
 
 
 
@@ -633,10 +695,15 @@ class MinitreeProducer(Module):
 		else:
 			self.out.fillBranch("bWeight_"+syst,[Probability_2(syst+"_up",jet_id),Probability_2(syst+"_down",jet_id)])
 			
-
-	top4v = lepton4v+bJet4v+neutrino4v
+	top4v_kin = lepton4v_kin + bJet4v + Nu4v_kin 
+	top4v = lepton4v + bJet4v + neutrino4v
 	topMass=top4v.M()
 	topPt=top4v.Pt()
+
+	self.out.fillBranch("topPt_kin", top4v_kin.Pt())
+        self.out.fillBranch("topEta_kin", top4v_kin.Eta())
+        self.out.fillBranch("topPhi_kin", top4v_kin.Phi())
+        self.out.fillBranch("topMass_kin", top4v_kin.M())	
 
 	njet_sel = -1
 	Jetpt = getattr(event,'Jet_pt')
@@ -743,6 +810,7 @@ class MinitreeProducer(Module):
 	self.out.fillBranch("FW2", Foxwol_h2)
 	self.out.fillBranch("FW3", Foxwol_h3)
 	self.out.fillBranch("mtwMass",mtwMass)
+	self.out.fillBranch("mtwMass_kin",mtwMass_kin)
 	self.out.fillBranch("topMass", topMass)
 	self.out.fillBranch("topPt", topPt)
 	self.out.fillBranch("cosThetaStar", cosThetaStar)
