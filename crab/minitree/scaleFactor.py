@@ -99,16 +99,26 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
     if(eta >= 2.4): eta = 2.39
     if(eta <=0.0): eta = 0.01
    
-    if(dataYear=='2016' or dataYear=='UL2016'):
+    if(dataYear=='2016'):
     	binX=[[0,0],[0,0],[0,0]] 
     	binY=[[0,0],[0,0],[0,0]]
+    if(dataYear=='UL2016preVFP'):
+        binX=[[0],[0],[0]]
+        binY=[[0],[0],[0]]
+    if(dataYear=='UL2016postVFP'):
+        binX=[[0],[0],[0]]
+        binY=[[0],[0],[0]]
     if(dataYear=='2017'or dataYear=='UL2017'):
         binX=[[0,0,0],[0,0,0],[0,0,0]]
         binY=[[0,0,0],[0,0,0],[0,0,0]]
     lumi=[];
-    if(dataYear=='2016' or dataYear=='UL2016'):
+    if(dataYear=='2016'):
     	lumi.append((19.636*1000.0)/lumiTotal) 
     	lumi.append((16.219*1000.0)/lumiTotal)
+    if(dataYear=='UL2016preVFP'):
+        lumi.append((19.521*1000.0)/lumiTotal)
+    if(dataYear=='UL2016postVFP'):
+        lumi.append((16.812*1000.0)/lumiTotal)
     if(dataYear=='2017' or (dataYear=='UL2017' and iso<=0.06)):
         lumi.append((14.42*1000.0)/lumiTotal)
         lumi.append((13.56*1000.0)/lumiTotal)
@@ -120,9 +130,10 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
     if(dataYear=='2016'):
 	periods.append("BCDEF")
     	periods.append("GH")
-    if(dataYear=='UL2016'):
-	periods.append("HIPM_") #BCDEF
-	periods.append("") #GH
+    if(dataYear=='UL2016preVFP'):
+        periods.append("HIPM_") #BCDEF
+    if(dataYear=='UL2016postVFP'):
+        periods.append("") #GH
     if(dataYear=='2017' or (dataYear=='UL2017' and iso<=0.06)):
         periods.append("BC")
         periods.append("DE")
@@ -133,13 +144,19 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
     sfs=[]
     sfs.append("ID")
     sfs.append("ISO")
-    if(dataYear=='2016' or dataYear=='UL2016'):sfs.append("Trigger") # since for iso<0.06 we are using lagecy sample created files only
+    if(dataYear=='2016' or dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP'):sfs.append("Trigger") # since for iso<0.06 we are using lagecy sample created files only
     if(dataYear=='2017' or dataYear=='UL2017'): sfs.append("TRI")
 
     #TString fSFName, SF, Period, dirName;
-    if(dataYear=='2016' or dataYear=='UL2016'):
+    if(dataYear=='2016' ):
     	fSF=[[0,0],[0,0],[0,0]]
     	hSF=[[0,0],[0,0],[0,0]]
+    if(dataYear=='UL2016preVFP'):
+        fSF=[[0],[0],[0]]
+        hSF=[[0],[0],[0]]
+    if(dataYear=='UL2016postVFP'):
+        fSF=[[0],[0],[0]]
+        hSF=[[0],[0],[0]]
     if(dataYear=='2017' or dataYear=='UL2017'):
         fSF=[[0,0,0],[0,0,0],[0,0,0]]
         hSF=[[0,0,0],[0,0,0],[0,0,0]]
@@ -159,7 +176,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
             for prod in range(0,len(periods)):
                 Period=periods[prod]
 		#print Period
-		if(dataYear=='UL2016'): fSFName=filter(lambda x: "UL_"+Period+SF+"_SF_0p06.root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
+		if(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP'): fSFName=filter(lambda x: "UL_"+Period+SF+"_SF_0p06.root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
 		else: fSFName=filter(lambda x: Period+"_"+SF+"_SF_0p06.root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
                 #fSFName=filepath+Period+"_"+SF+"_SF_0p06.root"
 		#print fSFName
@@ -175,7 +192,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
                 Period=periods[prod]
 		#print Period
                 if(dataYear=='2016'):fSFName=filter(lambda x: Period+"_"+SF+".root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
-                if(dataYear=='UL2016'):fSFName=filter(lambda x: "UL_"+Period+SF+".root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
+                if(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP'):fSFName=filter(lambda x: "UL_"+Period+SF+".root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
 		#if(dataYear=='2016'):fSFName=filepath+Period+"_"+SF+".root"
 		#print  "hSF[",sf_,"][",prod,"]"
 		if(dataYear=='2017'):fSFName=filter(lambda x: Period+"_SF_"+SF+".root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
@@ -186,7 +203,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
 		fSF[sf_][prod]=ROOT.TFile.Open(fSFName,"Read")
 		#print  SF , " " ,fSFName , dirName , "/pt_abseta_ratio"
                 if(dataYear=='2016'):hSF[sf_][prod]=fSF[sf_][prod].Get(dirName+"/pt_abseta_ratio")
-		if(dataYear=='UL2016'):hSF[sf_][prod]=fSF[sf_][prod].Get("NUM_TightID_DEN_TrackerMuons_abseta_pt")
+		if(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP'):hSF[sf_][prod]=fSF[sf_][prod].Get("NUM_TightID_DEN_TrackerMuons_abseta_pt")
 		if(dataYear=='2017'):hSF[sf_][prod]=fSF[sf_][prod].Get("NUM_TightID_DEN_genTracks")
 		if(dataYear=='UL2017'):hSF[sf_][prod]=fSF[sf_][prod].Get("NUM_TightID_DEN_genTracks_pt_abseta")
     #print "-----------------------------------" 	         	
@@ -197,7 +214,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
         if(iso >=0.2 and SF!="ID"): continue
         for prod in range(0,len(periods)):
             Period=periods[prod]
-	    if(dataYear=='UL2016' and iso >=0.2): # for iso<0.06 we are using persionlly created file axies are reverted
+	    if((dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP') and iso >=0.2): # for iso<0.06 we are using persionlly created file axies are reverted
             	if(pt >= hSF[sf_][prod].GetYaxis().GetXmax()): pt = hSF[sf_][prod].GetYaxis().GetXmax() - 1.0
 	    else:
 		 if(pt >= hSF[sf_][prod].GetXaxis().GetXmax()): pt = hSF[sf_][prod].GetXaxis().GetXmax() - 1.0
@@ -206,7 +223,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
 	    #print "pt = ",pt
 	    #print "eta = ",eta
 	    #print "hSF[",sf_,"][",prod,"]"
-	    if(dataYear=='UL2016' and iso >=0.2): # for iso<0.06 we are using persionlly created file axies are reverted
+	    if((dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP') and iso >=0.2): # for iso<0.06 we are using persionlly created file axies are reverted
             	binY[sf_][prod]=hSF[sf_][prod].GetYaxis().FindBin(pt)
 	    	binX[sf_][prod]=hSF[sf_][prod].GetXaxis().FindBin(eta)
 	    else:
@@ -234,11 +251,17 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
    # print "lumi = ",lumi
 #Scale factor Evaluation
 
-    if(iso >= 0.2 and (dataYear=='2016' or dataYear=='UL2016')):
+    if(iso >= 0.2 and dataYear=='2016'):
 	#print "idSF[0] = ", idSF[0], "idSF[1] = ", idSF[1] 
         if(syst=="noSyst"): muSF =  idSF[0]*lumi[0]  + idSF[1]*lumi[1] 
         if(syst=="IDUp"): muSF = (idSF[0] + idSFErrUp[0])*lumi[0]  + (idSF[1] + idSFErrUp[1])*lumi[1]
         if(syst=="IDDown"): muSF =  (idSF[0] - idSFErrDown[0])*lumi[0]  + (idSF[1] - idSFErrDown[1])*lumi[1]
+        if(syst=="IsoUp" or syst=="IsoDown" or syst=="TrigUp" or syst=="TrigDown"): muSF = 1.0
+    if(iso >= 0.2 and (dataYear=='UL2016preVFP' or  dataYear=='UL2016postVFP')):
+        #print "idSF[0] = ", idSF[0], "idSF[1] = ", idSF[1]
+        if(syst=="noSyst"): muSF =  idSF[0]*lumi[0]  
+        if(syst=="IDUp"): muSF = (idSF[0] + idSFErrUp[0])*lumi[0]  
+        if(syst=="IDDown"): muSF =  (idSF[0] - idSFErrDown[0])*lumi[0]  
         if(syst=="IsoUp" or syst=="IsoDown" or syst=="TrigUp" or syst=="TrigDown"): muSF = 1.0
 
     if(iso >= 0.2 and dataYear=='2017'):
@@ -254,7 +277,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
         if(syst=="IsoUp" or syst=="IsoDown" or syst=="TrigUp" or syst=="TrigDown"): muSF = 1.0
 
 
-    if(iso <=0.06 and (dataYear=='2016' or dataYear=='UL2016')):
+    if(iso <=0.06 and dataYear=='2016' ):
         if(syst=="noSyst"): muSF =  idSF[0]*isoSF[0]*trigSF[0]*lumi[0] + idSF[1]*isoSF[1]*trigSF[1]*lumi[1]
         if(syst=="IDUp"): muSF = (idSF[0] + idSFErrUp[0])*isoSF[0]*trigSF[0]*lumi[0] + (idSF[1] + idSFErrUp[1])*isoSF[1]*trigSF[1]*lumi[1]
         if(syst=="IDDown"): muSF = (idSF[0] - idSFErrDown[0])*isoSF[0]*trigSF[0]*lumi[0] + (idSF[1] - idSFErrDown[1])*isoSF[1]*trigSF[1]*lumi[1]
@@ -262,6 +285,14 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
         if(syst=="IsoDown"): muSF= idSF[0]*(isoSF[0] - isoSFErrDown[0])*trigSF[0]*lumi[0] + idSF[1]*(isoSF[1] - isoSFErrDown[1])*trigSF[1]*lumi[1]
         if(syst=="TrigUp"): muSF= idSF[0]*isoSF[0]*(trigSF[0] + trigSFErrUp[0])*lumi[0] + idSF[1]*isoSF[1]*(trigSF[1] + trigSFErrUp[1])*lumi[1]
         if(syst=="TrigDown"): muSF= idSF[0]*isoSF[0]*(trigSF[0] - trigSFErrDown[0])*lumi[0] + idSF[1]*isoSF[1]*(trigSF[1] - trigSFErrDown[1])*lumi[1]
+    if(iso <=0.06 and (dataYear=='UL2016preVFP' or  dataYear=='UL2016postVFP')):
+        if(syst=="noSyst"): muSF =  idSF[0]*isoSF[0]*trigSF[0]*lumi[0] 
+        if(syst=="IDUp"): muSF = (idSF[0] + idSFErrUp[0])*isoSF[0]*trigSF[0]*lumi[0] 
+        if(syst=="IDDown"): muSF = (idSF[0] - idSFErrDown[0])*isoSF[0]*trigSF[0]*lumi[0] 
+        if(syst=="IsoUp"): muSF = idSF[0]*(isoSF[0] + isoSFErrUp[0])*trigSF[0]*lumi[0] 
+        if(syst=="IsoDown"): muSF= idSF[0]*(isoSF[0] - isoSFErrDown[0])*trigSF[0]*lumi[0] 
+        if(syst=="TrigUp"): muSF= idSF[0]*isoSF[0]*(trigSF[0] + trigSFErrUp[0])*lumi[0] 
+        if(syst=="TrigDown"): muSF= idSF[0]*isoSF[0]*(trigSF[0] - trigSFErrDown[0])*lumi[0] 
 
     if(iso <=0.06 and (dataYear=='2017' or dataYear=='UL2017')):
         if(syst=="noSyst"): muSF =  idSF[0]*isoSF[0]*trigSF[0]*lumi[0] + idSF[1]*isoSF[1]*trigSF[1]*lumi[1]+idSF[2]*isoSF[2]*trigSF[2]*lumi[2]
@@ -380,8 +411,30 @@ mu_InFiles = {'2016' : [
 
 			'MuonSF/2016/UL/EfficienciesAndSF_Run2016_UL_HIPM_Trigger_SF_0p06.root',  # need to update this file for lagecy samples
 			'MuonSF/2016/UL/EfficienciesAndSF_Run2016_UL_Trigger_SF_0p06.root',   # need to update this file for lagecy samples
-
 			],
+	     'UL2016preVFP':[
+                        'MuonSF/2016/UL/EfficienciesAndSF_Run2016_UL_HIPM_ID_SF_0p06.root', # need to update this file for lagecy samples
+
+                        'MuonSF/2016/UL/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root', # UL recomdation
+
+                        'MuonSF/2016/UL/EfficienciesAndSF_Run2016_UL_HIPM_ISO_SF_0p06.root', # need to update this file for lagecy samples
+
+
+                        #'MuonSF/2016/UL/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ISO.root', # UL recomdation (not required to us)
+
+                        'MuonSF/2016/UL/EfficienciesAndSF_Run2016_UL_HIPM_Trigger_SF_0p06.root',  # need to update this file for lagecy samples
+                        ],
+	     'UL2016postVFP':[
+                        'MuonSF/2016/UL/EfficienciesAndSF_Run2016_UL_ID_SF_0p06.root', # need to update this file for lagecy samples
+
+                        'MuonSF/2016/UL/Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root', # UL recomdation
+
+                        'MuonSF/2016/UL/EfficienciesAndSF_Run2016_UL_ISO_SF_0p06.root',  # need to update this file for lagecy samples
+
+                        #'MuonSF/2016/UL/Efficiencies_muon_generalTracks_Z_Run2016_UL_ISO.root', # UL recomdation (not required to us)
+
+                        'MuonSF/2016/UL/EfficienciesAndSF_Run2016_UL_Trigger_SF_0p06.root',   # need to update this file for lagecy samples
+                        ],
 	     'UL2017':[
 			'MuonSF/2017/EfficienciesAndSF_BC_ID_SF_0p06.root',  # need to update this file for lagecy samples
                         'MuonSF/2017/EfficienciesAndSF_DE_ID_SF_0p06.root', # need to update this file for lagecy samples
@@ -406,14 +459,17 @@ mu_InFiles = {'2016' : [
 
 }
 def create_muSF(dataYear,pt_,eta_,iso_,lumiTotal_,syst_):
+	#if(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP'): dataYear='UL2016'
 	dataYear = str(dataYear)
         sf_InFiles= mu_InFiles[dataYear]
 	#print sf_InFiles
-	muSF = muonScaleFactor(sf_InFiles,pt_,eta_,iso_,lumiTotal_,syst_,dataYear) 
+	muSF = muonScaleFactor(sf_InFiles,pt_,eta_,iso_,lumiTotal_,syst_,dataYear)
         return muSF	
 #print "-------------------------------------------------------"
 #print create_elSF('UL2016preVFP',300,-1.3,50,'Tight','noSyst')
 #print create_elSF('UL2016preVFP',300,-1.3,50,'Veto','noSyst')
 #create_muSF('2016',21.1176013947,0.6142578125,0.3,3485,'noSyst')
 #print create_muSF('UL2017',60.1176013947,-2.0142578125,0.3,3485,'noSyst')
+#print create_muSF('UL2016postVFP',29.2907962799,0.0283164978027,0.0297331474721,16812,'noSyst')#19521,168121
+
 #print "-------------------------------------------------------"			
