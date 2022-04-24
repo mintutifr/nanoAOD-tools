@@ -70,7 +70,7 @@ for i in range(0,len(RequestNames)):
     update_Dataset = "config.Data.inputDataset = '"+Dataset+"'\n"
     update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+region_tag+"_"+lep+"/"+RequestName+"'\n"
     update_DatasetTag = "config.Data.outputDatasetTag = 'MiniTree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName+"_"+region_tag+"_check'\n"
-    update_InputFiles = "config.JobType.inputFiles = ['ElectronSF','MuonSF','scaleFactor.py','jme.py','crab_script_Minitree.py','../../scripts/haddnano.py','Mc_prob_cal_forBweght.py','foxwol_n_fourmomentumSolver.py','MinitreeModule.py','cut_strings.py','keep_and_drop_mu_Minitree.txt','keep_and_drop_el_Minitree.txt']\n"
+    update_InputFiles = "config.JobType.inputFiles = ['ElectronSF','MuonSF','scaleFactor.py','jme.py','crab_script_Minitree.py','../../scripts/haddnano.py','Mc_prob_cal_forBweght.py','foxwol_n_fourmomentumSolver.py','MinitreeModule.py','cut_strings.py','keep_and_drop_mu_Minitree.txt','keep_and_drop_el_Minitree.txt','KinFit.C']\n"
     if(year=='UL2016preVFP' or year=='UL2016postVFP' ):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2016\n"
     elif(year=='UL2017'):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2017\n"
     modules = "\t\tmodules=[MinitreeModuleConstr"+region_tag+"_"+lep+"_mc_"+year+"(),jmeCorrections"+year+"_MC_AK4CHS()],\n"

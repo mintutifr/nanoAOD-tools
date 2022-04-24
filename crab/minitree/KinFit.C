@@ -366,7 +366,7 @@ int elecResolution(double et, double eta, double& resEt, double& resEta, double&
   }
   return true;
 }
-void PerfomFit(TLorentzVector lep,TLorentzVector nu){
+vector<float> PerfomFit(TLorentzVector lep,TLorentzVector nu){
 	// vec1 and vec2 and vec3 = 4-vect to be fitted
 	// m1 and m2 and m3 covariant matrix
 	TMatrixD m_lep(3,3);
@@ -374,11 +374,6 @@ void PerfomFit(TLorentzVector lep,TLorentzVector nu){
 	m_lep.Zero();
 	m_nu.Zero();
 
-	Double_t Et_lep = lep.Et();
-	Double_t Et_nu = nu.Et();
-
-	Double_t eta_lep = lep.Eta();
-	Double_t eta_nu = nu.Eta();
 
 	//In this example the covariant matrix depends on the transverse energy and eta of the jets
 	double	resEt, resEta, resPhi;
@@ -393,9 +388,9 @@ void PerfomFit(TLorentzVector lep,TLorentzVector nu){
 	m_nu(1,1) = resEta*resEta; // eta
 	m_nu(2,2) = resPhi*resPhi; // phi
 
-	cout<<"cov m trac = [et (m(0,0)), eta (m(1,1)), phi (m(2,2))"<<endl;
-	cout<<"lepton cov m trac = ["<<m_lep(0,0)<<","<<m_lep(1,1)<<","<<m_lep(2,2)<<"]"<<endl;
-	cout<<"neutrino cov m trac = ["<<m_nu(0,0)<<","<<m_nu(1,1)<<","<<m_nu(2,2)<<"]"<<endl;
+	//cout<<"cov m trac = [et (m(0,0)), eta (m(1,1)), phi (m(2,2))"<<endl;
+	//cout<<"lepton cov m trac = ["<<m_lep(0,0)<<","<<m_lep(1,1)<<","<<m_lep(2,2)<<"]"<<endl;
+	//cout<<"neutrino cov m trac = ["<<m_nu(0,0)<<","<<m_nu(1,1)<<","<<m_nu(2,2)<<"]"<<endl;
 	
 	TAbsFitParticle* _lep;
 	TAbsFitParticle* _nu;
@@ -425,7 +420,7 @@ void PerfomFit(TLorentzVector lep,TLorentzVector nu){
 	
 	//Perform the fit
 	_fitter->fit();
-	cout<<"fit status : "<<_fitter->getStatus()<<endl;
+	//cout<<"fit status : "<<_fitter->getStatus()<<endl;
 	// Build up the event after the kinematic fit
 	/*RawParticle Lepton = RawParticle(_lep->getCurr4Vec()->X(),
 					 _lep->getCurr4Vec()->Y(),
@@ -435,8 +430,25 @@ void PerfomFit(TLorentzVector lep,TLorentzVector nu){
 					   _nu->getCurr4Vec()->Y(),
 					   _nu->getCurr4Vec()->Z(),
 					   _nu->getCurr4Vec()->E());*/
-	cout<<"lep = ["<<_lep->getCurr4Vec()->X()<<","<<_lep->getCurr4Vec()->Y()<<","<<_lep->getCurr4Vec()->Z()<<","<<_lep->getCurr4Vec()->E()<<endl;
-	cout<<"nu = ["<<_nu->getCurr4Vec()->X()<<","<<_nu->getCurr4Vec()->Y()<<","<<_nu->getCurr4Vec()->Z()<<","<<_nu->getCurr4Vec()->E()<<endl;
+	//cout<<"lep = ["<<_lep->getCurr4Vec()->X()<<","<<_lep->getCurr4Vec()->Y()<<","<<_lep->getCurr4Vec()->Z()<<","<<_lep->getCurr4Vec()->E()<<"]"<<endl;
+	//cout<<"nu = ["<<_nu->getCurr4Vec()->X()<<","<<_nu->getCurr4Vec()->Y()<<","<<_nu->getCurr4Vec()->Z()<<","<<_nu->getCurr4Vec()->E()<<"]"<<endl;
+	
+	vector<float> New_LoretzVectors_XYZE;
+	New_LoretzVectors_XYZE.reserve(8);
+
+	New_LoretzVectors_XYZE.push_back(_lep->getCurr4Vec()->X());
+	New_LoretzVectors_XYZE.push_back(_lep->getCurr4Vec()->Y());
+	New_LoretzVectors_XYZE.push_back(_lep->getCurr4Vec()->Z());
+	New_LoretzVectors_XYZE.push_back(_lep->getCurr4Vec()->E());
+
+
+	New_LoretzVectors_XYZE.push_back(_nu->getCurr4Vec()->X());
+        New_LoretzVectors_XYZE.push_back(_nu->getCurr4Vec()->Y());
+        New_LoretzVectors_XYZE.push_back(_nu->getCurr4Vec()->Z());
+        New_LoretzVectors_XYZE.push_back(_nu->getCurr4Vec()->E());
+	
+	return New_LoretzVectors_XYZE;
+	 
 }
 void KinFit(){
 	cout<<"begin event ....."<<endl;
@@ -446,7 +458,16 @@ void KinFit(){
 	cout<<"lep = ["<<lep.X()<<","<<lep.Y()<<","<<lep.Z()<<","<<lep.E()<<"]"<<endl;
         cout<<"nu = ["<<nu.X()<<","<<nu.Y()<<","<<nu.Z()<<","<<nu.E()<<"]"<<endl;
 	cout<<"Fitting ...."<<endl;
-	PerfomFit(lep,nu);
+
+	vector<float> new_lep;
+	new_lep.reserve(4);
+	new_lep = PerfomFit(lep,nu);
+
+	cout<<"lep = ["<<new_lep.at(0)<<","<<new_lep.at(1)<<","<<new_lep.at(2)<<","<<new_lep.at(3)<<"]"<<endl;
+
+
+
+
 	cout<<"..... end event"<<endl;
 	
 }
