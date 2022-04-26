@@ -131,8 +131,15 @@ class btagSFProducer(Module):
                     },
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		'UL2016preVFP': {
+                    'inputFileName': "reshaping_deepJet_106XUL16preVFP_v2.csv",
+=======
                 '2017': {
                     'inputFileName': "DeepFlavour_94XSF_V3_B_F.csv",
+>>>>>>> btv remmondation using modified files
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
@@ -149,8 +156,14 @@ class btagSFProducer(Module):
                     },
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
+<<<<<<< HEAD
+>>>>>>> btv recommadtion update
+                '2017': {
+                    'inputFileName': "DeepFlavour_94XSF_V3_B_F.csv",
+=======
 		'UL2016preVFP': {
                     'inputFileName': "reshaping_deepJet_106XUL16preVFP_v2_modified.csv",
+>>>>>>> btv remmondation using modified files
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
@@ -158,8 +171,17 @@ class btagSFProducer(Module):
                     },
                     'supported_wp': ["shape_corr"]
                 },
+<<<<<<< HEAD
+                'UL2017': {
+<<<<<<< HEAD
+                    'inputFileName': "DeepJet_106XUL17SF.csv",
+=======
+                    'inputFileName': "DeepJet_106XUL17SF_V2p1.csv",
+>>>>>>> btv recommadtion update
+=======
                 'UL2016postVFP': {
                     'inputFileName': "reshaping_deepJet_106XUL16postVFP_v3_modified.csv",
+>>>>>>> btv remmondation using modified files
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
@@ -177,14 +199,27 @@ class btagSFProducer(Module):
                     'supported_wp': ["shape_corr"]
                 },
                 'UL2018': {
+<<<<<<< HEAD
+<<<<<<< HEAD
+                    'inputFileName': "DeepJet_106XUL18SF.csv",
+=======
+                    'inputFileName': "DeepJet_106XUL18SF_V1p1.csv",
+>>>>>>> btv recommadtion update
+=======
                     'inputFileName': "reshaping_deepJet_106XUL18_v2_modified.csv",
+>>>>>>> btv remmondation using modified files
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
                         2: "incl"   # light
                     },
+<<<<<<< HEAD
+                    'supported_wp': ["L", "M", "T", "shape_corr"]
+                },
+=======
                     'supported_wp': ["shape_corr"]
                 },	
+>>>>>>> btv remmondation using modified files
             },
             'cmva': {
                 '2016': {
