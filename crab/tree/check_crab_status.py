@@ -65,9 +65,11 @@ for i in range(0,len(RequestNames)):
     #print "Command output : ", output
 
     resubmit_job = 'NO'
-    if(output.count("failed")>=2):resubmit_job = raw_input("enouter 'failed' twice should I resubmit the job : ")
+    print "failed : ",output.count("failed")," memory : ",output.count("memory")
+    if(output.count("failed")>=2 and output.count("memory")<2):resubmit_job = raw_input("enouter 'failed' twice should I resubmit the job : ")
+    if(output.count("failed")>=3 and output.count("memory")>=2):resubmit_job = raw_input("enouter 'failed' twice should I resubmit the job : ")
     if(resubmit_job=="yes" or resubmit_job=="1"):
-	cmd_crab_resubmit = "crab resubmit -d "+RN  #" --maxmemory 4000"#+" --maxjobruntime 2750"
+	cmd_crab_resubmit = "crab resubmit -d "+RN# + " --maxmemory 4000"#+" --maxjobruntime 2750"
 	os.system(cmd_crab_resubmit)
     print "DONE ---------------------------crab status---------------------------------------------------------------------"
     cmd_crab_report = "crab report -d "+RN
