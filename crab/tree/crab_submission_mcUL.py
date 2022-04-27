@@ -32,7 +32,8 @@ if(year == 'UL2017'):
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SEVENTEEN/MC/"
     Datasets = Datasets_MC_UL2017
 
-RequestNames = Datasets.keys()
+RequestNames = ['Tchannel',]
+#Datasets.keys()
 print RequestNames
 print "len(Datasets) = ",len(Datasets)
 
@@ -49,7 +50,7 @@ def replacemachine(fileName, sourceText, replaceText):
     ##################################################################
 
 #print RequestName
-for i in range(0,len(Datasets)):
+for i in range(0,len(RequestNames)):
     RequestName = RequestNames[i]
     Dataset = Datasets[RequestName]
     print RequestName, " : ",Dataset
