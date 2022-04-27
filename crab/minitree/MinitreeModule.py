@@ -228,14 +228,20 @@ class MinitreeProducer(Module):
         pass
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
-	if(self.isMC==True):	
-		x_sec = 136.02
-		Lumi=1.0
-                if(self.dataYear=="2016" or self.dataYear == "UL2016preVFP" or self.dataYear == "UL2016postVFP"):Lumi = 35882.5
-		elif(self.dataYear=="2017"):Lumi = 41529.5
-		NEvents = 31848000
+	if(self.isMC):
+	    TotalLumi={
+                '2016' : 35855,
+                '2017' : 41529,
+                '2018' : 41520,
+		'UL2016preVFP' :  19521,
+                'UL2016postVFP' : 16812,
+                'UL2017' : 41529,
+                'UL2018' : 59222}
+	if(self.isMC):	
+		x_sec = 80.95
+		NEvents = 31024000
 
-	        Xsec_wgt = (x_sec*Lumi)/NEvents
+	        Xsec_wgt = (x_sec*TotalLumi[self.dataYear])/NEvents
 	#print Xsec_wgt
 	muons = Collection(event, "Muon")
 	electrons = Collection(event, "Electron")
@@ -272,15 +278,6 @@ class MinitreeProducer(Module):
                 'UL2017' : 37,
                 'UL2018' : None} #need to check the trigger
 	
-	if(self.isMC):
-	    TotalLumi={
-                '2016' : 35855,
-                '2017' : 41529,
-                '2018' : 41520,
-		'UL2016preVFP' :  19521,
-                'UL2016postVFP' : 16812,
-                'UL2017' : 41529,
-                'UL2018' : 59222}
 
 	    Ele_EtaSC,Electron_SF_Iso,Electron_SF_Iso_IDUp,Electron_SF_Iso_IDDown,Electron_SF_Iso_TrigUp,Electron_SF_Iso_TrigDown,Electron_SF_Veto,Electron_SF_Veto_IDUp,Electron_SF_Veto_IDDown,Electron_SF_Veto_TrigUp,Electron_SF_Veto_TrigDown,Electron_CutbasedID=(-999 for i in range(12))
 	    Muon_SF_Iso,Muon_SF_IsoUp,Muon_SF_IsoDown,Muon_SF_Iso_IDUp,Muon_SF_Iso_IDDown,Muon_SF_Iso_TrigUp,Muon_SF_Iso_TrigDown,Muon_SF_Veto,Muon_SF_Veto_IDUp,Muon_SF_Veto_IDDown,Muon_SF_Veto_TrigUp,Muon_SF_Veto_TrigDown,Muon_RelIso=(-999 for i in range(13))	
