@@ -27,16 +27,16 @@ date   = datetime.datetime.now()
 
 if(year == 'UL2016preVFP'):
     from dataset_UL2016preVFP_phy3 import *
-    outputDir = "/store/user/mikumar/RUN2_UL/MiniTree_crab/SIXTEEN/MC/check/"
+    outputDir = "/store/user/mikumar/RUN2_UL/MiniTree_crab/SIXTEEN/MC/"
     Datasets = Datasets_MC_UL2016APV
 if(year == 'UL2016postVFP'):
     from dataset_UL2016postVFP_phy3 import *
-    outputDir = "/store/user/mikumar/RUN2_UL/MiniTree_crab/SIXTEEN/MC/check/"
+    outputDir = "/store/user/mikumar/RUN2_UL/MiniTree_crab/SIXTEEN/MC/"
     Datasets = Datasets_MC_UL2016
 
 if(year == 'UL2017'):
     from dataset_UL2017_phy3 import *
-    outputDir = "/store/user/mikumar/RUN2_UL/MiniTree_crab/SEVENTEEN/MC/check/"
+    outputDir = "/store/user/mikumar/RUN2_UL/MiniTree_crab/SEVENTEEN/MC/"
     Datasets = Datasets_MC_UL2017
 
 RequestNames = Datasets.keys()
@@ -69,7 +69,7 @@ for i in range(0,len(RequestNames)):
     update_RequestName = "config.General.requestName = '"+RequestName+"_Minitree_"+region_tag+"_"+lep+"_"+year+"'\n" 
     update_Dataset = "config.Data.inputDataset = '"+Dataset+"'\n"
     update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+region_tag+"_"+lep+"/"+RequestName+"'\n"
-    update_DatasetTag = "config.Data.outputDatasetTag = 'MiniTree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName+"_"+region_tag+"_check'\n"
+    update_DatasetTag = "config.Data.outputDatasetTag = 'MiniTree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName+"_"+region_tag+"'\n"
     update_InputFiles = "config.JobType.inputFiles = ['ElectronSF','MuonSF','scaleFactor.py','jme.py','crab_script_Minitree.py','../../scripts/haddnano.py','Mc_prob_cal_forBweght.py','foxwol_n_fourmomentumSolver.py','MinitreeModule.py','cut_strings.py','keep_and_drop_mu_Minitree.txt','keep_and_drop_el_Minitree.txt','KinFit.C']\n"
     if(year=='UL2016preVFP' or year=='UL2016postVFP' ):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2016\n"
     elif(year=='UL2017'):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2017\n"
@@ -111,7 +111,7 @@ for i in range(0,len(RequestNames)):
     #os.system(cmd_rm_dir)
 
     cmd_crab_submit = "crab submit -c crab_cfg_Minitree.py"
-    #os.system(cmd_crab_submit)  
+    os.system(cmd_crab_submit)  
  
 
 
