@@ -194,7 +194,7 @@ puAutoWeight_UL2016 = lambda: puWeightProducer(
 # 2017
 pufile_dataUL2017 = "%s/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-goldenJSON-13tev-UL2017-99bins.root" % os.environ[
     'CMSSW_BASE']
-pufile_mcUL2017 = "%s/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/mcPileupUL2017.root" % os.environ[  
+pufile_mcUL2017 = "%s/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/PileupHistogram-MC-UL2017-99bins.root" % os.environ[  
     'CMSSW_BASE']
 puWeight_UL2017 = lambda: puWeightProducer(pufile_mcUL2017,
                                            pufile_dataUL2017,
