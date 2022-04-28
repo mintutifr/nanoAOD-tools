@@ -73,6 +73,7 @@ for i in range(0,len(RequestNames)):
     update_InputFiles = "config.JobType.inputFiles = ['ElectronSF','MuonSF','scaleFactor.py','jme.py','crab_script_Minitree.py','../../scripts/haddnano.py','Mc_prob_cal_forBweght.py','foxwol_n_fourmomentumSolver.py','MinitreeModule.py','cut_strings.py','keep_and_drop_mu_Minitree.txt','keep_and_drop_el_Minitree.txt','KinFit.C']\n"
     if(year=='UL2016preVFP' or year=='UL2016postVFP' ):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2016\n"
     elif(year=='UL2017'):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2017\n"
+    update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"
     modules = "\t\tmodules=[MinitreeModuleConstr"+region_tag+"_"+lep+"_mc_"+year+"(),jmeCorrections"+year+"_MC_AK4CHS()],\n"
     branchsel = '\t\toutputbranchsel="keep_and_drop_'+lep+'_Minitree.txt",\n' 
      
@@ -96,9 +97,12 @@ for i in range(0,len(RequestNames)):
     replacemachine(cfgfile,'config.Data.outLFNDirBase =', update_DirBase )
     replacemachine(cfgfile,'config.Data.outputDatasetTag =', update_DatasetTag )
     replacemachine(cfgfile,'config.JobType.inputFiles =', update_InputFiles )
+    replacemachine(cfgfile,'config.Site.storageSite =', update_site )
+
     replacemachine(crab_scriptfile,'treecut =', cut_string )
     replacemachine(crab_scriptfile,'modules=', modules )
     replacemachine(crab_scriptfile,'outputbranchsel=', branchsel )
+
     #replacemachine(bweight_cal,'Effi_FIle = ROOT.TFile(', update_effi_file )
     replacemachine(MinitreeModule,'NEvents = ', update_NumberOfEvents )
     replacemachine(MinitreeModule,'x_sec = ',update_Xsection)

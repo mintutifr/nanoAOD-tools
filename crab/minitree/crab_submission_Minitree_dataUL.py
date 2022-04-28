@@ -78,7 +78,8 @@ for i in range(0,len(Datasets)):
     update_InputFiles = "config.JobType.inputFiles = ['crab_script_Minitree.py','../../scripts/haddnano.py','foxwol_n_fourmomentumSolver.py','MinitreeModule.py','cut_strings.py','keep_and_drop_mu_Minitree.txt','keep_and_drop_el_Minitree.txt']\n"   
     if(year=='UL2016preVFP' or year=='UL2016postVFP' ):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2016\n"
     elif(year=='UL2017'):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2017\n" 
-    
+
+    update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"    
     #cut_string = "treecut = cut_1L0TJet_"+region_tag+"_"+lep+"_"+year+"\n"
     modules = "\t\tmodules=[MinitreeModuleConstr"+region_tag+"_"+lep+"_data_"+year+"()],\n"
     branchsel = '\t\toutputbranchsel="keep_and_drop_'+lep+'_Minitree.txt",\n' 
@@ -97,6 +98,8 @@ for i in range(0,len(Datasets)):
     replacemachine(cfgfile,'config.Data.outLFNDirBase =', update_DirBase )
     replacemachine(cfgfile,'config.Data.outputDatasetTag =', update_DatasetTag )
     replacemachine(cfgfile,'config.JobType.inputFiles =', update_InputFiles )
+    replacemachine(cfgfile,'config.Site.storageSite =', update_site )
+
     replacemachine(module_cut,'treecut =', cut_string )
     replacemachine(module_cut,'modules=', modules )
     replacemachine(module_cut,'outputbranchsel=', branchsel )
