@@ -26,7 +26,7 @@ lep    = args.leptons[0]
 date   = datetime.datetime.now()
 
 if(year == 'UL2016preVFP'):
-    from dataset_UL2016postVFP_phy3 import *
+    from dataset_UL2016preVFP_phy3 import *
     outputDir = "/store/user/mikumar/RUN2/MiniTree_crab/SIXTEEN/Data/check/"
     if(lep=="mu"):
         Datasets = Datasets_SingleMuon_data_UL2016APV
@@ -81,7 +81,7 @@ for i in range(0,len(Datasets)):
 
     update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"    
     #cut_string = "treecut = cut_1L0TJet_"+region_tag+"_"+lep+"_"+year+"\n"
-    modules = "\t\tmodules=[MinitreeModuleConstr"+region_tag+"_"+lep+"_data_"+year+"()],\n"
+    modules = "\t\tmodules=[MinitreeModuleConstr"+region_tag+"_"+lep+"_data_"+year+"(), jmeCorrectionsUL"+RequestName[:-3]+"_DATA_AK4CHS()],\n"
     branchsel = '\t\toutputbranchsel="keep_and_drop_'+lep+'_Minitree.txt",\n' 
 
     print "\t"+cut_string
