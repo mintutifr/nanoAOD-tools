@@ -24,11 +24,11 @@
 
 * Crab submission for UL mc samples can be done using "crab_submission_Minitree_mcUL.py" file using the following commond:
 
-		python crab_submission_Minitree_mcUL.py  -y UL2016preVFP -l mu -h (-y stands for year -h stands for help, Script have to run without -h option otherwise it prints the help option only)
-		python crab_submission_Minitree_dataUL.py -y UL2016preVFP -l mu -h (-y stands for year -h stands for help, Script have to run without -h option otherwise it prints the help option only)
+	python crab_submission_Minitree_mcUL.py  -y UL2016preVFP -l mu -h (-y stands for year -h stands for help, Script have to run without -h option otherwise it prints the help option only)
+	python crab_submission_Minitree_dataUL.py -y UL2016preVFP -l mu -h (-y stands for year -h stands for help, Script have to run without -h option otherwise it prints the help option only)
 
 * new User 
-			a. user name <mikumar> and the site name <T2_IN_TIFR> must be changed in "crab_submission_Minitree_mcUL.py" and "crab_submission_Minitree_dataUL.py" accordingly
-                        b. outputDir = "/store/user/<username>/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP/check/" (need to chage storege unit accordingly)
-                        c. config.Site.storageSite = "<sitename>" (need to chage storege unit accordingly)
+	1. user name <mikumar> and the site name <T2_IN_TIFR> must be changed in "crab_submission_Minitree_mcUL.py" and "crab_submission_Minitree_dataUL.py" accordingly
+	2. outputDir = "/store/user/<username>/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP/check/" (need to chage storege unit accordingly)
+	3. config.Site.storageSite = "<sitename>" (need to chage storege unit accordingly)
 
