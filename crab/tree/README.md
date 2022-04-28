@@ -22,14 +22,15 @@
 		these chages chages has to be done before we run "crab_submission_mcUL.py" or "crab_submission_dataUL.py" since these file can not modify the line starting with "#"
 		other configuration are taken care by "crab_submission_mcUL.py" and "crab_submission_dataUL.py" file
 
-* Crab submission for UL mc samples can be done using "crab_submission_mcUL.py" file using the following commond:
+* Crab submission for UL mc/data samples can be done using "crab_submission_mcUL.py" file using the following commond:
 
 		python crab_submission_mcUL.py  -y UL2016preVFP -h (-y stands for year -h stands for help, Script have to run without -h option otherwise it prints the help option only)
+		python crab_submission_dataUL.py  -y UL2016preVFP -h (-y stands for year -h stands for help, Script have to run without -h option otherwise it prints the help option only)
 
-                for new User user name <mikumar> and the site name <T2_IN_TIFR> must be changed in "crab_submission_mcUL.py" and "crab_submission_dataUL.py" accordingly
-
-                        a. outputDir = "/store/user/<username>/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP/check/"
-                        b. config.Site.storageSite = "<sitename>" (need to chage storege unit accordingly)
+* For new User 
+		a.user name <mikumar> and the site name <T2_IN_TIFR> must be changed in "crab_submission_mcUL.py" and "crab_submission_dataUL.py" accordingly
+		b. outputDir = "/store/user/<username>/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP/check/" (need to chage storege unit accordingly)
+		c. config.Site.storageSite = "<sitename>" (need to chage storege unit accordingly)
 
 ## Recomdation  UL16preVFP
 	
