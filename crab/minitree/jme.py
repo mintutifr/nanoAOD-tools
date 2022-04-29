@@ -16,14 +16,8 @@ jmeCorrectionsULRun2016C_preVFP_DATA_AK4CHS = createJMECorrector(False, "UL2016_
 jmeCorrectionsULRun2016D_preVFP_DATA_AK4CHS = createJMECorrector(False, "UL2016_preVFP", "D", "All", "AK4PFchs")
 jmeCorrectionsULRun2016E_preVFP_DATA_AK4CHS = createJMECorrector(False, "UL2016_preVFP", "E", "All", "AK4PFchs")
 jmeCorrectionsULRun2016F_preVFP_DATA_AK4CHS = createJMECorrector(False, "UL2016_preVFP", "F", "All", "AK4PFchs")
-jmeCorrectionsULRun2016G_preVFP_DATA_AK4CHS = createJMECorrector(False, "UL2016_preVFP", "G", "All", "AK4PFchs")
-jmeCorrectionsULRun2016H_preVFP_DATA_AK4CHS = createJMECorrector(False, "UL2016_preVFP", "H", "All", "AK4PFchs")
 
 
-jmeCorrectionsULRun2016B_postVFP_DATA_AK4CHS = createJMECorrector(False, "UL2016", "B", "All", "AK4PFchs")
-jmeCorrectionsULRun2016C_postVFP_DATA_AK4CHS = createJMECorrector(False, "UL2016", "C", "All", "AK4PFchs")
-jmeCorrectionsULRun2016D_postVFP_DATA_AK4CHS = createJMECorrector(False, "UL2016", "D", "All", "AK4PFchs")
-jmeCorrectionsULRun2016E_postVFP_DATA_AK4CHS = createJMECorrector(False, "UL2016", "E", "All", "AK4PFchs")
 jmeCorrectionsULRun2016F_postVFP_DATA_AK4CHS = createJMECorrector(False, "UL2016", "F", "All", "AK4PFchs")
 jmeCorrectionsULRun2016G_postVFP_DATA_AK4CHS = createJMECorrector(False, "UL2016", "G", "All", "AK4PFchs")
 jmeCorrectionsULRun2016H_postVFP_DATA_AK4CHS = createJMECorrector(False, "UL2016", "H", "All", "AK4PFchs")
