@@ -5,23 +5,23 @@ keep event
 keep run
 keep luminosityBlock
 
-keep HLT_Ele27_WPTight_Gsf
-keep HLT_Ele28_WPTight_Gsf
-keep HLT_Ele32_WPTight_Gsf
-keep HLT_Ele35_WPTight_Gsf
-keep HLT_Ele38_WPTight_Gsf
-keep HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned
-keep HLT_Ele27_eta2p1_WPTight_Gsf
-keep HLT_Ele32_eta2p1_WPTight_Gsf
+keep HLT_Ele27_WPTight_Gsf*
+keep HLT_Ele28_WPTight_Gsf*
+keep HLT_Ele32_WPTight_Gsf*
+keep HLT_Ele35_WPTight_Gsf*
+keep HLT_Ele38_WPTight_Gsf*
+keep HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned*
+keep HLT_Ele27_eta2p1_WPTight_Gsf*
+keep HLT_Ele32_eta2p1_WPTight_Gsf*
 
-keep HLT_IsoMu20
-keep HLT_IsoTkMu20
-keep HLT_IsoMu24
-keep HLT_IsoTkMu24
-keep HLT_IsoMu24_eta2p1
-keep HLT_IsoMu27
-keep HLT_IsoTkMu27
-keep HLT_IsoMu30
+keep HLT_IsoMu20*
+keep HLT_IsoTkMu20*
+keep HLT_IsoMu24*
+keep HLT_IsoTkMu24*
+keep HLT_IsoMu24_eta2p1*
+keep HLT_IsoMu27*
+keep HLT_IsoTkMu27*
+keep HLT_IsoMu30*
 
 
 keep PV*
