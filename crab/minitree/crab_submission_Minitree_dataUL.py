@@ -50,7 +50,8 @@ if(year == 'UL2017'):
     if(lep=="el"):
     	Datasets = Datasets_SingleElectron_data_UL2017
     	
-RequestNames = Datasets.keys()
+RequestNames = ['Run2016C_preVFP_mu']
+#Datasets.keys()
 print RequestNames
 print "len(Datasets) = ",len(Datasets)
 cfgfile = "crab_cfg_Minitree.py"
@@ -67,7 +68,7 @@ def replacemachine(fileName, sourceText, replaceText):
     print "All went well, the modifications are done"
  #################################################################
 
-for i in range(0,len(Datasets)):
+for i in range(0,1):#len(Datasets)):
     region_tag = "2J1T1"
     RequestName = RequestNames[i]
     Dataset = Datasets[RequestNames[i]]
@@ -75,7 +76,7 @@ for i in range(0,len(Datasets)):
     update_Dataset = "config.Data.inputDataset = '"+Dataset+"'\n"
     update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+region_tag+"_"+lep+"_new/"+RequestName+"'\n"
     update_DatasetTag = "config.Data.outputDatasetTag = 'MiniTree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_"+RequestName+"'\n"
-    update_InputFiles = "config.JobType.inputFiles = ['crab_script_Minitree.py','../../scripts/haddnano.py','foxwol_n_fourmomentumSolver.py','MinitreeModule.py','cut_strings.py','keep_and_drop_mu_Minitree.txt','keep_and_drop_el_Minitree.txt']\n"   
+    update_InputFiles = "config.JobType.inputFiles = ['crab_script_Minitree.py','../../scripts/haddnano.py','foxwol_n_fourmomentumSolver.py','MinitreeModule.py','cut_strings.py','keep_and_drop_mu_Minitree.txt','keep_and_drop_el_Minitree.txt','jme.py','Mc_prob_cal_forBweght.py','scaleFactor.py','KinFit.C']\n"   
     if(year=='UL2016preVFP' or year=='UL2016postVFP' ):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2016\n"
     elif(year=='UL2017'):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2017\n" 
 
