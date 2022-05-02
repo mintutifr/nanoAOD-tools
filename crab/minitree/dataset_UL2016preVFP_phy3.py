@@ -4,11 +4,10 @@ Datasets_MC_UL2016APV = {
 
 Datasets_SingleMuon_data_UL2016APV = {
 		'Run2016B_preVFP_mu' : '/SingleMuon/mikumar-Tree_20_Apr22_Run2016B-ver2_mu-11cca84e9421f041a8fcb7fd41edd277/USER',
-		'Run2017F_preVFP_mu' : '/SingleMuon/mikumar-Tree_20_Apr22_Run2016F-HIPM_mu-11cca84e9421f041a8fcb7fd41edd277/USER',
 		'Run2016C_preVFP_mu' : '/SingleMuon/mikumar-Tree_20_Apr22_Run2016C-HIPM_mu-11cca84e9421f041a8fcb7fd41edd277/USER',
 		'Run2016D_preVFP_mu' : '/SingleMuon/mikumar-Tree_20_Apr22_Run2016D-HIPM_mu-11cca84e9421f041a8fcb7fd41edd277/USER',
 		'Run2016E_preVFP_mu' : '/SingleMuon/mikumar-Tree_20_Apr22_Run2016E-HIPM_mu-11cca84e9421f041a8fcb7fd41edd277/USER',
-		'Run2016F_preVFP_mu' : '/SingleMuon/mikumar-Tree_20_Apr22_Run2016F-HIPM_mu-11cca84e9421f041a8fcb7fd41edd277/USER',
+		'Run2017F_preVFP_mu' : '/SingleMuon/mikumar-Tree_20_Apr22_Run2016F-HIPM_mu-11cca84e9421f041a8fcb7fd41edd277/USER',
 }
 
 Datasets_SingleElectron_data_UL2016APV= {
