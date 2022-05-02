@@ -88,7 +88,8 @@
         https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
 
                 inputfile:
-                      	 Summer20UL16APV_JRV3_DATA.tar.gz
+                      	Summer20UL16APV_JRV3_DATA.tar.gz
+			Please note that JER-SF files for data just contain unity and are not supposed to be used in the analyses. They are needed for internal consistence of the framework, i.e. currently CMSSW requires the JER-SF file also for data for compatibility. 
 
 *	MET
 	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
@@ -216,7 +217,8 @@
 	https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
 
                 inputfile:
-                         Summer20UL16_JRV3_DATA.tar.gz
+			Summer20UL16_JRV3_DATA.tar.gz
+			Please note that JER-SF files for data just contain unity and are not supposed to be used in the analyses. They are needed for internal consistence of the framework, i.e. currently CMSSW requires the JER-SF file also for data for compatibility. 
 
 *	MET
 	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
@@ -345,6 +347,7 @@
 
                 inputfile:
                         Summer19UL17_JRV2_DATA.tar.gz
+			Please note that JER-SF files for data just contain unity and are not supposed to be used in the analyses. They are needed for internal consistence of the framework, i.e. currently CMSSW requires the JER-SF file also for data for compatibility. 
 
 *	MET
 	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
@@ -470,9 +473,10 @@
 
 *	jerData (Summer19UL18)
         https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
-
+	
                 inputfile:
                         Summer19UL18_JRV2_DATA.tar.gz
+			Please note that JER-SF files for data just contain unity and are not supposed to be used in the analyses. They are needed for internal consistence of the framework, i.e. currently CMSSW requires the JER-SF file also for data for compatibility. 
 
 *	 MET
          https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
