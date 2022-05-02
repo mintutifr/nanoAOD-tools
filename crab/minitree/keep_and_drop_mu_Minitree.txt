@@ -20,4 +20,4 @@ drop    103
 drop 	2
 
 keep Electron_SF*
-drop Jet_btagSF_deepjet*
+keep Jet_btagSF_deepjet*
