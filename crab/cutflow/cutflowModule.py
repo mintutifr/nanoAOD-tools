@@ -22,10 +22,10 @@ class cutflow(Module):
 	self.TotalLumi = {'2016' : 35882.5,
 		'2017' : 41529.5,
 		'2018' : None,
-		'UL2016preVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
-		'UL2016postVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
-                'UL2017' : 0.7476, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
-                'UL2018' : 0.7100} # https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
+		'UL2016preVFP' :  19521,
+                'UL2016postVFP' : 16812,
+                'UL2017' : 41529,
+                'UL2018' : 59222}
 
 	if(self.isMC == True):
 	    x_sec = 80.95
@@ -36,11 +36,10 @@ class cutflow(Module):
                 	'2016' : 0.7527, 
                 	'2017' : 0.8001,
                 	'2018' : None,
-			'UL2016preVFP' : 0.6502, #
-                        'UL2016postVFP' : 0.6377,
-                        'UL2017' : 0.7476,
-                        'UL2018' : 0.7100
-			}
+			'UL2016preVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
+			'UL2016postVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
+                	'UL2017' : 0.7476, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
+                	'UL2018' : 0.7100} # https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
 	if(self.lepflavour=="mu"):
 	    self.trigger_selection={
                 	'2016' : ['HLT_IsoMu24','HLT_IsoTkMu24'],
@@ -109,6 +108,9 @@ class cutflow(Module):
 	PV_npvs = getattr(event, "PV_npvs")
 	if(self.isMC == True):self.Nocut_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight) 
 	else:self.Nocut_npvs.Fill(PV_npvs*PreFireWeight)
+	#print "Xsec_wgt = ", self.Xsec_wgt
+	#print "PuWeight = ", PuWeight
+	#print "PreFireWeight = ",PreFireWeight
 
 ##################################
 #trigger selection	--0--
@@ -301,6 +303,7 @@ class cutflow(Module):
            elif(self.lepflavour=="el" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF)
 	   elif(self.lepflavour=="mu" and self.isMC == False): self.jet_sel_npvs.Fill(PV_npvs*PreFireWeight)
 	   elif(self.lepflavour=="el" and self.isMC == False): self.jet_sel_npvs.Fill(PV_npvs*PreFireWeight)
+	   
 	else:
 	    #print "jet selection  --4--"
 	    return True
@@ -332,6 +335,7 @@ class cutflow(Module):
 		
 		if(self.lepflavour=="mu"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*bweight)
 		if(self.lepflavour=="el"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*bweight)
+		#print "bweight = ",bweight
 	    if(self.isMC == False):
 		if(self.lepflavour=="mu"): self.b_tag_jet_sel_npvs.Fill(PV_npvs*PreFireWeight)
 		if(self.lepflavour=="el"): self.b_tag_jet_sel_npvs.Fill(PV_npvs*PreFireWeight)
