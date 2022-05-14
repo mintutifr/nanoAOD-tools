@@ -508,12 +508,12 @@ class MinitreeProducer(Module):
 		jet_id.append(jet)
 		#print lepton4v.DeltaR(njet4n)
 	#print "jet_id = ",jet_id
-	Tight_b_tab_crite={
+	Tight_b_tag_crite={
                 'UL2016preVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
 		'UL2016postVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
                 'UL2017' : 0.7476, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
                 'UL2018' : 0.7100} # https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
-	Lose_b_tab_crite={
+	Lose_b_tag_crite={
                 'UL2016preVFP' : 0.0480,
 		'UL2016postVFP' :0.0480,
                 'UL2017' : 0.0532,
@@ -524,12 +524,12 @@ class MinitreeProducer(Module):
 	    #print jet.btagDeepFlavB," ",jet.eta
 	#print getattr(event,'event');
 	
-	for jet in filter(lambda j:(j.btagDeepFlavB>Tight_b_tab_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
+	for jet in filter(lambda j:(j.btagDeepFlavB>Tight_b_tag_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
 	    btagjet_id.append(jet) 
 	#print "btagJet_id = ", btagjet_id
         #if(len(btagjet_id)):	return True
 	if(self.Total_Njets == 2 and  self.BTag_Njets == 1 and len(btagjet_id)==0):
-		for jet in filter(lambda j:(j.btagDeepFlavB>Lose_b_tab_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
+		for jet in filter(lambda j:(j.btagDeepFlavB>Lose_b_tag_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
 			btagjet_id.append(jet)
 		#print len(btagjet_id)
 
@@ -613,7 +613,7 @@ class MinitreeProducer(Module):
 	    for jet in jet_id:
 		#print "jet Pt = ", jet.pt
 	    	if(jet==btagjet_id[0]):
-	    	     #print "btabjet_id = ",jet
+	    	     #print "btagjet_id = ",jet
 		     [bJetMass,bJetPt,bJetEta,abs_bJetEta,bJetPhi,bJetdeepCSV,bJet4v]=CollectJetInfo(jet)
 	             if(self.isMC==True):bJethadronFlavour=jet.hadronFlavour	
 	    	else:
