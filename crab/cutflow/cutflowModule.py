@@ -5,7 +5,7 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 from importlib import import_module
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
 from Mc_prob_cal_forBweght import *
-
+from scaleFactor import * 
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
@@ -19,34 +19,64 @@ class cutflow(Module):
 	self.lepflavour = lepflavour
 	self.isMC = isMC
 	self.dataYear = dataYear
-	lumi = {'2016' : 35882.5,'2017' : 41529.5,'2018' : None}
+	self.TotalLumi = {'2016' : 35882.5,
+		'2017' : 41529.5,
+		'2018' : None,
+		'UL2016preVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
+		'UL2016postVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
+                'UL2017' : 0.7476, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
+                'UL2018' : 0.7100} # https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
+
 	if(self.isMC == True):
-	    x_sec = 1350
-            Lumi = lumi[self.dataYear]
-	    NEvents = 7380341
-            self.Xsec_wgt = (x_sec*Lumi)/NEvents
-	self.Tight_b_tab_crite={
-                	'2016' : 0.7527,
+	    x_sec = 80.95
+            #Lumi = lumi[self.dataYear]
+	    NEvents = 31024000
+            self.Xsec_wgt = (x_sec*self.TotalLumi[self.dataYear])/NEvents
+	self.Tight_b_tag_crite={
+                	'2016' : 0.7527, 
                 	'2017' : 0.8001,
-                	'2018' : None}
+                	'2018' : None,
+			'UL2016preVFP' : 0.6502, #
+                        'UL2016postVFP' : 0.6377,
+                        'UL2017' : 0.7476,
+                        'UL2018' : 0.7100
+			}
 	if(self.lepflavour=="mu"):
 	    self.trigger_selection={
                 	'2016' : ['HLT_IsoMu24','HLT_IsoTkMu24'],
                 	'2017' : ['HLT_IsoMu27'],
-                	'2018' : None}
+                	'2018' : None,
+			'UL2016preVFP' : ['HLT_IsoMu24','HLT_IsoTkMu24'],
+			'UL2016postVFP' : ['HLT_IsoMu24','HLT_IsoTkMu24'],
+                        'UL2017' : ['HLT_IsoMu27'],
+                        'UL2018' : None
+			}
 	    self.pt_Thes={
 			'2016' : 26,
 			'2017' : 30,
-			'2018' : None}
+			'2018' : None,
+			'UL2016preVFP' : 26,
+			'UL2016postVFP' : 26,
+			'UL2017' : 30,
+			 'UL2018' : None}
 	if(self.lepflavour=="el"):
             self.trigger_selection={
                         '2016' : ['HLT_Ele32_eta2p1_WPTight_Gsf'],
                         '2017' : ['HLT_Ele35_WPTight_Gsf','HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned'],
-                        '2018' : None}
+                        '2018' : None,
+			'UL2016preVFP' : ['HLT_Ele32_eta2p1_WPTight_Gsf'],
+			'UL2016postVFP' : ['HLT_Ele32_eta2p1_WPTight_Gsf'],
+                        'UL2017' : ['HLT_Ele35_WPTight_Gsf','HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned'],
+                        'UL2018' : None,
+			}
 	    self.pt_Thes={
 			'2016' : 35,
 			'2017' : 37,
-			'2018' : None}
+			'2018' : None,
+			'UL2016preVFP' : 35,
+			'UL2016postVFP' : 35,
+			'UL2017' : 37,
+			'UL2018' : None}
 
 
     def beginJob(self,histFile=None,histDirName=None):
@@ -122,7 +152,9 @@ class cutflow(Module):
 		    muSF = 0
 		    if(self.isMC == True):
 		         for muon in muons_id:
-			    muSF=muon.SF_Iso
+			    muSF=create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,self.TotalLumi[self.dataYear],"noSyst")
+
+			    #muon.SF_Iso
 			    #print "muSF = ",muSF
 		         self.tight_lep_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF)
 	                 #print "muSF = ",muSF
@@ -255,15 +287,15 @@ class cutflow(Module):
 	    if(self.lepflavour=="mu" and lossepF==1 and muon4v.DeltaR(njet4v)>0.4):
 		jet_id.append(jet)#and muon4v.DeltaR(njet4v)>0.4):jet_id.append(jet)
 		#print "jet.btagDeepB = ",jet.btagDeepB," jet.eta = ",abs(jet.eta)
-		print "deltaR =",muon4v.DeltaR(njet4v)," jetdeltaRiso = ",jet.dR_Ljet_Isomu," jetdeltaRantiiso = ",jet.dR_Ljet_AntiIsomu
+		#print "deltaR =",muon4v.DeltaR(njet4v)," jetdeltaRiso = ",jet.dR_Ljet_Isomu," jetdeltaRantiiso = ",jet.dR_Ljet_AntiIsomu
 	    	#print "Jet Pt =%s ; Jet eta =%s ; jet ID =%s ;DeltaR =%s" % (jet.pt,jet.eta,jet.jetId,muon4v.DeltaR(njet4v)) 
 	    elif(self.lepflavour=="el" and lossepF==1 and electron4v.DeltaR(njet4v)>0.4): jet_id.append(jet)
 	    else: continue
 	  #  print "jet_id = ",jet_id
-	    if(abs(jet.eta)<2.4 and jet.btagDeepB>self.Tight_b_tab_crite[self.dataYear] ): 
+	    if(abs(jet.eta)<2.4 and jet.btagDeepB>self.Tight_b_tag_crite[self.dataYear] ): 
 		btagjet_id.append(jet)
 	    #if(abs(jet.eta)<2.4): btagjet_id.append(jet)
-	 	print "btagJet_id = ", btagjet_id
+	 	#print "btagJet_id = ", btagjet_id
 	if(len(jet_id)==self.Total_Njets):
            if(self.lepflavour=="mu" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF)
            elif(self.lepflavour=="el" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF)
@@ -306,7 +338,7 @@ class cutflow(Module):
         else:
 	    #print "b tag jet  --5--"
 	    return True				
-	print '---------------------------------------------------------------------------b tag jet  --5--'
+	#print '---------------------------------------------------------------------------b tag jet  --5--'
 	#print(getattr(event,'event'))
 
         return True
@@ -315,10 +347,32 @@ cutflowModuleConstr_2J1T1_mu_data_2016 =  lambda : cutflow(2,1,True,"mu",False,'
 cutflowModuleConstr_2J1T1_el_mc_2016 =  lambda : cutflow(2,1,True,"el",True,'2016')
 cutflowModuleConstr_2J1T1_el_data_2016 =  lambda : cutflow(2,1,True,"el",False,'2016')
 
+cutflowModuleConstr_2J1T1_mu_mc_UL2016preVFP =  lambda : cutflow(2,1,True,"mu",True,'UL2016preVFP')
+cutflowModuleConstr_2J1T1_mu_data_UL2016preVFP =  lambda : cutflow(2,1,True,"mu",False,'UL2016preVFP')
+cutflowModuleConstr_2J1T1_el_mc_UL2016preVFP =  lambda : cutflow(2,1,True,"el",True,'UL2016preVFP')
+cutflowModuleConstr_2J1T1_el_data_UL2016preVFP =  lambda : cutflow(2,1,True,"el",False,'UL2016preVFP')
+
+cutflowModuleConstr_2J1T1_mu_mc_UL2016postVFP =  lambda : cutflow(2,1,True,"mu",True,'UL2016postVFP')
+cutflowModuleConstr_2J1T1_mu_data_UL2016postVFP =  lambda : cutflow(2,1,True,"mu",False,'UL2016postVFP')
+cutflowModuleConstr_2J1T1_el_mc_UL2016postVFP =  lambda : cutflow(2,1,True,"el",True,'UL2016postVFP')
+cutflowModuleConstr_2J1T1_el_data_UL2016postVFP =  lambda : cutflow(2,1,True,"el",False,'UL2016postVFP')
+
+
 cutflowModuleConstr_2J1T0_mu_mc_2016 =  lambda : cutflow(2,1,False,"mu",True,'2016')
 cutflowModuleConstr_2J1T0_mu_data_2016 =  lambda : cutflow(2,1,False,"mu",False,'2016')
 cutflowModuleConstr_2J1T0_el_mc_2016 =  lambda : cutflow(2,1,False,"el",True,'2016')
 cutflowModuleConstr_2J1T0_el_data_2016 =  lambda : cutflow(2,1,False,"el",False,'2016')
+
+cutflowModuleConstr_2J1T0_mu_mc_UL2016preVFP =  lambda : cutflow(2,1,False,"mu",True,'UL2016preVFP')
+cutflowModuleConstr_2J1T0_mu_data_UL2016preVFP =  lambda : cutflow(2,1,False,"mu",False,'UL2016preVFP')
+cutflowModuleConstr_2J1T0_el_mc_UL2016preVFP =  lambda : cutflow(2,1,False,"el",True,'UL2016preVFP')
+cutflowModuleConstr_2J1T0_el_data_UL2016preVFP =  lambda : cutflow(2,1,False,"el",False,'UL2016preVFP')
+
+cutflowModuleConstr_2J1T0_mu_mc_UL2016postVFP =  lambda : cutflow(2,1,False,"mu",True,'UL2016postVFP')
+cutflowModuleConstr_2J1T0_mu_data_UL2016postVFP =  lambda : cutflow(2,1,False,"mu",False,'UL2016postVFP')
+cutflowModuleConstr_2J1T0_el_mc_UL2016postVFP =  lambda : cutflow(2,1,False,"el",True,'UL2016postVFP')
+cutflowModuleConstr_2J1T0_el_data_UL2016postVFP =  lambda : cutflow(2,1,False,"el",False,'UL2016postVFP')
+
 
 cutflowModuleConstr_2J1T1_mu_mc_2017 =  lambda : cutflow(2,1,True,"mu",True,'2017')
 cutflowModuleConstr_2J1T1_mu_data_2017 =  lambda : cutflow(2,1,True,"mu",False,'2017')
@@ -329,6 +383,17 @@ cutflowModuleConstr_2J1T0_mu_mc_2017 =  lambda : cutflow(2,1,False,"mu",True,'20
 cutflowModuleConstr_2J1T0_mu_data_2017 =  lambda : cutflow(2,1,False,"mu",False,'2017')
 cutflowModuleConstr_2J1T0_el_mc_2017 =  lambda : cutflow(2,1,False,"el",True,'2017')
 cutflowModuleConstr_2J1T0_el_data_2017 =  lambda : cutflow(2,1,False,"el",False,'2017')
+
+cutflowModuleConstr_2J1T1_mu_mc_UL2017 =  lambda : cutflow(2,1,True,"mu",True,'UL2017')
+cutflowModuleConstr_2J1T1_mu_data_UL2017 =  lambda : cutflow(2,1,True,"mu",False,'UL2017')
+cutflowModuleConstr_2J1T1_el_mc_UL2017 =  lambda : cutflow(2,1,True,"el",True,'UL2017')
+cutflowModuleConstr_2J1T1_el_data_UL2017 =  lambda : cutflow(2,1,True,"el",False,'UL2017')
+
+cutflowModuleConstr_2J1T0_mu_mc_UL2017 =  lambda : cutflow(2,1,False,"mu",True,'UL2017')
+cutflowModuleConstr_2J1T0_mu_data_UL2017 =  lambda : cutflow(2,1,False,"mu",False,'UL2017')
+cutflowModuleConstr_2J1T0_el_mc_UL2017 =  lambda : cutflow(2,1,False,"el",True,'UL2017')
+cutflowModuleConstr_2J1T0_el_data_UL2017 =  lambda : cutflow(2,1,False,"el",False,'UL2017')
+
 
 cutflowModuleConstr_2J0T1_mu_mc_2016 =  lambda : cutflow(2,0,True,"mu",True,'2016')
 cutflowModuleConstr_2J0T0_mu_mc_2016 =  lambda : cutflow(2,0,False,"mu",True,'2016')
