@@ -50,8 +50,7 @@ if(year == 'UL2017'):
     if(lep=="el"):
     	Datasets = Datasets_SingleElectron_data_UL2017
     	
-RequestNames = ['Run2016C_preVFP_mu']
-#Datasets.keys()
+RequestNames = Datasets.keys()
 print RequestNames
 print "len(Datasets) = ",len(Datasets)
 cfgfile = "crab_cfg_Minitree.py"
@@ -68,7 +67,7 @@ def replacemachine(fileName, sourceText, replaceText):
     print "All went well, the modifications are done"
  #################################################################
 
-for i in range(0,1):#len(Datasets)):
+for i in range(0,1):#len(RequestNames)):
     region_tag = "2J1T1"
     RequestName = RequestNames[i]
     Dataset = Datasets[RequestNames[i]]
