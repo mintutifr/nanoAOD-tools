@@ -117,7 +117,7 @@ for i in range(0,len(RequestNames)):
     replacemachine(crab_scriptfile,'outputbranchsel=', branchsel )
     replacemachine(crab_scriptfile,'#inputFiles=',removeline)
     replacemachine(crab_scriptfile,'inputFiles=',Inputline)
-    replacemachine(crab_scriptfile,'inputFiles()','inputFiles')
+    replacemachine(crab_scriptfile,'inputFiles()','\t\tinputFiles,\n')
     """inputFiles = []
     with open(Input_files, "r") as a_file:
 	count = 0
