@@ -10,6 +10,7 @@ outputroot=$1
 echo "ouput root file wull be" $outputroot
 echo "CONDOR DIR: $_CONDOR_SCRATCH_DIR"
 cd ${_CONDOR_SCRATCH_DIR}
+ls -ltr
 #------------------------------------------------
 # set cmsenv
 #------------------------------------------------
@@ -51,5 +52,6 @@ cd ${_CONDOR_SCRATCH_DIR}
 rm -rf minitree.tar.gz
 rm -rf CMSSW_10_6_28
 rm -rf *.py
+ls -ltr
 printf "Done ";/bin/date
 

@@ -130,8 +130,9 @@ mkdir -p $baseDir
 #-----------------
 tarFile=$baseDir/minitree.tar.gz
 rm -rf $tarFile
-tar -zcf $tarFile ${crab_dir}/../../../PhysicsTools/ --exclude ${crab_dir}/condor_job
-#ystem("cp runMinitree.sh tmpSub/")
+PhysicsTools=${crab_dir}/../../../PhysicsTools
+
+tar --exclude='.git' --exclude=${PhysicsTools}'/NanoAODTools/crab/condor_job'  --exclude=${PhysicsTools}'/NanoAODTools/crab/tree' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study_Sebastien' --exclude=${PhysicsTools}'/NanoAODTools/crab/efficiency' --exclude=${PhysicsTools}'/NanoAODTools/crab/lumi_n_pileup' --exclude=${PhysicsTools}'/NanoAODTools/crab/cutflow' --exclude=${PhysicsTools}'/NanoAODTools/crab/puWeight' --exclude=${PhysicsTools}'/NanoAODTools/crab/Effective_Number' -zcvf $tarFile ${PhysicsTools}
 #echo $channels
 
 for channel in $channels; do
@@ -188,7 +189,7 @@ for channel in $channels; do
 	     echo $count
 	     sed -i 's:INPUT:'"$input_file_list_10"':g' crab_script_Minitree.py 
 	     sed -i "s:INPUT:root\://se01.indiacms.res.in/${outputDir}tree_$count.root:g" condorSetup.sub
-	     #condor_submit condorSetup.sub
+	     condor_submit condorSetup.sub
 	     cd ../		    	
              input_file_list_10="inputFiles=["
   	else
