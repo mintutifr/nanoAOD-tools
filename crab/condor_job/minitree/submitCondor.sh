@@ -40,12 +40,12 @@ fi
 #------------------------------------------------
 #create the same datasetfile depending on year
 #------------------------------------------------
-
 if [[ "UL2016preVFP" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2016preVFP_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/MiniTree_crab/SIXTEEN_preVFP/"
      if [[ $sample == "Mc" ]]; then
-	channels="Tbarchannel"
+	channels="Tchannel"
+	# Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTolnulnu WZTo2Q2L ZZTo2Q2L QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched '
      fi
 
      if [[ $sample == "Data" && $lep == "mu" ]]; then
@@ -132,11 +132,11 @@ tarFile=$baseDir/minitree.tar.gz
 rm -rf $tarFile
 PhysicsTools=${crab_dir}/../../../PhysicsTools
 
-tar --exclude='.git' --exclude=${PhysicsTools}'/NanoAODTools/crab/condor_job'  --exclude=${PhysicsTools}'/NanoAODTools/crab/tree' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study_Sebastien' --exclude=${PhysicsTools}'/NanoAODTools/crab/efficiency' --exclude=${PhysicsTools}'/NanoAODTools/crab/lumi_n_pileup' --exclude=${PhysicsTools}'/NanoAODTools/crab/cutflow' --exclude=${PhysicsTools}'/NanoAODTools/crab/puWeight' --exclude=${PhysicsTools}'/NanoAODTools/crab/Effective_Number' -zcvf $tarFile ${PhysicsTools}
+tar --exclude='.git' --exclude=${PhysicsTools}'/NanoAODTools/crab/condor_job'  --exclude=${PhysicsTools}'/NanoAODTools/crab/tree' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study_Sebastien' --exclude=${PhysicsTools}'/NanoAODTools/crab/efficiency' --exclude=${PhysicsTools}'/NanoAODTools/crab/lumi_n_pileup' --exclude=${PhysicsTools}'/NanoAODTools/crab/cutflow' --exclude=${PhysicsTools}'/NanoAODTools/crab/puWeight' --exclude=${PhysicsTools}'/NanoAODTools/crab/Effective_Number' -zcf $tarFile ${PhysicsTools}
 #echo $channels
-
+$channels
 for channel in $channels; do
-    #echo $channel
+    echo $channel
     #------------------------------------------------
     #Run python script to create input txt file using the dataset name
     #------------------------------------------------
@@ -159,7 +159,7 @@ for channel in $channels; do
     count=0
     input_files="All_input_files_"$channel".txt"
     input_file_list_10="inputFiles=["
-    outputDir=${outputDir}${sample}"/"${channel}"/"${region}"_"${lep}"/"
+    outputDir=${outputDir}${sample}"/"${region}"_"${lep}"/"${channel}"/"
     file_tail=`tail -n 1 $input_files`
 
     cat $input_files | while read ntupleT2Path
@@ -193,7 +193,7 @@ for channel in $channels; do
 	     cd ../		    	
              input_file_list_10="inputFiles=["
   	else
-    	     input_file_list_10=$input_file_list_10"'root\://se01.indiacms.res.in/"$ntupleT2Path"' , "  #adding file in the inputfile list
+    	     input_file_list_10=${input_file_list_10}"'root\://se01.indiacms.res.in/"${ntupleT2Path}"' , "  #adding file in the inputfile list
   	fi
   
   #condor_submit condorSetup.sub
