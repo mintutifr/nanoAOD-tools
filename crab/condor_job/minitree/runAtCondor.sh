@@ -24,7 +24,7 @@ eval `scramv1 runtime -sh`
 # untar nanoaod tools ans list the directory
 #------------------------------------------------
 mv ../../minitree.tar.gz .
-tar --strip-components=0 -zxvf minitree.tar.gz
+tar --strip-components=0 -zxf minitree.tar.gz
 pwd
 ls -la
 cp ../../MinitreeModule.py PhysicsTools/NanoAODTools/crab/minitree/ 
