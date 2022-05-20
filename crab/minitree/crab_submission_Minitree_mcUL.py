@@ -39,7 +39,42 @@ if(year == 'UL2017'):
     outputDir = "/store/user/mikumar/RUN2_UL/MiniTree_crab/SEVENTEEN/MC/"
     Datasets = Datasets_MC_UL2017
 
-RequestNames = Datasets.keys()
+RequestNames = [
+'Tchannel',
+'Tbarchannel',
+'tw_top',
+'tw_antitop',
+'Schannel',
+'ttbar_SemiLeptonic',
+'ttbar_FullyLeptonic',
+'WJetsToLNu_0J',
+'WJetsToLNu_1J',
+'WJetsToLNu_2J',
+'DYJets',
+'WWTolnulnu',
+'WZTo2Q2L',
+'ZZTo2Q2L',
+'QCD_Pt-15To20_MuEnriched',
+'QCD_Pt-20To30_MuEnriched',
+'QCD_Pt-30To50_MuEnriched',
+'QCD_Pt-50To80_MuEnriched',
+'QCD_Pt-80To120_MuEnriched',
+'QCD_Pt-120To170_MuEnriched',
+'QCD_Pt-170To300_MuEnriched',
+'QCD_Pt-300To470_MuEnriched',
+'QCD_Pt-470To600_MuEnriched',
+'QCD_Pt-600To800_MuEnriched',
+'QCD_Pt-800To1000_MuEnriched',
+'QCD_Pt-1000_MuEnriched',
+'QCD_Pt-30to50_EMEnriched',
+'QCD_Pt-50to80_EMEnriched',
+'QCD_Pt-80to120_EMEnriched',
+'QCD_Pt-120to170_EMEnriched',
+'QCD_Pt-170to300_EMEnriched',
+'QCD_Pt-300toInf_EMEnriched',
+]
+
+#Datasets.keys()
 print RequestNames
 print "len(Datasets) = ",len(Datasets)
 cfgfile = "crab_cfg_Minitree.py"
@@ -63,6 +98,7 @@ for i in range(0,len(RequestNames)):
     NumberOfEvents = Datasets[RequestNames[i]][1] 
     Xsection = Datasets[RequestNames[i]][2]
 
+    print "'",RequestName,"',"," : \t",Xsection," : ",NumberOfEvents
     if(lep=="el" and RequestName.find("MuEnriched")!=-1 and RequestName.find("QCD")!=-1): continue
     if(lep=="mu" and RequestName.find("EMEnriched")!=-1 and RequestName.find("QCD")!=-1): continue
     region_tag = "2J1T1"
