@@ -44,8 +44,9 @@ if [[ "UL2016preVFP" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2016preVFP_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/MiniTree_crab/SIXTEEN_preVFP/"
      if [[ $sample == "Mc" ]]; then
-	channels="Tchannel"
-	# Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTolnulnu WZTo2Q2L ZZTo2Q2L QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched '
+	channels="Tchannel Tbarchannel tw_top"
+	#"tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTolnulnu WZTo2Q2L ZZTo2Q2L QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched" 
+	#Tchannel Tbarchannel tw_top 
      fi
 
      if [[ $sample == "Data" && $lep == "mu" ]]; then
@@ -117,8 +118,7 @@ fi
 #------------------------------------------------
 file=$dataset_file
 localdir=$(basename $dataset_file)  #get the file name from the dataset_file path 
-#baseDir=$crab_dir"/condor_job/$(cut -d'.' -f1 <<<"$localdir")_$(date +"%d-%m-%Y")"
-baseDir=$(pwd)"/$(cut -d'.' -f1 <<<"$localdir")_$(date +"%d-%m-%Y")"
+baseDir=$(pwd)"/$(cut -d'.' -f1 <<<"$localdir")_${region}_${lep}_${sample}_$(date +"%d-%m-%Y")"
 echo $localdir
 echo $baseDir 
 #baseDir="/home/mikumar/tryout2/out_log_$(cut -d'_' -f2 <<<"$year")_$(date +"%d-%m-%Y")"
@@ -151,7 +151,7 @@ for channel in $channels; do
     cp prepare_input_filelist.py $outcond
     cp $crab_dir/minitree/crab_script_Minitree.py $outcond
     cp $crab_dir/minitree/MinitreeModule.py $outcond
-    mv $tarFile $outcond
+    cp $tarFile $outcond
     cd $outcond
 
     python prepare_input_filelist.py -y "$year" -s "$sample" -l "$lep" -r "$region" -c "$channel"
@@ -159,7 +159,7 @@ for channel in $channels; do
     count=0
     input_files="All_input_files_"$channel".txt"
     input_file_list_10="inputFiles=["
-    outputDir=${outputDir}${sample}"/"${region}"_"${lep}"/"${channel}"/"
+    outputroot=${outputDir}${sample}"/"${region}"_"${lep}"/"${channel}"/"
     file_tail=`tail -n 1 $input_files`
 
     cat $input_files | while read ntupleT2Path
@@ -188,7 +188,8 @@ for channel in $channels; do
     	     #echo $input_file_list_10
 	     echo $count
 	     sed -i 's:INPUT:'"$input_file_list_10"':g' crab_script_Minitree.py 
-	     sed -i "s:INPUT:root\://se01.indiacms.res.in/${outputDir}tree_$count.root:g" condorSetup.sub
+	     sed -i "s:INPUT:root\://se01.indiacms.res.in/${outputroot}tree_$count.root:g" condorSetup.sub
+	     #echo "root\://se01.indiacms.res.in/${outputroot}tree_$count.root"
 	     condor_submit condorSetup.sub
 	     cd ../		    	
              input_file_list_10="inputFiles=["
