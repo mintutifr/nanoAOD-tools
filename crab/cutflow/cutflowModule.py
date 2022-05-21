@@ -28,10 +28,10 @@ class cutflow(Module):
                 'UL2018' : 59222}
 
 	if(self.isMC == True):
-	    x_sec = 80.95
-            #Lumi = lumi[self.dataYear]
-	    NEvents = 31024000
-            self.Xsec_wgt = (x_sec*self.TotalLumi[self.dataYear])/NEvents
+		x_sec = 80.95
+		#Lumi = lumi[self.dataYear]
+		NEvents = 31024000
+		self.Xsec_wgt = (x_sec*self.TotalLumi[self.dataYear])/NEvents
 	self.Tight_b_tag_crite={
                 	'2016' : 0.7527, 
                 	'2017' : 0.8001,

@@ -94,8 +94,8 @@ for i in range(0,len(Datasets)):
     modules = "\t\tmodules=[cutflowModuleConstr_"+region_tag+"_"+lep+"_mc_"+year+"()],\n"
     if(sample=="mc"):
     	update_InputFiles = "config.JobType.inputFiles = ['ElectronSF','MuonSF','scaleFactor.py','crab_script_cutflow.py','../../scripts/haddnano.py','Mc_prob_cal_forBweght.py','cutflowModule.py','clean.txt']\n"   
-    	update_NumberOfEvents = "\t    NEvents = "+NumberOfEvents+"\n"
-    	update_Xsection = "\t    x_sec = "+Xsection+"\n"
+    	update_NumberOfEvents = "\t\tNEvents = "+NumberOfEvents+"\n"
+    	update_Xsection = "\t\tx_sec = "+Xsection+"\n"
     else:
 	update_InputFiles = "config.JobType.inputFiles = ['scaleFactor.py','crab_script_cutflow.py','../../scripts/haddnano.py','Mc_prob_cal_forBweght.py','cutflowModule.py','clean.txt']\n"
 
