@@ -176,10 +176,13 @@ class cutflow(Module):
 	    if (len(electron_id)==1):
 		elSF=0
 		if(self.isMC == True):
+		    Jetpt = getattr(event,'Jet_pt')
+                    jetpt = Jetpt[0]
 		    for electron in electron_id:
-		    	if(self.Isolation==True):elSF = electron.SF_Iso 
-		    	elif(self.Isolation==False):elSF = electron.SF_Veto
+		    	if(self.Isolation==True):elSF = create_elSF(self.dataYear,electron.pt,electron.EtaSC,jetpt,"Tight","noSyst")
+		    	elif(self.Isolation==False):elSF = create_elSF(self.dataYear,electron.pt,electron.EtaSC,jetpt,"Veto","noSyst")
 		    self.tight_lep_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF)
+		    #print "elSF : ",elSF, "Integral : ",self.tight_lep_sel_npvs.Integral()," weight : " , (self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF," LHE : " , LHEWeightSign
 		if(self.isMC == False):
 		    self.tight_lep_sel_npvs.Fill(PV_npvs*PreFireWeight)
   	    else:
