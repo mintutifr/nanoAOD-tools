@@ -23,7 +23,7 @@ eval `scramv1 runtime -sh`
 #------------------------------------------------
 # untar nanoaod tools ans list the directory
 #------------------------------------------------
-mv ../../minitree.tar.gz .
+mv ../../cutflow.tar.gz .
 tar --strip-components=0 -zxf cutflow.tar.gz
 pwd
 ls -la
