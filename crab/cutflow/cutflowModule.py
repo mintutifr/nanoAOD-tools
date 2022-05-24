@@ -146,6 +146,7 @@ class cutflow(Module):
 		    #print 'loose ID = ',lep.looseId, ' pt = ',lep.pt , ' eta = ', lep.eta, 'iso = ',lep.pfRelIso04_all #' phi =', lep.phi, ' mass = ',lep.mass
 		    if((self.Isolation==1) and lep.pt>self.pt_Thes[self.dataYear] and abs(lep.eta)<2.4 and lep.pfRelIso04_all<0.06 and lep.tightId==1):
 			muons_id.append(lep)
+
 		    elif((self.Isolation==0) and lep.pt>self.pt_Thes[self.dataYear] and abs(lep.eta)<2.4 and lep.pfRelIso04_all>0.2 and lep.tightId==1): 
 			muons_id.append(lep)
 		    else: 
@@ -154,13 +155,13 @@ class cutflow(Module):
 		    muSF = 0
 		    if(self.isMC == True):
 		         for muon in muons_id:
-			    muSF=create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,self.TotalLumi[self.dataYear],"noSyst")
+			    muSF=create_muSF(self.dataYear,muon.pt,muon.eta,muon.pfRelIso04_all,self.TotalLumi[self.dataYear],"noSyst")
 
 			    #muon.SF_Iso
 			    #print "muSF = ",muSF
 		         self.tight_lep_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF)
-	                 #print "muSF = ",muSF
-		    else:self.tight_lep_sel_npvs.Fill(PV_npvs**PreFireWeight)
+	                 #print "muSF : ",muSF," weight : " , (self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF, " Integral : ", self.tight_lep_sel_npvs.Integral(), " LHEweight : ",LHEWeightSign
+		    else:self.tight_lep_sel_npvs.Fill(PV_npvs*PreFireWeight)
 		else:
 		     #print "ione tight muon selection-1- "
 		     return True
