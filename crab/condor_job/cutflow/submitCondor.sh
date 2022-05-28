@@ -44,7 +44,9 @@ if [[ "UL2016preVFP" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2016preVFP_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/cutFlow_condor/SIXTEEN_preVFP/"
      if [[ $sample == "Mc" ]]; then
-	channels="Tchannel Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTolnulnu WZTo2Q2L ZZTo2Q2L QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched" 
+	channels="Tchannel Tbarchannel"
+	# tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTolnulnu WZTo2Q2L ZZTo2Q2L QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
+	#Tchannel Tbarchannel 
      fi
 
      if [[ $sample == "Data" && $lep == "mu" ]]; then
@@ -116,7 +118,7 @@ fi
 #------------------------------------------------
 #file=$dataset_file
 localdir=$(basename $dataset_file)  #get the file name from the dataset_file path 
-baseDir=$(pwd)"/$(cut -d'.' -f1 <<<"$localdir")_${region}_${lep}_${sample}_$(date +"%d-%m-%Y")"
+baseDir=$(pwd)"/$(cut -d'.' -f1 <<<"$localdir")check_${region}_${lep}_${sample}_$(date +"%d-%m-%Y")"
 echo $localdir
 echo $baseDir 
 #baseDir="/home/mikumar/tryout2/out_log_$(cut -d'_' -f2 <<<"$year")_$(date +"%d-%m-%Y")"
@@ -126,11 +128,11 @@ mkdir -p $baseDir
 #-----------------
 #create tar file
 #-----------------
-tarFile=$baseDir/cutflow.tar.gz
-rm -rf $tarFile
-PhysicsTools=${crab_dir}/../../../PhysicsTools
+#tarFile=$baseDir/cutflow.tar.gz
+#rm -rf $tarFile
+#PhysicsTools=${crab_dir}/../../../PhysicsTools
 
-tar --exclude='.git' --exclude=${PhysicsTools}'/NanoAODTools/crab/condor_job'  --exclude=${PhysicsTools}'/NanoAODTools/crab/tree' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study_Sebastien' --exclude=${PhysicsTools}'/NanoAODTools/crab/efficiency' --exclude=${PhysicsTools}'/NanoAODTools/crab/lumi_n_pileup' --exclude=${PhysicsTools}'/NanoAODTools/crab/minitree' --exclude=${PhysicsTools}'/NanoAODTools/crab/puWeight' --exclude=${PhysicsTools}'/NanoAODTools/crab/Effective_Number' -zcf $tarFile ${PhysicsTools}
+#tar --exclude='.git' --exclude=${PhysicsTools}'/NanoAODTools/crab/condor_job'  --exclude=${PhysicsTools}'/NanoAODTools/crab/tree' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study_Sebastien' --exclude=${PhysicsTools}'/NanoAODTools/crab/efficiency' --exclude=${PhysicsTools}'/NanoAODTools/crab/lumi_n_pileup' --exclude=${PhysicsTools}'/NanoAODTools/crab/minitree' --exclude=${PhysicsTools}'/NanoAODTools/crab/puWeight' --exclude=${PhysicsTools}'/NanoAODTools/crab/Effective_Number' -zcf $tarFile ${PhysicsTools}
 #echo $channels
 echo $channels
 for channel in $channels; do
@@ -147,9 +149,9 @@ for channel in $channels; do
     cp runAtCondor.sh $outcond
     cp $dataset_file  $outcond
     cp prepare_input_filelist.py $outcond
-    cp $crab_dir/cutflow/crab_script_cutflow.py $outcond
-    cp $crab_dir/cutflow/cutflowModule.py  $outcond
-    cp $tarFile $outcond
+    cp $crab_dir/cutflow/condor_script_cutflow.py $outcond
+    cp $crab_dir/cutflow/cutflowModule_new.py  $outcond
+    #cp $tarFile $outcond
     cd $outcond
 
     python prepare_input_filelist.py -y "$year" -s "$sample" -l "$lep" -r "$region" -c "$channel"
@@ -175,8 +177,8 @@ for channel in $channels; do
     	     #------------------------------------------------
 	     cp condorSetup.sub $count
 	     cp runAtCondor.sh $count
-	     cp cutflowModule.py $count
-	     cp crab_script_cutflow.py	$count 
+	     cp cutflowModule_new.py $count
+	     cp condor_script_cutflow.py $count 
 	     cd $count
 
     	     input_file_list_10=$input_file_list_10"'root\://se01.indiacms.res.in/"$ntupleT2Path"' ] " #adding file in the inputfile list and close list for 10 files
@@ -185,8 +187,8 @@ for channel in $channels; do
              #------------------------------------------------	
     	     #echo $input_file_list_10
 	     echo $count
-	     sed -i 's:INPUT:'"$input_file_list_10"':g' crab_script_cutflow.py 
-	     sed -i "s:INPUT:root\://se01.indiacms.res.in/${outputroot}Cutflow_hist_$count.root:g" condorSetup.sub
+	     sed -i 's:INPUT:'"$input_file_list_10"':g' condor_script_cutflow.py 
+	     sed -i "s:INPUT:root\://se01.indiacms.res.in/${outputroot}Cutflow_hist_$count.root $channel $count:g" condorSetup.sub
 	     #echo "root\://se01.indiacms.res.in/${outputroot}tree_$count.root"
 	     condor_submit condorSetup.sub
 	     cd ../		    	
@@ -197,4 +199,5 @@ for channel in $channels; do
   
   #condor_submit condorSetup.sub
     done
+    #sleep 1800
 done
