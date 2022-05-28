@@ -75,7 +75,8 @@ if(year == 'UL2017'):
     elif sample=="Data" and lep=="el" : Datasets = Datasets_SingleElectron_data_UL2017
 
 
-channels=Datasets.keys()
+channels=["Tchannel", "Tbarchannel"]
+#Datasets.keys()
 print 
 print "-----------------------------------------    chacking     --------------------------------"
 print

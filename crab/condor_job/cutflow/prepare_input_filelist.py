@@ -69,8 +69,8 @@ def replacemachine(fileName, sourceText, replaceText):
     print "All went well, the modifications are done"
     ##################################################################
 
-crab_scriptfile = "crab_script_cutflow.py"
-MainModule = "cutflowModule.py"
+crab_scriptfile = "condor_script_cutflow.py"
+MainModule = "cutflowModule_new.py"
 
 
 for i in range(0,len(RequestNames)):
@@ -90,16 +90,13 @@ for i in range(0,len(RequestNames)):
     os.system(cmd_dasgoclint) 
 
     region_tag = region
-    if(year=='UL2016preVFP' or year=='UL2016postVFP' ):cut_string = 'treecut = ""\n'
-    elif(year=='UL2017'):cut_string = 'treecut = ""\n'
     if(sample == "Mc"): 
     	update_NumberOfEvents = "\t\tNEvents = "+NumberOfEvents+"\n"
     	update_Xsection = "\t\tx_sec = "+Xsection+"\n"
-    	modules = "\t\tmodules=[cutflowModuleConstr_"+region_tag+"_"+lep+"_mc_"+year+"()],\n"
+    	modules = "modules=cutflowModuleConstr_"+region_tag+"_"+lep+"_mc_"+year+"()\n"
     else:
-	modules = "\t\tmodules=[cutflowModuleConstr_"+region_tag+"_"+lep+"_data_"+year+"()],\n"
+	modules = "modules=cutflowModuleConstr_"+region_tag+"_"+lep+"_data_"+year+"()\n"
 
-    print "\t"+cut_string 
     print modules
     if(sample == "Mc"): 
     	print "\tNumber of Events = ",NumberOfEvents  
@@ -108,8 +105,6 @@ for i in range(0,len(RequestNames)):
     	replacemachine(MainModule,'NEvents = ', update_NumberOfEvents )
     	replacemachine(MainModule,'x_sec = ',update_Xsection)
 
-    replacemachine(crab_scriptfile,'treecut =', cut_string )
     replacemachine(crab_scriptfile,'modules=', modules )
     replacemachine(crab_scriptfile,'#inputFiles=','\n')
     replacemachine(crab_scriptfile,'inputFiles=','INPUT\n')
-    replacemachine(crab_scriptfile,'inputFiles()','\t\tinputFiles,\n')
