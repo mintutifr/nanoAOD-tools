@@ -59,11 +59,12 @@ do
   cp condorSetup.sub $count
   cp runAtCondor.sh $count
   cd $count
-  input="$ntupleT2Path Minitree_$(cut -d'/' -f11 <<<"$ntupleT2Path")_$(cut -d'/' -f10 <<<"$ntupleT2Path") $file_outputdir" #Output file name has to be modified accordingly 
+  echo $(cut -d'/' -f10 <<<"$ntupleT2Path")
+  input="$ntupleT2Path Minitree_$(cut -d'/' -f10 <<<"$ntupleT2Path")_$(cut -d'/' -f9 <<<"$ntupleT2Path") $file_outputdir" #Output file name has to be modified accordingly 
   #input="$ntupleT2Path Minitree_$(cut -d'/' -f9 <<<"$ntupleT2Path") $file_outputdir"
   echo $input
   sed -i "s:INPUT:$input:g" condorSetup.sub
 
-  #condor_submit condorSetup.sub
+  condor_submit condorSetup.sub
   cd ../
 done

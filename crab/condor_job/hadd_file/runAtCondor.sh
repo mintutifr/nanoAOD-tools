@@ -22,7 +22,7 @@ pwd
 eval `scramv1 runtime -sh`
 cd ${_CONDOR_SCRATCH_DIR}/tryout/
 ls -ltr
-./hadd.sh $myArg1 . $myArg2 -j 4
+./hadd.sh $myArg1 . $myArg2 -j4
 #root -l -b -q "minitree_data_mu.C($myArg1, $myArg2, $myArg3, $myArg4)"
 
 #---------------------------------------------
