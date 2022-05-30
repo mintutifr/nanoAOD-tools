@@ -28,7 +28,7 @@ file_outputdir=$2
 #baseDir="/home/mikumar/t3store3/workarea/CMSSW_9_3_2/src/single_Electron_analysis/shelloutput/muon/MC/Allremaing1/log_cond"
 #
 localdir="$(cut -d'.' -f1 <<<"$1")" # this will spilt $1 where ever "." has been fould
-baseDir=$(pwd)"/Condor_jobs_T2_$(cut -d'_' -f2 <<<"$localdir")_$(date +"%d-%m-%Y")_$(cut -d'_' -f3 <<<"$localdir")_$(cut -d'_' -f4 <<<"$localdir")"
+baseDir=$(pwd)"/Condor_jobs_T2_Cutflow_$(cut -d'_' -f2 <<<"$localdir")_$(date +"%d-%m-%Y")_$(cut -d'_' -f3 <<<"$localdir")_$(cut -d'_' -f4 <<<"$localdir")"
 echo $localdir
 echo $baseDir 
 #baseDir="/home/mikumar/tryout2/out_log_$(cut -d'_' -f2 <<<"$1")_$(date +"%d-%m-%Y")"
@@ -60,8 +60,8 @@ do
   cp runAtCondor.sh $count
   cd $count
   echo $(cut -d'/' -f10 <<<"$ntupleT2Path")
-  input="$ntupleT2Path Minitree_$(cut -d'/' -f10 <<<"$ntupleT2Path")_$(cut -d'/' -f9 <<<"$ntupleT2Path") $file_outputdir" #Output file name has to be modified accordingly 
-  #input="$ntupleT2Path Minitree_$(cut -d'/' -f9 <<<"$ntupleT2Path") $file_outputdir"
+  input="$ntupleT2Path Minitree_$(cut -d'/' -f10 <<<"$ntupleT2Path")_$(cut -d'/' -f9 <<<"$ntupleT2Path") $file_outputdir" #Output file name has to be modified accordingly
+  #input="$ntupleT2Path Cutflow_$(cut -d'/' -f10 <<<"$ntupleT2Path")_$(cut -d'/' -f9 <<<"$ntupleT2Path") $file_outputdir" #Output file name has to be modified accordingly 
   echo $input
   sed -i "s:INPUT:$input:g" condorSetup.sub
 

@@ -33,9 +33,9 @@ ls -ltr
 echo "OUTPUT: "
 ls -ltrh ${_CONDOR_SCRATCH_DIR}/tryout/
 
-#cp -rf ${_CONDOR_SCRATCH_DIR}/tryout/Minitree*.root $myArg3
 rsync -avz ${_CONDOR_SCRATCH_DIR}/tryout/Minitree*.root $myArg3
-
+#rsync -avz ${_CONDOR_SCRATCH_DIR}/tryout/Cutflow*.root $myArg3
+#cp -rf ${_CONDOR_SCRATCH_DIR}/tryout/Minitree*.root $myArg3
 cd ${_CONDOR_SCRATCH_DIR}
 rm -rf truout/
 echo "DONE"
