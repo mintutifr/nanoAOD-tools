@@ -22,7 +22,8 @@ pwd
 eval `scramv1 runtime -sh`
 cd ${_CONDOR_SCRATCH_DIR}/tryout/
 ls -ltr
-./hadd.sh $myArg1 . $myArg2 -j4
+#./hadd.sh $myArg1 . $myArg2 -j4
+./hadd_hist.sh $myArg1 . $myArg2 -j4
 #root -l -b -q "minitree_data_mu.C($myArg1, $myArg2, $myArg3, $myArg4)"
 
 #---------------------------------------------
@@ -33,8 +34,8 @@ ls -ltr
 echo "OUTPUT: "
 ls -ltrh ${_CONDOR_SCRATCH_DIR}/tryout/
 
-rsync -avz ${_CONDOR_SCRATCH_DIR}/tryout/Minitree*.root $myArg3
-#rsync -avz ${_CONDOR_SCRATCH_DIR}/tryout/Cutflow*.root $myArg3
+#rsync -avz ${_CONDOR_SCRATCH_DIR}/tryout/Minitree*.root $myArg3
+rsync -avz ${_CONDOR_SCRATCH_DIR}/tryout/Cutflow*.root $myArg3
 #cp -rf ${_CONDOR_SCRATCH_DIR}/tryout/Minitree*.root $myArg3
 cd ${_CONDOR_SCRATCH_DIR}
 rm -rf truout/
