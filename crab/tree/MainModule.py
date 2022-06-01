@@ -37,8 +37,8 @@ class MainProducer(Module):
                 '2016' : 26,
                 '2017' : 30,
                 '2018' : None,
-		'UL2016preVFP' : 26,
-		'UL2016postVFP' : 26,
+	 	'UL2016preVFP' : 26,
+	 	'UL2016postVFP' : 26,
                 'UL2017' : 30,
                 'UL2018' : None}
 
@@ -46,7 +46,7 @@ class MainProducer(Module):
                 '2016' : 35,
                 '2017' : 37,
                 '2018' : None,
-		'UL2016preVFP' : 35,
+	 	'UL2016preVFP' : 35,
                 'UL2016postVFP' : 35,
                 'UL2017' : 37,
                 'UL2018' : None}
@@ -55,86 +55,86 @@ class MainProducer(Module):
 	    Ele_EtaSC = [] 
 	    Jet_dR_Ljet_Isomu,Jet_dR_Ljet_AntiIsomu,Jet_dR_Ljet_Isoel,Jet_dR_Ljet_AntiIsoel = ([]for i in range(4))
 	    if(True):
-		 count=0
-		 Jetpt = getattr(event,'Jet_pt')
-		 jetpt = Jetpt[0]
-		 for lep in electrons :
-		    #print "elPt : ",lep.pt, "elSCEta : ",lep.deltaEtaSC + lep.eta
-		    Ele_EtaSC.append(lep.deltaEtaSC + lep.eta)
-		    if(len(Jet_dR_Ljet_Isoel)==len(Jet_dR_Ljet_AntiIsoel) and lep.pt>pt_Thes_el[self.datayear] and abs(lep.eta)<2.1 and lep.cutBased>=1 and (abs(Ele_EtaSC[count])<1.4442 or abs(Ele_EtaSC[count])>1.5660) and ((abs(Ele_EtaSC[count])<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(Ele_EtaSC[count])> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10))):
-			el4v = ROOT.TLorentzVector(0.,0.,0.,0.)
-			el4v = lep.p4()
-			#print "el pt =",el4v.Pt()
-			#for jet in filter(lambda j:(j.pt>40 and abs(j.eta)<4.7 and j.jetId!=0), jets):
-			#if(len(Jet_dR_Ljet_Isoel)==len(Jet_dR_Ljet_AntiIsoel)): #this condiation make sure that len(dR)=len(jets) and dr information is saved for only one leptop and if the second leption is found then dr info is skiped because any way we rejet those event which has two tight lepton in cut strings for mimitree
+	 	 count=0
+	 	 Jetpt = getattr(event,'Jet_pt')
+	 	 jetpt = Jetpt[0]
+	 	 for lep in electrons :
+	 	    #print "elPt : ",lep.pt, "elSCEta : ",lep.deltaEtaSC + lep.eta
+	 	    Ele_EtaSC.append(lep.deltaEtaSC + lep.eta)
+	 	    if(len(Jet_dR_Ljet_Isoel)==len(Jet_dR_Ljet_AntiIsoel) and lep.pt>pt_Thes_el[self.datayear] and abs(lep.eta)<2.1 and lep.cutBased>=1 and (abs(Ele_EtaSC[count])<1.4442 or abs(Ele_EtaSC[count])>1.5660) and ((abs(Ele_EtaSC[count])<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(Ele_EtaSC[count])> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10))):
+	 	 	el4v = ROOT.TLorentzVector(0.,0.,0.,0.)
+	 	 	el4v = lep.p4()
+	 	 	#print "el pt =",el4v.Pt()
+	 	 	#for jet in filter(lambda j:(j.pt>40 and abs(j.eta)<4.7 and j.jetId!=0), jets):
+	 		#if(len(Jet_dR_Ljet_Isoel)==len(Jet_dR_Ljet_AntiIsoel)): #this condiation make sure that len(dR)=len(jets) and dr information is saved for only one leptop and if the second leption is found then dr info is skiped because any way we rejet those event which has two tight lepton in cut strings for mimitree
 			for jet in jets:
-		    	    jet4v = ROOT.TLorentzVector(0.,0.,0.,0.)
-			    jet4v = jet.p4()
-			    if(lep.cutBased==4):
-				Jet_dR_Ljet_Isoel.append(el4v.DeltaR(jet4v))
-				#Jet_dR_Ljet_AntiIsoel.append(999) 
-			    if(lep.cutBased!=4 and lep.cutBased>=1):
-				#Jet_dR_Ljet_Isoel.append(999)
-				Jet_dR_Ljet_AntiIsoel.append(el4v.DeltaR(jet4v))
-
-
-		    count=count+1
-		 #print 'elSF_Iso=',Electron_SF_Iso
-		 #print "Antijet dr =", Jet_dR_Ljet_AntiIsoel
-		 self.out.fillBranch("Electron_EtaSC", Ele_EtaSC)
+	 	    	    jet4v = ROOT.TLorentzVector(0.,0.,0.,0.)
+	 	 	    jet4v = jet.p4()
+	 	 	    if(lep.cutBased==4):
+	 	 	 	Jet_dR_Ljet_Isoel.append(el4v.DeltaR(jet4v))
+	 	 	 	#Jet_dR_Ljet_AntiIsoel.append(999) 
+	 	 	    if(lep.cutBased!=4 and lep.cutBased>=1):
+	 	 	 	#Jet_dR_Ljet_Isoel.append(999)
+	 	 	 	Jet_dR_Ljet_AntiIsoel.append(el4v.DeltaR(jet4v))
+                                
+                                
+	 	    count=count+1
+	 	 #print 'elSF_Iso=',Electron_SF_Iso
+	 	 #print "Antijet dr =", Jet_dR_Ljet_AntiIsoel
+	 	 self.out.fillBranch("Electron_EtaSC", Ele_EtaSC)
 	    self.out.fillBranch("Jet_dR_Ljet_Isoel",Jet_dR_Ljet_Isoel)
 	    self.out.fillBranch("Jet_dR_Ljet_AntiIsoel",Jet_dR_Ljet_AntiIsoel)
 	    if(True):
-		 for lep in muons :
-		    #if(lep.pt<=5):print lep.pt
-		    #print lep.pt
-		    #print "muPt : ",lep.pt, "muEta : ", lep.eta
-		    if(len(Jet_dR_Ljet_Isomu)== len(Jet_dR_Ljet_AntiIsomu) and lep.pt>pt_Thes_mu[self.datayear] and abs(lep.eta)<2.4 and (lep.pfRelIso04_all<0.06 or lep.pfRelIso04_all>0.2) and lep.tightId==1):
-			muon4v = ROOT.TLorentzVector(0.,0.,0.,0.)
-			muon4v = lep.p4()
-			#for jet in filter(lambda j:(j.pt>40 and abs(j.eta)<4.7 and j.jetId!=0), jets):
+	 	 for lep in muons :
+	 	    #if(lep.pt<=5):print lep.pt
+	 	    #print lep.pt
+	 	    #print "muPt : ",lep.pt, "muEta : ", lep.eta
+	 	    if(len(Jet_dR_Ljet_Isomu)== len(Jet_dR_Ljet_AntiIsomu) and lep.pt>pt_Thes_mu[self.datayear] and abs(lep.eta)<2.4 and (lep.pfRelIso04_all<0.06 or lep.pfRelIso04_all>0.2) and lep.tightId==1):
+	 	 	muon4v = ROOT.TLorentzVector(0.,0.,0.,0.)
+	 	 	muon4v = lep.p4()
+	  	 	#for jet in filter(lambda j:(j.pt>40 and abs(j.eta)<4.7 and j.jetId!=0), jets):
 			#if(len(Jet_dR_Ljet_Isomu)==len(Jet_dR_Ljet_AntiIsomu)): #this condiation make sure that len(dR)=len(jets) and dr information is saved for only one leptop and if the second leption is found then dr info is skiped because any way we rejet those event which has two tight lepton in cut strings for mimitree
-			for jet in jets:
-			    jet4v = ROOT.TLorentzVector(0.,0.,0.,0.)
-			    jet4v = jet.p4()
-			    if(lep.pfRelIso04_all<0.06):
-				Jet_dR_Ljet_Isomu.append(muon4v.DeltaR(jet4v))
-				#Jet_dR_Ljet_AntiIsomu.append(999.0)
-				#print jet ," ",lep," jetPt = ",jet4v.Pt(), "dr = ",muon4v.DeltaR(jet4v)
-			    if(lep.pfRelIso04_all>0.2):
-				Jet_dR_Ljet_AntiIsomu.append(muon4v.DeltaR(jet4v))
-				#Jet_dR_Ljet_Isomu.append(999.0)
-		    #print 'Muon_SF_Iso = ',Muon_SF_Iso
-		    #if(nolepton>1):print(nolepton," jets = ",len(jets), " Jet_dR_Ljet_Isomu = ", len(Jet_dR_Ljet_Isomu)," Jet_dR_Ljet_AntiIsomu = ",len(Jet_dR_Ljet_AntiIsomu) )
+	 	 	for jet in jets:
+	 	 	    jet4v = ROOT.TLorentzVector(0.,0.,0.,0.)
+	 	 	    jet4v = jet.p4()
+	 	 	    if(lep.pfRelIso04_all<0.06):
+	 	 	 	Jet_dR_Ljet_Isomu.append(muon4v.DeltaR(jet4v))
+	 	 	 	#Jet_dR_Ljet_AntiIsomu.append(999.0)
+	 	 	 	#print jet ," ",lep," jetPt = ",jet4v.Pt(), "dr = ",muon4v.DeltaR(jet4v)
+	 	 	    if(lep.pfRelIso04_all>0.2):
+	 	 	 	Jet_dR_Ljet_AntiIsomu.append(muon4v.DeltaR(jet4v))
+	 	 	 	#Jet_dR_Ljet_Isomu.append(999.0)
+	 	    #print 'Muon_SF_Iso = ',Muon_SF_Iso
+	 	    #if(nolepton>1):print(nolepton," jets = ",len(jets), " Jet_dR_Ljet_Isomu = ", len(Jet_dR_Ljet_Isomu)," Jet_dR_Ljet_AntiIsomu = ",len(Jet_dR_Ljet_AntiIsomu) )
 	    self.out.fillBranch("Jet_dR_Ljet_Isomu",Jet_dR_Ljet_Isomu)
 	    self.out.fillBranch("Jet_dR_Ljet_AntiIsomu",Jet_dR_Ljet_AntiIsomu)
-
-
+                
+                
 	    #self.out.fillBranch("Jet_dR_Ljet_AntiIsomu",Jet_dR_Ljet_AntiIsomu)
-
+                
 	    #print "----------------------------------------------------------------->"
 
 	elif(self.MC == False and self.dataset == "singleElectron"):
 	    #print self.dataset
 	    Ele_EtaSC,Jet_dR_Ljet_Isoel,Jet_dR_Ljet_AntiIsoel = ([]for i in range(3))
 	    if(True):
-		 count=0
-		 for lep in electrons :
-		    Ele_EtaSC.append(lep.deltaEtaSC + lep.eta)
-		    if(len(Jet_dR_Ljet_Isoel)==len(Jet_dR_Ljet_AntiIsoel) and lep.pt>pt_Thes_el[self.datayear] and abs(lep.eta)<2.1 and lep.cutBased>=1 and (abs(Ele_EtaSC[count])<1.4442 or abs(Ele_EtaSC[count])>1.5660) and ((abs(Ele_EtaSC[count])<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(Ele_EtaSC[count])> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10))):
-			el4v = ROOT.TLorentzVector(0.,0.,0.,0.)
-			el4v = lep.p4()
-			for jet in jets:
-			    jet4v = ROOT.TLorentzVector(0.,0.,0.,0.)
-			    jet4v = jet.p4()
-			    if(lep.cutBased==4):
-				Jet_dR_Ljet_Isoel.append(el4v.DeltaR(jet4v)) 
-			    if(lep.cutBased!=4 and lep.cutBased>=1):
-				Jet_dR_Ljet_AntiIsoel.append(el4v.DeltaR(jet4v))
-
-
-		    count=count+1
-		 self.out.fillBranch("Electron_EtaSC", Ele_EtaSC)
+	 	 count=0
+	 	 for lep in electrons :
+	 	    Ele_EtaSC.append(lep.deltaEtaSC + lep.eta)
+	 	    if(len(Jet_dR_Ljet_Isoel)==len(Jet_dR_Ljet_AntiIsoel) and lep.pt>pt_Thes_el[self.datayear] and abs(lep.eta)<2.1 and lep.cutBased>=1 and (abs(Ele_EtaSC[count])<1.4442 or abs(Ele_EtaSC[count])>1.5660) and ((abs(Ele_EtaSC[count])<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(Ele_EtaSC[count])> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10))):
+	 	 	el4v = ROOT.TLorentzVector(0.,0.,0.,0.)
+	 	 	el4v = lep.p4()
+	 	 	for jet in jets:
+	 	 	    jet4v = ROOT.TLorentzVector(0.,0.,0.,0.)
+	 	 	    jet4v = jet.p4()
+	 	 	    if(lep.cutBased==4):
+	 	 	 	Jet_dR_Ljet_Isoel.append(el4v.DeltaR(jet4v)) 
+	 	 	    if(lep.cutBased!=4 and lep.cutBased>=1):
+	 	 	 	Jet_dR_Ljet_AntiIsoel.append(el4v.DeltaR(jet4v))
+                                
+                         
+	 	    count=count+1
+	 	 self.out.fillBranch("Electron_EtaSC", Ele_EtaSC)
 	    self.out.fillBranch("Jet_dR_Ljet_Isoel",Jet_dR_Ljet_Isoel)
 	    self.out.fillBranch("Jet_dR_Ljet_AntiIsoel",Jet_dR_Ljet_AntiIsoel)
 	    #print "Ele_EtaSC = ", Ele_EtaSC
@@ -144,24 +144,24 @@ class MainProducer(Module):
 	    #print self.dataset
 	    Jet_dR_Ljet_Isomu,Jet_dR_Ljet_AntiIsomu = ([]for i in range(2)) 
 	    if(True):
-		 for lep in muons :
-		    if(len(Jet_dR_Ljet_Isomu)==len(Jet_dR_Ljet_AntiIsomu) and lep.pt>pt_Thes_mu[self.datayear] and abs(lep.eta)<2.4 and (lep.pfRelIso04_all<0.06 or lep.pfRelIso04_all>0.2) and lep.tightId==1):
-			muon4v = ROOT.TLorentzVector(0.,0.,0.,0.)
-			muon4v = lep.p4()
-			for jet in jets:
-			    jet4v = ROOT.TLorentzVector(0.,0.,0.,0.)
-			    jet4v = jet.p4()
-			    if(lep.pfRelIso04_all<0.06):
-				Jet_dR_Ljet_Isomu.append(muon4v.DeltaR(jet4v))
-				#print jet ," ",lep," jetPt = ",jet4v.Pt(), "dr = ",muon4v.DeltaR(jet4v)
-			    if(lep.pfRelIso04_all>0.2):
-				Jet_dR_Ljet_AntiIsomu.append(muon4v.DeltaR(jet4v))
-		    #print 'Muon_SF_Iso = ',Muon_SF_Iso
+	 	 for lep in muons :
+	 	    if(len(Jet_dR_Ljet_Isomu)==len(Jet_dR_Ljet_AntiIsomu) and lep.pt>pt_Thes_mu[self.datayear] and abs(lep.eta)<2.4 and (lep.pfRelIso04_all<0.06 or lep.pfRelIso04_all>0.2) and lep.tightId==1):
+	 	 	muon4v = ROOT.TLorentzVector(0.,0.,0.,0.)
+	 	 	muon4v = lep.p4()
+	 	 	for jet in jets:
+	 	 	    jet4v = ROOT.TLorentzVector(0.,0.,0.,0.)
+	 	 	    jet4v = jet.p4()
+	 	 	    if(lep.pfRelIso04_all<0.06):
+	 	 	 	Jet_dR_Ljet_Isomu.append(muon4v.DeltaR(jet4v))
+	 	 	 	#print jet ," ",lep," jetPt = ",jet4v.Pt(), "dr = ",muon4v.DeltaR(jet4v)
+	 	 	    if(lep.pfRelIso04_all>0.2):
+	 	 	 	Jet_dR_Ljet_AntiIsomu.append(muon4v.DeltaR(jet4v))
+	 	    #print 'Muon_SF_Iso = ',Muon_SF_Iso
 	    self.out.fillBranch("Jet_dR_Ljet_Isomu",Jet_dR_Ljet_Isomu)
 	    self.out.fillBranch("Jet_dR_Ljet_AntiIsomu",Jet_dR_Ljet_AntiIsomu)
 	    #print "Jet_dR_Ljet_Isomu = ",Jet_dR_Ljet_Isomu
 	    #print "Jet_dR_Ljet_AntiIsomu = ",Jet_dR_Ljet_AntiIsomu
-		
+	 	
         return True
 
 
