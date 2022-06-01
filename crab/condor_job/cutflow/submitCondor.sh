@@ -43,15 +43,19 @@ fi
 if [[ "UL2016preVFP" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2016preVFP_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/cutFlow_condor/SIXTEEN_preVFP/"
-     if [[ $sample == "Mc" ]]; then
-	channels="Tchannel Tbarchannel"
-	# tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTolnulnu WZTo2Q2L ZZTo2Q2L QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
+     common_mc_sample="Tchannel Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTolnulnu WZTo2Q2L ZZTo2Q2L"
+
+     if [[ $sample == "Mc" && $lep == "mu" ]]; then
+	channels="${common_mc_sample} QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched"
 	#Tchannel Tbarchannel 
+     fi
+     if [[ $sample == "Mc" && $lep == "el" ]]; then
+        channels="${common_mc_sample} QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
+        #Tchannel Tbarchannel
      fi
 
      if [[ $sample == "Data" && $lep == "mu" ]]; then
-     	channels="Run2016E_preVFP_mu"
-	# Run2016B_preVFP_mu Run2016D_preVFP_mu Run2016C_preVFP_mu Run2016F_preVFP_mu"
+     	channels="Run2016E_preVFP_mu Run2016B_preVFP_mu Run2016D_preVFP_mu Run2016C_preVFP_mu Run2016F_preVFP_mu"
      fi
      
      if [[ $sample == "Data" && $lep == "el" ]]; then
@@ -180,7 +184,7 @@ for channel in $channels; do
 	     cp cutflowModule_new.py $count
 	     cp condor_script_cutflow.py $count 
 	     cd $count
-
+         
     	     input_file_list_10=$input_file_list_10"'root\://se01.indiacms.res.in/"$ntupleT2Path"' ] " #adding file in the inputfile list and close list for 10 files
 	     #------------------------------------------------
              #Inshirt input files to the crab script
