@@ -270,7 +270,6 @@ class cutflow(Module):
 #jet selection  --4--
 ##################################  
  	jet_id = []
-	btagjet_id = []
 	muon4v = ROOT.TLorentzVector(0.,0.,0.,0.)
 	electron4v = ROOT.TLorentzVector(0.,0.,0.,0.)
 	if(self.lepflavour=="mu"):
@@ -292,16 +291,11 @@ class cutflow(Module):
 	    njet4v = jet.p4()
 	    if(self.lepflavour=="mu" and lossepF==1 and muon4v.DeltaR(njet4v)>0.4):
 		jet_id.append(jet)#and muon4v.DeltaR(njet4v)>0.4):jet_id.append(jet)
-		#print "jet.btagDeepB = ",jet.btagDeepB," jet.eta = ",abs(jet.eta)
 		#print "deltaR =",muon4v.DeltaR(njet4v)," jetdeltaRiso = ",jet.dR_Ljet_Isomu," jetdeltaRantiiso = ",jet.dR_Ljet_AntiIsomu
 	    	#print "Jet Pt =%s ; Jet eta =%s ; jet ID =%s ;DeltaR =%s" % (jet.pt,jet.eta,jet.jetId,muon4v.DeltaR(njet4v)) 
 	    elif(self.lepflavour=="el" and lossepF==1 and electron4v.DeltaR(njet4v)>0.4): jet_id.append(jet)
 	    else: continue
 	  #  print "jet_id = ",jet_id
-	    if(abs(jet.eta)<2.4 and jet.btagDeepB>self.Tight_b_tag_crite[self.dataYear] ): 
-		btagjet_id.append(jet)
-	    #if(abs(jet.eta)<2.4): btagjet_id.append(jet)
-	 	#print "btagJet_id = ", btagjet_id
 	if(len(jet_id)==self.Total_Njets):
            if(self.lepflavour=="mu" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF)
            elif(self.lepflavour=="el" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF)
@@ -314,22 +308,26 @@ class cutflow(Module):
 	#print '---------------------------------------------------------------jet selection  --4--'
 	#print 'No. Of jets = ',len(jets)
 	#for jet in jets:
-	    #print 'pt =%s eta =%s jetId =%s deepCSV =%s '%(jet.pt,jet.eta,jet.jetId,jet.btagDeepB)
 
 
 #################################
 #b tag jet  --5--
 ################################## 
-		
+	btagjet_id = []
+	for jet in jet_id:
+	    if(abs(jet.eta)<2.4 and jet.btagDeepFlavB>self.Tight_b_tag_crite[self.dataYear] ):
+		#print 'Jet_pt = ',jet.pt, ' Jet_jetId = ',jet.jetId, ' Jet_eta = ',abs(jet.eta), ' Jet_btagDeepFlavB = ',jet.btagDeepFlavB	
+            	btagjet_id.append(jet)	
 	if(len(btagjet_id)==self.BTag_Njets):
 	    if(self.isMC == True):
+		#print getattr(event,'event')
 		#print  len(btagjet_id)," ",self.BTag_Njets	
 		###################################   fixed working point b weight calculation   ###################
 		"""
 		p_mc_central_T = 1
 		p_data_central_T = 1
 		for jet in btagjet_id:
-		    [P_MC_term_central_T,P_Data_term_central_T] = Probability(jet.pt,jet.eta,jet.btagSF_deepcsv_T,0,0,'T',jet.btagDeepB,jet.hadronFlavour,'central',self.dataYear)
+		    [P_MC_term_central_T,P_Data_term_central_T] = Probability(jet.pt,jet.eta,jet.btagSF_deepcsv_T,0,0,'T',jet.btagDeepFlavB,jet.hadronFlavour,'central',self.dataYear)
 		    p_mc_central_T = p_mc_central_T*P_MC_term_central_T
 		    p_data_central_T = p_data_central_T*P_Data_term_central_T
 		bweight_central_T = p_data_central_T/p_mc_central_T"""

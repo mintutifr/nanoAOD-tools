@@ -93,8 +93,11 @@ class cutflow:
 	counter=0
 	for event in myTree:
 	    counter = counter+1
-	    if(counter % 10000 == 0): print counter
-	#    print getattr(event,'event')
+	    #if (counter<100000): continue
+	    if(counter % 10000 == 0): 
+		print counter
+		#if(counter % 10000==0): break
+	
 	    try:
 	 	LHEWeightSign = getattr(event,'LHEWeight_originalXWGTUP')/abs(getattr(event,'LHEWeight_originalXWGTUP'))
 	    except:
@@ -259,7 +262,6 @@ class cutflow:
 	 
 	 
 	    jet_id = []
-	    btagjet_id = []
 	    muon4v = ROOT.TLorentzVector(0.,0.,0.,0.)
 	    electron4v = ROOT.TLorentzVector(0.,0.,0.,0.)
 	    if(self.lepflavour=="mu"):
@@ -280,14 +282,11 @@ class cutflow:
 	    	njet4v = jet.p4()
 	    	if(self.lepflavour=="mu" and lossepF==1 and muon4v.DeltaR(njet4v)>0.4):
 	 	    jet_id.append(jet)#and muon4v.DeltaR(njet4v)>0.4):jet_id.append(jet)
-	 	    #print "jet.btagDeepB = ",jet.btagDeepB," jet.eta = ",abs(jet.eta)
 	 	    #print "deltaR =",muon4v.DeltaR(njet4v)," jetdeltaRiso = ",jet.dR_Ljet_Isomu," jetdeltaRantiiso = ",jet.dR_Ljet_AntiIsomu
 	    	    #print "Jet Pt =%s ; Jet eta =%s ; jet ID =%s ;DeltaR =%s" % (jet.pt,jet.eta,jet.jetId,muon4v.DeltaR(njet4v)) 
 	    	elif(self.lepflavour=="el" and lossepF==1 and electron4v.DeltaR(njet4v)>0.4): jet_id.append(jet)
 	    	else: continue
 	  	#  print "jet_id = ",jet_id
-	    	if(abs(jet.eta)<2.4 and jet.btagDeepB>self.Tight_b_tag_crite[self.dataYear] ): 
-	 	    btagjet_id.append(jet)
 	    if(len(jet_id)==self.Total_Njets):
            	if(self.lepflavour=="mu" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF)
            	elif(self.lepflavour=="el" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF)
@@ -302,9 +301,14 @@ class cutflow:
 	   
 	    ##################################
 	    #b tag jet  --5--
-	    ################################## 
+	    ##################################
+	    btagjet_id = []
+	    for jet in jet_id:
+	    	if(abs(jet.eta)<2.4 and jet.btagDeepFlavB>self.Tight_b_tag_crite[self.dataYear]): 
+	 	    btagjet_id.append(jet)
 	    if(len(btagjet_id)==self.BTag_Njets):
 	    	if(self.isMC == True):
+		    #print getattr(event,'event')
 	 	    bweight = Probability_2("Central",jet_id)	
 	 	    if(self.lepflavour=="mu"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*bweight)
 	 	    if(self.lepflavour=="el"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*bweight)
