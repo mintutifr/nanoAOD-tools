@@ -32,8 +32,7 @@ if(year == 'UL2017'):
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SEVENTEEN/MC/"
     Datasets = Datasets_MC_UL2017
 
-RequestNames = ['Tchannel',]
-#Datasets.keys()
+RequestNames = Datasets.keys()
 print RequestNames
 print "len(Datasets) = ",len(Datasets)
 
@@ -57,7 +56,7 @@ for i in range(0,len(RequestNames)):
     update_RequestName = "config.General.requestName = '"+RequestName+"_Tree_"+year+"'\n" 
     update_Dataset = "config.Data.inputDataset = '"+Dataset+"'\n"
     update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+RequestName+"'\n"
-    update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName+"_check'\n"
+    update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName+"'\n"
     update_InputFiles = "config.JobType.inputFiles = ['crab_script_skimTree.py','../../scripts/haddnano.py','keep_and_drop.txt','MainModule.py','btv.py']\n"    
     update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"
     update_module = "\t\tmodules=[MainModuleConstr_mc_"+year+"(),btagSF"+year+"(),puWeight_"+year+"()],\n"
@@ -86,5 +85,5 @@ for i in range(0,len(RequestNames)):
 
 
     print "DONE -----",RequestName,"--------------------------------------------------------------------------------------------"
-    time.sleep(3) 
+    time.sleep(10) 
     
