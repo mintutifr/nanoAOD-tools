@@ -12,8 +12,11 @@ echo $1
 echo $2
 echo "CONDOR DIR: $_CONDOR_SCRATCH_DIR"
 cd ${_CONDOR_SCRATCH_DIR}
-cp -r /home/mikumar/tryout .
-
+#cp -r /home/mikumar/tryout .
+mkdir tryout
+mv haddnano.py tryout/
+mv hadd.sh tryout/
+ 
 #------------------------------------------------
 #------------------------------------------------
 cd /home/mikumar/t3store3/workarea/CMSSW_9_4_9/src
@@ -23,7 +26,7 @@ eval `scramv1 runtime -sh`
 cd ${_CONDOR_SCRATCH_DIR}/tryout/
 ls -ltr
 #./hadd.sh $myArg1 . $myArg2 -j4
-./hadd_hist.sh $myArg1 . $myArg2 -j4
+./hadd.sh $myArg1 . $myArg2 -j4
 #root -l -b -q "minitree_data_mu.C($myArg1, $myArg2, $myArg3, $myArg4)"
 
 #---------------------------------------------

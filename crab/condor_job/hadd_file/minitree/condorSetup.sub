@@ -13,7 +13,7 @@ x509userproxy         = /home/mikumar/x509up_u56567
 #use_x509userproxy    = true
 Executable            = runAtCondor.sh
 Arguments             = INPUT $(Process) $(Cluster)
-
+Transfer_Input_Files  = ../haddnano.py, ../hadd.sh 
 #---------------------------------------------
 # hplusAnalyzer_TIFR.sh output are stored in .stdout
 # all kind of errors are stores in .stderr

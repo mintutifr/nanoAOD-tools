@@ -39,6 +39,8 @@ outcond="$baseDir"
 
 cp condorSetup.sub $outcond
 cp runAtCondor.sh $outcond
+cp haddnano.py $outcond 
+cp hadd.sh $outcond
 cp $file $outcond
 cd $outcond
 
@@ -54,17 +56,18 @@ do
  
   #----------------------------------------------
   #----------------------------------------------
-  
-  mkdir -p $count
-  cp condorSetup.sub $count
-  cp runAtCondor.sh $count
-  cd $count
-  echo $(cut -d'/' -f10 <<<"$ntupleT2Path")
-  input="$ntupleT2Path Minitree_$(cut -d'/' -f10 <<<"$ntupleT2Path")_$(cut -d'/' -f9 <<<"$ntupleT2Path") $file_outputdir" #Output file name has to be modified accordingly
-  #input="$ntupleT2Path Cutflow_$(cut -d'/' -f10 <<<"$ntupleT2Path")_$(cut -d'/' -f9 <<<"$ntupleT2Path") $file_outputdir" #Output file name has to be modified accordingly 
+  channel=$(cut -d'/' -f10 <<<"$ntupleT2Path")
+  region_lep=$(cut -d'/' -f9 <<<"$ntupleT2Path")
+  echo $channel
+  mkdir -p $channel
+  cp condorSetup.sub $channel
+  cp runAtCondor.sh $channel
+  cd $channel
+#  input="$ntupleT2Path Minitree_$(cut -d'/' -f10 <<<"$ntupleT2Path")_$(cut -d'/' -f9 <<<"$ntupleT2Path") $file_outputdir" #Output file name has to be modified accordingly
+  input="$ntupleT2Path Minitree_${channel}_${region_lep} $file_outputdir" #Output file name has to be modified accordingly 
   echo $input
   sed -i "s:INPUT:$input:g" condorSetup.sub
 
-  condor_submit condorSetup.sub
+  #condor_submit condorSetup.sub
   cd ../
 done
