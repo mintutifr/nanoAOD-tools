@@ -1,5 +1,6 @@
 import fileinput, string, sys, os, time, subprocess
 import argparse as arg
+from tqdm import tqdm
 
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-y', '--year', dest='inputs', type=str, nargs=1, help="Year [ UL2016preVFP , UL2016postVFP , UL2017 , UL2018 ]")
@@ -54,7 +55,7 @@ print "len(Datasets) = ",len(Datasets)
 
 print "Dataset size = ",len(Datasets)," RequestName size = ",len(RequestNames)
 
-for i in range(0,len(RequestNames)):
+for i in tqdm(range(0,len(RequestNames))):
     RN = "crab_"+RequestNames[i]+"_Tree_"+year
     print "RequestName = ",RN
     cmd_crab_status = "crab status -d "+RN

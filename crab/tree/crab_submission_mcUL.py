@@ -1,5 +1,6 @@
 import fileinput, string, sys, os, time, datetime
 import argparse as arg
+from tqdm import tqdm
 
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-y', '--year', dest='inputs', type=str, nargs=1, help="Year [UL2016preVFP, UL2016postVFP, UL2017, UL2018]")
@@ -49,7 +50,7 @@ def replacemachine(fileName, sourceText, replaceText):
     ##################################################################
 
 #print RequestName
-for i in range(0,len(RequestNames)):
+for i in tqdm(range(0,len(RequestNames))):
     RequestName = RequestNames[i]
     Dataset = Datasets[RequestName]
     print RequestName, " : ",Dataset
