@@ -81,6 +81,11 @@ print "-----------------------------------------    chacking     ---------------
 print
 cwd = os.getcwd()
 for channel in channels:
+    if not (os.path.isdir(CondorDir+"/"+channel)):
+        print
+        proceed = raw_input(CondorDir+"/"+channel +"  does not exist; you can skip this press 1/Yes and press other key to exit : ")
+        if(proceed=="1" or proceed=="yes"): continue
+        else: exit()
     Dirs=get_dirs(CondorDir+"/"+channel)
     for Dir in Dirs:
         cmd_grep = 'grep "100%" '+Dir+'/*'

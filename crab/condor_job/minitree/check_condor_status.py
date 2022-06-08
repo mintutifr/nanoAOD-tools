@@ -81,6 +81,11 @@ print "-----------------------------------------    chacking     ---------------
 print
 cwd = os.getcwd()
 for channel in channels:
+    if not (os.path.isdir(CondorDir+"/"+channel)):
+        print
+        proceed = raw_input(CondorDir+"/"+channel +"  does not exist; you can skip this press 1/Yes and press other key to exit : ")
+        if(proceed=="1" or proceed=="yes"): continue
+        else: exit()
     Dirs=get_dirs(CondorDir+"/"+channel)
     for Dir in Dirs:
         cmd_grep = 'grep "100%" '+Dir+'/*'
@@ -91,7 +96,7 @@ for channel in channels:
         p_status = p.wait()
 
         if(output.count("100%")==0): 
-	     condor_resubmit = raw_input("did not enouter '100%' tranfer @ " +Dir+"/ should I resubmit the job : ")
+	     condor_resubmit = raw_input("did not enouter '100%' tranfer @ " +Dir+"/ to resubmit the job press 1/yes: ")
 	     if(condor_resubmit=="yes" or condor_resubmit=="1"):
 	     	os.chdir(Dir)
 	     	os.system("condor_submit condorSetup.sub")

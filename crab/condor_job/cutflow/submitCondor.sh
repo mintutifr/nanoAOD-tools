@@ -122,7 +122,7 @@ fi
 #------------------------------------------------
 #file=$dataset_file
 localdir=$(basename $dataset_file)  #get the file name from the dataset_file path 
-baseDir=$(pwd)"/$(cut -d'.' -f1 <<<"$localdir")check_${region}_${lep}_${sample}_$(date +"%d-%m-%Y")"
+baseDir=$(pwd)"/$(cut -d'.' -f1 <<<"$localdir")_${region}_${lep}_${sample}_$(date +"%d-%m-%Y")"
 echo $localdir
 echo $baseDir 
 #baseDir="/home/mikumar/tryout2/out_log_$(cut -d'_' -f2 <<<"$year")_$(date +"%d-%m-%Y")"
