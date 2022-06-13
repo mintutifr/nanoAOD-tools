@@ -353,7 +353,7 @@ p=PostProcessor(".",
 		inputFiles,
 		#treecutEN,
 		modules=[MainModuleConstr_Gen()],
-		outputbranchsel="clean.txt",
+		outputbranchsel="clean_All_keep_kin.txt",
 		provenance=True,
 		fwkJobReport=True,
 		jsonInput=runsAndLumis())
