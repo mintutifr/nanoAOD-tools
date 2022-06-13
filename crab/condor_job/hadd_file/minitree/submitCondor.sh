@@ -68,6 +68,6 @@ do
   echo $input
   sed -i "s:INPUT:$input:g" condorSetup.sub
 
-  #condor_submit condorSetup.sub
+  condor_submit condorSetup.sub
   cd ../
 done
