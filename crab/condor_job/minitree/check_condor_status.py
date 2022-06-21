@@ -81,6 +81,8 @@ print "-----------------------------------------    chacking     ---------------
 print
 cwd = os.getcwd()
 for channel in channels:
+    if((lep=="el" and "MuEnriched" in channel) or (lep=="mu" and "EMEnriched" in channel)):
+        continue
     if not (os.path.isdir(CondorDir+"/"+channel)):
         print
         proceed = raw_input(CondorDir+"/"+channel +"  does not exist; you can skip this press 1/Yes and press other key to exit : ")
