@@ -60,10 +60,10 @@ def wolformvalue3J(v1,v2,v3 ):
 
 
 #def CollectJetInfo(jet):
-#	return [jet.mass,jet.pt,jet.eta,abs(jet.eta),jet.phi,jet.btagDeepB,jet.hadronFlavour,jet.p4()]
+#	return [jet.mass,jet.pt,jet.eta,abs(jet.eta),jet.phi,jet.btagDeepFlavB,jet.hadronFlavour,jet.p4()]
 
 def CollectJetInfo(jet):
-        return [jet.mass,jet.pt,jet.eta,abs(jet.eta),jet.phi,jet.btagDeepB,jet.p4()]
+        return [jet.mass,jet.pt,jet.eta,abs(jet.eta),jet.phi,jet.btagDeepFlavB,jet.p4()]
 
 def cbrt(num):
     if(num>=0):
