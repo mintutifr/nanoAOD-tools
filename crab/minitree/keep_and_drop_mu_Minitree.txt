@@ -17,6 +17,5 @@ drop    100
 drop    101
 drop    102
 drop    103
-drop 	2
 
 keep Jet_btagSF_deepjet*
