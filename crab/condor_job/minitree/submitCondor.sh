@@ -33,8 +33,8 @@ if ! [[ "mu" == "$lep" || "el" == "$lep" ]]; then
     exit 1
 fi
 
-if ! [[ "2J1T1" == "$region" || "2J1T0" == "$region" ]]; then
-    echo "wrong choice of lepton ["2J1T1 2J1T0"]"
+if ! [[ "2J1T1" == "$region" || "2J1T0" == "$region" || "2J0T1" == "$region" || "2J0T0" == "$region" || "3J1T1" == "$region" || "3J1T0" == "$region" || "3J2T1" == "$region" || "3J2T0" == "$region" || "2J1L0T1" == "$region" || "2J1L0T0" == "$region" ]]; then
+    echo "wrong choice of lepton ["2J1T1 2J1T0 2J0T1 2J0T0 3J1T1 3J1T0 3J2T1 3J2T0 2J1L0T1 2J1L0T0 "]"
     exit 1
 fi
 #------------------------------------------------

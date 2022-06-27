@@ -26,7 +26,7 @@ elif args.samples[0] == "Data" and args.leptons[0] not in ['mu','el']:
 #elif args.samples[0] == "Data": lep = args.leptons[0]
 lep = args.leptons[0]
 
-if args.regions[0] not in [ '2J1T1' , '2J1T0' ]:
+if args.regions[0] not in [ '2J1T1' , '2J1T0', '2J0T1' , '2J0T0', '3J1T1' , '3J1T0', '3J2T1' , '3J2T0', '2J1L0T1', '2J1L0T0']:
         print "Error: Incorrect choice of region, use -h for help"
         sys.exit (1)
 
