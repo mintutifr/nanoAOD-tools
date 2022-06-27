@@ -88,6 +88,8 @@ class cutflow:
         self.sec_lep_veto_npvs=ROOT.TH1F('sec_lep_veto_npvs','sec_lep_veto_npvs',100,0,1000)
         self.jet_sel_npvs=ROOT.TH1F('jet_sel_npvs','jet_sel_npvs',100,0,1000)
         self.b_tag_jet_sel_npvs=ROOT.TH1F('b_tag_jet_sel_npvs','b_tag_jet_sel_npvs',100,0,1000)
+        self.N_jet=ROOT.TH1F('N_jet','N_jet',25,0,25)
+        self.N_b_jet=ROOT.TH1F('N_b_jet','N_b_jet',25,0,25)
 
     def analyze(self, myTree):
 	counter=0
@@ -271,22 +273,29 @@ class cutflow:
 	        for electron in electron_id:
 	 	    electron4v = electron.p4()
             jets = Collection(event, "Jet")
+            N_loosePF_jets=0
+            N_b_jets=0
 	    for jet in jets:
 	    	#print jet.jetId
-	    	lossepF=0
+	    	islossepF=False
 	    	if(jet.pt>40 and abs(jet.eta)<4.7 and jet.jetId!=0):
-	 	   lossepF +=1 
+	 	   islossepF = True 
+                   N_loosePF_jets = N_loosePF_jets+1
+                   if(jet.btagDeepFlavB>self.Tight_b_tag_crite[self.dataYear]):
+                        N_b_jets=N_b_jets+1
 	 	   #print "jet.pt = ",jet.pt," jet.eta = ",abs(jet.eta), " jet.jetId = ",jet.jetId, "lossepF = ", lossepF
 	    	else: continue
 	    	njet4v = ROOT.TLorentzVector(0.,0.,0.,0.)	
 	    	njet4v = jet.p4()
-	    	if(self.lepflavour=="mu" and lossepF==1 and muon4v.DeltaR(njet4v)>0.4):
+	    	if(self.lepflavour=="mu" and islossepF==True and muon4v.DeltaR(njet4v)>0.4):
 	 	    jet_id.append(jet)#and muon4v.DeltaR(njet4v)>0.4):jet_id.append(jet)
 	 	    #print "deltaR =",muon4v.DeltaR(njet4v)," jetdeltaRiso = ",jet.dR_Ljet_Isomu," jetdeltaRantiiso = ",jet.dR_Ljet_AntiIsomu
 	    	    #print "Jet Pt =%s ; Jet eta =%s ; jet ID =%s ;DeltaR =%s" % (jet.pt,jet.eta,jet.jetId,muon4v.DeltaR(njet4v)) 
-	    	elif(self.lepflavour=="el" and lossepF==1 and electron4v.DeltaR(njet4v)>0.4): jet_id.append(jet)
+	    	elif(self.lepflavour=="el" and islossepF==True and electron4v.DeltaR(njet4v)>0.4): jet_id.append(jet)
 	    	else: continue
 	  	#  print "jet_id = ",jet_id
+            N_jets.Fill(N_loosePF_jets)
+            N_b_jets.Fill(N_b_jets)
 	    if(len(jet_id)==self.Total_Njets):
            	if(self.lepflavour=="mu" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF)
            	elif(self.lepflavour=="el" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF)
