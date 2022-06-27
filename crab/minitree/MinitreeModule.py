@@ -156,7 +156,7 @@ class MinitreeProducer(Module):
         self.out.branch("lJetEta",  "F")
         self.out.branch("abs_lJetEta",  "F")
         self.out.branch("lJetPhi",  "F")
-        self.out.branch("lJetdeepCSV",  "F")
+        self.out.branch("lJetdeepJet",  "F")
 	self.out.branch("nljet_sel",  "I")
         if(self.isMC==True):self.out.branch("lJethadronFlavour",  "F")
 
@@ -166,7 +166,7 @@ class MinitreeProducer(Module):
             self.out.branch("oJetEta",  "F")
             self.out.branch("abs_oJetEta",  "F")
             self.out.branch("oJetPhi",  "F")
-            self.out.branch("oJetdeepCSV",  "F")
+            self.out.branch("oJetdeepJet",  "F")
 	    self.out.branch("nojet_sel",  "I")
             if(self.isMC==True):self.out.branch("oJethadronFlavour",  "F")
 
@@ -543,7 +543,7 @@ class MinitreeProducer(Module):
 		     if(self.isMC==True):bJethadronFlavour=jet.hadronFlavour	
 		     #print "Dr bjet inside 2J1T con = ",lepton4v.DeltaR(bJet4v)
 		else:
-		     [lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepCSV,lJet4v]=CollectJetInfo(jet)	
+		     [lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepJet,lJet4v]=CollectJetInfo(jet)	
 		     if(self.isMC==True):lJethadronFlavour=jet.hadronFlavour
 	    del_theta = math.cos(lJet4v.Angle(bJet4v.Vect()))
             Foxwol_h1 = wolformvalue2J(poly1(del_theta),bJetPt,lJetPt)
@@ -569,7 +569,7 @@ class MinitreeProducer(Module):
 			     [bJetMass,bJetPt,bJetEta,abs_bJetEta,bJetPhi,bJetdeepJet,bJet4v]=CollectJetInfo(jet)
 			     if(self.isMC==True):bJethadronFlavour=jet.hadronFlavour	
 			else:
-			     [lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepCSV,lJet4v]=CollectJetInfo(jet)
+			     [lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepJet,lJet4v]=CollectJetInfo(jet)
 			     if(self.isMC==True):lJethadronFlavour=jet.hadronFlavour
 		else:
 		    for jet in jet_id:
@@ -578,7 +578,7 @@ class MinitreeProducer(Module):
 			     [bJetMass,bJetPt,bJetEta,abs_bJetEta,bJetPhi,bJetdeepJet,bJet4v]=CollectJetInfo(jet)
 			     if(self.isMC==True):bJethadronFlavour=jet.hadronFlavour	
 			else:
-			     [lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepCSV,lJet4v]=CollectJetInfo(jet)	
+			     [lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepJet,lJet4v]=CollectJetInfo(jet)	
 			     if(self.isMC==True):lJethadronFlavour=jet.hadronFlavour
 	    else:
 		#print "both score are not less than -1"
@@ -591,7 +591,7 @@ class MinitreeProducer(Module):
 			     if(self.isMC==True):bJethadronFlavour=jet.hadronFlavour	
 			     #print "bJetMass = %s; bJetPt = %s; bJetEta = %s; abs_bJetEta = %s; bJetPhi = %s; bJetdeepJet = %s; bJethadronFlavour = %s; bJet4vM = %s; " %(bJetMass,bJetPt,bJetEta,abs_bJetEta,bJetPhi,bJetdeepJet,bJethadronFlavour,bJet4v.M())
 			else:
-			     [lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepCSV,lJet4v]=CollectJetInfo(jet)	
+			     [lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepJet,lJet4v]=CollectJetInfo(jet)	
 			     if(self.isMC==True):lJethadronFlavour=jet.hadronFlavour
 		else:
 		    for jet in jet_id:
@@ -600,7 +600,7 @@ class MinitreeProducer(Module):
 			     [bJetMass,bJetPt,bJetEta,abs_bJetEta,bJetPhi,bJetdeepJet,bJet4v]=CollectJetInfo(jet)
 			     if(self.isMC==True):bJethadronFlavour=jet.hadronFlavour	
 			else:
-			     [lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepCSV,lJet4v]=CollectJetInfo(jet)
+			     [lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepJet,lJet4v]=CollectJetInfo(jet)
 			     if(self.isMC==True):lJethadronFlavour=jet.hadronFlavour	
 	    del_theta=math.cos(lJet4v.Angle(bJet4v.Vect()))
             Foxwol_h1=wolformvalue2J(poly1(del_theta),bJetPt,lJetPt)
@@ -628,17 +628,17 @@ class MinitreeProducer(Module):
 	    for jet in jet_compaired:
 	    	if(abs(eta0)>abs(eta1)):
 		    if(jet==jet_compaired[0]):
-			[lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepCSV,lJet4v]=CollectJetInfo(jet)
+			[lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepJet,lJet4v]=CollectJetInfo(jet)
 			if(self.isMC==True):lJethadronFlavour=jet.hadronFlavour	
 		    else:	
-			[oJetMass,oJetPt,oJetEta,abs_oJetEta,oJetPhi,oJetdeepCSV,oJet4v]=CollectJetInfo(jet)
+			[oJetMass,oJetPt,oJetEta,abs_oJetEta,oJetPhi,oJetdeepJet,oJet4v]=CollectJetInfo(jet)
 			if(self.isMC==True):oJethadronFlavour=jet.hadronFlavour	
 		else:
 		    if(jet==jet_compaired[1]):
-			[lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepCSV,lJet4v]=CollectJetInfo(jet)
+			[lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepJet,lJet4v]=CollectJetInfo(jet)
 			if(self.isMC==True):lJethadronFlavour=jet.hadronFlavour	
                     else:			
-			[oJetMass,oJetPt,oJetEta,abs_oJetEta,oJetPhi,oJetdeepCSV,oJet4v]=CollectJetInfo(jet)
+			[oJetMass,oJetPt,oJetEta,abs_oJetEta,oJetPhi,oJetdeepJet,oJet4v]=CollectJetInfo(jet)
 			if(self.isMC==True):oJethadronFlavour=jet.hadronFlavour	
 	    [Foxwol_h1,Foxwol_h2,Foxwol_h3]=wolformvalue3J(bJet4v,lJet4v,oJet4v)
 	elif(self.Total_Njets == 3 and  self.BTag_Njets == 2):
@@ -646,7 +646,7 @@ class MinitreeProducer(Module):
 	    dummyjet_id=[]
 	    for jet in jet_id:
 		if(jet!=btagjet_id[0] and jet!=btagjet_id[1]):
-		    [lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepCSV,lJet4v]=CollectJetInfo(jet)	
+		    [lJetMass,lJetPt,lJetEta,abs_lJetEta,lJetPhi,lJetdeepJet,lJet4v]=CollectJetInfo(jet)	
 		    if(self.isMC==True):lJethadronFlavour=jet.hadronFlavour
  	    dummybjet0 = ROOT.TLorentzVector()
 	    dummybjet1 = ROOT.TLorentzVector()
@@ -668,7 +668,7 @@ class MinitreeProducer(Module):
 			[bJetMass,bJetPt,bJetEta,abs_bJetEta,bJetPhi,bJetdeepJet,bJet4v]=CollectJetInfo(jet)
 			if(self.isMC==True):bJethadronFlavour=jet.hadronFlavour
 		    else:
-			[oJetMass,oJetPt,oJetEta,abs_oJetEta,oJetPhi,oJetdeepCSV,oJet4v]=CollectJetInfo(jet)
+			[oJetMass,oJetPt,oJetEta,abs_oJetEta,oJetPhi,oJetdeepJet,oJet4v]=CollectJetInfo(jet)
 			if(self.isMC==True):oJethadronFlavour=jet.hadronFlavour
 		else:
 		    if(jet==btagjet_id[1]):
@@ -676,7 +676,7 @@ class MinitreeProducer(Module):
 			[bJetMass,bJetPt,bJetEta,abs_bJetEta,bJetPhi,bJetdeepJet,bJet4v]=CollectJetInfo(jet)
 			if(self.isMC==True):bJethadronFlavour=jet.hadronFlavour
 		    else:
-			[oJetMass,oJetPt,oJetEta,abs_oJetEta,oJetPhi,oJetdeepCSV,oJet4v]=CollectJetInfo(jet)
+			[oJetMass,oJetPt,oJetEta,abs_oJetEta,oJetPhi,oJetdeepJet,oJet4v]=CollectJetInfo(jet)
 			if(self.isMC==True):oJethadronFlavour=jet.hadronFlavour
 	    [Foxwol_h1,Foxwol_h2,Foxwol_h3]=wolformvalue3J(bJet4v,lJet4v,oJet4v)
 
@@ -787,7 +787,7 @@ class MinitreeProducer(Module):
         self.out.fillBranch("lJetEta", lJetEta )
         self.out.fillBranch("abs_lJetEta", abs_lJetEta )
         self.out.fillBranch("lJetPhi", lJetPhi )
-        self.out.fillBranch("lJetdeepCSV", lJetdeepCSV )
+        self.out.fillBranch("lJetdeepJet", lJetdeepJet )
 	self.out.fillBranch("nljet_sel", nljet_sel)
         if(self.isMC==True):self.out.fillBranch("lJethadronFlavour", lJethadronFlavour )
 
@@ -797,7 +797,7 @@ class MinitreeProducer(Module):
             self.out.fillBranch("oJetEta", oJetEta )
             self.out.fillBranch("abs_oJetEta", abs_oJetEta )
             self.out.fillBranch("oJetPhi", oJetPhi )
-            self.out.fillBranch("oJetdeepCSV", oJetdeepCSV )
+            self.out.fillBranch("oJetdeepJet", oJetdeepJet )
 	    self.out.fillBranch("nojet_sel", nojet_sel)
             if(self.isMC==True):self.out.fillBranch("oJethadronFlavour", oJethadronFlavour )	
 	self.out.fillBranch("Px_nu", Px_nu)
