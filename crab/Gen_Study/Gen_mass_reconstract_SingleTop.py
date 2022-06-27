@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import os, sys
-import ROOT
+import ROOT 
 import numpy as np
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 from importlib import import_module
@@ -26,6 +26,13 @@ class EfficiencyModule(Module):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
         self.out.branch("top_mass_gen", "F")
+        self.out.branch("top_mass_gen_reco", "F")
+        self.out.branch("top_pt_gen", "F")
+        self.out.branch("top_pt_gen_reco", "F")
+        self.out.branch("top_eta_gen", "F")
+        self.out.branch("top_eta_gen_reco", "F")
+        self.out.branch("top_phi_gen", "F")
+        self.out.branch("top_phi_gen_reco", "F")
 	self.out.branch("tau_to_el_flag", "F")
 	self.out.branch("tau_to_mu_flag", "F")
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
@@ -40,6 +47,13 @@ class EfficiencyModule(Module):
 	nuetrino_id = None
     	tau_to_el_flag = False
 	tau_to_mu_flag = False
+        
+        lepton4v_gen = ROOT.TLorentzVector()
+        Nu4v_gen = ROOT.TLorentzVector()
+        bJet4v_gen = ROOT.TLorentzVector()
+        w4v_gen_reco = ROOT.TLorentzVector()
+        top4v_gen_reco = ROOT.TLorentzVector()
+
 	for genpart in Genparts:
 	    #if((abs(genpart.pdgId)==5)):
 	    #tau_to_el_flag = False
@@ -59,6 +73,7 @@ class EfficiencyModule(Module):
                 if(abs(PDG)==5):
                     #print 
 	 	    #print abs(PDG)," -> ",
+                    bJet4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,4.18)
 	 	    if(abs(motherPDG)!=6):
 	 	        #print abs(motherPDG)," -> ",
 	 	        #printonce = False
@@ -95,7 +110,9 @@ class EfficiencyModule(Module):
 	 	    #lepton_id = genpart.genPartIdx
                     #print
                     #print PDG," -> ", motherPDG," -> ",
-                    #print_once = False
+                    #print_once = FalseElectron
+                    if(abs(PDG)==13): lepton4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.1056583745)
+                    if(abs(PDG)==11): lepton4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.0005109989461)
 	 	    if( abs(motherPDG)==24 or abs(motherPDG)==11 or abs(motherPDG)==13 or abs(motherPDG)==15):	
 	 	    	while ((motherPDG == GmotherPDG and GmotherPDG !=-1 and motherPDG !=-1 and Gmotheridx!=-1 and abs(GmotherPDG)!=6) or ( (abs(motherPDG)==24 or abs(motherPDG)==15) and abs(GmotherPDG)!=6 and GmotherPDG !=-1)):
                              #if(print_once==False):
@@ -121,6 +138,7 @@ class EfficiencyModule(Module):
                     #print
                     #print PDG," -> ", motherPDG," -> ",
                     #print_once = False
+                    Nu4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.0)
                     if( abs(motherPDG)==24  or abs(motherPDG)==15):
                         while ((motherPDG == GmotherPDG and GmotherPDG !=-1 and motherPDG !=-1 and Gmotheridx!=-1 and abs(GmotherPDG)!=6) or ( (abs(motherPDG)==24 or abs(motherPDG)==15) and abs(GmotherPDG)!=6 and GmotherPDG !=-1)):
                              #if(print_once==False):
@@ -145,7 +163,14 @@ class EfficiencyModule(Module):
 	if(len(top_from_lepton)==1 and len(top_from_bquark)==1): 
 	    if(top_from_lepton[0]==top_from_bquark[0] and top_from_lepton[0]==top_from_nuetrino[0]):
 	 	#print "top found with index = ",top_from_lepton[0]
-                
+                w4v_gen_reco = lepton4v_gen + Nu4v_gen         
+                top4v_gen_reco = w4v_gen_reco + bJet4v_gen
+
+                self.out.fillBranch("top_mass_gen_reco", top4v_gen_reco.M())
+                self.out.fillBranch("top_pt_gen_reco", top4v_gen_reco.Pt())
+                self.out.fillBranch("top_eta_gen_reco", top4v_gen_reco.Eta())
+                self.out.fillBranch("top_phi_gen_reco", top4v_gen_reco.Phi())
+
 	 	ID=0
 	 	for genpart in Genparts:
 	 	    if(ID==top_from_lepton[0]):
@@ -155,9 +180,11 @@ class EfficiencyModule(Module):
 	       	       	else:self.out.fillBranch("tau_to_el_flag", 0.0)
 	 	 	if(tau_to_mu_flag):self.out.fillBranch("tau_to_mu_flag", 1.0)
                         else:self.out.fillBranch("tau_to_mu_flag", 0.0)
-	 	 	top_mass_gen = genpart.mass
 	 	 	#self.top_mass_hist.Fill(genpart.mass)
-	 	 	self.out.fillBranch("top_mass_gen", top_mass_gen)
+	 	 	self.out.fillBranch("top_mass_gen", genpart.mass)
+                        self.out.fillBranch("top_pt_gen", genpart.pt)
+                        self.out.fillBranch("top_eta_gen", genpart.eta)
+                        self.out.fillBranch("top_phi_gen", genpart.phi)
 	 	        #print ("top mass filed")	
 	 	 	break 
 	 	    ID = ID+1
