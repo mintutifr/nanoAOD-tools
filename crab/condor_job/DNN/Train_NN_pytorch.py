@@ -141,7 +141,7 @@ epoch_number = 0
 
 EPOCHS = 10
 
-best_vloss = 1_000_000.
+best_vloss = 1000000
 
 for epoch in range(EPOCHS):
     print('EPOCH {}:'.format(epoch_number + 1))
