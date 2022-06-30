@@ -12,7 +12,7 @@ channels = ['Tchannel', 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_
 
 datasets = []
 for channel in channels:
-        datasets.append(load_dataset(10,channel, "mu"))
+        datasets.append(load_dataset(1000,channel, "mu"))
 
 bjet_deepjet_score = []
 corr_assig = []
@@ -71,32 +71,92 @@ del datasets
 del bjet_deepjet_score
 del corr_assig
 
-#channels = ['Tchannel', 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
-df_top_signal = pd.concat([df['Tchannel'],df['Tbarchannel']])
-#one method to putting cut on clumbs
-#df_top_signal_correct_assign = df_top_signal[df_top_signal['Assig']==1].copy() # correct assignment
-#df_top_signal_wrong_assign = df_top_signal[df_top_signal['Assig']==0].copy()   # incorrect assignment
-print "df_top_signal : ",df_top_signal.shape
-df_top_signal_correct_assign = df_top_signal.query('Assig==1',inplace = False)
-df_top_signal_wrong_assign = df_top_signal.query('Assig==0',inplace = False)
-print "df_top_signal_correct_assign : ",df_top_signal_correct_assign.shape
-print "df_top_signal_wrong_assign : ",df_top_signal_wrong_assign.shape
-df_top_BKG = pd.concat([df['tw_top'],df['tw_antitop'],df['Schannel'],df['ttbar_SemiLeptonic'],df['ttbar_FullyLeptonic'],df_top_signal_wrong_assign])
-df_EWK_BKG = pd.concat([df['WJetsToLNu_0J'],df['WJetsToLNu_1J'],df['WJetsToLNu_2J'],df['DYJets'],df['WWTolnulnu'],df['WZTo2Q2L'],df['ZZTo2Q2L']])
+
+df_train = {}
+df_valid = {}
+df_test = {}
+
+for channel in channels:
+        Entries = df[channel].shape[0]
+        df_train[channel] = df[channel].iloc[:int(Entries/2),:]
+        df_valid[channel] = df[channel].iloc[int(Entries/2):int(3*Entries/4),:]
+        df_test[channel] = df[channel].iloc[int(3*Entries/4):,:]
+        print("total = ", df[channel].shape[0], " df_train = ", df_train[channel].shape[0], " df_valid = ",df_valid[channel].shape[0]," df_test = ",df_test[channel].shape[0])
+
+del df
+
+df_samples_train_valid_test = []
+df_samples_train_valid_test_correct_assign = []
+df_samples_train_valid_test_wrong_assign = []
+
+for df in [df_train,df_valid,df_test]:
+	df_temp = pd.concat([df['Tchannel'],df['Tbarchannel']])
+	df_samples_train_valid_test.append(df_temp)
+        df_temp_correct_assign = df_temp.query('Assig==1',inplace = False)
+        df_samples_train_valid_test_correct_assign.append(df_temp_correct_assign)
+        del df_temp_correct_assign
+        df_temp_wrong_assign = df_temp.query('Assig==0',inplace = False)
+        df_samples_train_valid_test_wrong_assign.append(df_temp_wrong_assign)
+        del df_temp_wrong_assign
+        del df_temp
+    
+print "full sample"
+print "train : ", df_samples_train_valid_test[0].shape, "valid : ", df_samples_train_valid_test[1].shape, "test : ", df_samples_train_valid_test[2].shape
+
+print "only correct assignment"
+print "train : ", df_samples_train_valid_test_correct_assign[0].shape, "valid : ", df_samples_train_valid_test_correct_assign[1].shape, "test : ", df_samples_train_valid_test_correct_assign[2].shape
+
+print "only wrong assignment"
+print "train : ", df_samples_train_valid_test_wrong_assign[0].shape, "valid : ", df_samples_train_valid_test_wrong_assign[1].shape, "test : ", df_samples_train_valid_test_wrong_assign[2].shape
+
+
+#print "df_top_signal_train : ",df_top_signal_train.shape, " df_top_signal_valid : ",df_top_signal_valid.shape, "df_top_signal_test : ",df_top_signal_test.shape
+#print "df_top_signal_correct_assign_train : ",df_top_signal_correct_assign_train.shape,"df_top_signal_correct_assign_valid : ",df_top_signal_correct_assign_valid.shape,"df_top_signal_correct_assign_test : ",df_top_signal_correct_assign_test.shape
+#print "df_top_signal_wrong_assign_train : ",df_top_signal_wrong_assign_train.shape,"df_top_signal_wrong_assign_valid : ",df_top_signal_wrong_assign_valid.shape,"df_top_signal_wrong_assign_test : ",df_top_signal_wrong_assign_test.shape
+
+df_top_BKG_train = pd.concat([df_train['tw_top'],df_train['tw_antitop'],df_train['Schannel'],df_train['ttbar_SemiLeptonic'],df_train['ttbar_FullyLeptonic'],df_top_signal_wrong_assign_train])
+df_top_BKG_valid = pd.concat([df_valid['tw_top'],df_valid['tw_antitop'],df_valid['Schannel'],df_valid['ttbar_SemiLeptonic'],df_valid['ttbar_FullyLeptonic'],df_top_signal_wrong_assign_valid])
+df_top_BKG_test = pd.concat([df_test['tw_top'],df_test['tw_antitop'],df_test['Schannel'],df_test['ttbar_SemiLeptonic'],df_test['ttbar_FullyLeptonic'],df_top_signal_wrong_assign_test])
+
+
+
+df_EWK_BKG_train = pd.concat([df_train['WJetsToLNu_0J'],df_train['WJetsToLNu_1J'],df_train['WJetsToLNu_2J'],df_train['DYJets'],df_train['WWTolnulnu'],df_train['WZTo2Q2L'],df_train['ZZTo2Q2L']])
+df_EWK_BKG_valid = pd.concat([df_valid['WJetsToLNu_0J'],df_valid['WJetsToLNu_1J'],df_valid['WJetsToLNu_2J'],df_valid['DYJets'],df_valid['WWTolnulnu'],df_valid['WZTo2Q2L'],df_valid['ZZTo2Q2L']])
+df_EWK_BKG_test = pd.concat([df_test['WJetsToLNu_0J'],df_test['WJetsToLNu_1J'],df_test['WJetsToLNu_2J'],df_test['DYJets'],df_test['WWTolnulnu'],df_test['WZTo2Q2L'],df_test['ZZTo2Q2L']])
 #print(type(df_top_signal),df_top_signal.columns.tolist())
 
 
 #print "df_top_signal_corre_aaign : ",df_top_signal_correct_assign_new
 
-df_top_signal_correct_assign.to_root('dataframe_saved/preVFP2016_Top_signal.root',key='Events')
-df_top_BKG.to_root('dataframe_saved/preVFP2016_Top_bkg.root',key='Events')
-df_EWK_BKG.to_root('dataframe_saved/preVFP2016_EWK_BKG.root',key='Events')
+df_top_signal_correct_assign_train.to_root('dataframe_saved/preVFP2016_Top_signal_train.root',key='Events')
+df_top_signal_correct_assign_valid.to_root('dataframe_saved/preVFP2016_Top_signal_valid.root',key='Events')
+df_top_signal_correct_assign_test.to_root('dataframe_saved/preVFP2016_Top_signal_test.root',key='Events')
 
-del df_top_signal_correct_assign
-del df_top_signal_wrong_assign
-del df_top_signal
-del df_top_BKG
-del df_EWK_BKG
+df_top_BKG_train.to_root('dataframe_saved/preVFP2016_Top_bkg_train.root',key='Events')
+df_top_BKG_valid.to_root('dataframe_saved/preVFP2016_Top_bkg_valid.root',key='Events')
+df_top_BKG_test.to_root('dataframe_saved/preVFP2016_Top_bkg_test.root',key='Events')
+
+df_EWK_BKG_train.to_root('dataframe_saved/preVFP2016_EWK_BKG_train.root',key='Events')
+df_EWK_BKG_valid.to_root('dataframe_saved/preVFP2016_EWK_BKG_valid.root',key='Events')
+df_EWK_BKG_test.to_root('dataframe_saved/preVFP2016_EWK_BKG_test.root',key='Events')
+
+del df_top_signal_correct_assign_train
+del df_top_signal_wrong_assign_train
+del df_top_signal_train
+del df_top_BKG_train
+del df_EWK_BKG_train
+
+del df_top_signal_correct_assign_valid
+del df_top_signal_wrong_assign_valid
+del df_top_signal_valid
+del df_top_BKG_valid
+del df_EWK_BKG_valid
+
+del df_top_signal_correct_assign_test
+del df_top_signal_wrong_assign_test
+del df_top_signal_test
+del df_top_BKG_test
+del df_EWK_BKG_test
 
 #KERAS#
 
