@@ -2,6 +2,7 @@
 #import pickle
 import ROOT 
 import numpy as np  
+#import pandas as pd
 import pandas as pd
 import sys
 import os
@@ -23,13 +24,17 @@ _branches_mu = [
         'FW1',
         'Jet_pt',
         'Jet_btagDeepFlavB',
-        'nbjet_sel'
+        'Jet_partonFlavour',
+        'nbjet_sel',
+        'bJethadronFlavour',
+        'MuonCharge',
+        'event'
     ]
 def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu" ):
     chain = ROOT.TChain('Events')
     chain.Add(dir16+'Minitree_'+channel+'_2J1T1_'+lep+'.root')
 
-    print(chain.GetEntries())
+    print 'Entries : ',chain.GetEntries(), "\tSelected : ",max_entries
 
     _dataset = root_numpy.tree2array (chain,
         branches = _branches_mu,
@@ -45,9 +50,9 @@ if __name__ == '__main__':
      print("Starting mu datsets \n")
     
      dataset_Tchannel_mu = load_dataset(10000,"Tchannel", "mu")
-     dataset_ttbkg_mu = load_dataset(10000,"ttbar", "mu")
-     dataset_WToLNu_2J_mu = load_dataset(10000, "WToLNu_2J" ,"mu")
+     dataset_ttbkg_mu = load_dataset(10000,"ttbar_FullyLeptonic", "mu")
+     #dataset_WToLNu_2J_mu = load_dataset(10000, "WToLNu_2J" ,"mu")
      #print(dataset_mu)
-     Muon_Eta = dataset_WToLNu_2J_mu ["MuonEta"]
+     Muon_Eta =  dataset_Tchannel_mu ["MuonEta"]
      print(Muon_Eta)
      
