@@ -1,3 +1,4 @@
+#source /cvmfs/cms.cern.ch/cmsset_default.sh
 import torch
 import pandas as pd
 import numpy as np
