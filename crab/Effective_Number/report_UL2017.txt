@@ -181,3 +181,270 @@ sum(file.nevents): 9.615795e+06
 
 
 
+---------------------------------------      Tbarchannel_mtop1695       ---------------------------------
+sum(file.nevents): 2.6299e+07
+ Number of Events :  2.6299e+07
+
+Effective No. Events =24765105
+totle files Evaluated = 49
+
+---------------------------------------      ttbar_FullyLeptonic_mtop1695       ---------------------------------
+sum(file.nevents): 4.1048e+07
+ Number of Events :  4.1048e+07
+
+Effective No. Events =40711187
+totle files Evaluated = 37
+
+---------------------------------------      Tbarchannel_mtop1735       ---------------------------------
+sum(file.nevents): 2.6921e+07
+ Number of Events :  2.6921e+07
+
+Effective No. Events =25339045
+totle files Evaluated = 50
+
+---------------------------------------      ttbar_FullyLeptonic_widthx0p55       ---------------------------------
+sum(file.nevents): 4.2489e+07
+ Number of Events :  4.2489e+07
+
+Effective No. Events =42145406
+totle files Evaluated = 40
+
+---------------------------------------      ttbar_FullyLeptonic_widthx0p7       ---------------------------------
+sum(file.nevents): 4.1088e+07
+ Number of Events :  4.1088e+07
+
+Effective No. Events =40756219
+totle files Evaluated = 41
+
+---------------------------------------      ttbar_FullyLeptonic_mtop1735       ---------------------------------
+sum(file.nevents): 4.2742e+07
+ Number of Events :  4.2742e+07
+
+Effective No. Events =42398031
+totle files Evaluated = 40
+
+---------------------------------------      Tbarchannel_mtop1715       ---------------------------------
+sum(file.nevents): 2.70019e+07
+ Number of Events :  2.70019e+07
+
+Effective No. Events =25422007
+totle files Evaluated = 26
+
+---------------------------------------      ttbar_FullyLeptonic_widthx1p3       ---------------------------------
+sum(file.nevents): 4.0981e+07
+ Number of Events :  4.0981e+07
+
+Effective No. Events =40650252
+totle files Evaluated = 41
+
+---------------------------------------      ttbar_FullyLeptonic_mtop1755       ---------------------------------
+sum(file.nevents): 4.2266e+07
+ Number of Events :  4.2266e+07
+
+Effective No. Events =41928555
+totle files Evaluated = 71
+
+---------------------------------------      ttbar_FullyLeptonic_widthx1p45       ---------------------------------
+sum(file.nevents): 4.0789e+07
+ Number of Events :  4.0789e+07
+
+Effective No. Events =40460925
+totle files Evaluated = 48
+
+---------------------------------------      ttbar_FullyLeptonic_mtop1715       ---------------------------------
+sum(file.nevents): 4.0782e+07
+ Number of Events :  4.0782e+07
+
+Effective No. Events =40450929
+totle files Evaluated = 55
+
+---------------------------------------      Tchannel_mtop1715       ---------------------------------
+sum(file.nevents): 5.4413e+07
+ Number of Events :  5.4413e+07
+
+Effective No. Events =50999704
+totle files Evaluated = 78
+
+---------------------------------------      ttbar_SemiLeptonic_mtop1755       ---------------------------------
+sum(file.nevents): 1.32486e+08
+ Number of Events :  1.32486e+08
+
+# of files read = 100
+Effective No. Events =131429627
+totle files Evaluated = 117
+
+---------------------------------------      ttbar_SemiLeptonic_mtop1735       ---------------------------------
+sum(file.nevents): 1.37904e+08
+ Number of Events :  1.37904e+08
+
+# of files read = 100
+Effective No. Events =136794165
+totle files Evaluated = 142
+
+---------------------------------------      ttbar_SemiLeptonic_mtop1715       ---------------------------------
+sum(file.nevents): 1.32484e+08
+ Number of Events :  1.32484e+08
+
+# of files read = 100
+Effective No. Events =131407129
+totle files Evaluated = 111
+
+---------------------------------------      ttbar_SemiLeptonic_mtop1715       ---------------------------------
+sum(file.nevents): 1.32484e+08
+ Number of Events :  1.32484e+08
+
+# of files read = 100
+Effective No. Events =131407129
+totle files Evaluated = 111
+
+---------------------------------------      ttbar_FullyLeptonic_widthx0p85       ---------------------------------
+sum(file.nevents): 4.1386e+07
+ Number of Events :  4.1386e+07
+
+Effective No. Events =41052515
+totle files Evaluated = 42
+
+---------------------------------------      Tbarchannel_mtop1755       ---------------------------------
+sum(file.nevents): 2.1054e+07
+ Number of Events :  2.1054e+07
+
+Effective No. Events =19811182
+totle files Evaluated = 19
+
+---------------------------------------      ttbar_SemiLeptonic_mtop169       ---------------------------------
+sum(file.nevents): 1.25943e+08
+ Number of Events :  1.25943e+08
+
+# of files read = 100
+Effective No. Events =124907515
+totle files Evaluated = 130
+
+---------------------------------------      Tchannel_mtop1695       ---------------------------------
+sum(file.nevents): 5.269e+07
+ Number of Events :  5.269e+07
+
+Effective No. Events =49399506
+totle files Evaluated = 89
+
+---------------------------------------      ttbar_FullyLeptonic_widthx1p15       ---------------------------------
+sum(file.nevents): 4.0684e+07
+ Number of Events :  4.0684e+07
+
+Effective No. Events =40355725
+totle files Evaluated = 46
+
+---------------------------------------      Tchannel_mtop1735       ---------------------------------
+sum(file.nevents): 5.1652e+07
+ Number of Events :  5.1652e+07
+
+# of files read = 100
+Effective No. Events =48397797
+totle files Evaluated = 115
+
+---------------------------------------      Tchannel_mtop1755       ---------------------------------
+sum(file.nevents): 5.2196e+07
+ Number of Events :  5.2196e+07
+
+Effective No. Events =48885307
+totle files Evaluated = 74
+
+---------------------------------------      Tchannel_TuneCP5CR2       ---------------------------------
+sum(file.nevents): 5.339e+07
+ Number of Events :  5.339e+07
+
+Effective No. Events =50028326
+totle files Evaluated = 46
+
+---------------------------------------      Tchannel_TuneCP5CR1       ---------------------------------
+sum(file.nevents): 5.395e+07
+ Number of Events :  5.395e+07
+
+Effective No. Events =50554878
+totle files Evaluated = 46
+
+---------------------------------------      Tbachannel_hdampup       ---------------------------------
+sum(file.nevents): 2.6783e+07
+ Number of Events :  2.6783e+07
+
+Effective No. Events =25244204
+totle files Evaluated = 77
+
+---------------------------------------      Tchannel_hdampdown       ---------------------------------
+sum(file.nevents): 5.4055e+07
+ Number of Events :  5.4055e+07
+
+Effective No. Events =50524842
+totle files Evaluated = 98
+
+---------------------------------------      Tchannel_TuneCP5down       ---------------------------------
+sum(file.nevents): 5.3646e+07
+ Number of Events :  5.3646e+07
+
+# of files read = 100
+Effective No. Events =50263415
+totle files Evaluated = 108
+
+---------------------------------------      Tchannel_hdampup       ---------------------------------
+sum(file.nevents): 5.4669e+07
+ Number of Events :  5.4669e+07
+
+Effective No. Events =51297219
+totle files Evaluated = 55
+
+---------------------------------------      Tbachannel_TuneCP5up       ---------------------------------
+sum(file.nevents): 2.6488e+07
+ Number of Events :  2.6488e+07
+
+Effective No. Events =24935048
+totle files Evaluated = 22
+
+---------------------------------------      Tbachannel_hdampdown       ---------------------------------
+sum(file.nevents): 2.6461e+07
+ Number of Events :  2.6461e+07
+
+Effective No. Events =24856816
+totle files Evaluated = 49
+
+---------------------------------------      Tchannel_erdON       ---------------------------------
+sum(file.nevents): 5.5383e+07
+ Number of Events :  5.5383e+07
+
+# of files read = 100
+Effective No. Events =51895306
+totle files Evaluated = 116
+
+---------------------------------------      Tchannel_TuneCP5up       ---------------------------------
+sum(file.nevents): 5.2891e+07
+ Number of Events :  5.2891e+07
+
+Effective No. Events =49562044
+totle files Evaluated = 91
+
+---------------------------------------      Tbachannel_TuneCP5CR2       ---------------------------------
+sum(file.nevents): 2.7522e+07
+ Number of Events :  2.7522e+07
+
+Effective No. Events =25907341
+totle files Evaluated = 48
+
+---------------------------------------      Tbachannel_TuneCP5CR1       ---------------------------------
+sum(file.nevents): 2.7649e+07
+ Number of Events :  2.7649e+07
+
+Effective No. Events =26027022
+totle files Evaluated = 29
+
+---------------------------------------      Tbachannel_erdON       ---------------------------------
+sum(file.nevents): 2.6979e+07
+ Number of Events :  2.6979e+07
+
+Effective No. Events =25397830
+totle files Evaluated = 50
+
+---------------------------------------      Tbachannel_TuneCP5down       ---------------------------------
+sum(file.nevents): 2.7196e+07
+ Number of Events :  2.7196e+07
+
+Effective No. Events =25603878
+totle files Evaluated = 30
+
