@@ -120,6 +120,21 @@ sum(file.nevents): 1.95529774e+08
 Effective No. Events =131552392
 totle files Evaluated = 153
 
+
+---------------------------------------      WWTolnulnu       ---------------------------------
+sum(file.nevents): 4.76e+06
+ Number of Events :  4.76e+06
+
+Effective No. Events =4760000
+totle files Evaluated = 32
+
+---------------------------------------      WZTo2Q2L       ---------------------------------
+sum(file.nevents): 2.9091996e+07
+ Number of Events :  2.9091996e+07
+
+Effective No. Events =18136497
+totle files Evaluated = 30
+
 ---------------------------------------      Tchannel       ---------------------------------
 sum(file.nevents): 1.29903e+08
  Number of Events :  1.29903e+08
@@ -128,6 +143,19 @@ sum(file.nevents): 1.29903e+08
 Effective No. Events =121728258
 totle files Evaluated = 197
 
+---------------------------------------      QCD_Pt-15To20_MuEnriched       ---------------------------------
+sum(file.nevents): 9.019841e+06
+ Number of Events :  9.019841e+06
+
+
+---------------------------------------      QCD_Pt-20To30_MuEnriched       ---------------------------------
+sum(file.nevents): 6.4623134e+07
+ Number of Events :  6.4623134e+07
+
+
+---------------------------------------      QCD_Pt-30to50_EMEnriched       ---------------------------------
+sum(file.nevents): 8.784542e+06
+ Number of Events :  8.784542e+06
 
 ---------------------------------------      QCD_Pt-50To80_MuEnriched       ---------------------------------
 sum(file.nevents): 4.0322726e+07
