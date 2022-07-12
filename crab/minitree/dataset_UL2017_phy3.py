@@ -31,7 +31,7 @@ Datasets_MC_UL2017 = {
 	'QCD_Pt-1000_MuEnriched'     : ['/QCD_Pt-1000_MuEnrichedPt5_TuneCP5_13TeV-pythia8/mikumar-Tree_01_Jul22_MCUL2017_QCD_Pt-1000_MuEnriched-76de701442013e6ff941c86cd482e64d/USER','27478273','1.08'],
 
 
-	'QCD_Pt-15to20_EMEnriched'   : ['/QCD_Pt-15to20_EMEnriched_TuneCP5_13TeV-pythia8/mikumar-Tree_05_Jul22_MCUL2017_QCD_Pt-15to20_EMEnriched-76de701442013e6ff941c86cd482e64d/USER','7966910','1318000']
+	'QCD_Pt-15to20_EMEnriched'   : ['/QCD_Pt-15to20_EMEnriched_TuneCP5_13TeV-pythia8/mikumar-Tree_05_Jul22_MCUL2017_QCD_Pt-15to20_EMEnriched-76de701442013e6ff941c86cd482e64d/USER','7966910','1318000'],
 	'QCD_Pt-20to30_EMEnriched'   : ['/QCD_Pt-20to30_EMEnriched_TuneCP5_13TeV-pythia8/mikumar-Tree_30_Jun22_MCUL2017_QCD_Pt-20to30_EMEnriched-76de701442013e6ff941c86cd482e64d/USER','14166147','4913000'],
 	'QCD_Pt-30to50_EMEnriched'   : ['/QCD_Pt-30to50_EMEnriched_TuneCP5_13TeV-pythia8/mikumar-Tree_30_Jun22_MCUL2017_QCD_Pt-30to50_EMEnriched-76de701442013e6ff941c86cd482e64d/USER','8784542','6457000'],
 	'QCD_Pt-50to80_EMEnriched'   : ['/QCD_Pt-50to80_EMEnriched_TuneCP5_13TeV-pythia8/mikumar-Tree_30_Jun22_MCUL2017_QCD_Pt-50to80_EMEnriched-76de701442013e6ff941c86cd482e64d/USER','10210400','1988000'],
@@ -43,50 +43,50 @@ Datasets_MC_UL2017 = {
 }
 
 Datasets_Alt_MC_UL2017 = {
-        'Tchannel_mtop1695' : ['/ST_t-channel_antitop_4f_hdampup_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_hdampup-76de701442013e6ff941c86cd482e64d/USER','','136.02'],
-        'Tchannel_mtop1715' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1715_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_mtop1715-76de701442013e6ff941c86cd482e64d/USER','','136.02'],
-        'Tchannel_mtop1735' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1735_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_mtop1735-76de701442013e6ff941c86cd482e64d/USER','','136.02'],
-        'Tchannel_mtop1755' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1755_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_mtop1755-76de701442013e6ff941c86cd482e64d/USER','','136.02'],
+        'Tchannel_mtop1695' : ['/ST_t-channel_antitop_4f_hdampup_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_hdampup-76de701442013e6ff941c86cd482e64d/USER','52690000','136.02'],
+        'Tchannel_mtop1715' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1715_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_mtop1715-76de701442013e6ff941c86cd482e64d/USER','54413000','136.02'],
+        'Tchannel_mtop1735' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1735_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_mtop1735-76de701442013e6ff941c86cd482e64d/USER','51652000','136.02'],
+        'Tchannel_mtop1755' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1755_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_mtop1755-76de701442013e6ff941c86cd482e64d/USER','52196000','136.02'],
 
-        'Tbarchannel_mtop1695' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1695_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbarchannel_mtop1695-76de701442013e6ff941c86cd482e64d/USER','','80.95'],
-        'Tbarchannel_mtop1715' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1715_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbarchannel_mtop1715-76de701442013e6ff941c86cd482e64d/USER','','80.95'],
-        'Tbarchannel_mtop1735' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1735_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbarchannel_mtop1735-76de701442013e6ff941c86cd482e64d/USER','','80.95'],
-        'Tbarchannel_mtop1755' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1755_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbarchannel_mtop1755-76de701442013e6ff941c86cd482e64d/USER','','80.95'],
+        'Tbarchannel_mtop1695' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1695_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbarchannel_mtop1695-76de701442013e6ff941c86cd482e64d/USER','26299000','80.95'],
+        'Tbarchannel_mtop1715' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1715_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbarchannel_mtop1715-76de701442013e6ff941c86cd482e64d/USER','27001900','80.95'],
+        'Tbarchannel_mtop1735' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1735_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbarchannel_mtop1735-76de701442013e6ff941c86cd482e64d/USER','26921000','80.95'],
+        'Tbarchannel_mtop1755' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1755_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbarchannel_mtop1755-76de701442013e6ff941c86cd482e64d/USER','21054000','80.95'],
 
-        'ttbar_SemiLeptonic_mtop1695' : ['/TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_SemiLeptonic_mtop169-76de701442013e6ff941c86cd482e64d/USER','','364.31'],
-        'ttbar_SemiLeptonic_mtop1715' : ['/TTToSemiLeptonic_mtop171p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_SemiLeptonic_mtop1715-76de701442013e6ff941c86cd482e64d/USER','','364.31'],
-        'ttbar_SemiLeptonic_mtop1735' : ['/TTToSemiLeptonic_mtop173p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_SemiLeptonic_mtop1735-76de701442013e6ff941c86cd482e64d/USER','','364.31'],
-        'ttbar_SemiLeptonic_mtop1755' : ['/TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_SemiLeptonic_mtop1755-76de701442013e6ff941c86cd482e64d/USER','','364.31'],
+        'ttbar_SemiLeptonic_mtop1695' : ['/TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_SemiLeptonic_mtop169-76de701442013e6ff941c86cd482e64d/USER','125943000','364.31'],
+        'ttbar_SemiLeptonic_mtop1715' : ['/TTToSemiLeptonic_mtop171p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_SemiLeptonic_mtop1715-76de701442013e6ff941c86cd482e64d/USER','132484000','364.31'],
+        'ttbar_SemiLeptonic_mtop1735' : ['/TTToSemiLeptonic_mtop173p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_SemiLeptonic_mtop1735-76de701442013e6ff941c86cd482e64d/USER','137904000','364.31'],
+        'ttbar_SemiLeptonic_mtop1755' : ['/TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_SemiLeptonic_mtop1755-76de701442013e6ff941c86cd482e64d/USER','132486000','364.31'],
 
-        'ttbar_FullyLeptonic_mtop1695' : ['/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_mtop1695-76de701442013e6ff941c86cd482e64d/USER','','87.33'],
-        'ttbar_FullyLeptonic_mtop1715' : ['/TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_mtop1715-76de701442013e6ff941c86cd482e64d/USER','','87.33'],
-        'ttbar_FullyLeptonic_mtop1735' : ['/TTTo2L2Nu_mtop173p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_mtop1735-76de701442013e6ff941c86cd482e64d/USER','','87.33'],
-        'ttbar_FullyLeptonic_mtop1755' : ['/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_mtop1755-76de701442013e6ff941c86cd482e64d/USER','','87.33'],
+        'ttbar_FullyLeptonic_mtop1695' : ['/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_mtop1695-76de701442013e6ff941c86cd482e64d/USER','41048000','87.33'],
+        'ttbar_FullyLeptonic_mtop1715' : ['/TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_mtop1715-76de701442013e6ff941c86cd482e64d/USER','40782000','87.33'],
+        'ttbar_FullyLeptonic_mtop1735' : ['/TTTo2L2Nu_mtop173p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_mtop1735-76de701442013e6ff941c86cd482e64d/USER','42742000','87.33'],
+        'ttbar_FullyLeptonic_mtop1755' : ['/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_mtop1755-76de701442013e6ff941c86cd482e64d/USER','42266000','87.33'],
 
-        'ttbar_FullyLeptonic_widthx0p55' : ['/TTTo2L2Nu_widthx0p55_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_widthx0p55-76de701442013e6ff941c86cd482e64d/USER','','87.33'],
-        'ttbar_FullyLeptonic_widthx0p7'  : ['/TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_widthx0p7-76de701442013e6ff941c86cd482e64d/USER','','87.33'],
-        'ttbar_FullyLeptonic_widthx0p85' : ['/TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_widthx0p85-76de701442013e6ff941c86cd482e64d/USER','','87.33'],
-        'ttbar_FullyLeptonic_widthx1p15' : ['/TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_widthx1p15-76de701442013e6ff941c86cd482e64d/USER','','87.33'],
-        'ttbar_FullyLeptonic_widthx1p3'  : ['/TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_widthx1p3-76de701442013e6ff941c86cd482e64d/USER','','87.33'],
-        'ttbar_FullyLeptonic_widthx1p45' : ['/TTTo2L2Nu_widthx1p45_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_widthx1p45-76de701442013e6ff941c86cd482e64d/USER','','87.33']
+        'ttbar_FullyLeptonic_widthx0p55' : ['/TTTo2L2Nu_widthx0p55_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_widthx0p55-76de701442013e6ff941c86cd482e64d/USER','42489000','87.33'],
+        'ttbar_FullyLeptonic_widthx0p7'  : ['/TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_widthx0p7-76de701442013e6ff941c86cd482e64d/USER','41088000','87.33'],
+        'ttbar_FullyLeptonic_widthx0p85' : ['/TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_widthx0p85-76de701442013e6ff941c86cd482e64d/USER','41052515','87.33'],
+        'ttbar_FullyLeptonic_widthx1p15' : ['/TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_widthx1p15-76de701442013e6ff941c86cd482e64d/USER','40650252','87.33'],
+        'ttbar_FullyLeptonic_widthx1p3'  : ['/TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_widthx1p3-76de701442013e6ff941c86cd482e64d/USER','40460925','87.33'],
+        'ttbar_FullyLeptonic_widthx1p45' : ['/TTTo2L2Nu_widthx1p45_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_04_Jul22_MCUL2017_ttbar_FullyLeptonic_widthx1p45-76de701442013e6ff941c86cd482e64d/USER','40355725','87.33']
 }
 
 Datasets_sys_MC_UL2017 = {
-        'Tchannel_TuneCP5CR2' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5CR2_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_TuneCP5CR2-76de701442013e6ff941c86cd482e64d/USER','','136.02'],
-        'Tchannel_TuneCP5CR1' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5CR1_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_TuneCP5CR1-76de701442013e6ff941c86cd482e64d/USER','','136.02'],
-        'Tchannel_TuneCP5up' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5up_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_TuneCP5up-76de701442013e6ff941c86cd482e64d/USER','','136.02'],
-        'Tchannel_TuneCP5down' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5down_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_TuneCP5down-76de701442013e6ff941c86cd482e64d/USER','','136.02'],
-        'Tchannel_hdampup' : ['/ST_t-channel_top_4f_hdampup_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_hdampup-76de701442013e6ff941c86cd482e64d/USER','','136.02'],
-        'Tchannel_hdampdown' : ['/ST_t-channel_top_4f_hdampdown_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_hdampdown-76de701442013e6ff941c86cd482e64d/USER','','136.02'],
-        'Tchannel_erdON' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_erdON_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_erdON-76de701442013e6ff941c86cd482e64d/USER','','136.02'],
+        'Tchannel_TuneCP5CR2' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5CR2_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_TuneCP5CR2-76de701442013e6ff941c86cd482e64d/USER','50028326','136.02'],
+        'Tchannel_TuneCP5CR1' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5CR1_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_TuneCP5CR1-76de701442013e6ff941c86cd482e64d/USER','50554878','136.02'],
+        'Tchannel_TuneCP5up' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5up_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_TuneCP5up-76de701442013e6ff941c86cd482e64d/USER','49562044','136.02'],
+        'Tchannel_TuneCP5down' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5down_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_TuneCP5down-76de701442013e6ff941c86cd482e64d/USER','50263415','136.02'],
+        'Tchannel_hdampup' : ['/ST_t-channel_top_4f_hdampup_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_hdampup-76de701442013e6ff941c86cd482e64d/USER','51297219','136.02'],
+        'Tchannel_hdampdown' : ['/ST_t-channel_top_4f_hdampdown_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_hdampdown-76de701442013e6ff941c86cd482e64d/USER','50524842','136.02'],
+        'Tchannel_erdON' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_erdON_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tchannel_erdON-76de701442013e6ff941c86cd482e64d/USER','51895306','136.02'],
 
-        'Tbarchannel_TuneCP5CR2' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5CR2_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_TuneCP5CR2-76de701442013e6ff941c86cd482e64d/USER','','80.95'],
-        'Tbarchannel_TuneCP5CR1' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5CR1_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_TuneCP5CR1-76de701442013e6ff941c86cd482e64d/USER','','80.95'],
-        'Tbarchannel_TuneCP5up' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5up_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_TuneCP5up-76de701442013e6ff941c86cd482e64d/USER','','80.95'],
-        'Tbarchannel_TuneCP5down' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5down_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_TuneCP5down-76de701442013e6ff941c86cd482e64d/USER','','80.95'],
-        'Tbarchannel_hdampup' : ['/ST_t-channel_antitop_4f_hdampup_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_hdampup-76de701442013e6ff941c86cd482e64d/USER','','80.95'],
-        'Tbarchannel_hdampdown' : ['/ST_t-channel_antitop_4f_hdampdown_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_hdampdown-76de701442013e6ff941c86cd482e64d/USER','','80.95'],
-        'Tbarchannel_erdON' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_erdON_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_erdON-76de701442013e6ff941c86cd482e64d/USER','','80.95']
+        'Tbarchannel_TuneCP5CR2' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5CR2_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_TuneCP5CR2-76de701442013e6ff941c86cd482e64d/USER','25907341','80.95'],
+        'Tbarchannel_TuneCP5CR1' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5CR1_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_TuneCP5CR1-76de701442013e6ff941c86cd482e64d/USER','26027022','80.95'],
+        'Tbarchannel_TuneCP5up' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5up_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_TuneCP5up-76de701442013e6ff941c86cd482e64d/USER','24935048','80.95'],
+        'Tbarchannel_TuneCP5down' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5down_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_TuneCP5down-76de701442013e6ff941c86cd482e64d/USER','25603878','80.95'],
+        'Tbarchannel_hdampup' : ['/ST_t-channel_antitop_4f_hdampup_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_hdampup-76de701442013e6ff941c86cd482e64d/USER','25244204','80.95'],
+        'Tbarchannel_hdampdown' : ['/ST_t-channel_antitop_4f_hdampdown_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_hdampdown-76de701442013e6ff941c86cd482e64d/USER','24856816','80.95'],
+        'Tbarchannel_erdON' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_erdON_13TeV-powheg-madspin-pythia8/mikumar-Tree_04_Jul22_MCUL2017_Tbachannel_erdON-76de701442013e6ff941c86cd482e64d/USER','25397830','80.95']
 }
 
 Datasets_SingleMuon_data_UL2017 = {
