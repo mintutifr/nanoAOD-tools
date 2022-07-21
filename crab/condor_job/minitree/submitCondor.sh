@@ -170,10 +170,15 @@ for channel in $channels; do
 
     count=0
     input_files="All_input_files_"$channel".txt"
-    input_file_list_10="inputFiles=["
+    input_file_list="inputFiles=["
     outputroot=${outputDir}${sample}"/"${region}"_"${lep}"/"${channel}"/"
     file_tail=`tail -n 1 $input_files`
 
+    if  [[ "$channel" == "Tchannel" || "$channel" == "Tbarchannel" || "$channel" == "ttbar_SemiLeptonic" || "$channel" == "ttbar_FullyLeptonic" ]]; then
+        files_in_input_file_list=5
+    else files_in_input_file_list=10
+    fi
+        
     cat $input_files | while read ntupleT2Path
     do
   	#----------------------------------------------
@@ -181,7 +186,7 @@ for channel in $channels; do
   	#----------------------------------------------
   	((count++))
   	#if [[ $count%10==0 || $ntupleT2Path == $file_tail ]]; then
-  	if [[ $count%10 -eq 0 || $ntupleT2Path == $file_tail ]]; then
+  	if [[ $count%$files_in_input_file_list -eq 0 || $ntupleT2Path == $file_tail ]]; then
 
 	     mkdir -p $count
 	     #------------------------------------------------
@@ -193,20 +198,20 @@ for channel in $channels; do
 	     cp crab_script_Minitree.py	$count 
 	     cd $count
 
-    	     input_file_list_10=$input_file_list_10"'root\://se01.indiacms.res.in/"$ntupleT2Path"' ] " #adding file in the inputfile list and close list for 10 files
+    	     input_file_list=$input_file_list"'root\://se01.indiacms.res.in/"$ntupleT2Path"' ] " #adding file in the inputfile list and close list for 10 files
 	     #------------------------------------------------
              #Inshirt input files to the crab script
              #------------------------------------------------	
-    	     #echo $input_file_list_10
+    	     #echo $input_file_list
 	     echo $count
-	     sed -i 's:INPUT:'"$input_file_list_10"':g' crab_script_Minitree.py 
+	     sed -i 's:INPUT:'"$input_file_list"':g' crab_script_Minitree.py 
 	     sed -i "s:INPUT:root\://se01.indiacms.res.in/${outputroot}tree_$count.root:g" condorSetup.sub
 	     #echo "root\://se01.indiacms.res.in/${outputroot}tree_$count.root"
-	     condor_submit condorSetup.sub
+	     #condor_submit condorSetup.sub
 	     cd ../		    	
-             input_file_list_10="inputFiles=["
+             input_file_list="inputFiles=["
   	else
-    	     input_file_list_10=${input_file_list_10}"'root\://se01.indiacms.res.in/"${ntupleT2Path}"' , "  #adding file in the inputfile list
+    	     input_file_list=${input_file_list}"'root\://se01.indiacms.res.in/"${ntupleT2Path}"' , "  #adding file in the inputfile list
   	fi
   
   #condor_submit condorSetup.sub
