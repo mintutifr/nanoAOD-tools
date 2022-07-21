@@ -9,6 +9,8 @@ date
 outputroot=$1
 channel=$2
 count=$3
+Process=$4
+Cluster=$5
 echo "ouput root file wull be" $outputroot
 echo "CONDOR DIR: $_CONDOR_SCRATCH_DIR"
 cd ${_CONDOR_SCRATCH_DIR}
@@ -20,8 +22,8 @@ cd -
 #---------------------------------------------
 cd /home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/condor_job/Runing_condor/
 pwd
-mkdir -p cutflow_${channel}_${count} 
-cd cutflow_${channel}_${count}
+mkdir -p cutflow_${channel}_${count}_${Process}_${Cluster} 
+cd cutflow_${channel}_${count}_${Process}_${Cluster}
 pwd
 scp -r /home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/cutflow .
 cd cutflow
@@ -62,7 +64,7 @@ xrdcp -f Cutflow_hist.root ${outputroot}
 echo "Cleaning up condor directory"
 
 cd ../../
-rm -rf cutflow_${channel}_${count}
+rm -rf cutflow_${channel}_${count}_${Process}_${Cluster}
 cd ${_CONDOR_SCRATCH_DIR}
 #rm -rf cutflow.tar.gz
 #rm -rf CMSSW_10_6_28

@@ -237,10 +237,10 @@ class MinitreeProducer(Module):
                 'UL2016postVFP' : 16812,
                 'UL2017' : 41529,
                 'UL2018' : 59222}
-	if(self.isMC):	
-		x_sec = 80.95
-		NEvents = 31024000
-
+        if(self.isMC):
+	        x_sec = 80.95
+	        NEvents = 31024000
+                
 	        Xsec_wgt = (x_sec*TotalLumi[self.dataYear])/NEvents
 	#print Xsec_wgt
 	muons = Collection(event, "Muon")
