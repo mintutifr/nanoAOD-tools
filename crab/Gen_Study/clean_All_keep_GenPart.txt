@@ -1,6 +1,6 @@
 drop *
 keep GenPart*
-
+keep    event
 keep    top_mass_gen
 keep    top_mass_gen_reco
 keep    top_pt_gen

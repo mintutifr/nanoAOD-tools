@@ -4,15 +4,12 @@ import ROOT
 import numpy as np
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 from importlib import import_module
-from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
-from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputFiles,runsAndLumis
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from Gen_mass_functions import *
-class EfficiencyModule(Module):
-    def __init__(self,datayear,jetSelection):
-        self.jetSel = jetSelection
+class NanoGenModule(Module):
+    def __init__(self,datayear):
 	self.writeHistFile=True
 	self.datayear = datayear
     #def beginJob(self,histFile=None,histDirName=None):
@@ -185,44 +182,38 @@ class EfficiencyModule(Module):
                         self.out.fillBranch("top_pt_gen", genpart.pt)
                         self.out.fillBranch("top_eta_gen", genpart.eta)
                         self.out.fillBranch("top_phi_gen", genpart.phi)
+                        #print "Genpart top mass : %s pt : %s eta : %s phi : %s" %(genpart.mass,genpart.pt,genpart.eta,genpart.phi)
 	 	        #print ("top mass filed")	
 	 	 	break 
 	 	    ID = ID+1
             else:
                 print "top_from_lepton : ",top_from_lepton," top_from_bquark : ",top_from_bquark," top_from_nuetrino : ",top_from_nuetrino
+                self.out.fillBranch("tau_to_el_flag", -2.0)
+                self.out.fillBranch("tau_to_mu_flag", -2.0)
+                self.out.fillBranch("top_mass_gen", -1000)
+                self.out.fillBranch("top_pt_gen", -1000)
+                self.out.fillBranch("top_eta_gen", -1000)
+                self.out.fillBranch("top_phi_gen", -1000)
+                self.out.fillBranch("top_mass_gen_reco", -1000)
+                self.out.fillBranch("top_pt_gen_reco", -1000)
+                self.out.fillBranch("top_eta_gen_reco", -1000)
+                self.out.fillBranch("top_phi_gen_reco", -1000)
 	else:
-	    print "top_from_lepton : %s top_from_bquark : %s top_from_nuetrino : %s event = %s"%(top_from_lepton,top_from_bquark,top_from_nuetrino,getattr(event,'event'))
+	    #print "top_from_lepton : %s top_from_bquark : %s top_from_nuetrino : %s event = %s"%(top_from_lepton,top_from_bquark,top_from_nuetrino,getattr(event,'event'))
             #PrintTrueflags(flag_for_b)
+            self.out.fillBranch("tau_to_el_flag", -1.0)
+            self.out.fillBranch("tau_to_mu_flag", -1.0)
             self.out.fillBranch("top_mass_gen", -999)
+            self.out.fillBranch("top_pt_gen", -999)
+            self.out.fillBranch("top_eta_gen", -999)
+            self.out.fillBranch("top_phi_gen", -999)
+            self.out.fillBranch("top_mass_gen_reco", -999)
+            self.out.fillBranch("top_pt_gen_reco", -999)
+            self.out.fillBranch("top_eta_gen_reco", -999)
+            self.out.fillBranch("top_phi_gen_reco", -999)
 	#    
 	#print("----------------------------------")
+             #return True
         return True
 
-EfficiencyConstr_2016 = lambda : EfficiencyModule('2016',jetSelection= lambda j : j.pt > 20)
-EfficiencyConstr_2017 = lambda : EfficiencyModule('2017',jetSelection= lambda j : j.pt > 20)
-
-treecut="Entry$<1000"#"event==17066074"#"Entry$<1000"#event==9004381"#6644553"# Entry$<1000 "
-#inputFiles=["/grid_mnt/t3storage3/mikumar/Run2/SIXTEEN/minitree/Mc/2J1T1/final/Minitree_Tchannel_2J1T1_mu.root"]
-inputFiles=[	#"/grid_mnt/t3storage3/mikumar/Run2/SIXTEEN/minitree/Mc_dR/2J1T1/final/Minitree_Tbarchannel_2J1T1_el.root",
-	 	#"/grid_mnt/t3storage3/mikumar/Run2/SIXTEEN/minitree/Mc_dR/2J1T1/final/Minitree_Tchannel_2J1T1_el.root",
-	 	"/grid_mnt/t3storage3/mikumar/Run2/SIXTEEN/minitree/Mc/2J1T1/final/Minitree_Tbarchannel_2J1T1_mu.root",
-	 	#"/grid_mnt/t3storage3/mikumar/Run2/SIXTEEN/minitree/Mc/2J1T1/final/Minitree_Tchannel_2J1T1_mu.root"
- 	 	#"/grid_mnt/t3storage3/mikumar/Run2/SIXTEEN/minitree/Mc/2J1T1/final/Minitree_ttbar_2J1T1_mu.root",
-	 	#"/grid_mnt/t3storage3/mikumar/Run2/SIXTEEN/minitree/Mc/2J1T1/final/Minitree_ttbar_2J1T1_el.root",
-         
-	   ]
-                
-p=PostProcessor( ".",
-                inputFiles,
-                #treecut,
-                modules=[EfficiencyConstr_2017()],
-                outputbranchsel="clean_All_keep_GenPart.txt",
-                provenance=True,
-                fwkJobReport=True,
-                jsonInput=runsAndLumis())
-                #noOut=False,
-                #histFileName="top_mass_reconstracted.root",
-                #histDirName="Histograms")
-p.run()
-
-print "DONE"
+NanoGenConstr_UL2016 = lambda : NanoGenModule('UL2016')
