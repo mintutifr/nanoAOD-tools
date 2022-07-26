@@ -21,8 +21,8 @@ date   = datetime.datetime.now()
 
 if(year == 'UL2016'):
     from dataset_UL2016 import *
-    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/MC_NaNOGEN/"
-    Datasets = Datasets_Alt_MC_UL2016APV
+    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_Nanogen/"
+    Datasets = Datasets_Alt_MC_UL2016
 
 RequestNames = Datasets.keys()
 print RequestNames
@@ -67,7 +67,7 @@ for i in tqdm(range(0,len(RequestNames))):
     replacemachine(scriptfile,'modules=', update_module ) 
 
     cmd_crab_submit = "crab submit -c "+cfgfile
-    #os.system(cmd_crab_submit)  
+    os.system(cmd_crab_submit)  
  
     #cmd_crab_kill = "crab kill -d crab_"+RequestName[i]
     #os.system(cmd_crab_kill)
