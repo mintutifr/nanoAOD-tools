@@ -32,6 +32,8 @@ class NanoGenModule(Module):
         self.out.branch("top_phi_gen_reco", "F")
 	self.out.branch("tau_to_el_flag", "F")
 	self.out.branch("tau_to_mu_flag", "F")
+        self.out.branch("el_flag", "F")
+        self.out.branch("mu_flag", "F")
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
     def analyze(self, event):
@@ -44,7 +46,9 @@ class NanoGenModule(Module):
 	nuetrino_id = None
     	tau_to_el_flag = False
 	tau_to_mu_flag = False
-        
+        el_flag = False
+        mu_flag = False
+
         lepton4v_gen = ROOT.TLorentzVector()
         Nu4v_gen = ROOT.TLorentzVector()
         bJet4v_gen = ROOT.TLorentzVector()
@@ -108,8 +112,12 @@ class NanoGenModule(Module):
                     #print
                     #print PDG," -> ", motherPDG," -> ",
                     #print_once = FalseElectron
-                    if(abs(PDG)==13): lepton4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.1056583745)
-                    if(abs(PDG)==11): lepton4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.0005109989461)
+                    if(abs(PDG)==13): 
+                        lepton4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.1056583745)
+                        mu_flag = True
+                    if(abs(PDG)==11): 
+                        lepton4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.0005109989461)
+                        el_flag = True
 	 	    if( abs(motherPDG)==24 or abs(motherPDG)==11 or abs(motherPDG)==13 or abs(motherPDG)==15):	
 	 	    	while ((motherPDG == GmotherPDG and GmotherPDG !=-1 and motherPDG !=-1 and Gmotheridx!=-1 and abs(GmotherPDG)!=6) or ( (abs(motherPDG)==24 or abs(motherPDG)==15) and abs(GmotherPDG)!=6 and GmotherPDG !=-1)):
                              #if(print_once==False):
@@ -117,6 +125,7 @@ class NanoGenModule(Module):
                                 #print_once=True
 	 	 	     if(abs(motherPDG)==15 and abs(PDG)==11 ): tau_to_el_flag = True
 	 	 	     if(abs(motherPDG)==15 and abs(PDG)==13 ): tau_to_mu_flag = True
+                                
 	 	 	     PDG = motherPDG
 	 	 	     motheridx = Gmotheridx
 	 	 	     motherPDG,Gmotheridx,GmotherPDG = findMother(Gmotheridx,Genparts)
@@ -177,6 +186,10 @@ class NanoGenModule(Module):
 	       	       	else:self.out.fillBranch("tau_to_el_flag", 0.0)
 	 	 	if(tau_to_mu_flag):self.out.fillBranch("tau_to_mu_flag", 1.0)
                         else:self.out.fillBranch("tau_to_mu_flag", 0.0)
+                        if(el_flag):self.out.fillBranch("el_flag", 1.0)
+                        else:self.out.fillBranch("el_flag", 0.0)
+                        if(mu_flag):self.out.fillBranch("mu_flag", 1.0)
+                        else:self.out.fillBranch("mu_flag", 0.0)
 	 	 	#self.top_mass_hist.Fill(genpart.mass)
 	 	 	self.out.fillBranch("top_mass_gen", genpart.mass)
                         self.out.fillBranch("top_pt_gen", genpart.pt)
@@ -190,6 +203,8 @@ class NanoGenModule(Module):
                 print "top_from_lepton : ",top_from_lepton," top_from_bquark : ",top_from_bquark," top_from_nuetrino : ",top_from_nuetrino
                 self.out.fillBranch("tau_to_el_flag", -2.0)
                 self.out.fillBranch("tau_to_mu_flag", -2.0)
+                self.out.fillBranch("el_flag", -2.0)
+                self.out.fillBranch("mu_flag", -2.0)
                 self.out.fillBranch("top_mass_gen", -1000)
                 self.out.fillBranch("top_pt_gen", -1000)
                 self.out.fillBranch("top_eta_gen", -1000)

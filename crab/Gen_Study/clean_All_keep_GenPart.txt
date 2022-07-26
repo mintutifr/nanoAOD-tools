@@ -10,3 +10,5 @@ keep    top_eta_gen_reco
 keep    top_phi_gen
 keep    tau_to_el_flag
 keep    tau_to_mu_flag
+keep    el_flag
+keep    mu_flag
