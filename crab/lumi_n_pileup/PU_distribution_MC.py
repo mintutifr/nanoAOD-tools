@@ -1,4 +1,4 @@
-//dasgoclient --query="file dataset=/ST_t-channel_top_4f_InclusiveDecays_mtop1785*/RunIIFall17NanoAOD*mc2017*/NANOAODSIM"//to get the files of a dataset
+#//dasgoclient --query="file dataset=/ST_t-channel_top_4f_InclusiveDecays_mtop1785*/RunIIFall17NanoAOD*mc2017*/NANOAODSIM"//to get the files of a dataset
 #include<iostream>
 using namespace std;
 
@@ -7,13 +7,13 @@ using namespace std;
 #include "TGaxis.h"
 #include "TH2D.h"
 
-void PU_distribution(){
+void PU_distribution_MC(){
 
 
      TFile *fnew = new TFile("mcPileupUL2017_new.root","RECREATE");
      string fileName;
      ifstream infile;
-     infile.open("filename.txt");
+     infile.open("filename_ttbar.txt");
      TH1F *h = new TH1F("pu_mc","pu_mc",99,0,99);h->Sumw2();
      //TH1F* h; 
      ULong64_t count=0;
