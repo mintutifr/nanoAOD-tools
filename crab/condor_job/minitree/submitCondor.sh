@@ -176,7 +176,7 @@ for channel in $channels; do
 
     if  [[ "$channel" == "Tchannel" || "$channel" == "Tbarchannel" || "$channel" == "ttbar_SemiLeptonic" || "$channel" == "ttbar_FullyLeptonic" ]]; then
         files_in_input_file_list=5
-    else files_in_input_file_list=10
+    else files_in_input_file_list=5
     fi
         
     cat $input_files | while read ntupleT2Path
@@ -207,7 +207,7 @@ for channel in $channels; do
 	     sed -i 's:INPUT:'"$input_file_list"':g' crab_script_Minitree.py 
 	     sed -i "s:INPUT:root\://se01.indiacms.res.in/${outputroot}tree_$count.root:g" condorSetup.sub
 	     #echo "root\://se01.indiacms.res.in/${outputroot}tree_$count.root"
-	     #condor_submit condorSetup.sub
+	     condor_submit condorSetup.sub
 	     cd ../		    	
              input_file_list="inputFiles=["
   	else
