@@ -5,7 +5,7 @@ config = Configuration()
 
 config.section_("General")
 
-config.General.requestName = 'Tbarchannel_wtop1p15_Tree_UL2016'
+config.General.requestName = 'Tbarchannel_wtop0p55_Tree_UL2016'
 
 config.General.transferLogs=True
 config.section_("JobType")
@@ -17,17 +17,17 @@ config.JobType.inputFiles = ['crab_script_NanoGen_skimtree.py','../../scripts/ha
 config.JobType.sendPythonFolder=True
 config.section_("Data")
 
-config.Data.inputDataset = '/ST_t-channel_antitop_4f_InclusiveDecays_wtop1p15_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/RunIISummer20UL16wmLHENanoGEN-106X_mcRun2_asymptotic_v13-v1/NANOAODSIM'
+config.Data.inputDataset = '/ST_t-channel_antitop_4f_InclusiveDecays_wtop0p55_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/RunIISummer20UL16wmLHENanoGEN-106X_mcRun2_asymptotic_v13-v1/NANOAODSIM'
 
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1
 
-config.Data.outLFNDirBase = '/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_Nanogen/Tbarchannel_wtop1p15'
+config.Data.outLFNDirBase = '/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN/Tbarchannel_wtop0p55'
 
 config.Data.publication = True
 
-config.Data.outputDatasetTag = 'Tree_26_Jul22_MCUL2016_Tbarchannel_wtop1p15'
+config.Data.outputDatasetTag = 'Tree_26_Jul22_MCUL2016_Tbarchannel_wtop0p55_v2'
 
 config.section_("Site")
 config.Site.storageSite = 'T2_IN_TIFR'
