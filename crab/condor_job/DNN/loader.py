@@ -13,50 +13,63 @@ dir17 = ''
 dir18 = ''
 
 _branches_mu = [
-        'MuonEta',
-        'dEta_mu_bJet',
+        'MuonEta', 'MuonPt', 'MuonPhi', 'MuonE', 'MuonCharge',
+        'lJetEta', 'lJetPt', 'lJetPhi', 'lJetMass',
+        'bJetEta', 'bJetPt', 'bJetPhi', 'bJetMass',
+        'Px_nu', 'Py_nu', 'Pz_nu',
+        'dEta_mu_lJet', 'dEta_mu_bJet',
+        'dPhi_mu_lJet', 'dPhi_mu_bJet', 
+        'bJetdeepJet', 'lJetdeepJet',
+        'Jet_pt', 'Jet_partonFlavour',
+        'dR_bJet_lJet',
+        'nbjet_sel',
         'mtwMass',
         'abs_lJetEta',
         'jetpTSum',
         'diJetMass',
         'cosThetaStar',
-        'dR_bJet_lJet',
         'FW1',
-        'Jet_pt',
-        'Jet_partonFlavour',
-        'nbjet_sel',
-        'MuonCharge',
-        'bJetdeepJet',
+        'Xsec_wgt',
+        'LHEWeightSign',
+        'L1PreFiringWeight_Nom',
         'event'
     ]
 _branches_mu_Data = [
-        'MuonEta',
-        'dEta_mu_bJet',
+        'MuonEta', 'MuonPt', 'MuonPhi', 'MuonE',   'MuonCharge',
+        'lJetEta', 'lJetPt', 'lJetPhi', 'lJetMass',
+        'bJetEta', 'bJetPt', 'bJetPhi', 'bJetMass',
+        'Px_nu', 'Py_nu', 'Pz_nu',
+        'dEta_mu_lJet', 'dEta_mu_bJet', 
+        'dPhi_mu_lJet', 'dPhi_mu_bJet',
+        'bJetdeepJet', 'lJetdeepJet',
+        'Jet_pt', 
+        'dR_bJet_lJet',
+        'nbjet_sel',
         'mtwMass',
         'abs_lJetEta',
         'jetpTSum',
         'diJetMass',
         'cosThetaStar',
-        'dR_bJet_lJet',
         'FW1',
-        'Jet_pt',
-        'nbjet_sel',
-        'MuonCharge',
-        'bJetdeepJet',
+        'L1PreFiringWeight_Nom',
         'event'
     ]
 def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu" ):
     chain = ROOT.TChain('Events')
     if "Data" in channel:
+        _branches_mu.remove('Xsec_wgt')
+        _branches_mu.remove('LHEWeightSign')
+        _branches_mu.remove('Jet_partonFlavour')
+
         chain.Add(dir16+'2J1T0/Minitree_'+channel+'_2J1T0_'+lep+'.root')
         print 'Entries Data: ',chain.GetEntries(), "\tSelected : ",max_entries
 
         _dataset = root_numpy.tree2array (chain,
-                branches = _branches_mu_Data,
+                branches = _branches_mu,
                 selection = '',
                 stop = max_entries
                 )
-        return { b : _dataset[b] for b in _branches_mu_Data }
+        return { b : _dataset[b] for b in _branches_mu }
     else:
         chain.Add(dir16+'2J1T1/Minitree_'+channel+'_2J1T1_'+lep+'.root')
 
