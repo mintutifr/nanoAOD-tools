@@ -966,6 +966,17 @@ MinitreeModuleConstr2J0T0_mu_data_UL2016postVFP = lambda : MinitreeProducer(2,0,
 MinitreeModuleConstr2J0T0_el_mc_UL2016postVFP = lambda : MinitreeProducer(2,0,False,'el',True,'UL2016postVFP')
 MinitreeModuleConstr2J0T0_el_data_UL2016postVFP = lambda : MinitreeProducer(2,0,False,'el',False,'UL2016postVFP')
 
+MinitreeModuleConstr2J0T1_mu_mc_UL2017 = lambda : MinitreeProducer(2,0,True,'mu',True,'UL2017')
+MinitreeModuleConstr2J0T1_mu_data_UL2017 = lambda : MinitreeProducer(2,0,True,'mu',False,'UL2017')
+MinitreeModuleConstr2J0T1_el_mc_UL2017 = lambda : MinitreeProducer(2,0,True,'el',True,'UL2017')
+MinitreeModuleConstr2J0T1_el_data_UL2017 = lambda : MinitreeProducer(2,0,True,'el',False,'UL2017')
+
+MinitreeModuleConstr2J0T0_mu_mc_UL2017 = lambda : MinitreeProducer(2,0,False,'mu',True,'UL2017')
+MinitreeModuleConstr2J0T0_mu_data_UL2017 = lambda : MinitreeProducer(2,0,False,'mu',False,'UL2017')
+MinitreeModuleConstr2J0T0_el_mc_UL2017 = lambda : MinitreeProducer(2,0,False,'el',True,'UL2017')
+MinitreeModuleConstr2J0T0_el_data_UL2017 = lambda : MinitreeProducer(2,0,False,'el',False,'UL2017')
+
+
 #----------------------------------------------3J1T-----------------------------------------------
 
 MinitreeModuleConstr3J1T1_mu_mc_2016 = lambda : MinitreeProducer(3,1,True,'mu',True,'2016')
