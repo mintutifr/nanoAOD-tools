@@ -1,4 +1,4 @@
-Datasets_MC_UL2016APV = {
+Datasets_MC_UL2016 = {
 	'Tchannel'      : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/psuryade-Tree_19_Jul22_MCUL2016postVFP_Tchannel-cdc8a5f8d50b7902483cf88592ab9ddb/USER','63073000','136.02'],
 	'Tbarchannel'   : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/psuryade-Tree_19_Jul22_MCUL2016postVFP_Tbarchannel-cdc8a5f8d50b7902483cf88592ab9ddb/USER','30609000','80.95'],
 	'Schannel'      : ['/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/psuryade-Tree_19_Jul22_MCUL2016postVFP_Schannel-cdc8a5f8d50b7902483cf88592ab9ddb/USER','5471000','11.36'],
@@ -44,7 +44,7 @@ Datasets_MC_UL2016APV = {
 
 }
 
-Datasets_Alt_MC_UL2016APV = {
+Datasets_Alt_MC_UL2016 = {
         'Tchannel_mtop1695' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1695_TuneCP5_13TeV-powheg-madspin-pythia8/psuryade-Tree_21_Jul22_MCUL2016postVFP_Tchannel_mtop1695-cdc8a5f8d50b7902483cf88592ab9ddb/USER','23972000','136.02'],
         'Tchannel_mtop1715' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1715_TuneCP5_13TeV-powheg-madspin-pythia8/psuryade-Tree_19_Jul22_MCUL2016postVFP_Tchannel_mtop1715-cdc8a5f8d50b7902483cf88592ab9ddb/USER','24833000','136.02'],
         'Tchannel_mtop1735' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1735_TuneCP5_13TeV-powheg-madspin-pythia8/psuryade-Tree_21_Jul22_MCUL2016postVFP_Tchannel_mtop1735-cdc8a5f8d50b7902483cf88592ab9ddb/USER','24764000','136.02'],
@@ -74,7 +74,7 @@ Datasets_Alt_MC_UL2016APV = {
 }
 
 
-Datasets_sys_MC_UL2016APV = {
+Datasets_sys_MC_UL2016 = {
         'Tchannel_TuneCP5CR2' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5CR2_13TeV-powheg-madspin-pythia8/psuryade-Tree_19_Jul22_MCUL2016postVFP_Tchannel_TuneCP5CR2-cdc8a5f8d50b7902483cf88592ab9ddb/USER','23728000','136.02'],
         'Tchannel_TuneCP5CR1' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5CR1_13TeV-powheg-madspin-pythia8/psuryade-Tree_19_Jul22_MCUL2016postVFP_Tchannel_TuneCP5CR1-cdc8a5f8d50b7902483cf88592ab9ddb/USER','25457000','136.02'],
         'Tchannel_TuneCP5up' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5up_13TeV-powheg-madspin-pythia8/psuryade-Tree_19_Jul22_MCUL2016postVFP_Tchannel_TuneCP5up-cdc8a5f8d50b7902483cf88592ab9ddb/USER','25025000','136.02'],
@@ -92,14 +92,12 @@ Datasets_sys_MC_UL2016APV = {
         'Tbarchannel_erdON' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_erdON_13TeV-powheg-madspin-pythia8/psuryade-Tree_19_Jul22_MCUL2016postVFP_Tbarchannel_erdON-cdc8a5f8d50b7902483cf88592ab9ddb/USER','12632000','80.95']
 }
 
-Datasets_SingleMuon_data_UL2016APV = {
-	'Run2016F_mu'  : '/SingleMuon/psuryade-Tree_26_Jul22_Run2016F_mu-ca9d4430e47fdda3ce7f6ef5dc603b1d/USER',           
-        'Run2016G_mu'  : '/SingleMuon/psuryade-Tree_26_Jul22_Run2016G_mu-ca9d4430e47fdda3ce7f6ef5dc603b1d/USER',
-        'Run2016H_mu'  : '/SingleMuon/psuryade-Tree_26_Jul22_Run2016H_mu-ca9d4430e47fdda3ce7f6ef5dc603b1d/USER'            
+Datasets_SingleMuon_data_UL2016 = {
+	'Run2016F_mu'  : '/SingleMuon/psuryade-Tree_26_Jul22_Run2016F_mu-ca9d4430e47fdda3ce7f6ef5dc603b1d/USER',                'Run2016G_mu'  : '/SingleMuon/psuryade-Tree_26_Jul22_Run2016G_mu-ca9d4430e47fdda3ce7f6ef5dc603b1d/USER',
 }                                                           
 
 
-Datasets_SingleElectron_data_UL2016APV= {
+Datasets_SingleElectron_data_UL2016= {
         'Run2016F_el'  : '/SingleElectron/psuryade-Tree_26_Jul22_Run2016F_el-ca9d4430e47fdda3ce7f6ef5dc603b1d/USER',
         'Run2016G_el'  : '/SingleElectron/psuryade-Tree_26_Jul22_Run2016G_el-ca9d4430e47fdda3ce7f6ef5dc603b1d/USER',
         'Run2016H_el'  : '/SingleElectron/psuryade-Tree_26_Jul22_Run2016H_el-ca9d4430e47fdda3ce7f6ef5dc603b1d/USER'   
