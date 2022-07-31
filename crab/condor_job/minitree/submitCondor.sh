@@ -40,7 +40,7 @@ fi
 #------------------------------------------------
 #create the same datasetfile depending on year
 #------------------------------------------------
-Mc_common_channel="Tchannel Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTo2L2Nu WZTo2Q2L ZZTo2Q2L"
+Mc_common_channel="Tchannel Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTo2L2Nu WZTo2Q2L ZZTo2Q2L" #Tchannel
 if [[ "UL2016preVFP" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2016preVFP_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_preVFP/"
@@ -62,9 +62,9 @@ if [[ "UL2016preVFP" == "$year" ]]; then
 elif  [[ "UL2016postVFP" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2016postVFP_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_postVFP/"
-     
+ 
      if [[ $sample == "Mc" && $lep == "mu" ]]; then
-        channels="${common_mc_sample} QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched"
+        channels="${Mc_common_channel} QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched"
         #Tchannel Tbarchannel 
      fi
      if [[ $sample == "Mc" && $lep == "el" ]]; then
@@ -73,7 +73,7 @@ elif  [[ "UL2016postVFP" == "$year" ]]; then
      fi
 
      if [[ $sample == "Data" && $lep == "mu" ]]; then
-        channels="Run2016F__mu Run2016G_mu Run2016H_mu"
+        channels="Run2016F_mu #Run2016G_mu Run2016H_mu"
      fi
 
      if [[ $sample == "Data" && $lep == "el" ]]; then
@@ -174,8 +174,8 @@ for channel in $channels; do
     outputroot=${outputDir}${sample}"/"${region}"_"${lep}"/"${channel}"/"
     file_tail=`tail -n 1 $input_files`
 
-    if  [[ "$channel" == "Tchannel" || "$channel" == "Tbarchannel" || "$channel" == "ttbar_SemiLeptonic" || "$channel" == "ttbar_FullyLeptonic" ]]; then
-        files_in_input_file_list=5
+    if  [[ "$channel" == *"Run"* ]]; then
+        files_in_input_file_list=10
     else files_in_input_file_list=5
     fi
         
@@ -204,6 +204,7 @@ for channel in $channels; do
              #------------------------------------------------	
     	     #echo $input_file_list
 	     echo $count
+             #echo $input_file_list
 	     sed -i 's:INPUT:'"$input_file_list"':g' crab_script_Minitree.py 
 	     sed -i "s:INPUT:root\://se01.indiacms.res.in/${outputroot}tree_$count.root:g" condorSetup.sub
 	     #echo "root\://se01.indiacms.res.in/${outputroot}tree_$count.root"

@@ -94,6 +94,7 @@ Datasets_sys_MC_UL2016 = {
 
 Datasets_SingleMuon_data_UL2016 = {
 	'Run2016F_mu'  : '/SingleMuon/psuryade-Tree_26_Jul22_Run2016F_mu-ca9d4430e47fdda3ce7f6ef5dc603b1d/USER',                'Run2016G_mu'  : '/SingleMuon/psuryade-Tree_26_Jul22_Run2016G_mu-ca9d4430e47fdda3ce7f6ef5dc603b1d/USER',
+        'Run2016H_mu'  : '/SingleMuon/psuryade-Tree_26_Jul22_Run2016H_mu-ca9d4430e47fdda3ce7f6ef5dc603b1d/USER'
 }                                                           
 
 
