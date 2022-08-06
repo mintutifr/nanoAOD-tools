@@ -32,11 +32,11 @@ echo $sample
 #------------------------------------------------
 #create the same datasetfile depending on year
 #------------------------------------------------
-Mc_common_channel="Tbarchannel_wtop0p55" #Tbarchannel_wtop0p7  Tbarchannel_wtop0p85 Tbarchannel_wtop1p0 Tbarchannel_wtop1p15 Tbarchannel_wtop1p3   Tbarchannel_wtop1p45  Tchannel_wtop0p55  Tchannel_wtop0p7 Tchannel_wtop0p85  Tchannel_wtop1p0  Tchannel_wtop1p15 Tchannel_wtop1p3 Tchannel_wtop1p45"
+Mc_common_channel="Tbarchannel_wtop0p55" #"Tbarchannel_wtop0p7  Tbarchannel_wtop0p85 Tbarchannel_wtop1p0 Tbarchannel_wtop1p15 Tbarchannel_wtop1p3   Tbarchannel_wtop1p45  Tchannel_wtop0p55  Tchannel_wtop0p7 Tchannel_wtop0p85  Tchannel_wtop1p0  Tchannel_wtop1p15 Tchannel_wtop1p3 Tchannel_wtop1p45" #Tbarchannel_wtop0p55
 
 if [[ "UL2016" == "$year" ]]; then
      dataset_file=$crab_dir"/Gen_Study/dataset_UL2016_phy3.py"
-     outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN/Mc_NANOGEN/"
+     outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_new/Mc_NANOGEN/"
 
      
 	channels="${Mc_common_channel}" 
@@ -103,7 +103,7 @@ for channel in $channels; do
 
     if  [[ "$channel" == "Tchannel" || "$channel" == "Tbarchannel" || "$channel" == "ttbar_SemiLeptonic" || "$channel" == "ttbar_FullyLeptonic" ]]; then
         files_in_input_file_list=5
-    else files_in_input_file_list=10
+    else files_in_input_file_list=1
     fi
         
     cat $input_files | while read ntupleT2Path

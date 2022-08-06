@@ -110,7 +110,7 @@ for i in range(0,len(RequestNames)):
     if(year=='UL2016preVFP' or year=='UL2016postVFP' ):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2016\n"
     elif(year=='UL2017'):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2017\n"
     update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"
-    modules = "\t\tmodules=[MinitreeModuleConstr"+region_tag+"_"+lep+"_mc_"+year+"(),jmeCorrections"+year+"_MC_AK4CHS()],\n"
+    modules = "\t\tmodules=[MinitreeModuleConstr"+region_tag+"_"+lep+"_mc_"+year+"(),jmeCorrections"+year+"_MC_AK4CHS()],\n" #,puWeight_"+year+"()],\n"
     branchsel = '\t\toutputbranchsel="keep_and_drop_'+lep+'_Minitree.txt",\n' 
      
     update_NumberOfEvents = "\t\tNEvents = "+NumberOfEvents+"\n"
