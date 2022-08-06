@@ -95,7 +95,7 @@ for i in range(0,len(RequestNames)):
     if(sample == "Mc"): 
     	update_NumberOfEvents = "\t\tNEvents = "+NumberOfEvents+"\n"
     	update_Xsection = "\t\tx_sec = "+Xsection+"\n"
-    	modules = "\t\tmodules=[MinitreeModuleConstr"+region_tag+"_"+lep+"_mc_"+year+"(),jmeCorrections"+year+"_MC_AK4CHS()],\n"
+    	modules = "\t\tmodules=[MinitreeModuleConstr"+region_tag+"_"+lep+"_mc_"+year+"(),jmeCorrections"+year+"_MC_AK4CHS()],\n" #,puWeight_"+year+"()],\n"
     else:
 	modules = "\t\tmodules=[MinitreeModuleConstr"+region_tag+"_"+lep+"_data_"+year+"(), jmeCorrectionsUL"+RequestName[:-3]+"_DATA_AK4CHS()],\n"
     branchsel = '\t\toutputbranchsel="keep_and_drop_'+lep+'_Minitree.txt",\n' 
