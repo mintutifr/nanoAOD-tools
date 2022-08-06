@@ -1,0 +1,621 @@
+[mikumar@lxplus730 Gen_Study]$ python check_crab_status.py -y UL2016 -s Mc
+year =  UL2016
+len(Datasets) =  14
+Dataset size =  14  RequestName size =  14
+  0%|          | 0/14 [00:00<?, ?it/s]RequestName =  crab_Tbarchannel_wtop1p45_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p45_Tree_UL2016
+Task name:                      220726_132456:mikumar_crab_Tbarchannel_wtop1p45_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0122.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_132456%3Amikumar_crab_Tbarchannel_wtop1p45_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_132456%3Amikumar_crab_Tbarchannel_wtop1p45_Tree_UL2016&from=1658838296000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (109/109)
+
+Publication status of 1 dataset(s):     done                    100.0% (109/109)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_antitop_4f_InclusiveDecays_wtop1p45_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop1p45_v2-4b5a8726309277866dee7282a3d508cd/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_antitop_4f_InclusiveDecays_wtop1p45_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop1p45_v2-4b5a8726309277866dee7282a3d508cd%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 381MB min, 606MB max, 457MB ave
+ * Runtime: 0:08:40 min, 9:30:44 max, 3:04:35 ave
+ * CPU eff: 53% min, 268% max, 98% ave
+ * Waste: 362:55:58 (52% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p45_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p45_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 109
+  Number of events read: 12884000
+  Number of events written in EDM files: 109
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_antitop_4f_InclusiveDecays_wtop1p45_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop1p45_v2-4b5a8726309277866dee7282a3d508cd/USER: 109
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p45_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+  7%|7         | 1/14 [00:12<02:36, 12.03s/it]RequestName =  crab_Tchannel_wtop1p45_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p45_Tree_UL2016
+Task name:                      220726_132556:mikumar_crab_Tchannel_wtop1p45_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0119.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_132556%3Amikumar_crab_Tchannel_wtop1p45_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_132556%3Amikumar_crab_Tchannel_wtop1p45_Tree_UL2016&from=1658838357000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (188/188)
+
+Publication status of 1 dataset(s):     done                    100.0% (188/188)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_top_4f_InclusiveDecays_wtop1p45_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop1p45_v2-a416af9723181f508c1355aa14d09fc4/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_top_4f_InclusiveDecays_wtop1p45_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop1p45_v2-a416af9723181f508c1355aa14d09fc4%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 360MB min, 614MB max, 458MB ave
+ * Runtime: 0:10:09 min, 13:01:36 max, 3:38:23 ave
+ * CPU eff: 79% min, 143% max, 97% ave
+ * Waste: 674:29:55 (50% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p45_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p45_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 188
+  Number of events read: 25134000
+  Number of events written in EDM files: 188
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_top_4f_InclusiveDecays_wtop1p45_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop1p45_v2-a416af9723181f508c1355aa14d09fc4/USER: 188
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p45_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+ 14%|#4        | 2/14 [00:22<02:20, 11.70s/it]RequestName =  crab_Tchannel_wtop1p15_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p15_Tree_UL2016
+Task name:                      220726_132657:mikumar_crab_Tchannel_wtop1p15_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0122.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_132657%3Amikumar_crab_Tchannel_wtop1p15_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_132657%3Amikumar_crab_Tchannel_wtop1p15_Tree_UL2016&from=1658838417000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (232/232)
+
+Publication status of 1 dataset(s):     done                    100.0% (232/232)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_top_4f_InclusiveDecays_wtop1p15_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop1p15_v2-88a88927c446165db845558a38175a4f/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_top_4f_InclusiveDecays_wtop1p15_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop1p15_v2-88a88927c446165db845558a38175a4f%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 420MB min, 623MB max, 462MB ave
+ * Runtime: 0:06:27 min, 10:01:16 max, 2:52:11 ave
+ * CPU eff: 73% min, 208% max, 97% ave
+ * Waste: 959:11:57 (59% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p15_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p15_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 232
+  Number of events read: 24864000
+  Number of events written in EDM files: 232
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_top_4f_InclusiveDecays_wtop1p15_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop1p15_v2-88a88927c446165db845558a38175a4f/USER: 232
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p15_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+ 21%|##1       | 3/14 [00:32<02:02, 11.14s/it]RequestName =  crab_Tbarchannel_wtop0p85_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop0p85_Tree_UL2016
+Task name:                      220726_132755:mikumar_crab_Tbarchannel_wtop0p85_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0144.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_132755%3Amikumar_crab_Tbarchannel_wtop0p85_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_132755%3Amikumar_crab_Tbarchannel_wtop0p85_Tree_UL2016&from=1658838475000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (149/149)
+
+Publication status of 1 dataset(s):     done                    100.0% (149/149)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_antitop_4f_InclusiveDecays_wtop0p85_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop0p85_v2-0367f605b91b716f6ef5e330f5750642/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_antitop_4f_InclusiveDecays_wtop0p85_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop0p85_v2-0367f605b91b716f6ef5e330f5750642%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 308MB min, 598MB max, 451MB ave
+ * Runtime: 0:06:19 min, 8:19:22 max, 2:08:50 ave
+ * CPU eff: 62% min, 191% max, 97% ave
+ * Waste: 438:03:44 (58% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop0p85_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop0p85_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 149
+  Number of events read: 12475000
+  Number of events written in EDM files: 149
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_antitop_4f_InclusiveDecays_wtop0p85_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop0p85_v2-0367f605b91b716f6ef5e330f5750642/USER: 149
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop0p85_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+ 29%|##8       | 4/14 [00:42<01:47, 10.72s/it]RequestName =  crab_Tchannel_wtop0p55_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop0p55_Tree_UL2016
+Task name:                      220726_153357:mikumar_crab_Tchannel_wtop0p55_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0137.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_153357%3Amikumar_crab_Tchannel_wtop0p55_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_153357%3Amikumar_crab_Tchannel_wtop0p55_Tree_UL2016&from=1658846037000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (190/190)
+
+Publication status of 1 dataset(s):     done                    100.0% (190/190)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_top_4f_InclusiveDecays_wtop0p55_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop0p55_v2-b580596142f1b0d2a0f13f27efbbd1a4/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_top_4f_InclusiveDecays_wtop0p55_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop0p55_v2-b580596142f1b0d2a0f13f27efbbd1a4%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 424MB min, 619MB max, 459MB ave
+ * Runtime: 0:10:56 min, 8:42:09 max, 3:33:38 ave
+ * CPU eff: 41% min, 227% max, 98% ave
+ * Waste: 639:23:52 (49% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop0p55_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop0p55_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 190
+  Number of events read: 24648000
+  Number of events written in EDM files: 190
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_top_4f_InclusiveDecays_wtop0p55_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop0p55_v2-b580596142f1b0d2a0f13f27efbbd1a4/USER: 190
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop0p55_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+ 36%|###5      | 5/14 [00:52<01:34, 10.49s/it]RequestName =  crab_Tbarchannel_wtop1p3_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p3_Tree_UL2016
+Task name:                      220726_132956:mikumar_crab_Tbarchannel_wtop1p3_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0196.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_132956%3Amikumar_crab_Tbarchannel_wtop1p3_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_132956%3Amikumar_crab_Tbarchannel_wtop1p3_Tree_UL2016&from=1658838596000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (104/104)
+
+Publication status of 1 dataset(s):     done                    100.0% (104/104)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_antitop_4f_InclusiveDecays_wtop1p3_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop1p3_v2-8fc2a1d095c4b6059271f73c1a2e684d/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_antitop_4f_InclusiveDecays_wtop1p3_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop1p3_v2-8fc2a1d095c4b6059271f73c1a2e684d%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 438MB min, 567MB max, 458MB ave
+ * Runtime: 0:08:25 min, 10:52:21 max, 3:11:41 ave
+ * CPU eff: 66% min, 103% max, 95% ave
+ * Waste: 352:20:22 (51% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p3_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p3_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 104
+  Number of events read: 12892000
+  Number of events written in EDM files: 104
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_antitop_4f_InclusiveDecays_wtop1p3_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop1p3_v2-8fc2a1d095c4b6059271f73c1a2e684d/USER: 104
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p3_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+ 43%|####2     | 6/14 [01:02<01:21, 10.20s/it]RequestName =  crab_Tbarchannel_wtop1p0_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p0_Tree_UL2016
+Task name:                      220726_133055:mikumar_crab_Tbarchannel_wtop1p0_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0120.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_133055%3Amikumar_crab_Tbarchannel_wtop1p0_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_133055%3Amikumar_crab_Tbarchannel_wtop1p0_Tree_UL2016&from=1658838656000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (99/99)
+
+Publication status of 1 dataset(s):     done                    100.0% (99/99)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_antitop_4f_InclusiveDecays_wtop1p0_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop1p0_v2-1fda63a7db3c2aaff1696a2b5985dfe6/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_antitop_4f_InclusiveDecays_wtop1p0_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop1p0_v2-1fda63a7db3c2aaff1696a2b5985dfe6%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 460MB min, 539MB max, 461MB ave
+ * Runtime: 0:10:57 min, 11:50:09 max, 3:25:58 ave
+ * CPU eff: 38% min, 202% max, 95% ave
+ * Waste: 475:40:07 (58% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p0_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p0_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 99
+  Number of events read: 12750000
+  Number of events written in EDM files: 99
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_antitop_4f_InclusiveDecays_wtop1p0_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop1p0_v2-1fda63a7db3c2aaff1696a2b5985dfe6/USER: 99
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p0_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+ 50%|#####     | 7/14 [01:11<01:09,  9.99s/it]RequestName =  crab_Tbarchannel_wtop0p7_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop0p7_Tree_UL2016
+Task name:                      220726_133154:mikumar_crab_Tbarchannel_wtop0p7_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0155.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_133154%3Amikumar_crab_Tbarchannel_wtop0p7_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_133154%3Amikumar_crab_Tbarchannel_wtop0p7_Tree_UL2016&from=1658838714000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (134/134)
+
+Publication status of 1 dataset(s):     done                    100.0% (134/134)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_antitop_4f_InclusiveDecays_wtop0p7_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop0p7_v2-e84294f5756d420bab86b8565c42444a/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_antitop_4f_InclusiveDecays_wtop0p7_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop0p7_v2-e84294f5756d420bab86b8565c42444a%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 61MB min, 566MB max, 458MB ave
+ * Runtime: 0:05:12 min, 9:38:38 max, 2:28:24 ave
+ * CPU eff: 48% min, 126% max, 96% ave
+ * Waste: 423:40:54 (56% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop0p7_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop0p7_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 134
+  Number of events read: 12884000
+  Number of events written in EDM files: 134
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_antitop_4f_InclusiveDecays_wtop0p7_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop0p7_v2-e84294f5756d420bab86b8565c42444a/USER: 134
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop0p7_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+ 57%|#####7    | 8/14 [01:21<00:59,  9.91s/it]RequestName =  crab_Tchannel_wtop0p7_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop0p7_Tree_UL2016
+Task name:                      220726_133252:mikumar_crab_Tchannel_wtop0p7_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0144.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_133252%3Amikumar_crab_Tchannel_wtop0p7_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_133252%3Amikumar_crab_Tchannel_wtop0p7_Tree_UL2016&from=1658838772000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (200/200)
+
+Publication status of 1 dataset(s):     done                    100.0% (200/200)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_top_4f_InclusiveDecays_wtop0p7_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop0p7_v2-159d8cd36698449e81f0a83f5bc24745/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_top_4f_InclusiveDecays_wtop0p7_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop0p7_v2-159d8cd36698449e81f0a83f5bc24745%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 448MB min, 561MB max, 465MB ave
+ * Runtime: 0:06:38 min, 7:56:37 max, 3:24:42 ave
+ * CPU eff: 68% min, 181% max, 98% ave
+ * Waste: 851:30:44 (56% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop0p7_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop0p7_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 200
+  Number of events read: 24654000
+  Number of events written in EDM files: 200
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_top_4f_InclusiveDecays_wtop0p7_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop0p7_v2-159d8cd36698449e81f0a83f5bc24745/USER: 200
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop0p7_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+ 64%|######4   | 9/14 [01:30<00:49,  9.85s/it]RequestName =  crab_Tchannel_wtop1p0_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p0_Tree_UL2016
+Task name:                      220726_133350:mikumar_crab_Tchannel_wtop1p0_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0155.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_133350%3Amikumar_crab_Tchannel_wtop1p0_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_133350%3Amikumar_crab_Tchannel_wtop1p0_Tree_UL2016&from=1658838830000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (189/189)
+
+Publication status of 1 dataset(s):     done                    100.0% (189/189)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_top_4f_InclusiveDecays_wtop1p0_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop1p0_v2-4a539c76c29e8af629436a60cc2510ab/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_top_4f_InclusiveDecays_wtop1p0_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop1p0_v2-4a539c76c29e8af629436a60cc2510ab%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 353MB min, 732MB max, 469MB ave
+ * Runtime: 0:05:49 min, 14:25:02 max, 3:37:35 ave
+ * CPU eff: 43% min, 232% max, 98% ave
+ * Waste: 926:32:08 (57% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p0_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p0_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 189
+  Number of events read: 25026000
+  Number of events written in EDM files: 189
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_top_4f_InclusiveDecays_wtop1p0_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop1p0_v2-4a539c76c29e8af629436a60cc2510ab/USER: 189
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p0_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+ 71%|#######1  | 10/14 [01:40<00:38,  9.72s/it]RequestName =  crab_Tchannel_wtop1p3_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p3_Tree_UL2016
+Task name:                      220726_133448:mikumar_crab_Tchannel_wtop1p3_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0119.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_133448%3Amikumar_crab_Tchannel_wtop1p3_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_133448%3Amikumar_crab_Tchannel_wtop1p3_Tree_UL2016&from=1658838888000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (260/260)
+
+Publication status of 1 dataset(s):     done                    100.0% (260/260)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_top_4f_InclusiveDecays_wtop1p3_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop1p3_v2-008528aa243ba435eaa6b6fa8dd94fd7/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_top_4f_InclusiveDecays_wtop1p3_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop1p3_v2-008528aa243ba435eaa6b6fa8dd94fd7%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 466MB min, 613MB max, 467MB ave
+ * Runtime: 0:03:14 min, 20:21:26 max, 2:50:37 ave
+ * CPU eff: 16% min, 159% max, 91% ave
+ * Waste: 844:36:54 (53% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p3_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p3_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 260
+  Number of events read: 25702000
+  Number of events written in EDM files: 260
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_top_4f_InclusiveDecays_wtop1p3_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop1p3_v2-008528aa243ba435eaa6b6fa8dd94fd7/USER: 260
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop1p3_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+ 79%|#######8  | 11/14 [01:50<00:29,  9.73s/it]RequestName =  crab_Tchannel_wtop0p85_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop0p85_Tree_UL2016
+Task name:                      220726_133551:mikumar_crab_Tchannel_wtop0p85_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0195.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_133551%3Amikumar_crab_Tchannel_wtop0p85_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_133551%3Amikumar_crab_Tchannel_wtop0p85_Tree_UL2016&from=1658838951000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (185/185)
+
+Publication status of 1 dataset(s):     done                    100.0% (185/185)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_top_4f_InclusiveDecays_wtop0p85_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop0p85_v2-fb326044d190653f334bc1189da926ae/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_top_4f_InclusiveDecays_wtop0p85_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop0p85_v2-fb326044d190653f334bc1189da926ae%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 577MB min, 577MB max, 465MB ave
+ * Runtime: 0:11:04 min, 10:56:18 max, 3:41:24 ave
+ * CPU eff: 42% min, 228% max, 97% ave
+ * Waste: 863:38:34 (56% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop0p85_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop0p85_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 185
+  Number of events read: 24776000
+  Number of events written in EDM files: 185
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_top_4f_InclusiveDecays_wtop0p85_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tchannel_wtop0p85_v2-fb326044d190653f334bc1189da926ae/USER: 185
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tchannel_wtop0p85_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+ 86%|########5 | 12/14 [01:59<00:19,  9.72s/it]RequestName =  crab_Tbarchannel_wtop1p15_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p15_Tree_UL2016
+Task name:                      220726_133730:mikumar_crab_Tbarchannel_wtop1p15_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0194.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_133730%3Amikumar_crab_Tbarchannel_wtop1p15_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_133730%3Amikumar_crab_Tbarchannel_wtop1p15_Tree_UL2016&from=1658839050000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (120/120)
+
+Publication status of 1 dataset(s):     done                    100.0% (120/120)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_antitop_4f_InclusiveDecays_wtop1p15_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop1p15_v2-a190d6fbb5ea0cd46da4de162bc0ca4c/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_antitop_4f_InclusiveDecays_wtop1p15_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop1p15_v2-a190d6fbb5ea0cd46da4de162bc0ca4c%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 508MB min, 572MB max, 467MB ave
+ * Runtime: 0:13:25 min, 8:56:44 max, 2:48:30 ave
+ * CPU eff: 41% min, 197% max, 97% ave
+ * Waste: 443:51:43 (57% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p15_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p15_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 120
+  Number of events read: 12888000
+  Number of events written in EDM files: 120
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_antitop_4f_InclusiveDecays_wtop1p15_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop1p15_v2-a190d6fbb5ea0cd46da4de162bc0ca4c/USER: 120
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop1p15_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+ 93%|#########2| 13/14 [02:09<00:09,  9.66s/it]RequestName =  crab_Tbarchannel_wtop0p55_Tree_UL2016
+CRAB project directory:         /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop0p55_Tree_UL2016
+Task name:                      220726_153620:mikumar_crab_Tbarchannel_wtop0p55_Tree_UL2016
+Grid scheduler - Task Worker:   crab3@vocms0122.cern.ch - crab-prod-tw01
+Status on the CRAB server:      SUBMITTED
+Task URL to use for HELP:       https://cmsweb.cern.ch/crabserver/ui/task/220726_153620%3Amikumar_crab_Tbarchannel_wtop0p55_Tree_UL2016
+Dashboard monitoring URL:       https://monit-grafana.cern.ch/d/cmsTMDetail/cms-task-monitoring-task-view?orgId=11&var-user=mikumar&var-task=220726_153620%3Amikumar_crab_Tbarchannel_wtop0p55_Tree_UL2016&from=1658846180000&to=now
+Status on the scheduler:        COMPLETED
+
+Jobs status:                    finished                100.0% (156/156)
+
+Publication status of 1 dataset(s):     done                    100.0% (156/156)
+(from CRAB internal bookkeeping in transferdb)
+
+Output dataset:                 /ST_t-channel_antitop_4f_InclusiveDecays_wtop0p55_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop0p55_v2-90a39493bbb27cfdd70230a8c0f4c30b/USER
+Output dataset DAS URL:         https://cmsweb.cern.ch/das/request?input=%2FST_t-channel_antitop_4f_InclusiveDecays_wtop0p55_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8%2Fmikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop0p55_v2-90a39493bbb27cfdd70230a8c0f4c30b%2FUSER&instance=prod%2Fphys03
+
+Summary of run jobs:
+ * Memory: 32MB min, 600MB max, 454MB ave
+ * Runtime: 0:05:04 min, 9:50:10 max, 2:14:52 ave
+ * CPU eff: 21% min, 147% max, 94% ave
+ * Waste: 364:13:09 (51% of total)
+
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop0p55_Tree_UL2016/crab.log
+failed :  0  memory :  0
+DONE ---------------------------crab status---------------------------------------------------------------------
+Running crab status first to fetch necessary information.
+Will save lumi files into output directory /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop0p55_Tree_UL2016/results
+Summary from jobs in status 'finished':
+  Number of files processed: 156
+  Number of events read: 12608000
+  Number of events written in EDM files: 156
+  Number of events written in TFileService files: 0
+  Number of events written in other type of files: 0
+  Processed lumis written to processedLumis.json
+  Warning: Duplicate lumis in output files written to outputFilesDuplicateLumis.json
+Summary from output datasets in DBS:
+  Number of events:
+    /ST_t-channel_antitop_4f_InclusiveDecays_wtop0p55_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_26_Jul22_MCUL2016_Tbarchannel_wtop0p55_v2-90a39493bbb27cfdd70230a8c0f4c30b/USER: 156
+  Output datasets lumis written to outputDatasetsLumis.json
+Log file is /afs/cern.ch/work/m/mikumar/private/NanoAOD_new/CMSSW_10_6_24/src/PhysicsTools/NanoAODTools/crab/Gen_Study/crab_Tbarchannel_wtop0p55_Tree_UL2016/crab.log
+DONE ---------------------------crab report---------------------------------------------------------------------
+resubmit job status yes/no(1/0) = NO
+DONE -------------------------------------------------------------------------------------------------
+100%|##########| 14/14 [02:18<00:00,  9.56s/it]
