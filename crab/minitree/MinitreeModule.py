@@ -2,6 +2,7 @@ import ROOT
 import os,sys
 import math
 import random
+import gzip
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
@@ -9,7 +10,13 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from Mc_prob_cal_forBweght import *
 from foxwol_n_fourmomentumSolver import *
 from scaleFactor import *
+from correctionlib import _core
+
+# Load CorrectionSet
+
+
 ROOT.gInterpreter.ProcessLine('#include "KinFit.C"')
+
 
 def mk_safe(fct, *args):
     try:
@@ -46,7 +53,21 @@ class MinitreeProducer(Module):
 	self.letopn_flv = letopn_flv
 	self.isMC = isMC
 	self.dataYear = dataYear
+        if(self.isMC):
+             PATH = "%s/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/" % os.environ['CMSSW_BASE']
+             JetPUJetID_effi_file={
+             'UL2016preVFP'  :  PATH+"jmar_PUID_UL2016preVFP.json.gz",
+             'UL2016postVFP' :  PATH+"jmar_PUID_UL2016postVFP.json.gz",
+             'UL2017'        :  PATH+"jmar_PUID_UL2017.json.gz",
+             'UL2018'        :  PATH+"jmar_PUID_UL2018.json.gz"}
 	
+             if JetPUJetID_effi_file[self.dataYear].endswith(".json.gz"):
+                with gzip.open(JetPUJetID_effi_file[self.dataYear],'rt') as file:
+                        data = file.read().strip()
+                        self.evaluator = _core.CorrectionSet.from_string(data)
+             else:
+                        self.evaluator = _core.CorrectionSet.from_file(JetPUJetID_effi_file[self.dataYear])
+
 	"""rc_corrections={
                 '2016' : 'RoccoR2016.txt',
                 '2017' : 'RoccoR2017.txt',
@@ -141,7 +162,7 @@ class MinitreeProducer(Module):
 
         self.out.branch("mtwMass","F")
 	self.out.branch("mtwMass_kin", "F")
-	
+
 	self.out.branch("bJetMass",  "F")
         self.out.branch("bJetPt",  "F")
         self.out.branch("bJetEta",  "F")
@@ -149,7 +170,11 @@ class MinitreeProducer(Module):
         self.out.branch("bJetPhi",  "F")
         self.out.branch("bJetdeepJet",  "F")
 	self.out.branch("nbjet_sel",  "I")
-        if(self.isMC==True):self.out.branch("bJethadronFlavour",  "F")
+        if(self.isMC==True):
+                self.out.branch("bJethadronFlavour",  "F")
+                self.out.branch("bJetPUJetID_SF",  "F")
+                self.out.branch("bJetPUJetID_SF_up",  "F")
+                self.out.branch("bJetPUJetID_SF_down",  "F")
 
 	self.out.branch("lJetMass",  "F")
         self.out.branch("lJetPt",  "F")
@@ -158,9 +183,16 @@ class MinitreeProducer(Module):
         self.out.branch("lJetPhi",  "F")
         self.out.branch("lJetdeepJet",  "F")
 	self.out.branch("nljet_sel",  "I")
-        if(self.isMC==True):self.out.branch("lJethadronFlavour",  "F")
+        if(self.isMC==True):
+                self.out.branch("lJethadronFlavour",  "F")
+                self.out.branch("lJetPUJetID_SF",  "F")
+                self.out.branch("lJetPUJetID_SF_up",  "F")
+                self.out.branch("lJetPUJetID_SF_down",  "F")
 
 	if(self.Total_Njets == 3 and  (self.BTag_Njets == 1 or self.BTag_Njets == 2)):
+            self.out.branch("oJetPUJetID_SF",  "F")
+            self.out.branch("oJetPUJetID_SF_up",  "F")
+            self.out.branch("oJetPUJetID_SF_down",  "F")
 	    self.out.branch("oJetMass",  "F")
             self.out.branch("oJetPt",  "F")
             self.out.branch("oJetEta",  "F")
@@ -168,7 +200,11 @@ class MinitreeProducer(Module):
             self.out.branch("oJetPhi",  "F")
             self.out.branch("oJetdeepJet",  "F")
 	    self.out.branch("nojet_sel",  "I")
-            if(self.isMC==True):self.out.branch("oJethadronFlavour",  "F")
+            if(self.isMC==True):
+                self.out.branch("oJethadronFlavour",  "F")
+                self.out.branch("oJetPUJetID_SF",  "F")
+                self.out.branch("oJetPUJetID_SF_up",  "F")
+                self.out.branch("oJetPUJetID_SF_down",  "F")
 
 	self.out.branch("FW1", "F")
 	self.out.branch("FW2", "F")
@@ -238,8 +274,8 @@ class MinitreeProducer(Module):
                 'UL2017' : 41529,
                 'UL2018' : 59222}
         if(self.isMC):
-	        x_sec = 80.95
-	        NEvents = 31024000
+		x_sec = 136.02
+		NEvents = 52437432
                 
 	        Xsec_wgt = (x_sec*TotalLumi[self.dataYear])/NEvents
 	#print Xsec_wgt
@@ -502,6 +538,7 @@ class MinitreeProducer(Module):
 	#drs = getattr(event,"dR_Ljet_Isomu") 
 	#for i in (0,len(drs)):
 	   #print "dr = ",drs[i]
+
 	for jet in filter(lambda j:(j.pt>40 and abs(j.eta)<4.7 and j.jetId!=0), jets):
 	    njet4v.SetPtEtaPhiM(jet.pt,jet.eta,jet.phi,jet.mass)
 	    if(lepton4v.DeltaR(njet4v)>0.4): 
@@ -685,6 +722,30 @@ class MinitreeProducer(Module):
 	    #btagjet_id = dummyjet_id
 	
 	if(self.isMC==True):
+            if(lJetPt<50):
+                lJetPUJetID_SF = self.evaluator["PUJetID_eff"].evaluate(abs(lJetEta), lJetPt, "nom","L")
+                lJetPUJetID_SF_up = self.evaluator["PUJetID_eff"].evaluate(abs(lJetEta), lJetPt, "up","L")
+                lJetPUJetID_SF_down = self.evaluator["PUJetID_eff"].evaluate(abs(lJetEta), lJetPt, "down","L")
+                #print "lJetPUJetID_SF : ",lJetPUJetID_SF_down," : ",lJetPUJetID_SF," : ",lJetPUJetID_SF_up," [ ",abs(lJetEta)," ",lJetPt," ]"
+            else:
+                lJetPUJetID_SF,lJetPUJetID_SF_up,lJetPUJetID_SF_down = 1.0,1.0,1.0
+            if(bJetPt<50):
+                bJetPUJetID_SF = self.evaluator["PUJetID_eff"].evaluate(abs(bJetEta), bJetPt, "nom","L")
+                bJetPUJetID_SF_up = self.evaluator["PUJetID_eff"].evaluate(abs(bJetEta), bJetPt, "up","L")
+                bJetPUJetID_SF_down = self.evaluator["PUJetID_eff"].evaluate(abs(bJetEta), bJetPt, "down","L")
+                #print "bJetPUJetID_SF : ",bJetPUJetID_SF_down," : ",bJetPUJetID_SF," : ",bJetPUJetID_SF_up," [ ",abs(bJetEta)," ",bJetPt," ]"
+            else:
+                bJetPUJetID_SF,bJetPUJetID_SF_up,bJetPUJetID_SF_down = 1,1,1
+                
+            if(self.Total_Njets == 3):
+                if(oJetPt<50): 
+                        oJetPUJetID_SF = self.evaluator["PUJetID_eff"].evaluate(abs(oJetEta), oJetPt, "nom","L")
+                        oJetPUJetID_SF_up = self.evaluator["PUJetID_eff"].evaluate(abs(oJetEta), oJetPt, "up","L")
+                        oJetPUJetID_SF_down = self.evaluator["PUJetID_eff"].evaluate(abs(oJetEta), oJetPt, "down","L")
+                        #print "ojetPUJetID_SF : ",oJetPUJetID_SF_down," : ",oJetPUJetID_SF," : ",oJetPUJetID_SF_up," [ ",abs(oJetEta)," ",oJetPt," ]"
+                else:
+                        oJetPUJetID_SF,oJetPUJetID_SF_up,oJetPUJetID_SF_down = 1.0,1.0,1.0
+                
 	    bWeight = Probability_2("Central",jet_id)
             for syst in self.shape_systs:
 		if(syst=="Central"): 
@@ -780,7 +841,12 @@ class MinitreeProducer(Module):
         self.out.fillBranch("bJetPhi", bJetPhi )
         self.out.fillBranch("bJetdeepJet", bJetdeepJet )
 	self.out.fillBranch("nbjet_sel",nbjet_sel)
-        if(self.isMC==True):self.out.fillBranch("bJethadronFlavour", bJethadronFlavour )
+        if(self.isMC==True):
+            self.out.fillBranch("bJethadronFlavour", bJethadronFlavour )
+            self.out.fillBranch("bJetPUJetID_SF", bJetPUJetID_SF )
+            self.out.fillBranch("bJetPUJetID_SF_up", bJetPUJetID_SF_up )
+            self.out.fillBranch("bJetPUJetID_SF_down", bJetPUJetID_SF_down )
+
 
         self.out.fillBranch("lJetMass", lJetMass )
         self.out.fillBranch("lJetPt", lJetPt )
@@ -789,7 +855,11 @@ class MinitreeProducer(Module):
         self.out.fillBranch("lJetPhi", lJetPhi )
         self.out.fillBranch("lJetdeepJet", lJetdeepJet )
 	self.out.fillBranch("nljet_sel", nljet_sel)
-        if(self.isMC==True):self.out.fillBranch("lJethadronFlavour", lJethadronFlavour )
+        if(self.isMC==True):
+            self.out.fillBranch("lJethadronFlavour", lJethadronFlavour )
+            self.out.fillBranch("lJetPUJetID_SF", lJetPUJetID_SF )
+            self.out.fillBranch("lJetPUJetID_SF_up", lJetPUJetID_SF_up )
+            self.out.fillBranch("lJetPUJetID_SF_down", lJetPUJetID_SF_down )
 
 	if(self.Total_Njets == 3 and  (self.BTag_Njets == 1 or self.BTag_Njets == 2)):
 	    self.out.fillBranch("oJetMass", oJetMass )
@@ -799,7 +869,12 @@ class MinitreeProducer(Module):
             self.out.fillBranch("oJetPhi", oJetPhi )
             self.out.fillBranch("oJetdeepJet", oJetdeepJet )
 	    self.out.fillBranch("nojet_sel", nojet_sel)
-            if(self.isMC==True):self.out.fillBranch("oJethadronFlavour", oJethadronFlavour )	
+            if(self.isMC==True):
+                self.out.fillBranch("oJethadronFlavour", oJethadronFlavour )
+                self.out.fillBranch("oJetPUJetID_SF", oJetPUJetID_SF )	
+                self.out.fillBranch("oJetPUJetID_SF_up", oJetPUJetID_SF_up )
+                self.out.fillBranch("oJetPUJetID_SF_down", oJetPUJetID_SF_down )
+
 	self.out.fillBranch("Px_nu", Px_nu)
 	self.out.fillBranch("Py_nu", Py_nu)
 	self.out.fillBranch("Pz_nu", Pz_nu)
