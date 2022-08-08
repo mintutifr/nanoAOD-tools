@@ -10,7 +10,7 @@ from IPython.display import display
 import glob
 from time import time
 
-channels = ['Tchannel', 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2Q2L', 'DataULpreVFP2016']
+channels = ['Tchannel', 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'DataULpreVFP2016'] #WWTolnulnu
 
 datasets = []                                            # this object will be a list of list
 for channel in channels:
@@ -54,7 +54,8 @@ VARS = ['MuonEta', 'MuonPt', 'MuonPhi', 'MuonE',   'MuonCharge',
         'Xsec_wgt',
         'LHEWeightSign',
         'L1PreFiringWeight_Nom',
-        'event'
+        'event',
+        'topMass'
         ]
 
 df = {}  # remember this will be list of dataframe
@@ -147,7 +148,7 @@ print "train : ", df_TopBKG_train_valid_test_wrong_assign[0].shape, "valid : ", 
 
 df_EWKBKG_train_valid_test = []  #define a new list for train test and validation
 for i,df in enumerate([df_train,df_valid,df_test]):
-    df_temp = pd.concat([df['WJetsToLNu_0J'],df['WJetsToLNu_1J'],df['WJetsToLNu_2J'],df['DYJets'],df['WWTolnulnu'],df['WZTo2Q2L'],df['ZZTo2Q2L']]) # adding all EWK bkg and push to a temp df
+    df_temp = pd.concat([df['WJetsToLNu_0J'],df['WJetsToLNu_1J'],df['WJetsToLNu_2J'],df['DYJets'],df['WWTo2L2Nu'],df['WZTo2Q2L'],df['ZZTo2Q2L']]) # adding all EWK bkg and push to a temp df
     df_EWKBKG_train_valid_test.append(df_temp)
     del df_temp # #delete temp df
 

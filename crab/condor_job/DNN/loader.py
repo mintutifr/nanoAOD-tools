@@ -32,7 +32,8 @@ _branches_mu = [
         'Xsec_wgt',
         'LHEWeightSign',
         'L1PreFiringWeight_Nom',
-        'event'
+        'event',
+        'topMass'
     ]
 _branches_mu_Data = [
         'MuonEta', 'MuonPt', 'MuonPhi', 'MuonE',   'MuonCharge',
@@ -52,7 +53,8 @@ _branches_mu_Data = [
         'cosThetaStar',
         'FW1',
         'L1PreFiringWeight_Nom',
-        'event'
+        'event',
+        'topMass'
     ]
 def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu" ):
     chain = ROOT.TChain('Events')
