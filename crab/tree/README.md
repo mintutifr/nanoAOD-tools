@@ -91,6 +91,13 @@
                       	Summer20UL16APV_JRV3_DATA.tar.gz
 			Please note that JER-SF files for data just contain unity and are not supposed to be used in the analyses. They are needed for internal consistence of the framework, i.e. currently CMSSW requires the JER-SF file also for data for compatibility. 
 
+*       PUID
+        https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupJetIDUL
+                inputfile:
+                        https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration/-/tree/master/POG/JME/2016preVFP_UL -> jmar.json.gz
+                        correclation libraries are installed with python2 acc to https://cms-nanoaod.github.io/correctionlib/install.html
+                        
+
 *	MET
 	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
  
@@ -219,6 +226,12 @@
                 inputfile:
 			Summer20UL16_JRV3_DATA.tar.gz
 			Please note that JER-SF files for data just contain unity and are not supposed to be used in the analyses. They are needed for internal consistence of the framework, i.e. currently CMSSW requires the JER-SF file also for data for compatibility. 
+
+*       PUID
+        https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupJetIDUL
+                inputfile:
+                        https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration/-/tree/master/POG/JME/2016postVFP_UL -> jmar.json.gz
+                        correclation libraries are installed with python2 acc to https://cms-nanoaod.github.io/correctionlib/install.html
 
 *	MET
 	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
@@ -349,6 +362,12 @@
                         Summer19UL17_JRV2_DATA.tar.gz
 			Please note that JER-SF files for data just contain unity and are not supposed to be used in the analyses. They are needed for internal consistence of the framework, i.e. currently CMSSW requires the JER-SF file also for data for compatibility. 
 
+*       PUID
+        https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupJetIDUL
+                inputfile:
+                        https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration/-/tree/master/POG/JME/2017_UL -> jmar.json.gz
+                        correclation libraries are installed with python2 acc to https://cms-nanoaod.github.io/correctionlib/install.html
+
 *	MET
 	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
 
@@ -477,6 +496,13 @@
                 inputfile:
                         Summer19UL18_JRV2_DATA.tar.gz
 			Please note that JER-SF files for data just contain unity and are not supposed to be used in the analyses. They are needed for internal consistence of the framework, i.e. currently CMSSW requires the JER-SF file also for data for compatibility. 
+
+*       PUID
+        https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupJetIDUL
+                inputfile:
+                        https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration/-/tree/master/POG/JME/2018_UL -> jmar.json.gz
+                        correclation libraries are installed with python2 acc to https://cms-nanoaod.github.io/correctionlib/install.html
+
 
 *	 MET
          https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
