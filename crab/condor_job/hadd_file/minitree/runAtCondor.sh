@@ -19,7 +19,7 @@ mv hadd.sh tryout/
  
 #------------------------------------------------
 #------------------------------------------------
-cd /home/mikumar/t3store3/workarea/CMSSW_9_4_9/src
+cd /home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 pwd
 eval `scramv1 runtime -sh`
