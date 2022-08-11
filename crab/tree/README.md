@@ -95,7 +95,7 @@
         https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupJetIDUL
                 inputfile:
                         https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration/-/tree/master/POG/JME/2016preVFP_UL -> jmar.json.gz
-                        correclation libraries are installed with python2 acc to https://cms-nanoaod.github.io/correctionlib/install.html
+                        correclation libraries are installed with python2 acc to https://cms-nanoaod.github.io/correctionlib/install.html#inside-cmssw
                         
 
 *	MET
@@ -231,7 +231,7 @@
         https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupJetIDUL
                 inputfile:
                         https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration/-/tree/master/POG/JME/2016postVFP_UL -> jmar.json.gz
-                        correclation libraries are installed with python2 acc to https://cms-nanoaod.github.io/correctionlib/install.html
+                        correclation libraries are installed with python2 acc to https://cms-nanoaod.github.io/correctionlib/install.html#inside-cmssw
 
 *	MET
 	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
@@ -366,7 +366,7 @@
         https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupJetIDUL
                 inputfile:
                         https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration/-/tree/master/POG/JME/2017_UL -> jmar.json.gz
-                        correclation libraries are installed with python2 acc to https://cms-nanoaod.github.io/correctionlib/install.html
+                        correclation libraries are installed with python2 acc to https://cms-nanoaod.github.io/correctionlib/install.html#inside-cmssw
 
 *	MET
 	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETRun2Corrections#Implementation
@@ -501,7 +501,7 @@
         https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupJetIDUL
                 inputfile:
                         https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration/-/tree/master/POG/JME/2018_UL -> jmar.json.gz
-                        correclation libraries are installed with python2 acc to https://cms-nanoaod.github.io/correctionlib/install.html
+                        correclation libraries are installed with python2 acc to https://cms-nanoaod.github.io/correctionlib/install.html#inside-cmssw
 
 
 *	 MET
