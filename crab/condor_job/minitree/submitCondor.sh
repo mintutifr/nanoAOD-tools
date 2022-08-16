@@ -40,14 +40,14 @@ fi
 #------------------------------------------------
 #create the same datasetfile depending on year
 #------------------------------------------------
-Mc_common_channel="Tchannel" #Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTo2L2Nu WZTo2Q2L ZZTo2Q2L" #Tchannel
+Mc_common_channel="WWTo2L2Nu" #Tchannel Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTo2L2Nu WZTo2Q2L ZZTo2Q2L" #Tchannel
 
 if [[ "UL2016preVFP" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2016preVFP_phy3.py"
-     outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_preVFP/"
+     outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_preVFP_puid/"
 
      if [[ $sample == "Mc" && $lep == "mu" ]]; then
-	channels="${Mc_common_channel}" #QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched" #QCD_Pt-15To20_MuEnriched 
+	channels="${Mc_common_channel} QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched" #QCD_Pt-15To20_MuEnriched 
      fi
      if [[ $sample == "Mc" && $lep == "el" ]]; then
         channels="${Mc_common_channel} QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
@@ -62,14 +62,14 @@ if [[ "UL2016preVFP" == "$year" ]]; then
 
 elif  [[ "UL2016postVFP" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2016postVFP_phy3.py"
-     outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_postVFP/"
+     outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_postVFP_puid/"
  
      if [[ $sample == "Mc" && $lep == "mu" ]]; then
-        channels="${Mc_common_channel}" QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched"
+        channels="${Mc_common_channel}" #QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched"
         #Tchannel Tbarchannel 
      fi
      if [[ $sample == "Mc" && $lep == "el" ]]; then
-        channels="${Mc_common_channel}" QCD_Pt-15to20_EMEnriched QCD_Pt-20to30_EMEnriched QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
+        channels="${Mc_common_channel}" #QCD_Pt-15to20_EMEnriched QCD_Pt-20to30_EMEnriched QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
      fi
 
      if [[ $sample == "Data" && $lep == "mu" ]]; then
@@ -208,7 +208,7 @@ for channel in $channels; do
 	     sed -i 's:INPUT:'"$input_file_list"':g' crab_script_Minitree.py 
 	     sed -i "s:INPUT:root\://se01.indiacms.res.in/${outputroot}tree_$count.root:g" condorSetup.sub
 	     #echo "root\://se01.indiacms.res.in/${outputroot}tree_$count.root"
-	     #condor_submit condorSetup.sub
+	     condor_submit condorSetup.sub
 	     cd ../		    	
              input_file_list="inputFiles=["
   	else

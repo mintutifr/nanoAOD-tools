@@ -77,6 +77,7 @@ if(year == 'UL2017'):
 
 #channels=['WWTo2L2Nu']
 channels=Datasets.keys()
+print channels
 print 
 print "-----------------------------------------    chacking     --------------------------------"
 print
