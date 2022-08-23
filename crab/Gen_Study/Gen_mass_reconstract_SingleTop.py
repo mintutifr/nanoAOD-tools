@@ -179,8 +179,8 @@ class NanoGenModule(Module):
                     neutrino_pt_gen = genpart.pt
                     neutrino_eta_gen = genpart.eta
                     neutrino_phi_gen = genpart.phi
-                    if(abs(PDG)==12)  neutrino_el_flag = True else neutrino_el_flag = False
-                    elif(abs(PDG)==14)  neutrino_mu_flag = True else neutrino_mu_flag = False
+                    neutrino_el_flag = True if(abs(PDG)==12)  else False
+                    neutrino_mu_flag = True if(abs(PDG)==14)  else False
 
                     if( abs(motherPDG)==24  or abs(motherPDG)==15):
                         while ((motherPDG == GmotherPDG and GmotherPDG !=-1 and motherPDG !=-1 and Gmotheridx!=-1 and abs(GmotherPDG)!=6) or ( (abs(motherPDG)==24 or abs(motherPDG)==15) and abs(GmotherPDG)!=6 and GmotherPDG !=-1)):
@@ -189,7 +189,7 @@ class NanoGenModule(Module):
                                 #print_once=True
                              PDG = motherPDG
                              motheridx = Gmotheridx
-                            if(abs(PDG) == 24): WMotheridx = motheridx
+                             if(abs(PDG) == 24): WMotheridx = motheridx
                              motherPDG,Gmotheridx,GmotherPDG = findMother(Gmotheridx,Genparts)
                              #print GmotherPDG," ---> ",   
                              #print("-----> ",motherPDG,Gmotheridx,GmotherPDG)
@@ -224,10 +224,9 @@ class NanoGenModule(Module):
 	 	for genpart in Genparts:
                     if((abs(genpart.pdgId)==24 and abs(genpart.genPartIdxMother)==WMotheridx) ):
                         self.out.fillBranch("W_mass_gen", genpart.mass)
-                        self.out.fillBranch("W_pt_gen"), genpart.pt)
-                        self.out.fillBranch("W_eta_gen"), genpart.eta)
-                        self.out.fillBranch("W_phi_gen"), genpart.phi)
-
+                        self.out.fillBranch("W_pt_gen", genpart.pt)
+                        self.out.fillBranch("W_eta_gen", genpart.eta)
+                        self.out.fillBranch("W_phi_gen", genpart.phi)
 
 	 	    if(ID==top_from_lepton[0]):
                         #print genpart.statusFlags
@@ -264,9 +263,9 @@ class NanoGenModule(Module):
             else:
                 print "top_from_lepton : ",top_from_lepton," top_from_bquark : ",top_from_bquark," top_from_nuetrino : ",top_from_nuetrino
                 self.out.fillBranch("W_mass_gen", -1000)
-                self.out.fillBranch("W_pt_gen"),-1000)
-                self.out.fillBranch("W_eta_gen"), -1000)
-                self.out.fillBranch("W_phi_gen"), -10000)
+                self.out.fillBranch("W_pt_gen",-1000)
+                self.out.fillBranch("W_eta_gen", -1000)
+                self.out.fillBranch("W_phi_gen", -10000)
                 self.out.fillBranch("tau_to_el_flag", -2.0)
                 self.out.fillBranch("tau_to_mu_flag", -2.0)
                 self.out.fillBranch("el_flag", -2.0)
@@ -289,9 +288,9 @@ class NanoGenModule(Module):
 	    #print "top_from_lepton : %s top_from_bquark : %s top_from_nuetrino : %s event = %s"%(top_from_lepton,top_from_bquark,top_from_nuetrino,getattr(event,'event'))
             #PrintTrueflags(flag_for_b)
             self.out.fillBranch("W_mass_gen", -999)
-            self.out.fillBranch("W_pt_gen"),-999)
-            self.out.fillBranch("W_eta_gen"), -999)
-            self.out.fillBranch("W_phi_gen"), -999)
+            self.out.fillBranch("W_pt_gen",-999)
+            self.out.fillBranch("W_eta_gen", -999)
+            self.out.fillBranch("W_phi_gen", -999)
 
             self.out.fillBranch("tau_to_el_flag", -1.0)
             self.out.fillBranch("tau_to_mu_flag", -1.0)
