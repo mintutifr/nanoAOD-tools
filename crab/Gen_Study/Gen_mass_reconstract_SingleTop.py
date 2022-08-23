@@ -34,6 +34,35 @@ class NanoGenModule(Module):
 	self.out.branch("tau_to_mu_flag", "F")
         self.out.branch("el_flag", "F")
         self.out.branch("mu_flag", "F")
+
+        self.out.branch("lepton_pt_gen", "F")
+        self.out.branch("lepton_eta_gen", "F")
+        self.out.branch("lepton_phi_gen", "F")
+
+        self.out.branch("neutrino_pt_gen", "F")
+        self.out.branch("neutrino_eta_gen", "F")
+        self.out.branch("neutrino_phi_gen", "F")
+        self.out.branch("neutrino_el_flag", "F")
+        self.out.branch("neutrino_mu_flag", "F")
+
+        self.out.branch("W_mass_gen", "F")
+        self.out.branch("W_mass_gen_reco", "F")
+        self.out.branch("W_pt_gen", "F")
+        self.out.branch("W_pt_gen_reco", "F")
+        self.out.branch("W_eta_gen", "F")
+        self.out.branch("W_eta_gen_reco", "F")
+        self.out.branch("W_phi_gen", "F")
+        self.out.branch("W_phi_gen_reco", "F")
+        self.out.branch("W_to_el_flag", "F")
+        self.out.branch("W_to_mu_flag", "F")
+
+
+        self.out.branch("bjet_pt_gen", "F")
+        self.out.branch("bjet_eta_gen", "F")
+        self.out.branch("bjet_phi_gen", "F")
+        self.out.branch("bjet_el_flag", "F")
+        self.out.branch("bjet_mu_flag", "F")
+
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
     def analyze(self, event):
@@ -48,6 +77,8 @@ class NanoGenModule(Module):
 	tau_to_mu_flag = False
         el_flag = False
         mu_flag = False
+        neutrino_el_flag = False
+        neutrino_mu_flag = False
 
         lepton4v_gen = ROOT.TLorentzVector()
         Nu4v_gen = ROOT.TLorentzVector()
@@ -145,6 +176,12 @@ class NanoGenModule(Module):
                     #print PDG," -> ", motherPDG," -> ",
                     #print_once = False
                     Nu4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.0)
+                    neutrino_pt_gen = genpart.pt
+                    neutrino_eta_gen = genpart.eta
+                    neutrino_phi_gen = genpart.phi
+                    if(abs(PDG)==12)  neutrino_el_flag = True else neutrino_el_flag = False
+                    elif(abs(PDG)==14)  neutrino_mu_flag = True else neutrino_mu_flag = False
+
                     if( abs(motherPDG)==24  or abs(motherPDG)==15):
                         while ((motherPDG == GmotherPDG and GmotherPDG !=-1 and motherPDG !=-1 and Gmotheridx!=-1 and abs(GmotherPDG)!=6) or ( (abs(motherPDG)==24 or abs(motherPDG)==15) and abs(GmotherPDG)!=6 and GmotherPDG !=-1)):
                              #if(print_once==False):
@@ -152,6 +189,7 @@ class NanoGenModule(Module):
                                 #print_once=True
                              PDG = motherPDG
                              motheridx = Gmotheridx
+                            if(abs(PDG) == 24): WMotheridx = motheridx
                              motherPDG,Gmotheridx,GmotherPDG = findMother(Gmotheridx,Genparts)
                              #print GmotherPDG," ---> ",   
                              #print("-----> ",motherPDG,Gmotheridx,GmotherPDG)
@@ -165,12 +203,17 @@ class NanoGenModule(Module):
                              #print "top_from_nuetrino : ",top_from_nuetrino
 	#if(len(top_from_lepton)!=1 and len(top_from_bquark)!=1 and len(top_from_nuetrino)!=1):
 	    #print "top_from_lepton : %s top_from_bquark : %s event = %s"%(top_from_lepton,top_from_bquark,getattr(event,'event'))
-            
+
 	if(len(top_from_lepton)==1 and len(top_from_bquark)==1): 
 	    if(top_from_lepton[0]==top_from_bquark[0] and top_from_lepton[0]==top_from_nuetrino[0]):
 	 	#print "top found with index = ",top_from_lepton[0]
                 w4v_gen_reco = lepton4v_gen + Nu4v_gen         
                 top4v_gen_reco = w4v_gen_reco + bJet4v_gen
+
+                self.out.fillBranch("W_mass_gen_reco", w4v_gen_reco.M())
+                self.out.fillBranch("W_pt_gen_reco", w4v_gen_reco.Pt())
+                self.out.fillBranch("W_eta_gen_reco", w4v_gen_reco.Eta())
+                self.out.fillBranch("W_phi_gen_reco", w4v_gen_reco.Phi())
 
                 self.out.fillBranch("top_mass_gen_reco", top4v_gen_reco.M())
                 self.out.fillBranch("top_pt_gen_reco", top4v_gen_reco.Pt())
@@ -179,6 +222,13 @@ class NanoGenModule(Module):
 
 	 	ID=0
 	 	for genpart in Genparts:
+                    if((abs(genpart.pdgId)==24 and abs(genpart.genPartIdxMother)==WMotheridx) ):
+                        self.out.fillBranch("W_mass_gen", genpart.mass)
+                        self.out.fillBranch("W_pt_gen"), genpart.pt)
+                        self.out.fillBranch("W_eta_gen"), genpart.eta)
+                        self.out.fillBranch("W_phi_gen"), genpart.phi)
+
+
 	 	    if(ID==top_from_lepton[0]):
                         #print genpart.statusFlags
                         #PrintTrueflags(Binary_flags(genpart.statusFlags))
@@ -195,12 +245,28 @@ class NanoGenModule(Module):
                         self.out.fillBranch("top_pt_gen", genpart.pt)
                         self.out.fillBranch("top_eta_gen", genpart.eta)
                         self.out.fillBranch("top_phi_gen", genpart.phi)
+
+                        self.out.fillBranch("neutrino_pt_gen",neutrino_pt_gen)
+                        self.out.fillBranch("neutrino_eta_gen",neutrino_eta_gen)
+                        self.out.fillBranch("neutrino_phi_gen",neutrino_phi_gen)
+                        self.out.fillBranch("neutrino_el_flag", neutrino_el_flag)
+                        self.out.fillBranch("neutrino_mu_flag", neutrino_mu_flag)
+
+                        self.out.fillBranch("lepton_pt_gen",  genpart.pt)
+                        self.out.fillBranch("lepton_eta_gen",  genpart.eta)
+                        self.out.fillBranch("lepton_phi_gen", genpart.phi)
+                        
+
                         #print "Genpart top mass : %s pt : %s eta : %s phi : %s" %(genpart.mass,genpart.pt,genpart.eta,genpart.phi)
 	 	        #print ("top mass filed")	
 	 	 	break 
 	 	    ID = ID+1
             else:
                 print "top_from_lepton : ",top_from_lepton," top_from_bquark : ",top_from_bquark," top_from_nuetrino : ",top_from_nuetrino
+                self.out.fillBranch("W_mass_gen", -1000)
+                self.out.fillBranch("W_pt_gen"),-1000)
+                self.out.fillBranch("W_eta_gen"), -1000)
+                self.out.fillBranch("W_phi_gen"), -10000)
                 self.out.fillBranch("tau_to_el_flag", -2.0)
                 self.out.fillBranch("tau_to_mu_flag", -2.0)
                 self.out.fillBranch("el_flag", -2.0)
@@ -213,9 +279,20 @@ class NanoGenModule(Module):
                 self.out.fillBranch("top_pt_gen_reco", -1000)
                 self.out.fillBranch("top_eta_gen_reco", -1000)
                 self.out.fillBranch("top_phi_gen_reco", -1000)
+                self.out.fillBranch("neutrino_pt_gen",-1000)
+                self.out.fillBranch("neutrino_eta_gen",-1000)
+                self.out.fillBranch("neutrino_phi_gen",-1000)
+                self.out.fillBranch("lepton_pt_gen",  -1000)
+                self.out.fillBranch("lepton_eta_gen",  -1000)
+                self.out.fillBranch("lepton_phi_gen", -1000)
 	else:
 	    #print "top_from_lepton : %s top_from_bquark : %s top_from_nuetrino : %s event = %s"%(top_from_lepton,top_from_bquark,top_from_nuetrino,getattr(event,'event'))
             #PrintTrueflags(flag_for_b)
+            self.out.fillBranch("W_mass_gen", -999)
+            self.out.fillBranch("W_pt_gen"),-999)
+            self.out.fillBranch("W_eta_gen"), -999)
+            self.out.fillBranch("W_phi_gen"), -999)
+
             self.out.fillBranch("tau_to_el_flag", -1.0)
             self.out.fillBranch("tau_to_mu_flag", -1.0)
             self.out.fillBranch("top_mass_gen", -999)
@@ -226,6 +303,15 @@ class NanoGenModule(Module):
             self.out.fillBranch("top_pt_gen_reco", -999)
             self.out.fillBranch("top_eta_gen_reco", -999)
             self.out.fillBranch("top_phi_gen_reco", -999)
+
+            self.out.fillBranch("neutrino_pt_gen",-999)
+            self.out.fillBranch("neutrino_eta_gen",-999)
+            self.out.fillBranch("neutrino_phi_gen",-999)
+           
+            self.out.fillBranch("lepton_pt_gen",  -999)
+            self.out.fillBranch("lepton_eta_gen",  -999)
+            self.out.fillBranch("lepton_phi_gen", -999)
+
 	#    
 	#print("----------------------------------")
              #return True
