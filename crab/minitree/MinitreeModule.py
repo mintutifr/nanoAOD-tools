@@ -175,7 +175,8 @@ class MinitreeProducer(Module):
                 self.out.branch("bJetPUJetID_SF",  "F")
                 self.out.branch("bJetPUJetID_SF_up",  "F")
                 self.out.branch("bJetPUJetID_SF_down",  "F")
-
+        
+        self.out.branch("MinDR_lep_lnbJet",  "F")
 	self.out.branch("lJetMass",  "F")
         self.out.branch("lJetPt",  "F")
         self.out.branch("lJetEta",  "F")
@@ -449,7 +450,6 @@ class MinitreeProducer(Module):
 		    leptonCharge = lep.charge
 		    Electron_CutbasedID = lep.cutBased
                     self.out.fillBranch("Electron_CutbasedID",Electron_CutbasedID)
-
 
 
 	######### ------------------------- lepton selction done -------------------------------  ####################
@@ -804,13 +804,14 @@ class MinitreeProducer(Module):
             dR_el_lJet = lepton4v.DeltaR(lJet4v)
         dEta_bJet_lJet = abs(lJet4v.Eta() - bJet4v.Eta()) 
         dEta_top_lJet = abs(lJet4v.Eta() - top4v.Eta())				
-
+        
       	dPhi_bJet_lJet = bJet4v.DeltaPhi(lJet4v)
       	dPhi_top_lJet = top4v.DeltaPhi(lJet4v)
 
       	dR_bJet_lJet = bJet4v.DeltaR(lJet4v) 
       	dR_top_lJet = top4v.DeltaR(lJet4v)
-
+        
+        MinDR_lep_lnbJet = min(lepton4v.DeltaR(bJet4v),lepton4v.DeltaR(lJet4v))
 	
 	lep4v_for_transformation = ROOT.TLorentzVector()
         lJet4v_for_transformation = ROOT.TLorentzVector()
@@ -834,6 +835,8 @@ class MinitreeProducer(Module):
 	     self.out.fillBranch("LHEWeightSign",LHEWeightSign)
 	     self.out.fillBranch("Xsec_wgt",Xsec_wgt )
 	     self.out.fillBranch("Event_wgt",Event_wgt)
+
+        self.out.fillBranch("MinDR_lep_lnbJet",MinDR_lep_lnbJet)
 	self.out.fillBranch("bJetMass", bJetMass)
         self.out.fillBranch("bJetPt", bJetPt )
         self.out.fillBranch("bJetEta", bJetEta )
