@@ -90,8 +90,7 @@ for i in range(0,len(RequestNames)):
     os.system(cmd_dasgoclint) 
 
     region_tag = region
-    if(year=='UL2016preVFP' or year=='UL2016postVFP' ):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2016\n"
-    elif(year=='UL2017'):cut_string = "treecut = cut_"+region_tag+"_"+lep+"_2017\n"
+    cut_string = "treecut = cut_"+region_tag+"_"+lep+"_"+year+"\n"
     if(sample == "Mc"): 
     	update_NumberOfEvents = "\t\tNEvents = "+NumberOfEvents+"\n"
     	update_Xsection = "\t\tx_sec = "+Xsection+"\n"
