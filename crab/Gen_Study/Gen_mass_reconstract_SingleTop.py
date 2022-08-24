@@ -72,6 +72,7 @@ class NanoGenModule(Module):
         self.out.branch("bpart_pt_gen", "F")
         self.out.branch("bpart_eta_gen", "F")
         self.out.branch("bpart_phi_gen", "F")
+        self.out.branch("minDR_bpart_bjet","F")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -93,10 +94,12 @@ class NanoGenModule(Module):
 
         lepton4v_gen = ROOT.TLorentzVector()
         Nu4v_gen = ROOT.TLorentzVector()
-        #bPart4v_gen = ROOT.TLorentzVector()
+        bPart4v_gen = ROOT.TLorentzVector()
         bjet4v_gen = ROOT.TLorentzVector()
         w4v_gen_reco = ROOT.TLorentzVector()
         top4v_gen_reco = ROOT.TLorentzVector()
+        bjet4v_gen_temp = ROOT.TLorentzVector()
+
         genpartID = -1
 	for genpart in Genparts:
             genpartID = genpartID+1
@@ -118,7 +121,7 @@ class NanoGenModule(Module):
                 if(abs(PDG)==5):
                     #print 
 	 	    #print abs(PDG)," -> ",
-                    #bPart4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,4.18)i
+                    bPart4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,4.18)
                     bpart_ID = genpartID
                     bpart_pt_gen = genpart.pt
                     bpart_eta_gen = genpart.eta
@@ -128,14 +131,16 @@ class NanoGenModule(Module):
                     JetID = -1
                     for genjet in GenJets:
                         JetID = JetID + 1
-                        minidR_temp = math.sqrt((genpart.eta-genjet.eta)*(genpart.eta-genjet.eta)+(genpart.phi-genjet.phi)*(genpart.phi-genjet.phi)) 
+                        bjet4v_gen_temp.SetPtEtaPhiM(genjet.pt,genjet.eta,genjet.phi,genjet.mass)
+                        minidR_temp = bPart4v_gen.DeltaR(bjet4v_gen_temp)
+                        #math.sqrt((genpart.eta-genjet.eta)*(genpart.eta-genjet.eta)+(genpart.phi-genjet.phi)*(genpart.phi-genjet.phi)) 
                         if(minidR_temp<minidR):
                                 minidR = minidR_temp  
-                                bjet4v_gen.SetPtEtaPhiM = (genjet.pt,genjet.eta,genjet.phi,genjet.mass)
                                 bjet_pt_gen = genjet.pt
                                 bjet_eta_gen = genjet.eta
                                 bjet_phi_gen = genjet.phi
                                 bjet_mass_gen = genjet.mass
+                                bjet4v_gen.SetPtEtaPhiM(genjet.pt,genjet.eta,genjet.phi,genjet.mass)
                                 bjet_ID =  JetID
 	 	    if(abs(motherPDG)!=6):
 	 	        #print abs(motherPDG)," -> ",
@@ -316,8 +321,8 @@ class NanoGenModule(Module):
                         self.out.fillBranch("bpart_eta_gen",bpart_eta_gen)
                         self.out.fillBranch("bpart_phi_gen",bpart_phi_gen)
                         self.out.fillBranch("bpart_ID",bpart_ID)
+                        self.out.fillBranch("minDR_bpart_bjet",minidR)
                         
-
                         #print "Genpart top mass : %s pt : %s eta : %s phi : %s" %(genpart.mass,genpart.pt,genpart.eta,genpart.phi)
 	 	        #print ("top mass filed")	
 	 	 	break 
@@ -364,6 +369,7 @@ class NanoGenModule(Module):
                 self.out.fillBranch("bpart_pt_gen", -1000)
                 self.out.fillBranch("bpart_eta_gen",-1000)
                 self.out.fillBranch("bpart_phi_gen",-1000)
+                self.out.fillBranch("minDR_bpart_bjet",-1000)
 	else:
 	    #print "top_from_lepton : %s top_from_bquark : %s top_from_nuetrino : %s event = %s"%(top_from_lepton,top_from_bquark,top_from_nuetrino,getattr(event,'event'))
             #PrintTrueflags(flag_for_b)
@@ -404,7 +410,7 @@ class NanoGenModule(Module):
             self.out.fillBranch("bpart_pt_gen", -999)
             self.out.fillBranch("bpart_eta_gen",-999)
             self.out.fillBranch("bpart_phi_gen",-999)
-
+            self.out.fillBranch("minDR_bpart_bjet",-999)
 	#    
 	#print("----------------------------------")
              #return True
