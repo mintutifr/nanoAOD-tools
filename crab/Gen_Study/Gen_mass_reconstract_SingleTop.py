@@ -2,6 +2,7 @@
 import os, sys
 import ROOT 
 import numpy as np
+import math
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 from importlib import import_module
 
@@ -22,6 +23,8 @@ class NanoGenModule(Module):
 	#self.addObject(self.top_mass_hist)
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
+        self.out.branch("top_ID","I")
+        self.out.branch("top_is_lastcopy","F")
         self.out.branch("top_mass_gen", "F")
         self.out.branch("top_mass_gen_reco", "F")
         self.out.branch("top_pt_gen", "F")
@@ -35,16 +38,19 @@ class NanoGenModule(Module):
         self.out.branch("el_flag", "F")
         self.out.branch("mu_flag", "F")
 
+        self.out.branch("lepton_ID","I")
         self.out.branch("lepton_pt_gen", "F")
         self.out.branch("lepton_eta_gen", "F")
         self.out.branch("lepton_phi_gen", "F")
 
+        self.out.branch("neutrino_ID","I")
         self.out.branch("neutrino_pt_gen", "F")
         self.out.branch("neutrino_eta_gen", "F")
         self.out.branch("neutrino_phi_gen", "F")
         self.out.branch("neutrino_el_flag", "F")
         self.out.branch("neutrino_mu_flag", "F")
 
+        self.out.branch("W_ID","I")
         self.out.branch("W_mass_gen", "F")
         self.out.branch("W_mass_gen_reco", "F")
         self.out.branch("W_pt_gen", "F")
@@ -56,17 +62,22 @@ class NanoGenModule(Module):
         self.out.branch("W_to_el_flag", "F")
         self.out.branch("W_to_mu_flag", "F")
 
-
+        self.out.branch("bjet_ID","I")
         self.out.branch("bjet_pt_gen", "F")
         self.out.branch("bjet_eta_gen", "F")
         self.out.branch("bjet_phi_gen", "F")
-        self.out.branch("bjet_el_flag", "F")
-        self.out.branch("bjet_mu_flag", "F")
+        self.out.branch("bjet_mass_gen", "F")
+
+        self.out.branch("bpart_ID","I")
+        self.out.branch("bpart_pt_gen", "F")
+        self.out.branch("bpart_eta_gen", "F")
+        self.out.branch("bpart_phi_gen", "F")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
     def analyze(self, event):
 	Genparts = Collection(event,"GenPart")
+        GenJets = Collection(event,"GenJet")
 	top_from_bquark = []
 	top_from_lepton = []
 	top_from_nuetrino = []
@@ -82,11 +93,13 @@ class NanoGenModule(Module):
 
         lepton4v_gen = ROOT.TLorentzVector()
         Nu4v_gen = ROOT.TLorentzVector()
-        bJet4v_gen = ROOT.TLorentzVector()
+        #bPart4v_gen = ROOT.TLorentzVector()
+        bjet4v_gen = ROOT.TLorentzVector()
         w4v_gen_reco = ROOT.TLorentzVector()
         top4v_gen_reco = ROOT.TLorentzVector()
-
+        genpartID = -1
 	for genpart in Genparts:
+            genpartID = genpartID+1
 	    #if((abs(genpart.pdgId)==5)):
 	    #tau_to_el_flag = False
 	    #tau_to_mu_flag = False
@@ -105,7 +118,25 @@ class NanoGenModule(Module):
                 if(abs(PDG)==5):
                     #print 
 	 	    #print abs(PDG)," -> ",
-                    bJet4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,4.18)
+                    #bPart4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,4.18)i
+                    bpart_ID = genpartID
+                    bpart_pt_gen = genpart.pt
+                    bpart_eta_gen = genpart.eta
+                    bpart_phi_gen = genpart.phi
+
+                    minidR = 99
+                    JetID = -1
+                    for genjet in GenJets:
+                        JetID = JetID + 1
+                        minidR_temp = math.sqrt((genpart.eta-genjet.eta)*(genpart.eta-genjet.eta)+(genpart.phi-genjet.phi)*(genpart.phi-genjet.phi)) 
+                        if(minidR_temp<minidR):
+                                minidR = minidR_temp  
+                                bjet4v_gen.SetPtEtaPhiM = (genjet.pt,genjet.eta,genjet.phi,genjet.mass)
+                                bjet_pt_gen = genjet.pt
+                                bjet_eta_gen = genjet.eta
+                                bjet_phi_gen = genjet.phi
+                                bjet_mass_gen = genjet.mass
+                                bjet_ID =  JetID
 	 	    if(abs(motherPDG)!=6):
 	 	        #print abs(motherPDG)," -> ",
 	 	        #printonce = False
@@ -143,6 +174,10 @@ class NanoGenModule(Module):
                     #print
                     #print PDG," -> ", motherPDG," -> ",
                     #print_once = FalseElectron
+                    lepton_ID = genpartID
+                    lepton_pt_gen = genpart.pt
+                    lepton_eta_gen = genpart.eta
+                    lepton_phi_gen = genpart.phi
                     if(abs(PDG)==13): 
                         lepton4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.1056583745)
                         mu_flag = True
@@ -175,6 +210,7 @@ class NanoGenModule(Module):
                     #print
                     #print PDG," -> ", motherPDG," -> ",
                     #print_once = False
+                    neutrino_ID = genpartID
                     Nu4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.0)
                     neutrino_pt_gen = genpart.pt
                     neutrino_eta_gen = genpart.eta
@@ -189,16 +225,19 @@ class NanoGenModule(Module):
                                 #print_once=True
                              PDG = motherPDG
                              motheridx = Gmotheridx
-                             if(abs(PDG) == 24): WMotheridx = motheridx
                              motherPDG,Gmotheridx,GmotherPDG = findMother(Gmotheridx,Genparts)
                              #print GmotherPDG," ---> ",   
                              #print("-----> ",motherPDG,Gmotheridx,GmotherPDG)
-                        #print   
-                    ## ---- it is not posible to be top as mother because in case of lepton we find w(24) as mother atleast and top(6) as Grandmother 
+                             #print   
+                             ## ---- it is not posible to be top as mother because in case of lepton we find w(24) as mother atleast and top(6) as Grandmother
+                         
                         if(abs(GmotherPDG)==6): #we dont want to add the top quarks which give lepton in final state which leptons mother is not W boson
                              #print(isflagTrue(final_state_GenPart_Flag,"fromHardProcess"))
                              #PrintTrueflags(final_state_GenPart_Flag)
                              top_from_nuetrino.append(Gmotheridx)
+                             #if(abs(motherPDG) == 24): 
+                                #WMotheridx = Gmotheridx
+                                #print motherPDG, " ", GmotherPDG," ",Gmotheridx
                              #print "Gmother is top "  
                              #print "top_from_nuetrino : ",top_from_nuetrino
 	#if(len(top_from_lepton)!=1 and len(top_from_bquark)!=1 and len(top_from_nuetrino)!=1):
@@ -208,7 +247,7 @@ class NanoGenModule(Module):
 	    if(top_from_lepton[0]==top_from_bquark[0] and top_from_lepton[0]==top_from_nuetrino[0]):
 	 	#print "top found with index = ",top_from_lepton[0]
                 w4v_gen_reco = lepton4v_gen + Nu4v_gen         
-                top4v_gen_reco = w4v_gen_reco + bJet4v_gen
+                top4v_gen_reco = w4v_gen_reco + bjet4v_gen
 
                 self.out.fillBranch("W_mass_gen_reco", w4v_gen_reco.M())
                 self.out.fillBranch("W_pt_gen_reco", w4v_gen_reco.Pt())
@@ -220,14 +259,22 @@ class NanoGenModule(Module):
                 self.out.fillBranch("top_eta_gen_reco", top4v_gen_reco.Eta())
                 self.out.fillBranch("top_phi_gen_reco", top4v_gen_reco.Phi())
 
-	 	ID=0
+                
+                ID = -1
 	 	for genpart in Genparts:
-                    if((abs(genpart.pdgId)==24 and abs(genpart.genPartIdxMother)==WMotheridx) ):
+                    ID +=1
+                    if(abs(genpart.pdgId)==24 and abs(genpart.genPartIdxMother)==top_from_lepton[0] ):
+                        #print "----->", ID, " ", genpart.pdgId, " ", genpart.genPartIdxMother," ", top_from_lepton[0]
+                        #print "-----> stored ",genpart.pdgId  
                         self.out.fillBranch("W_mass_gen", genpart.mass)
                         self.out.fillBranch("W_pt_gen", genpart.pt)
                         self.out.fillBranch("W_eta_gen", genpart.eta)
                         self.out.fillBranch("W_phi_gen", genpart.phi)
-
+                        self.out.fillBranch("W_ID", ID)
+                        break 
+	 	ID=-1
+                for genpart in Genparts:
+                    ID +=1
 	 	    if(ID==top_from_lepton[0]):
                         #print genpart.statusFlags
                         #PrintTrueflags(Binary_flags(genpart.statusFlags))
@@ -240,36 +287,58 @@ class NanoGenModule(Module):
                         if(mu_flag):self.out.fillBranch("mu_flag", 1.0)
                         else:self.out.fillBranch("mu_flag", 0.0)
 	 	 	#self.top_mass_hist.Fill(genpart.mass)
+                        self.out.fillBranch("top_is_lastcopy", isflagTrue(Binary_flags(genpart.statusFlags),"isLastCopy"))
 	 	 	self.out.fillBranch("top_mass_gen", genpart.mass)
                         self.out.fillBranch("top_pt_gen", genpart.pt)
                         self.out.fillBranch("top_eta_gen", genpart.eta)
                         self.out.fillBranch("top_phi_gen", genpart.phi)
+                        self.out.fillBranch("top_ID", ID)
 
                         self.out.fillBranch("neutrino_pt_gen",neutrino_pt_gen)
                         self.out.fillBranch("neutrino_eta_gen",neutrino_eta_gen)
                         self.out.fillBranch("neutrino_phi_gen",neutrino_phi_gen)
                         self.out.fillBranch("neutrino_el_flag", neutrino_el_flag)
                         self.out.fillBranch("neutrino_mu_flag", neutrino_mu_flag)
+                        self.out.fillBranch("neutrino_ID", neutrino_ID)
 
-                        self.out.fillBranch("lepton_pt_gen",  genpart.pt)
-                        self.out.fillBranch("lepton_eta_gen",  genpart.eta)
-                        self.out.fillBranch("lepton_phi_gen", genpart.phi)
+                        self.out.fillBranch("lepton_pt_gen", lepton_pt_gen)
+                        self.out.fillBranch("lepton_eta_gen",  lepton_eta_gen)
+                        self.out.fillBranch("lepton_phi_gen", lepton_phi_gen)
+                        self.out.fillBranch("lepton_ID", lepton_ID)
+
+                        self.out.fillBranch("bjet_pt_gen", bjet_pt_gen)
+                        self.out.fillBranch("bjet_eta_gen", bjet_eta_gen)
+                        self.out.fillBranch("bjet_phi_gen", bjet_phi_gen)
+                        self.out.fillBranch("bjet_mass_gen",bjet_mass_gen)
+                        self.out.fillBranch("bjet_ID",bjet_ID)
+
+                        self.out.fillBranch("bpart_pt_gen", bpart_pt_gen)
+                        self.out.fillBranch("bpart_eta_gen",bpart_eta_gen)
+                        self.out.fillBranch("bpart_phi_gen",bpart_phi_gen)
+                        self.out.fillBranch("bpart_ID",bpart_ID)
                         
 
                         #print "Genpart top mass : %s pt : %s eta : %s phi : %s" %(genpart.mass,genpart.pt,genpart.eta,genpart.phi)
 	 	        #print ("top mass filed")	
 	 	 	break 
-	 	    ID = ID+1
             else:
                 print "top_from_lepton : ",top_from_lepton," top_from_bquark : ",top_from_bquark," top_from_nuetrino : ",top_from_nuetrino
+
                 self.out.fillBranch("W_mass_gen", -1000)
                 self.out.fillBranch("W_pt_gen",-1000)
                 self.out.fillBranch("W_eta_gen", -1000)
                 self.out.fillBranch("W_phi_gen", -10000)
+
                 self.out.fillBranch("tau_to_el_flag", -2.0)
                 self.out.fillBranch("tau_to_mu_flag", -2.0)
                 self.out.fillBranch("el_flag", -2.0)
                 self.out.fillBranch("mu_flag", -2.0)
+
+                self.out.fillBranch("W_mass_gen_reco", -1000)
+                self.out.fillBranch("W_pt_gen_reco",-1000)
+                self.out.fillBranch("W_eta_gen_reco", -1000)
+                self.out.fillBranch("W_phi_gen_reco", -10000)
+
                 self.out.fillBranch("top_mass_gen", -1000)
                 self.out.fillBranch("top_pt_gen", -1000)
                 self.out.fillBranch("top_eta_gen", -1000)
@@ -278,15 +347,31 @@ class NanoGenModule(Module):
                 self.out.fillBranch("top_pt_gen_reco", -1000)
                 self.out.fillBranch("top_eta_gen_reco", -1000)
                 self.out.fillBranch("top_phi_gen_reco", -1000)
+
                 self.out.fillBranch("neutrino_pt_gen",-1000)
                 self.out.fillBranch("neutrino_eta_gen",-1000)
                 self.out.fillBranch("neutrino_phi_gen",-1000)
+
                 self.out.fillBranch("lepton_pt_gen",  -1000)
                 self.out.fillBranch("lepton_eta_gen",  -1000)
                 self.out.fillBranch("lepton_phi_gen", -1000)
+
+                self.out.fillBranch("bjet_pt_gen", -1000)
+                self.out.fillBranch("bjet_eta_gen", -1000)
+                self.out.fillBranch("bjet_phi_gen", -1000)
+                self.out.fillBranch("bjet_mass_gen",-1000)
+
+                self.out.fillBranch("bpart_pt_gen", -1000)
+                self.out.fillBranch("bpart_eta_gen",-1000)
+                self.out.fillBranch("bpart_phi_gen",-1000)
 	else:
 	    #print "top_from_lepton : %s top_from_bquark : %s top_from_nuetrino : %s event = %s"%(top_from_lepton,top_from_bquark,top_from_nuetrino,getattr(event,'event'))
             #PrintTrueflags(flag_for_b)
+            self.out.fillBranch("W_mass_gen_reco", -999)
+            self.out.fillBranch("W_pt_gen_reco",-999)
+            self.out.fillBranch("W_eta_gen_reco", -999)
+            self.out.fillBranch("W_phi_gen_reco", -999)
+               
             self.out.fillBranch("W_mass_gen", -999)
             self.out.fillBranch("W_pt_gen",-999)
             self.out.fillBranch("W_eta_gen", -999)
@@ -310,6 +395,15 @@ class NanoGenModule(Module):
             self.out.fillBranch("lepton_pt_gen",  -999)
             self.out.fillBranch("lepton_eta_gen",  -999)
             self.out.fillBranch("lepton_phi_gen", -999)
+
+            self.out.fillBranch("bjet_pt_gen", -999)
+            self.out.fillBranch("bjet_eta_gen", -999)
+            self.out.fillBranch("bjet_phi_gen", -999)
+            self.out.fillBranch("bjet_mass_gen",-999)
+
+            self.out.fillBranch("bpart_pt_gen", -999)
+            self.out.fillBranch("bpart_eta_gen",-999)
+            self.out.fillBranch("bpart_phi_gen",-999)
 
 	#    
 	#print("----------------------------------")
