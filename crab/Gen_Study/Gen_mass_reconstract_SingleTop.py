@@ -197,7 +197,7 @@ class NanoGenModule(Module):
                     if(abs(PDG)==13): 
                         lepton4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.1056583745)
                         GenDressedLeptonsID = -1
-                        minidR_dresslep = 99
+                        minidR_dresslep = 999
                         for GenDressedLepton in GenDressedLeptons:
                             GenDressedLeptonID = GenDressedLeptonsID + 1
                             if(abs(GenDressedLepton.pdgId) ==13):GenDressedLepton_gen_temp.SetPtEtaPhiM(GenDressedLepton.pt,GenDressedLepton.eta,GenDressedLepton.phi,GenDressedLepton.mass)
@@ -212,12 +212,14 @@ class NanoGenModule(Module):
                                 DressLep_mass_gen = GenDressedLepton.mass
                                 GenDressedLepton_gen = GenDressedLepton_gen_temp
                                 DressLep_ID =  GenDressedLeptonID
-
+                        if(minidR_dresslep==999):
+                                DressLep_pt_gen = DressLep_eta_gen = DressLep_phi_gen = DressLep_mass_gen = -99
+                                DressLep_ID = -1
                         mu_flag = True
                     if(abs(PDG)==11): 
                         lepton4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.0005109989461)
                         GenDressedLeptonsID = -1
-                        minidR_dresslep = 99
+                        minidR_dresslep = 999
                         for GenDressedLepton in GenDressedLeptons:
                             GenDressedLeptonID = GenDressedLeptonsID + 1
                             if(abs(GenDressedLepton.pdgId) ==11): GenDressedLepton_gen_temp.SetPtEtaPhiM(GenDressedLepton.pt,GenDressedLepton.eta,GenDressedLepton.phi,GenDressedLepton.mass)
@@ -232,7 +234,9 @@ class NanoGenModule(Module):
                                 DressLep_mass_gen = GenDressedLepton.mass
                                 GenDressedLepton_gen = GenDressedLepton_gen_temp
                                 DressLep_ID =  GenDressedLeptonID
-
+                        if(minidR_dresslep==999):
+                                DressLep_pt_gen = DressLep_eta_gen = DressLep_phi_gen = DressLep_mass_gen = -99
+                                DressLep_ID = -1
                         el_flag = True
 	 	    if( abs(motherPDG)==24 or abs(motherPDG)==11 or abs(motherPDG)==13 or abs(motherPDG)==15):	
 	 	    	while ((motherPDG == GmotherPDG and GmotherPDG !=-1 and motherPDG !=-1 and Gmotheridx!=-1 and abs(GmotherPDG)!=6) or ( (abs(motherPDG)==24 or abs(motherPDG)==15) and abs(GmotherPDG)!=6 and GmotherPDG !=-1)):
