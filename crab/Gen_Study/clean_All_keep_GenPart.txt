@@ -1,6 +1,10 @@
 drop *
+keep nGenPart
 keep GenPart*
+keep nGenJet
 keep GenJet*
+keep nGenDressedLepton
+keep GenDressedLepton*
 keep    event
 keep    top_ID
 keep    top_is_lastcopy
@@ -21,6 +25,14 @@ keep    lepton_ID
 keep    lepton_pt_gen
 keep    lepton_eta_gen
 keep    lepton_phi_gen
+
+keep    minidR_dresslep
+keep    DressLep_pt_gen
+keep    DressLep_eta_gen
+keep    DressLep_phi_gen
+keep    DressLep_mass_gen
+keep    DressLep_ID
+
 
 keep    neutrino_ID
 keep    neutrino_pt_gen

@@ -43,6 +43,13 @@ class NanoGenModule(Module):
         self.out.branch("lepton_eta_gen", "F")
         self.out.branch("lepton_phi_gen", "F")
 
+        self.out.branch("minidR_dresslep","F")
+        self.out.branch("DressLep_pt_gen", "F")
+        self.out.branch("DressLep_eta_gen", "F")
+        self.out.branch("DressLep_phi_gen", "F")
+        self.out.branch("DressLep_mass_gen", "F")
+        self.out.branch("DressLep_ID", "I")
+
         self.out.branch("neutrino_ID","I")
         self.out.branch("neutrino_pt_gen", "F")
         self.out.branch("neutrino_eta_gen", "F")
@@ -79,6 +86,7 @@ class NanoGenModule(Module):
     def analyze(self, event):
 	Genparts = Collection(event,"GenPart")
         GenJets = Collection(event,"GenJet")
+        GenDressedLeptons = Collection(event,"GenDressedLepton")
 	top_from_bquark = []
 	top_from_lepton = []
 	top_from_nuetrino = []
@@ -99,6 +107,8 @@ class NanoGenModule(Module):
         w4v_gen_reco = ROOT.TLorentzVector()
         top4v_gen_reco = ROOT.TLorentzVector()
         bjet4v_gen_temp = ROOT.TLorentzVector()
+        GenDressedLepton_gen = ROOT.TLorentzVector()
+        GenDressedLepton_gen_temp = ROOT.TLorentzVector()
 
         genpartID = -1
 	for genpart in Genparts:
@@ -140,7 +150,7 @@ class NanoGenModule(Module):
                                 bjet_eta_gen = genjet.eta
                                 bjet_phi_gen = genjet.phi
                                 bjet_mass_gen = genjet.mass
-                                bjet4v_gen.SetPtEtaPhiM(genjet.pt,genjet.eta,genjet.phi,genjet.mass)
+                                bjet4v_gen = bjet4v_gen_temp
                                 bjet_ID =  JetID
 	 	    if(abs(motherPDG)!=6):
 	 	        #print abs(motherPDG)," -> ",
@@ -185,9 +195,43 @@ class NanoGenModule(Module):
                     lepton_phi_gen = genpart.phi
                     if(abs(PDG)==13): 
                         lepton4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.1056583745)
+                        GenDressedLeptonsID = -1
+                        minidR_dresslep = 99
+                        for GenDressedLepton in GenDressedLeptons:
+                            GenDressedLeptonID = GenDressedLeptonsID + 1
+                            if(GenDressedLepton.pdgId ==13):GenDressedLepton_gen_temp.SetPtEtaPhiM(GenDressedLepton.pt,GenDressedLepton.eta,GenDressedLepton.phi,GenDressedLepton.mass)
+                            else: continue
+                            minidR_dresslep_temp = lepton4v_gen.DeltaR(GenDressedLepton_gen_temp)
+                            
+                            if(minidR_dresslep_temp<minidR_dresslep):
+                                minidR_dresslep = minidR_dresslep_temp
+                                DressLep_pt_gen = GenDressedLepton.pt
+                                DressLep_eta_gen = GenDressedLepton.eta
+                                DressLep_phi_gen = GenDressedLepton.phi
+                                DressLep_mass_gen = GenDressedLepton.mass
+                                GenDressedLepton_gen = GenDressedLepton_gen_temp
+                                DressLep_ID =  GenDressedLeptonID
+
                         mu_flag = True
                     if(abs(PDG)==11): 
                         lepton4v_gen.SetPtEtaPhiM(genpart.pt,genpart.eta,genpart.phi,0.0005109989461)
+                        GenDressedLeptonsID = -1
+                        minidR_dresslep = 99
+                        for GenDressedLepton in GenDressedLeptons:
+                            GenDressedLeptonID = GenDressedLeptonsID + 1
+                            if(GenDressedLepton.pdgId ==11): GenDressedLepton_gen_temp.SetPtEtaPhiM(GenDressedLepton.pt,GenDressedLepton.eta,GenDressedLepton.phi,GenDressedLepton.mass)
+                            else: continue
+                            minidR_dresslep_temp = lepton4v_gen.DeltaR(GenDressedLepton_gen_temp)
+                            
+                            if(minidR_dresslep_temp<minidR_dresslep):
+                                minidR_dresslep = minidR_dresslep_temp
+                                DressLep_pt_gen = GenDressedLepton.pt
+                                DressLep_eta_gen = GenDressedLepton.eta
+                                DressLep_phi_gen = GenDressedLepton.phi
+                                DressLep_mass_gen = GenDressedLepton.mass
+                                GenDressedLepton_gen = GenDressedLepton_gen_temp
+                                DressLep_ID =  GenDressedLeptonID
+
                         el_flag = True
 	 	    if( abs(motherPDG)==24 or abs(motherPDG)==11 or abs(motherPDG)==13 or abs(motherPDG)==15):	
 	 	    	while ((motherPDG == GmotherPDG and GmotherPDG !=-1 and motherPDG !=-1 and Gmotheridx!=-1 and abs(GmotherPDG)!=6) or ( (abs(motherPDG)==24 or abs(motherPDG)==15) and abs(GmotherPDG)!=6 and GmotherPDG !=-1)):
@@ -251,7 +295,7 @@ class NanoGenModule(Module):
 	if(len(top_from_lepton)==1 and len(top_from_bquark)==1): 
 	    if(top_from_lepton[0]==top_from_bquark[0] and top_from_lepton[0]==top_from_nuetrino[0]):
 	 	#print "top found with index = ",top_from_lepton[0]
-                w4v_gen_reco = lepton4v_gen + Nu4v_gen         
+                w4v_gen_reco = GenDressedLepton_gen + Nu4v_gen         
                 top4v_gen_reco = w4v_gen_reco + bjet4v_gen
 
                 self.out.fillBranch("W_mass_gen_reco", w4v_gen_reco.M())
@@ -311,6 +355,13 @@ class NanoGenModule(Module):
                         self.out.fillBranch("lepton_phi_gen", lepton_phi_gen)
                         self.out.fillBranch("lepton_ID", lepton_ID)
 
+                        self.out.fillBranch("minidR_dresslep",minidR_dresslep)
+                        self.out.fillBranch("DressLep_pt_gen", DressLep_pt_gen)
+                        self.out.fillBranch("DressLep_eta_gen", DressLep_eta_gen)
+                        self.out.fillBranch("DressLep_phi_gen", DressLep_phi_gen)
+                        self.out.fillBranch("DressLep_mass_gen", DressLep_mass_gen)
+                        self.out.fillBranch("DressLep_ID", DressLep_ID)
+
                         self.out.fillBranch("bjet_pt_gen", bjet_pt_gen)
                         self.out.fillBranch("bjet_eta_gen", bjet_eta_gen)
                         self.out.fillBranch("bjet_phi_gen", bjet_phi_gen)
@@ -361,6 +412,14 @@ class NanoGenModule(Module):
                 self.out.fillBranch("lepton_eta_gen",  -1000)
                 self.out.fillBranch("lepton_phi_gen", -1000)
 
+                self.out.fillBranch("minidR_dresslep",-1000)
+                self.out.fillBranch("DressLep_pt_gen", -1000)
+                self.out.fillBranch("DressLep_eta_gen", -1000)
+                self.out.fillBranch("DressLep_phi_gen", -1000)
+                self.out.fillBranch("DressLep_mass_gen", -1000)
+                self.out.fillBranch("DressLep_ID", -1000)
+
+
                 self.out.fillBranch("bjet_pt_gen", -1000)
                 self.out.fillBranch("bjet_eta_gen", -1000)
                 self.out.fillBranch("bjet_phi_gen", -1000)
@@ -402,6 +461,14 @@ class NanoGenModule(Module):
             self.out.fillBranch("lepton_eta_gen",  -999)
             self.out.fillBranch("lepton_phi_gen", -999)
 
+            self.out.fillBranch("minidR_dresslep",-999)
+            self.out.fillBranch("DressLep_pt_gen", -999)
+            self.out.fillBranch("DressLep_eta_gen", -999)
+            self.out.fillBranch("DressLep_phi_gen", -999)
+            self.out.fillBranch("DressLep_mass_gen", -999)
+            self.out.fillBranch("DressLep_ID", -999)
+
+
             self.out.fillBranch("bjet_pt_gen", -999)
             self.out.fillBranch("bjet_eta_gen", -999)
             self.out.fillBranch("bjet_phi_gen", -999)
@@ -414,6 +481,15 @@ class NanoGenModule(Module):
 	#    
 	#print("----------------------------------")
              #return True
+        del lepton4v_gen
+        del Nu4v_gen
+        del bPart4v_gen
+        del bjet4v_gen
+        del w4v_gen_reco
+        del top4v_gen_reco
+        del bjet4v_gen_temp
+        del GenDressedLepton_gen
+        del GenDressedLepton_gen_temp
         return True
 
 NanoGenConstr_UL2016 = lambda : NanoGenModule('UL2016')
