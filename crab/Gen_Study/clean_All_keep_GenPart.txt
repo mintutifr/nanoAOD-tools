@@ -32,7 +32,7 @@ keep    DressLep_eta_gen
 keep    DressLep_phi_gen
 keep    DressLep_mass_gen
 keep    DressLep_ID
-
+keep    DR_dresslepton_bjet
 
 keep    neutrino_ID
 keep    neutrino_pt_gen

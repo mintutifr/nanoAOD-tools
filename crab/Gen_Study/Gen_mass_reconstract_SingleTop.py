@@ -80,6 +80,7 @@ class NanoGenModule(Module):
         self.out.branch("bpart_eta_gen", "F")
         self.out.branch("bpart_phi_gen", "F")
         self.out.branch("minDR_bpart_bjet","F")
+        self.out.branch("DR_dresslepton_bjet","F")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -199,7 +200,7 @@ class NanoGenModule(Module):
                         minidR_dresslep = 99
                         for GenDressedLepton in GenDressedLeptons:
                             GenDressedLeptonID = GenDressedLeptonsID + 1
-                            if(GenDressedLepton.pdgId ==13):GenDressedLepton_gen_temp.SetPtEtaPhiM(GenDressedLepton.pt,GenDressedLepton.eta,GenDressedLepton.phi,GenDressedLepton.mass)
+                            if(abs(GenDressedLepton.pdgId) ==13):GenDressedLepton_gen_temp.SetPtEtaPhiM(GenDressedLepton.pt,GenDressedLepton.eta,GenDressedLepton.phi,GenDressedLepton.mass)
                             else: continue
                             minidR_dresslep_temp = lepton4v_gen.DeltaR(GenDressedLepton_gen_temp)
                             
@@ -219,7 +220,7 @@ class NanoGenModule(Module):
                         minidR_dresslep = 99
                         for GenDressedLepton in GenDressedLeptons:
                             GenDressedLeptonID = GenDressedLeptonsID + 1
-                            if(GenDressedLepton.pdgId ==11): GenDressedLepton_gen_temp.SetPtEtaPhiM(GenDressedLepton.pt,GenDressedLepton.eta,GenDressedLepton.phi,GenDressedLepton.mass)
+                            if(abs(GenDressedLepton.pdgId) ==11): GenDressedLepton_gen_temp.SetPtEtaPhiM(GenDressedLepton.pt,GenDressedLepton.eta,GenDressedLepton.phi,GenDressedLepton.mass)
                             else: continue
                             minidR_dresslep_temp = lepton4v_gen.DeltaR(GenDressedLepton_gen_temp)
                             
@@ -367,6 +368,7 @@ class NanoGenModule(Module):
                         self.out.fillBranch("bjet_phi_gen", bjet_phi_gen)
                         self.out.fillBranch("bjet_mass_gen",bjet_mass_gen)
                         self.out.fillBranch("bjet_ID",bjet_ID)
+                        self.out.fillBranch("DR_dresslepton_bjet",GenDressedLepton_gen.DeltaR(bjet4v_gen))
 
                         self.out.fillBranch("bpart_pt_gen", bpart_pt_gen)
                         self.out.fillBranch("bpart_eta_gen",bpart_eta_gen)
@@ -424,6 +426,7 @@ class NanoGenModule(Module):
                 self.out.fillBranch("bjet_eta_gen", -1000)
                 self.out.fillBranch("bjet_phi_gen", -1000)
                 self.out.fillBranch("bjet_mass_gen",-1000)
+                self.out.fillBranch("DR_dresslepton_bjet",-1000)
 
                 self.out.fillBranch("bpart_pt_gen", -1000)
                 self.out.fillBranch("bpart_eta_gen",-1000)
@@ -473,6 +476,7 @@ class NanoGenModule(Module):
             self.out.fillBranch("bjet_eta_gen", -999)
             self.out.fillBranch("bjet_phi_gen", -999)
             self.out.fillBranch("bjet_mass_gen",-999)
+            self.out.fillBranch("DR_dresslepton_bjet",-1000)
 
             self.out.fillBranch("bpart_pt_gen", -999)
             self.out.fillBranch("bpart_eta_gen",-999)
