@@ -20,7 +20,7 @@ def search_string_in_file(file_name, string_to_search):
             if string_to_search in line:
                 # If yes, then add the line number & line as a tuple in the list
 		string = line.rstrip()
-		list_of_results.append(string[32:]) #Output dataset:
+		list_of_results.append(string[18:]) #Output dataset:
                 #list_of_results.append(string[25:]) #Number of events read:
 		#list_of_results.append(string[30:-11]) #root://cms-xrd-global.cern.ch/
 		#list_of_results.append(string[30:].rsplit("/",1)[0]+"/") #root://cms-xrd-global.cern.ch/
