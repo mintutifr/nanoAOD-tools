@@ -279,7 +279,7 @@ class cutflow:
 	    for jet in jets:
 	    	#print jet.jetId
 	    	islossepF=False
-	    	if(jet.pt>40 and abs(jet.eta)<4.7 and jet.jetId!=0):
+	    	if(jet.pt>40 and abs(jet.eta)<4.7 and jet.jetId!=0 and jet.puId!=0):
 	 	        islossepF = True
 	 	        jetid_for_N_jets.append(jet)
 	 	        #print "jet.pt = ",jet.pt," jet.eta = ",abs(jet.eta), " jet.jetId = ",jet.jetId, "lossepF = ", lossepF
