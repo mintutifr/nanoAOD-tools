@@ -5,6 +5,8 @@ import sys
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
 from Mc_prob_cal_forBweght import *
 from scaleFactor import *
+import gzip
+from correctionlib import _core
 
 #parser = arg.ArgumentParser(description='discription for inputs')
 #parser.add_argument('-f', '--inputFile', dest='InFile', default=['MVA_results/Inputfile_after_traing.root'], type=str, nargs=1, help="Input File after the training ")
@@ -26,6 +28,21 @@ class cutflow:
         self.lepflavour = lepflavour
         self.isMC = isMC
         self.dataYear = dataYear
+        if(self.isMC):
+             PATH = "%s/src/PhysicsTools/NanoAODTools/python/postprocessing/data/pileup/" % os.environ['CMSSW_BASE']
+             JetPUJetID_effi_file={
+             'UL2016preVFP'  :  PATH+"jmar_PUID_UL2016preVFP.json.gz",
+             'UL2016postVFP' :  PATH+"jmar_PUID_UL2016postVFP.json.gz",
+             'UL2017'        :  PATH+"jmar_PUID_UL2017.json.gz",
+             'UL2018'        :  PATH+"jmar_PUID_UL2018.json.gz"}
+	
+             if JetPUJetID_effi_file[self.dataYear].endswith(".json.gz"):
+                with gzip.open(JetPUJetID_effi_file[self.dataYear],'rt') as file:
+                        data = file.read().strip()
+                        self.evaluator = _core.CorrectionSet.from_string(data)
+             else:
+                        self.evaluator = _core.CorrectionSet.from_file(JetPUJetID_effi_file[self.dataYear])
+
         self.TotalLumi = {
             '2016' : 35882.5,
             '2017' : 41529.5,
@@ -43,7 +60,7 @@ class cutflow:
             '2016' : 0.7527, 
             '2017' : 0.8001,
             '2018' : None,
-            'UL2016preVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
+            'UL2016preVFP' : 0.6502, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
             'UL2016postVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
             'UL2017' : 0.7476, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
             'UL2018' : 0.7100} # https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
@@ -262,7 +279,7 @@ class cutflow:
 	    ##################################
 	    #jet selection  --4--
 	    ##################################  
-	 
+         
 	 
 	    jet_id = []
 	    jetid_for_N_jets = []
@@ -295,14 +312,19 @@ class cutflow:
 	  	#  print "jet_id = ",jet_id
                 
             if(self.isMC == True): bweight_for_N_b_jets = Probability_2("Central",jetid_for_N_jets)
+            JetPUJetID_SF = 1.0
+	    if(self.isMC==True):
+                for jet in jetid_for_N_jets:
+                    if(jet.pt<50):
+                        JetPUJetID_SF = JetPUJetID_SF*self.evaluator["PUJetID_eff"].evaluate(abs(jet.eta), jet.pt, "nom","L")
             if(self.lepflavour=="mu" and self.isMC == True):
-                self.N_jets.Fill(len(jetid_for_N_jets),(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF)
-                self.wightSum_WO_bWeight.Fill(len(jetid_for_N_jets),(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF)
-                self.wightSum_W_bWeight.Fill(len(jetid_for_N_jets),(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*bweight_for_N_b_jets)
+                self.N_jets.Fill(len(jetid_for_N_jets),(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*JetPUJetID_SF)
+                self.wightSum_WO_bWeight.Fill(len(jetid_for_N_jets),(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*JetPUJetID_SF)
+                self.wightSum_W_bWeight.Fill(len(jetid_for_N_jets),(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*JetPUJetID_SF*bweight_for_N_b_jets)
             if(self.lepflavour=="el" and self.isMC == True):
-                self.N_jets.Fill(len(jetid_for_N_jets),(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF)
-                self.wightSum_WO_bWeight.Fill(len(jetid_for_N_jets),(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF)
-                self.wightSum_W_bWeight.Fill(len(jetid_for_N_jets),(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*bweight_for_N_b_jets)
+                self.N_jets.Fill(len(jetid_for_N_jets),(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*JetPUJetID_SF)
+                self.wightSum_WO_bWeight.Fill(len(jetid_for_N_jets),(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*JetPUJetID_SF)
+                self.wightSum_W_bWeight.Fill(len(jetid_for_N_jets),(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*JetPUJetID_SF*bweight_for_N_b_jets)
             if(self.lepflavour=="mu" and self.isMC == False):
                 self.N_jets.Fill(len(jetid_for_N_jets),PreFireWeight)
             if(self.lepflavour=="el" and self.isMC == False):
@@ -313,16 +335,24 @@ class cutflow:
                         N_b_jets=N_b_jets+1
                 
             del jetid_for_N_jets
-            if(self.lepflavour=="mu" and self.isMC == True):self.N_b_jets.Fill(N_b_jets,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*bweight_for_N_b_jets)
-            if(self.lepflavour=="el" and self.isMC == True):self.N_b_jets.Fill(N_b_jets,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*bweight_for_N_b_jets)
+            if(self.lepflavour=="mu" and self.isMC == True):self.N_b_jets.Fill(N_b_jets,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*JetPUJetID_SF*bweight_for_N_b_jets)
+            if(self.lepflavour=="el" and self.isMC == True):self.N_b_jets.Fill(N_b_jets,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*JetPUJetID_SF*bweight_for_N_b_jets)
             if(self.lepflavour=="mu" and self.isMC == False):self.N_b_jets.Fill(N_b_jets,PreFireWeight)
             if(self.lepflavour=="el" and self.isMC == False):self.N_b_jets.Fill(N_b_jets,PreFireWeight)
             if(self.isMC == True): del bweight_for_N_b_jets
             del N_b_jets
-                
+            del JetPUJetID_SF
+    
+            JetPUJetID_SF = 1.0
 	    if(len(jet_id)==self.Total_Njets):
-           	if(self.lepflavour=="mu" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF)
-           	elif(self.lepflavour=="el" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF)
+                
+                if(self.isMC==True):
+                  for jet in jet_id:
+                     if(jet.pt<50):
+                        JetPUJetID_SF = JetPUJetID_SF*self.evaluator["PUJetID_eff"].evaluate(abs(jet.eta), jet.pt, "nom","L")
+
+           	if(self.lepflavour=="mu" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*JetPUJetID_SF)
+           	elif(self.lepflavour=="el" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*JetPUJetID_SF)
 	   	elif(self.lepflavour=="mu" and self.isMC == False): self.jet_sel_npvs.Fill(PV_npvs,PreFireWeight)
 	   	elif(self.lepflavour=="el" and self.isMC == False): self.jet_sel_npvs.Fill(PV_npvs,PreFireWeight)
 	   
@@ -344,8 +374,8 @@ class cutflow:
 	    	if(self.isMC == True):
 		    #print getattr(event,'event')
 	 	    bweight = Probability_2("Central",jet_id)	
-	 	    if(self.lepflavour=="mu"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*bweight)
-	 	    if(self.lepflavour=="el"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*bweight)
+	 	    if(self.lepflavour=="mu"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*JetPUJetID_SF*bweight)
+	 	    if(self.lepflavour=="el"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*JetPUJetID_SF*bweight)
 	 	     #print "bweight = ",bweight
 	    	if(self.isMC == False):
 	 	    if(self.lepflavour=="mu"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,PreFireWeight)
