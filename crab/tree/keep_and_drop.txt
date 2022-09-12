@@ -1,0 +1,143 @@
+# this  comment
+drop * # start with all
+
+keep event
+keep run
+keep luminosityBlock
+
+keep HLT_Ele27_WPTight_Gsf*
+keep HLT_Ele28_WPTight_Gsf*
+keep HLT_Ele32_WPTight_Gsf*
+keep HLT_Ele35_WPTight_Gsf*
+keep HLT_Ele38_WPTight_Gsf*
+keep HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned*
+keep HLT_Ele27_eta2p1_WPTight_Gsf*
+keep HLT_Ele32_eta2p1_WPTight_Gsf*
+
+keep HLT_IsoMu20*
+keep HLT_IsoTkMu20*
+keep HLT_IsoMu24*
+keep HLT_IsoTkMu24*
+keep HLT_IsoMu24_eta2p1*
+keep HLT_IsoMu27*
+keep HLT_IsoTkMu27*
+keep HLT_IsoMu30*
+
+
+keep PV*
+
+keep Pileup_gpudensity 
+keep Pileup_nPU
+keep Pileup_nTrueInt
+keep Pileup_pudensity
+keep GenPart*
+
+keep GenJet*
+
+keep Generator*
+
+keep PSWeight*
+
+keep LHEPdfWeight
+keep LHEScaleWeight*
+keep LHEWeight*
+
+keep nElectron
+keep Electron_pt	
+keep Electron_eta
+keep Electron_phi	
+keep Electron_mass	
+keep Electron_charge	
+keep Electron_deltaEtaSC
+keep Electron_EtaSC
+keep Electron_cutBased
+keep Electron_pfRelIso03_all
+keep Electron_pfRelIso03_chg	
+keep Electron_miniPFRelIso_all
+keep Electron_miniPFRelIso_chg
+keep Electron_dz
+keep Electron_dzErr
+keep Electron_dxy
+keep Electron_dxyErr	
+keep Electron_cleanmask
+keep Electron_dr03EcalRecHitSumEt
+keep Electron_dr03TkSumPt
+keep Electron_hoe
+keep Electron_genPartIdx
+keep Electron_r9
+
+keep nMuon
+keep Muon_pt
+keep Muon_eta
+keep Muon_phi
+keep Muon_mass
+keep Muon_charge
+keep Muon_isPFcand
+keep Muon_isGlobal
+keep Muon_isTracker
+keep Muon_mediumId	
+keep Muon_looseId
+keep Muon_tightId
+keep Muon_pfRelIso04_all
+keep Muon_pfRelIso03_all
+keep Muon_pfRelIso03_chg
+keep Muon_miniPFRelIso_all
+keep Muon_miniPFRelIso_chg
+keep Muon_mvaId
+keep Muon_genPartIdx
+keep Muon_nTrackerLayers
+keep L1PreFiringWeight_Dn
+keep L1PreFiringWeight_Nom
+keep L1PreFiringWeight_Up
+
+keep nJet
+keep Jet_pt
+keep Jet_eta
+keep Jet_phi
+keep Jet_mass
+keep Jet_partonFlavour
+keep Jet_hadronFlavour
+keep Jet_btagCMVA
+keep Jet_btagCSVV2
+keep Jet_btagDeepB
+keep Jet_btagDeepFlavB
+keep Jet_qgl
+keep Jet_genJetIdx
+keep Jet_jetId 
+keep Jet_puId
+keep Jet_chEmEF
+keep Jet_chHEF
+keep Jet_neEmEF
+keep Jet_neHEF
+keep Jet_muEF
+keep Jet_nConstituents
+keep Jet_nElectrons
+keep Jet_nMuons
+keep Jet_area
+keep Jet_bRegCorr
+keep Jet_bRegRes
+ 
+keep MET*
+keep PuppiMET*
+
+
+#added in main module
+keep Jet_dR_Ljet_Isomu
+keep Jet_dR_Ljet_AntiIsomu
+keep Jet_dR_Ljet_Isoel
+keep Jet_dR_Ljet_AntiIsoel
+
+       
+keep Electron_EtaSC
+
+keep Jet_btagSF_*
+keep puWeight*
+keep LHEWeight*
+
+#------------------related to jme calculation--------------#
+keep RawMET*
+keep fixedGridRhoFastjetAll
+keep Jet_rawFactor
+keep Jet_muonSubtrFactor
+keep nCorrT1METJet
+keep CorrT1METJet*
