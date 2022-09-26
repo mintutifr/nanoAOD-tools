@@ -5,9 +5,53 @@ import numpy as np
 import ROOT as rt
 from IPython.display import display
 from torch.utils.data import TensorDataset, DataLoader
+from torch.optim.lr_scheduler import MultiStepLR
 from torch import nn
 from torch.utils.tensorboard import SummaryWriter
 from datetime import datetime
+
+def distance_corr(var_1,var_2,normedweight,power=2):
+    """var_1: First variable to decorrelate (eg mass)
+    var_2: Second variable to decorrelate (eg classifier output)
+    normedweight: Per-example weight. Sum of weights should add up to N (where N is the number of examples)
+    power: Exponent used in calculating the distance correlation
+    
+    va1_1, var_2 and normedweight should all be 1D torch tensors with the same number of entries
+    
+    Usage: Add to your loss function. total_loss = BCE_loss + lambda * distance_corr
+    """
+    
+    
+    xx = var_1.view(-1, 1).repeat(1, len(var_1)).view(len(var_1),len(var_1))
+    yy = var_1.repeat(len(var_1),1).view(len(var_1),len(var_1))
+    amat = (xx-yy).abs()
+
+    xx = var_2.view(-1, 1).repeat(1, len(var_2)).view(len(var_2),len(var_2))
+    yy = var_2.repeat(len(var_2),1).view(len(var_2),len(var_2))
+    bmat = (xx-yy).abs()
+
+    amatavg = torch.mean(amat*normedweight,dim=1)
+    Amat=amat-amatavg.repeat(len(var_1),1).view(len(var_1),len(var_1))\
+        -amatavg.view(-1, 1).repeat(1, len(var_1)).view(len(var_1),len(var_1))\
+        +torch.mean(amatavg*normedweight)
+
+    bmatavg = torch.mean(bmat*normedweight,dim=1)
+    Bmat=bmat-bmatavg.repeat(len(var_2),1).view(len(var_2),len(var_2))\
+        -bmatavg.view(-1, 1).repeat(1, len(var_2)).view(len(var_2),len(var_2))\
+        +torch.mean(bmatavg*normedweight)
+
+    ABavg = torch.mean(Amat*Bmat*normedweight,dim=1)
+    AAavg = torch.mean(Amat*Amat*normedweight,dim=1)
+    BBavg = torch.mean(Bmat*Bmat*normedweight,dim=1)
+
+    if(power==1):
+        dCorr=(torch.mean(ABavg*normedweight))/torch.sqrt((torch.mean(AAavg*normedweight)*torch.mean(BBavg*normedweight)))
+    elif(power==2):
+        dCorr=(torch.mean(ABavg*normedweight))**2/(torch.mean(AAavg*normedweight)*torch.mean(BBavg*normedweight))
+    else:
+        dCorr=((torch.mean(ABavg*normedweight))/torch.sqrt((torch.mean(AAavg*normedweight)*torch.mean(BBavg*normedweight))))**power
+    
+    return dCorr
 
 
 class NeuralNetwork(nn.Module):
@@ -15,11 +59,22 @@ class NeuralNetwork(nn.Module):
         super(NeuralNetwork, self).__init__()
         #self.flatten = nn.Flatten()
         self.linear_relu_stack = nn.Sequential(
-            nn.Linear(9, 64),
+            nn.Linear(18, 256),
             nn.ReLU(),
-            nn.Linear(64, 128),
+            nn.Linear(256, 512),
             nn.ReLU(),
-            nn.Linear(128, 3),
+            nn.Linear(512, 512),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(512, 256),
+            nn.ReLU(),
+            nn.Linear(256, 128),
+            nn.ReLU(),
+            nn.Dropout(0.1),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Linear(64, 6),
+            nn.LogSoftmax(dim=1),
         )
 
     def forward(self, x):
@@ -36,20 +91,18 @@ def train_one_epoch(epoch_index, tb_writer, training_loader):
     # index and do some intra-epoch reporting
     for i, data in enumerate(training_loader):
         # Every data instance is an input + label pair
-        inputs, labels = data
+        inputs, labels1 = data
 
         # Zero your gradients for every batch!
         optimizer.zero_grad()
 
         # Make predictions for this batch
         outputs = model(inputs)
-
+        labels = labels1[:,0]
         # Compute the loss and its gradients
-        #print(outputs.shape)
-        #print(labels.long()[:,0])
-        loss = loss_fn(outputs, labels.long()[:,0])
+        loss = loss_fn(outputs, labels.long()) + lamda * distance_corr(labels1[:,1],torch.exp(outputs[:,1]), labels1[:,2]) +  lamda * distance_corr(labels1[:,1],torch.exp(outputs[:,2]), labels1[:,2]) +  lamda * distance_corr(labels1[:,1],torch.exp(outputs[:,3]), labels1[:,2]) +  lamda * distance_corr(labels1[:,1],torch.exp(outputs[:,4]), labels1[:,2]) +  lamda * distance_corr(labels1[:,1],torch.exp(outputs[:,5]), labels1[:,2])
         loss.backward()
-
+        #print(loss)
         # Adjust learning weights
         optimizer.step()
 
@@ -57,57 +110,57 @@ def train_one_epoch(epoch_index, tb_writer, training_loader):
         running_loss += loss.item()
         if i % 1000 == 999:
             last_loss = running_loss / 1000 # loss per batch
-            print('  batch {} loss: {}'.format(i + 1, last_loss))
+            #print('  batch {} loss: {}'.format(i + 1, last_loss))
             tb_x = epoch_index * len(training_loader) + i + 1
             tb_writer.add_scalar('Loss/train', last_loss, tb_x)
             running_loss = 0.
 
     return last_loss
 
-VARS = ['MuonEta',
-        'dEta_mu_bJet',
-        'mtwMass',
-        'abs_lJetEta',
-        'jetpTSum',
-        'diJetMass',
-        'cosThetaStar',
-        'dR_bJet_lJet',
-        'FW1',
+VARS = ['MuonEta', 'MuonPt', 'MuonPhi', 'MuonE',
+        'lJetEta', 'lJetPt', 'lJetPhi', 'lJetMass',
+        'bJetEta', 'bJetPt', 'bJetPhi', 'bJetMass',
+        'Px_nu', 'Py_nu', 'Pz_nu',
+        'FW1', 'bJetdeepJet', 'lJetdeepJet',
         ]
 
-df_tr_top_signal = rt.RDataFrame("Events",'dataframe_saved/preVFP2016_Top_signal_train.root').AsNumpy()
-df_tr_top_BKG = rt.RDataFrame("Events",'dataframe_saved/preVFP2016_Top_bkg_train.root').AsNumpy()
-df_tr_EWK_BKG = rt.RDataFrame("Events",'dataframe_saved/preVFP2016_EWK_BKG_train.root').AsNumpy()
+train_ch = ['WS_Top_signal', 'Top_signal', 'Top_bkg', 'WS_Top_bkg', 'EWK_BKG', 'QCD_BKG']
+df_train={}
+df_val = {}
+x_tr_ch = {}
+y_tr_ch = {}
+x_val_ch = {}
+y_val_ch = {}
 
-df_val_top_signal = rt.RDataFrame("Events",'dataframe_saved/preVFP2016_Top_signal_valid.root').AsNumpy()
-df_val_top_BKG = rt.RDataFrame("Events",'dataframe_saved/preVFP2016_Top_bkg_valid.root').AsNumpy()
-df_val_EWK_BKG = rt.RDataFrame("Events",'dataframe_saved/preVFP2016_EWK_BKG_valid.root').AsNumpy()
+n_tr = 50000
+n_val = 10000
+for count, channel in enumerate(train_ch):
+    df_train[channel] = rt.RDataFrame("Events",'2017_' + channel + '_train.root').AsNumpy()
+    df_val[channel] = rt.RDataFrame("Events",'2017_' + channel + '_valid.root').AsNumpy()
+    x_tr_ch[channel] = np.vstack([df_train[channel][var] for var in VARS]).T
+    x_val_ch[channel] = np.vstack([df_val[channel][var] for var in VARS]).T
+    print("shape of x for training " + channel + " " , np.shape(x_tr_ch[channel]))
+    print("shape of x for validation " + channel + " " , x_val_ch[channel].shape)
+    sel_tr = np.random.choice(x_tr_ch[channel].shape[0], n_tr, replace=False)
+    sel_val = np.random.choice(x_val_ch[channel].shape[0], n_val, replace=False)
+    print(np.shape(df_train[channel]['topMass']))
+    y_tr_ch[channel] = np.vstack([np.array([count]*(n_tr)), df_train[channel]['topMass'][sel_tr], np.array([1]*(n_tr))]).T 
+    y_val_ch[channel] = np.vstack([np.array([count]*(n_val)), df_val[channel]['topMass'][sel_val], np.array([1]*(n_val))]).T
+    if count == 0:
+        x_tr = np.vstack([x_tr_ch[channel][sel_tr]])
+        y_tr = np.vstack([y_tr_ch[channel]])
+        x_val = np.vstack([x_val_ch[channel][sel_val]])
+        y_val = np.vstack([y_val_ch[channel]])
+    else:
+        x_tr = np.vstack([x_tr, x_tr_ch[channel][sel_tr]])
+        y_tr = np.vstack([y_tr, y_tr_ch[channel]])
+        x_val = np.vstack([x_val, x_val_ch[channel][sel_val]])
+        y_val = np.vstack([y_val, y_val_ch[channel]])
 
-#display(df_tr_top_signal_new)
-
-x_Sig_tr = np.vstack([df_tr_top_signal[var] for var in VARS]).T
-x_Top_BKG_tr = np.vstack([df_tr_top_BKG[var] for var in VARS]).T
-x_EWK_BKG_tr = np.vstack([df_tr_EWK_BKG[var] for var in VARS]).T
-x_tr = np.vstack([x_Sig_tr, x_Top_BKG_tr, x_EWK_BKG_tr])
 print("shape of x for training" ,x_tr.shape)
 
-y_Sig_tr = np.vstack([0]*(x_Sig_tr.shape[0]))
-y_Top_BKG_tr = np.vstack([1]*(x_Top_BKG_tr.shape[0]))
-y_BKG_BKG_tr = np.vstack([2]*(x_EWK_BKG_tr.shape[0]))
-y_tr = np.vstack([y_Sig_tr,y_Top_BKG_tr,y_BKG_BKG_tr]).astype(int)
-print("shape of y for training", y_tr.shape)
-
-
-x_Sig_val = np.vstack([df_val_top_signal[var] for var in VARS]).T
-x_Top_BKG_val = np.vstack([df_val_top_BKG[var] for var in VARS]).T
-x_EWK_BKG_val = np.vstack([df_val_EWK_BKG[var] for var in VARS]).T
-x_val = np.vstack([x_Sig_val, x_Top_BKG_val, x_EWK_BKG_val])
 print("shape of x for validation" ,x_val.shape)
 
-y_Sig_val = np.vstack([0]*(x_Sig_val.shape[0]))
-y_Top_BKG_val = np.vstack([1]*(x_Top_BKG_val.shape[0]))
-y_BKG_BKG_val = np.vstack([2]*(x_EWK_BKG_val.shape[0]))
-y_val = np.vstack([y_Sig_val,y_Top_BKG_val,y_BKG_BKG_val]).astype(int)
 print("shape of y for validation", y_val.shape)
 
 tensor_x_tr = torch.Tensor(x_tr) # transform to torch tensor
@@ -116,36 +169,41 @@ tensor_y_tr = torch.Tensor(y_tr)
 tensor_x_val = torch.Tensor(x_val) # transform to torch tensor
 tensor_y_val = torch.Tensor(y_val)
 
-if torch.cuda.is_available():
-    tensor_x_tr = tensor_x_tr.to("cuda")
-    tensor_y_tr = tensor_y_tr.to("cuda")
-    tensor_x_val = tensor_x_val.to("cuda")
-    tensor_y_val = tensor_y_val.to("cuda")
+device = "cuda:3" if torch.cuda.is_available() else "cpu"
+print(f"Using {device} device")
 
+if torch.cuda.is_available():
+    tensor_x_tr = tensor_x_tr.to(device)
+    tensor_y_tr = tensor_y_tr.to(device)
+    tensor_x_val = tensor_x_val.to(device)
+    tensor_y_val = tensor_y_val.to(device)
+
+batch = 40
 train_dataset = TensorDataset(tensor_x_tr,tensor_y_tr) # create your datset
 validation_dataset = TensorDataset(tensor_x_val,tensor_y_val)
-training_loader = DataLoader(train_dataset, batch_size = 20, shuffle = True) # create your dataloader
-validation_loader = DataLoader(validation_dataset, batch_size = 20, shuffle = True)
+training_loader = DataLoader(train_dataset, batch_size = batch, shuffle = True) # create your dataloader
+validation_loader = DataLoader(validation_dataset, batch_size = batch, shuffle = True)
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-print(f"Using {device} device")
 
 model = NeuralNetwork().to(device)
 print(model)
 
-loss_fn = torch.nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
+#loss_fn = torch.nn.CrossEntropyLoss()
+loss_fn = torch.nn.NLLLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
+scheduler = MultiStepLR(optimizer, milestones=[30,40], gamma=0.2)
+
 
 timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
 writer = SummaryWriter('runs/fashion_trainer_{}'.format(timestamp))
 epoch_number = 0
 
-EPOCHS = 10
-
+EPOCHS = 50
+lamda = 0.5
 best_vloss = 1000000
-
+f = open('loss.csv', 'w')
 for epoch in range(EPOCHS):
-    print('EPOCH {}:'.format(epoch_number + 1))
+    #print('EPOCH {}:'.format(epoch_number + 1))
 
     # Make sure gradient tracking is on, and do a pass over the data
     model.train(True)
@@ -156,14 +214,18 @@ for epoch in range(EPOCHS):
 
     running_vloss = 0.0
     for i, vdata in enumerate(validation_loader):
-        vinputs, vlabels = vdata
+        vinputs, vlabels1 = vdata
         voutputs = model(vinputs)
-        vloss = loss_fn(voutputs, vlabels.long()[:,0])
+        vlabels = vlabels1[:,0]
+        vloss = loss_fn(voutputs, vlabels.long()) + lamda * distance_corr(vlabels1[:,1],torch.exp(voutputs[:,1]),vlabels1[:,2]) + lamda * distance_corr(vlabels1[:,1],torch.exp(voutputs[:,2]),vlabels1[:,2]) + lamda * distance_corr(vlabels1[:,1],torch.exp(voutputs[:,3]),vlabels1[:,2]) + lamda * distance_corr(vlabels1[:,1],torch.exp(voutputs[:,4]),vlabels1[:,2]) + lamda * distance_corr(vlabels1[:,1],torch.exp(voutputs[:,5]),vlabels1[:,2])
+        #print(distance_corr(vlabels1[:,1],torch.exp(voutputs[:,1]),vlabels1[:,2]))
         running_vloss += vloss
 
     avg_vloss = running_vloss / (i + 1)
-    print('LOSS train {} valid {}'.format(avg_loss, avg_vloss))
-
+    #print('LOSS train {} valid {}'.format(avg_loss, avg_vloss))
+    print(str(epoch) + ',' + str(avg_loss) + ',' +str(avg_vloss.item()))
+    f.write(str(epoch) + ',' + str(avg_loss) + ',' +str(avg_vloss.item()) + '\n')
+    scheduler.step()
     # Log the running loss averaged per batch
     # for both training and validation
     writer.add_scalars('Training vs. Validation Loss',
@@ -174,11 +236,11 @@ for epoch in range(EPOCHS):
     # Track best performance, and save the model's state
     if avg_vloss < best_vloss:
         best_vloss = avg_vloss
-        model_path = 'model_{}_{}'.format(timestamp, epoch_number)
+        model_path = 'weights_l1/model_{}_{}'.format(timestamp, epoch_number)
         torch.save(model.state_dict(), model_path)
 
     epoch_number += 1
-
+f.close()
 
 
 

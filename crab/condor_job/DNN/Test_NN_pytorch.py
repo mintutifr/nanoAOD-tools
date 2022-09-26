@@ -17,17 +17,25 @@ class NeuralNetwork(nn.Module):
         super(NeuralNetwork, self).__init__()
         #self.flatten = nn.Flatten()
         self.linear_relu_stack = nn.Sequential(
-            nn.Linear(9, 64),
+            nn.Linear(18, 256),
             nn.ReLU(),
-            nn.Linear(64, 128),
+            nn.Linear(256, 512),
             nn.ReLU(),
-            nn.Linear(128, 256),
+            nn.Linear(512, 512),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(512, 256),
             nn.ReLU(),
             nn.Linear(256, 128),
             nn.ReLU(),
-            nn.Linear(128, 3),
+            nn.Dropout(0.1),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Linear(64, 6),
             #nn.Softmax(dim=1),
         )
+
+
 
     def forward(self, x):
         #x = self.flatten(x)
@@ -35,18 +43,23 @@ class NeuralNetwork(nn.Module):
         return logits
 
 
-VARS = ['MuonEta',
-        'dEta_mu_bJet',
-        'mtwMass',
-        'abs_lJetEta',
-        'jetpTSum',
-        'diJetMass',
-        'cosThetaStar',
-        'dR_bJet_lJet',
-        'FW1',
+VARS = ['MuonEta', 'MuonPt', 'MuonPhi', 'MuonE',
+        'lJetEta', 'lJetPt', 'lJetPhi', 'lJetMass',
+        'bJetEta', 'bJetPt', 'bJetPhi', 'bJetMass',
+        'Px_nu', 'Py_nu', 'Pz_nu',
+        'FW1', 'bJetdeepJet', 'lJetdeepJet',
         ]
 
-files = ['preVFP2016_Top_signal_train.root', 'preVFP2016_EWK_BKG_train.root', 'preVFP2016_Top_bkg_train.root']
+
+train_ch = ['WS_Top_signal', 'Top_signal', 'Top_bkg', 'WS_Top_bkg', 'EWK_BKG', 'QCD_BKG']
+types = ['train', 'test', 'valid']
+files = []
+for channel in train_ch:
+    for typ in types:
+        files.append('2017_' + channel + '_' + typ + '.root')
+
+print(files)
+#files = ['preVFP2016_Top_signal_train.root', 'preVFP2016_EWK_BKG_train.root', 'preVFP2016_Top_bkg_train.root', 'preVFP2016_Top_signal_test.root', 'preVFP2016_EWK_BKG_test.root', 'preVFP2016_Top_bkg_test.root']
 m = nn.LogSoftmax(dim=1)
 for fil in files:
 	print(fil)
@@ -64,7 +77,7 @@ for fil in files:
 	tensor_x_te = torch.Tensor(x_te) # transform to torch tensor
 	tensor_y_te = torch.Tensor(y_te)
 
-	device = "cuda:2" if torch.cuda.is_available() else "cpu"
+	device = "cuda:1" if torch.cuda.is_available() else "cpu"
 	print(f"Using {device} device")
 
 	if torch.cuda.is_available():
@@ -77,8 +90,8 @@ for fil in files:
 	testing_loader = DataLoader(test_dataset, batch_size = batch, shuffle = False) # create your dataloader
 
 	model = NeuralNetwork().to(device)
-	model.load_state_dict(torch.load('weights/model_20220725_201804_19'))
-	y_arr = np.zeros((x_te.shape[0], 3))
+	model.load_state_dict(torch.load('weights_l08/model_20220914_173358_41'))
+	y_arr = np.zeros((x_te.shape[0], 6))
 
 	for i, tdata in enumerate(testing_loader):
 		#print(i)
@@ -91,9 +104,9 @@ for fil in files:
 			y_arr[batch*i:batch*(i+1), :] = np.exp(toutputs.detach().numpy())
 		else:
 			y_arr[batch*i:, :] = np.exp(toutputs.detach().numpy())
-	print(y_arr[:10,:])
-	print(y_arr[-10:,:])
-	print(np.shape(y_arr))
-	y_arr = y_arr.ravel().view(dtype = np.dtype([('c1', np.double), ('c2', np.double), ('c3', np.double)]))
+	#print(y_arr[:10,:])
+	#print(y_arr[-10:,:])
+	#print(np.shape(y_arr))
+	y_arr = y_arr.ravel().view(dtype = np.dtype([('c1', np.double), ('c2', np.double), ('c3', np.double), ('c4', np.double), ('c5', np.double), ('c6', np.double)]))
 	fname, ext = os.path.splitext(fil)
-	root_numpy.array2root(y_arr, fname + '_apply.root', mode='recreate')
+	root_numpy.array2root(y_arr, 'weights_l08/' + fname + '_apply.root', mode='recreate')
