@@ -52,9 +52,9 @@ class cutflow:
             'UL2017' : 41529,
             'UL2018' : 59222}
         if(self.isMC == True):
-                x_sec = 80.95
+                x_sec = 87.33
                 #Lumi = lumi[self.dataYear]
-                NEvents = 31024000
+                NEvents = 37202073
                 self.Xsec_wgt = (x_sec*self.TotalLumi[self.dataYear])/NEvents
         self.Tight_b_tag_crite={
             '2016' : 0.7527, 
@@ -127,7 +127,7 @@ class cutflow:
 	    PreFireWeight = getattr(event,'L1PreFiringWeight_Nom')
 	    PV_npvs = getattr(event, "PV_npvs")
 	    if(self.isMC == True):self.Nocut_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight) 
-	    else:self.Nocut_npvs.Fill(PV_npvs,PreFireWeight)  
+	    else:self.Nocut_npvs.Fill(PV_npvs)  
 	   
 	    ##################################
 	    #trigger selection	--0--
@@ -139,14 +139,14 @@ class cutflow:
 	 	    trigger=trigger+getattr(event,value)   #trigger value will be o or 1. So sum = 1 if any given trigger is true
 	        if(trigger != 0):
 	    	     if(self.isMC == True):self.trig_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight) 
-	 	     else:self.trig_sel_npvs.Fill(PV_npvs,PreFireWeight)
+	 	     else:self.trig_sel_npvs.Fill(PV_npvs)
 	    	else:
 	     	    continue
 	    elif(self.lepflavour=="el"):
 	    	for value in self.trigger_selection[self.dataYear]: trigger=trigger+getattr(event,value)
 	    	if(trigger != 0):
 	 	      if(self.isMC == True):self.trig_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight) 
-	 	      else:self.trig_sel_npvs.Fill(PV_npvs,PreFireWeight)
+	 	      else:self.trig_sel_npvs.Fill(PV_npvs)
 	    	else:
                       continue
 	    #print "---------------------------------trigger selection      --0------------"
@@ -176,7 +176,7 @@ class cutflow:
 	 	 	    muSF=create_muSF(self.dataYear,muon.pt,muon.eta,muon.pfRelIso04_all,self.TotalLumi[self.dataYear],"noSyst")
 	 	            self.tight_lep_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF)
 	                 #print "muSF : ",muSF," weight : " , (self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF, " Integral : ", self.tight_lep_sel_npvs.Integral(), " LHEweight : ",LHEWeightSign
-		    else:self.tight_lep_sel_npvs.Fill(PV_npvs,PreFireWeight)
+		    else:self.tight_lep_sel_npvs.Fill(PV_npvs)
 	 	else:
 	 	     #print "ione tight muon selection-1- "
 	 	     continue
@@ -199,7 +199,7 @@ class cutflow:
 	 	            self.tight_lep_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF)
 	 	    #print "elSF : ",elSF, "Integral : ",self.tight_lep_sel_npvs.Integral()," weight : " , (self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF," LHE : " , LHEWeightSign
 	 	    if(self.isMC == False):
-	 	    	self.tight_lep_sel_npvs.Fill(PV_npvs,PreFireWeight)
+	 	    	self.tight_lep_sel_npvs.Fill(PV_npvs)
   	    	else:
 	 	    #print "one tight muon selection-1- "
                     continue
@@ -222,7 +222,7 @@ class cutflow:
 	 	    if(muons_losse_size>0): break
 	 	if(muons_losse_size==0):
 	 	    if(self.isMC == True):self.losse_lep_veto_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF)
-	 	    if(self.isMC == False):self.losse_lep_veto_npvs.Fill(PV_npvs,PreFireWeight)
+	 	    if(self.isMC == False):self.losse_lep_veto_npvs.Fill(PV_npvs)
 	 	else:
 	 	    #print "losse muon veto --2--"	
 	 	    continue
@@ -238,7 +238,7 @@ class cutflow:
 	 	 	break
 	    	if(electron_vid_size==0):
 	 	    if(self.isMC == True):self.losse_lep_veto_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF)
-	 	    if(self.isMC == False):self.losse_lep_veto_npvs.Fill(PV_npvs,PreFireWeight)
+	 	    if(self.isMC == False):self.losse_lep_veto_npvs.Fill(PV_npvs)
 	    	else:
 	 	    continue
 	    #print '---------------------------------------------losse lep veto --2---------------
@@ -257,7 +257,7 @@ class cutflow:
 	 	    if(electron_vid_size>0): break
 	 	if(electron_vid_size==0):
 	 	    if(self.isMC == True):self.sec_lep_veto_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF)
-	 	    if(self.isMC == False):self.sec_lep_veto_npvs.Fill(PV_npvs,PreFireWeight)
+	 	    if(self.isMC == False):self.sec_lep_veto_npvs.Fill(PV_npvs)
 	 	else:
 	 	     #print "ione tight muon selection-1- "
 	 	     continue
@@ -269,7 +269,7 @@ class cutflow:
 	 	    if(muons_losse_size>0): break
 	     	if(muons_losse_size==0):
              	    if(self.isMC == True):self.sec_lep_veto_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF)
-	 	    if(self.isMC == False):self.sec_lep_veto_npvs.Fill(PV_npvs,PreFireWeight)
+	 	    if(self.isMC == False):self.sec_lep_veto_npvs.Fill(PV_npvs)
 	   	else:
 	 	     #print "second lepton veto  --3--"
              	     continue
@@ -353,8 +353,8 @@ class cutflow:
 
            	if(self.lepflavour=="mu" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*JetPUJetID_SF)
            	elif(self.lepflavour=="el" and self.isMC == True): self.jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*JetPUJetID_SF)
-	   	elif(self.lepflavour=="mu" and self.isMC == False): self.jet_sel_npvs.Fill(PV_npvs,PreFireWeight)
-	   	elif(self.lepflavour=="el" and self.isMC == False): self.jet_sel_npvs.Fill(PV_npvs,PreFireWeight)
+	   	elif(self.lepflavour=="mu" and self.isMC == False): self.jet_sel_npvs.Fill(PV_npvs)
+	   	elif(self.lepflavour=="el" and self.isMC == False): self.jet_sel_npvs.Fill(PV_npvs)
 	   
 	    else:
 	    	#print "jet selection  --4--"
@@ -376,10 +376,10 @@ class cutflow:
 	 	    bweight = Probability_2("Central",jet_id)	
 	 	    if(self.lepflavour=="mu"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*JetPUJetID_SF*bweight)
 	 	    if(self.lepflavour=="el"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*JetPUJetID_SF*bweight)
-	 	     #print "bweight = ",bweight
+	 	    #print "bweight = ",bweight
 	    	if(self.isMC == False):
-	 	    if(self.lepflavour=="mu"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,PreFireWeight)
-	 	    if(self.lepflavour=="el"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,PreFireWeight)
+	 	    if(self.lepflavour=="mu"): self.b_tag_jet_sel_npvs.Fill(PV_npvs)
+	 	    if(self.lepflavour=="el"): self.b_tag_jet_sel_npvs.Fill(PV_npvs)
             else:
 	        #print "b tag jet  --5--"
 	        continue				

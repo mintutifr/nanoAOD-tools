@@ -216,7 +216,7 @@ class NanoGenModule(Module):
                                 DressLep_eta_gen = GenDressedLepton.eta
                                 DressLep_phi_gen = GenDressedLepton.phi
                                 DressLep_mass_gen = GenDressedLepton.mass
-                                GenDressedLepton_gen = GenDressedLepton_gen_temp
+                                GenDressedLepton_gen.SetPtEtaPhiM(DressLep_pt_gen,DressLep_eta_gen,DressLep_phi_gen,DressLep_mass_gen)# = GenDressedLepton_gen_temp
                                 DressLep_ID =  GenDressedLeptonID
                         if(minidR_dresslep==999):
                                 DressLep_pt_gen = DressLep_eta_gen = DressLep_phi_gen = DressLep_mass_gen = -99
@@ -238,7 +238,7 @@ class NanoGenModule(Module):
                                 DressLep_eta_gen = GenDressedLepton.eta
                                 DressLep_phi_gen = GenDressedLepton.phi
                                 DressLep_mass_gen = GenDressedLepton.mass
-                                GenDressedLepton_gen = GenDressedLepton_gen_temp
+                                GenDressedLepton_gen.SetPtEtaPhiM(DressLep_pt_gen,DressLep_eta_gen,DressLep_phi_gen,DressLep_mass_gen)# = GenDressedLepton_gen_temp
                                 DressLep_ID =  GenDressedLeptonID
                         if(minidR_dresslep==999):
                                 DressLep_pt_gen = DressLep_eta_gen = DressLep_phi_gen = DressLep_mass_gen = -99

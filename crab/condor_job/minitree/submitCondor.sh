@@ -40,9 +40,9 @@ fi
 #------------------------------------------------
 #create the same datasetfile depending on year
 #------------------------------------------------
-Mc_common_channel="Tchannel" # Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTo2L2Nu WZTo2Q2L ZZTo2Q2L" #Tchannel
+Mc_common_channel="Tchannel Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTo2L2Nu WZTo2Q2L ZZTo2Q2L" #Tchannel
 Mc_QCD_mu="QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched"
-Mc_QCD_el="QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
+Mc_QCD_el=" QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
 
 
 

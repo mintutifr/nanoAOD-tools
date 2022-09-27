@@ -1,6 +1,7 @@
 Datasets_MC_UL2016 = {
+        'Tchannel_wtop0p7_check' : ['/ST_t-channel_top_4f_InclusiveDecays_wtop0p7_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_08_Sep22_MCUL2016_Tchannel_wtop0p7_v7-159d8cd36698449e81f0a83f5bc24745/USER'],
 	'Tchannel_wtop0p55' : ['/ST_t-channel_top_4f_InclusiveDecays_wtop0p55_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_03_Sep22_MCUL2016_Tchannel_wtop0p55_v7-b580596142f1b0d2a0f13f27efbbd1a4/USER'],
-	'Tchannel_wtop0p7' : ['/ST_t-channel_top_4f_InclusiveDecays_wtop0p7_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_03_Sep22_MCUL2016_Tchannel_wtop0p7_v7-159d8cd36698449e81f0a83f5bc24745/USER'],
+	'Tchannel_wtop0p7' : ['/ST_t-channel_top_4f_InclusiveDecays_wtop0p7_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_08_Sep22_MCUL2016_Tchannel_wtop0p7_v7-159d8cd36698449e81f0a83f5bc24745/USER'],
 	'Tchannel_wtop0p85' : ['/ST_t-channel_top_4f_InclusiveDecays_wtop0p85_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_03_Sep22_MCUL2016_Tchannel_wtop0p85_v7-fb326044d190653f334bc1189da926ae/USER'],
 	'Tchannel_wtop1p0' : ['/ST_t-channel_top_4f_InclusiveDecays_wtop1p0_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_03_Sep22_MCUL2016_Tchannel_wtop1p0_v7-4a539c76c29e8af629436a60cc2510ab/USER'],
 	'Tchannel_wtop1p15' : ['/ST_t-channel_top_4f_InclusiveDecays_wtop1p15_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/mikumar-Tree_03_Sep22_MCUL2016_Tchannel_wtop1p15_v7-88a88927c446165db845558a38175a4f/USER'],

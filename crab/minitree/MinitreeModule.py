@@ -275,8 +275,8 @@ class MinitreeProducer(Module):
                 'UL2017' : 41529,
                 'UL2018' : 59222}
         if(self.isMC):
-		x_sec = 136.02
-		NEvents = 52437432
+		x_sec = 87.33
+		NEvents = 37202073
                 
 	        Xsec_wgt = (x_sec*TotalLumi[self.dataYear])/NEvents
 	#print Xsec_wgt
@@ -835,7 +835,7 @@ class MinitreeProducer(Module):
 	     self.out.fillBranch("LHEWeightSign",LHEWeightSign)
 	     self.out.fillBranch("Xsec_wgt",Xsec_wgt )
 	     self.out.fillBranch("Event_wgt",Event_wgt)
-
+ 
         self.out.fillBranch("MinDR_lep_lnbJet",MinDR_lep_lnbJet)
 	self.out.fillBranch("bJetMass", bJetMass)
         self.out.fillBranch("bJetPt", bJetPt )

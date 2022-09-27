@@ -41,18 +41,19 @@ fi
 #create the same datasetfile depending on year
 #------------------------------------------------
 common_mc_sample="Tchannel Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTo2L2Nu WZTo2Q2L ZZTo2Q2L" #Tchannel"
+Mc_QCD_mu="QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched"
+Mc_QCD_el=" QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
 
 if [[ "UL2016preVFP" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2016preVFP_phy3.py"
-     outputDir="/store/user/mikumar/RUN2_UL/cutFlow_condor/SIXTEEN_preVFP/"
+     outputDir="/store/user/mikumar/RUN2_UL/cutFlow_condor/SIXTEEN_preVFP_v5/"
 
      if [[ $sample == "Mc" && $lep == "mu" ]]; then
-	channels="${common_mc_sample} QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched"
+	channels="${common_mc_sample} ${Mc_QCD_mu}"
 	#Tchannel Tbarchannel 
      fi
      if [[ $sample == "Mc" && $lep == "el" ]]; then
-        channels="${common_mc_sample} QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
-        #Tchannel Tbarchannel
+        channels="${common_mc_sample} ${Mc_QCD_el}"
      fi
 
      if [[ $sample == "Data" && $lep == "mu" ]]; then
@@ -65,36 +66,34 @@ if [[ "UL2016preVFP" == "$year" ]]; then
 
 elif  [[ "UL2016postVFP" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2016postVFP_phy3.py"
-     outputDir="/store/user/mikumar/RUN2_UL/cutFlow_condor/SIXTEEN_postVFP/"
+     outputDir="/store/user/mikumar/RUN2_UL/cutFlow_condor/SIXTEEN_postVFP_v5/"
 
      if [[ $sample == "Mc" && $lep == "mu" ]]; then
-        channels="${common_mc_sample} QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched"
-        #Tchannel Tbarchannel 
+        channels="${common_mc_sample} ${Mc_QCD_mu}" 
      fi
      if [[ $sample == "Mc" && $lep == "el" ]]; then
-        channels="${common_mc_sample} QCD_Pt-15to20_EMEnriched QCD_Pt-20to30_EMEnriched QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
-        #Tchannel Tbarchannel
+        channels="${common_mc_sample} ${Mc_QCD_el}"
      fi
 
      if [[ $sample == "Data" && $lep == "mu" ]]; then
-        channels="Run2016F__mu Run2016G_mu Run2016H_mu"
+        channels="Run2016F_postVFP_mu Run2016G_postVFP_mu Run2016H_postVFP_mu"
      fi
 
      if [[ $sample == "Data" && $lep == "el" ]]; then
-        channels="Run2016F_el Run2016G_el Run2016H_el"
+        channels="Run2016F_postVFP_el Run2016G_postVFP_el Run2016H_postVFP_el"
      fi
 
 
 elif  [[ "UL2017" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2017_phy3.py"
-     outputDir="/store/user/mikumar/RUN2_UL/cutFlow_condor/SEVENTEEN_new/"
+     outputDir="/store/user/mikumar/RUN2_UL/cutFlow_condor/SEVENTEEN_new_v5/"
 
      if [[ $sample == "Mc" && $lep == "mu" ]]; then
-        channels="${common_mc_sample} QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched"
+        channels="${common_mc_sample} ${Mc_QCD_mu}"
      fi
 
      if [[ $sample == "Mc" && $lep == "el" ]]; then
-        channels="${common_mc_sample} QCD_Pt-15to20_EMEnriched QCD_Pt-20to30_EMEnriched QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
+        channels="${common_mc_sample} ${Mc_QCD_el}"
      fi
 
      if [[ $sample == "Data" && $lep == "mu" ]]; then

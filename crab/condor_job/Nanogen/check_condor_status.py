@@ -79,6 +79,18 @@ for channel in channels:
         else: exit()
     Dirs=get_dirs(CondorDir+"/"+channel)
     for Dir in Dirs:
+        cmd_grep = 'grep "Server responded with an error" '+Dir+'/*'
+        #os.system(cmd_grep)
+
+        p = subprocess.Popen(cmd_grep, stdout=subprocess.PIPE, shell=True)
+        (output, err) = p.communicate()
+        p_status = p.wait()
+
+
+        if(output.count("Server responded with an error")>0):
+                print "file acess error in ",Dir
+
+
         cmd_grep = 'grep "100%" '+Dir+'/*'
         #os.system(cmd_grep)
 

@@ -11,15 +11,14 @@ from jme import *
 from MinitreeModule import *
 from cut_strings import *
 
-treecut = cut_3J2T1_mu_2016
-
-#inputFiles=["6E1B25E9-BBAE-B14F-92C1-FDC95C9EC4A2_Skim.root"]
-#inputFiles=["root://se01.indiacms.res.in//store/user/mikumar/RUN2/Tree_crab/SIXTEEN/Data_mu_new/Run2016D_mu/SingleMuon/Tree_12_Oct21_Run2016D_mu/211012_170845/0000/tree_1.root"]
-inputFiles=['root://se01.indiacms.res.in//store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP/ttbar_SemiLeptonic/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Tree_04_Jun22_MCUL2016preVFP_ttbar_SemiLeptonic/220604_162528/0000/tree_10.root']
+treecut = cut_2J1T1_mu_UL2016preVFP
+inputFiles=["root://se01.indiacms.res.in//store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP_v2/Tbarchannel/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/Tree_06_Aug22_MCUL2016preVFP_Tbarchannel/220806_112911/0000/tree_14.root"]
+#inputFiles=["root://se01.indiacms.res.in//store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Data_preVFP_mu/Run2016D-HIPM_mu/SingleMuon/Tree_04_Jun22_Run2016D-HIPM_mu/220604_165834/0000/tree_1.root"]
+#inputFiles=['tree_10.root']
 p=PostProcessor(".",
 		inputFiles,
 		treecut,
-		modules=[MinitreeModuleConstr3J2T1_mu_data_UL2016preVFP()],#, jmeCorrectionsULRun2016C_preVFP_DATA_AK4CHS()],
+		modules=[MinitreeModuleConstr2J1T1_mu_mc_UL2016preVFP()],#, jmeCorrectionsULRun2016C_preVFP_DATA_AK4CHS()],
 		outputbranchsel="keep_and_drop_mu_Minitree.txt",
 		provenance=True,
 		fwkJobReport=True,

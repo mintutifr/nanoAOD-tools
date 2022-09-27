@@ -8,6 +8,7 @@ parser.add_argument('-y', '--year', dest='years', type=str, nargs=1, help="Year 
 parser.add_argument('-l', '--lepton', dest='leptons', type=str, nargs=1, help="sample [ mu , el ]")
 
 args = parser.parse_args()
+import ROOT as rt
 
 if args.CondorDir == None:
 	print "USAGE: %s [-h] [-d <condor directory>]"%(sys.argv [0])
@@ -75,8 +76,8 @@ if(year == 'UL2017'):
     elif sample=="Data" and lep=="el" : Datasets = Datasets_SingleElectron_data_UL2017
 
 
-#channels=['WWTo2L2Nu']
-channels=Datasets.keys()
+channels=['Tbarchannel']
+#channels=Datasets.keys()
 print channels
 print 
 print "-----------------------------------------    chacking     --------------------------------"
@@ -91,29 +92,36 @@ for channel in channels:
         if(proceed=="1" or proceed=="yes"): continue
         else: exit()
     Dirs=get_dirs(CondorDir+"/"+channel)
+    i=0
     for Dir in Dirs:
-        cmd_grep = 'grep "Server responded with an error" '+Dir+'/*'
-        #os.system(cmd_grep)
-
+        i=i+1
+        print "================",i,"=============="
+        """cmd_grep = 'grep "inputFiles" '+Dir+'/condor_script_cutflow.py'
+        print Dir+'/condor_script_cutflow.py'       
         p = subprocess.Popen(cmd_grep, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
         p_status = p.wait()
 
+        if(output.count("inputFiles")>0): 
+            file = output.rsplit("'")[1]
+            print file
 
-        if(output.count("Server responded with an error")>0):
-                print "file acess error in ",Dir
+            InFile = rt.TFile.Open(file,"READ")
+            Tree = InFile.Get("Events")
+            cut = "HLT_Ele32_eta2p1_WPTight_Gsf==1 && (Sum$(Electron_pt>35 && abs(Electron_eta)<2.1 && Electron_cutBased==4 && (abs(Electron_EtaSC)<1.4442 || abs(Electron_EtaSC)>1.5660) && ((abs(Electron_EtaSC)<=1.479 && abs(Electron_dz)< 0.10 && abs(Electron_dxy)< 0.05) || (abs(Electron_EtaSC)> 1.479 && abs(Electron_dz)< 0.20 && abs(Electron_dxy)< 0.10)))==1) && (Sum$(Electron_cutBased>=1 && Electron_pt>15 && abs(Electron_eta)<2.5 && ((abs(Electron_EtaSC)<=1.479 && abs(Electron_dz)< 0.10 && abs(Electron_dxy)< 0.05) || (abs(Electron_EtaSC)> 1.479 && abs(Electron_dz)< 0.20 && abs(Electron_dxy)< 0.10)))==1) && (Sum$(Muon_looseId==1 && Muon_pt>10 && abs(Muon_eta)<2.4 && Muon_pfRelIso04_all<0.2)==0) && (Sum$(Jet_pt>40 && abs(Jet_eta)<4.7 && Jet_jetId!=0 && Jet_puId>0 && Jet_dR_Ljet_Isoel>0.4)==2) && (Sum$(Jet_pt>40 && Jet_jetId!=0 && Jet_puId>0 && abs(Jet_eta)<2.4 && Jet_dR_Ljet_Isoel>0.4 && Jet_btagDeepFlavB>0.6502)==1)"
+            print Tree.GetEntries(cut)"""
+            
 
-        cmd_grep = 'grep "100%" '+Dir+'/*'
-        #os.system(cmd_grep)
-
+        cmd_grep = 'grep "Arguments" '+Dir+'/condorSetup.sub'
         p = subprocess.Popen(cmd_grep, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
         p_status = p.wait()
+        #print Dir+'/condorSetup.sub'
+        if(output.count("Arguments")>0):
+            file = output.rsplit(" ")[-5]
+            #print file
+            cmd_analise_cutflow = "python Analize_Cutflow_histogram.py -f "+file
+            os.system(cmd_analise_cutflow)
+        print
+            
 
-        if(output.count("100%")==0): 
-	     condor_resubmit = raw_input("did not enouter '100%' tranfer @ " +Dir+"/ to resubmit the job press 1/yes: ")
-	     if(condor_resubmit=="yes" or condor_resubmit=="1"):
-	     	os.chdir(Dir)
-	     	os.system("condor_submit condorSetup.sub")
-	     	os.chdir(cwd)
- 

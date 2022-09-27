@@ -23,7 +23,7 @@ if [ $numFile -ne 0 ]; then
 
 				echo -e "hadd ${tmpMerge_name[$((blockID - 1 ))]} \t ${array_name[*]} \t root://se01.indiacms.res.in/${file:4}"
 #				hadd ${tmpMerge_name[$((blockID - 1 ))]} ${array_name[*]} root://se01.indiacms.res.in/$t2_dir$file
-				python haddnano.py ${tmpMerge_name[$((blockID - 1 ))]} ${array_name[*]} root://se01.indiacms.res.in/${file:4}	
+				hadd ${tmpMerge_name[$((blockID - 1 ))]} ${array_name[*]} root://se01.indiacms.res.in/${file:4}	
 			fi
 		else
 			if [ $blockCount -ne 0 ] && [ $count -lt $numFile ]; then		
@@ -35,7 +35,7 @@ if [ $numFile -ne 0 ]; then
 
 					echo -e "hadd ${tmpMerge_name[$((blockID - 1 ))]} \t ${array_name[*]} \t root://se01.indiacms.res.in/${file:4}"
 #					hadd ${tmpMerge_name[$((blockID - 1 ))]} ${array_name[*]} root://se01.indiacms.res.in/$t2_dir$file
-                    			python haddnano.py ${tmpMerge_name[$((blockID - 1 ))]} ${array_name[*]} root://se01.indiacms.res.in/${file:4}
+                    hadd ${tmpMerge_name[$((blockID - 1 ))]} ${array_name[*]} root://se01.indiacms.res.in/${file:4}
 				else
 					blockID=$((blockID + 1 ))
 					echo -e "$count \t  $blockCount \t $blockID"
@@ -43,14 +43,14 @@ if [ $numFile -ne 0 ]; then
 
 					echo -e "hadd ${tmpMerge_name[$((blockID - 1 ))]} \t ${array_name[*]:0:$((blockCount - 1 ))} \t root://se01.indiacms.res.in/${file:4}"
 #					hadd ${tmpMerge_name[$((blockID - 1 ))]} ${array_name[*]} root://se01.indiacms.res.in/$t2_dir$file
-					python haddnano.py ${tmpMerge_name[$((blockID - 1 ))]} ${array_name[*]:0:$((blockCount - 1 ))} root://se01.indiacms.res.in/${file:4}
+					hadd ${tmpMerge_name[$((blockID - 1 ))]} ${array_name[*]:0:$((blockCount - 1 ))} root://se01.indiacms.res.in/${file:4}
 				fi		
 			fi	
 		fi
 
     done
     echo -e "hadd $dest_dir/$channel.root \t ${tmpMerge_name[*]}"
-    python haddnano.py $dest_dir/$channel.root ${tmpMerge_name[*]}	
+    hadd $dest_dir/$channel.root ${tmpMerge_name[*]}	
 else
 	echo -e "Already hadd-ed"
 fi
