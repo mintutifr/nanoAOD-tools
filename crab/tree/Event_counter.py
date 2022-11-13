@@ -39,6 +39,7 @@ for i in range(0,len(RequestNames)):
 
     print 
     cmd_count = 'dasgoclient --query="file, dataset='+Dataset+' | sum(file.nevents)"'
+    print cmd_count
     os.system(cmd_count)
     p = subprocess.Popen(cmd_count, stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
