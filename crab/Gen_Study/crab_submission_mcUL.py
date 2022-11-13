@@ -3,7 +3,7 @@ import argparse as arg
 from tqdm import tqdm
 
 parser = arg.ArgumentParser(description='inputs discription')
-parser.add_argument('-y', '--year', dest='inputs', type=str, nargs=1, help="Year [UL2016preVFP, UL2016postVFP, UL2017, UL2018]")
+parser.add_argument('-y', '--year', dest='inputs', type=str, nargs=1, help="Year [ UL2016 ]")
 args = parser.parse_args()
 
 
@@ -21,10 +21,10 @@ date   = datetime.datetime.now()
 
 if(year == 'UL2016'):
     from dataset_UL2016 import *
-    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN/"
+    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN_v7/"
     Datasets = Datasets_Alt_MC_UL2016
 
-RequestNames = Datasets.keys()
+RequestNames = ["Tchannel_wtop0p7"]#Datasets.keys()
 print RequestNames
 print "len(Datasets) = ",len(Datasets)
 
@@ -48,7 +48,7 @@ for i in tqdm(range(0,len(RequestNames))):
     update_RequestName = "config.General.requestName = '"+RequestName+"_Tree_"+year+"'\n" 
     update_Dataset = "config.Data.inputDataset = '"+Dataset+"'\n"
     update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+RequestName+"'\n"
-    update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName+"_v2'\n"
+    update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName+"_v7'\n"
     update_InputFiles = "config.JobType.inputFiles = ['crab_script_NanoGen_skimtree.py','../../scripts/haddnano.py','clean_All_keep_GenPart.txt','Gen_mass_reconstract_SingleTop.py','Gen_mass_functions.py']\n"    
     update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"
     update_module = "\tmodules=[NanoGenConstr_"+year+"()],\n"
