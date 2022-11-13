@@ -378,7 +378,6 @@ class MinitreeProducer(Module):
 		 nMuon_sel = -1
 		 for lep in muons :
 		    nMuon_sel = nMuon_sel+1
-		    #print lep.pt
 		    if(   ((self.Isolation==True)  and lep.pt>pt_Thes_mu[self.dataYear] and abs(lep.eta)<2.4 and lep.pfRelIso04_all<0.06 and lep.tightId==1)   or
 			  ((self.Isolation==False) and lep.pt>pt_Thes_mu[self.dataYear] and abs(lep.eta)<2.4 and lep.pfRelIso04_all>0.2  and lep.tightId==1)    ):
 
@@ -1212,7 +1211,7 @@ MinitreeModuleConstr2J1L0T1_mu_data_UL2017 = lambda : MinitreeProducer(2,1,True,
 MinitreeModuleConstr2J1L0T1_el_mc_UL2017 = lambda : MinitreeProducer(2,1,True,'el',True,'UL2017')
 MinitreeModuleConstr2J1L0T1_el_data_UL2017 = lambda : MinitreeProducer(2,1,True,'el',False,'UL2017')
 
-MinitreeModuleConstr2J1L0T1_mu_mc_UL2017 = lambda : MinitreeProducer(2,1,False,'mu',True,'UL2017')
-MinitreeModuleConstr2J1L0T1_mu_data_UL2017 = lambda : MinitreeProducer(2,1,False,'mu',False,'UL2017')
-MinitreeModuleConstr2J1L0T1_el_mc_UL2017 = lambda : MinitreeProducer(2,1,False,'el',True,'UL2017')
-MinitreeModuleConstr2J1L0T1_el_data_UL2017 = lambda : MinitreeProducer(2,1,False,'el',False,'UL2017')
+MinitreeModuleConstr2J1L0T0_mu_mc_UL2017 = lambda : MinitreeProducer(2,1,False,'mu',True,'UL2017')
+MinitreeModuleConstr2J1L0T0_mu_data_UL2017 = lambda : MinitreeProducer(2,1,False,'mu',False,'UL2017')
+MinitreeModuleConstr2J1L0T0_el_mc_UL2017 = lambda : MinitreeProducer(2,1,False,'el',True,'UL2017')
+MinitreeModuleConstr2J1L0T0_el_data_UL2017 = lambda : MinitreeProducer(2,1,False,'el',False,'UL2017')
