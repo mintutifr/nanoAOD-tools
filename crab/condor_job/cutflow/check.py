@@ -76,7 +76,7 @@ if(year == 'UL2017'):
     elif sample=="Data" and lep=="el" : Datasets = Datasets_SingleElectron_data_UL2017
 
 
-channels=['Tbarchannel']
+channels=['Tchannel']
 #channels=Datasets.keys()
 print channels
 print 
@@ -93,10 +93,12 @@ for channel in channels:
         else: exit()
     Dirs=get_dirs(CondorDir+"/"+channel)
     i=0
+    treeEntries=0
+    cutflowEntries=0
     for Dir in Dirs:
         i=i+1
         print "================",i,"=============="
-        """cmd_grep = 'grep "inputFiles" '+Dir+'/condor_script_cutflow.py'
+        cmd_grep = 'grep "inputFiles" '+Dir+'/condor_script_cutflow.py'
         print Dir+'/condor_script_cutflow.py'       
         p = subprocess.Popen(cmd_grep, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
@@ -108,9 +110,13 @@ for channel in channels:
 
             InFile = rt.TFile.Open(file,"READ")
             Tree = InFile.Get("Events")
-            cut = "HLT_Ele32_eta2p1_WPTight_Gsf==1 && (Sum$(Electron_pt>35 && abs(Electron_eta)<2.1 && Electron_cutBased==4 && (abs(Electron_EtaSC)<1.4442 || abs(Electron_EtaSC)>1.5660) && ((abs(Electron_EtaSC)<=1.479 && abs(Electron_dz)< 0.10 && abs(Electron_dxy)< 0.05) || (abs(Electron_EtaSC)> 1.479 && abs(Electron_dz)< 0.20 && abs(Electron_dxy)< 0.10)))==1) && (Sum$(Electron_cutBased>=1 && Electron_pt>15 && abs(Electron_eta)<2.5 && ((abs(Electron_EtaSC)<=1.479 && abs(Electron_dz)< 0.10 && abs(Electron_dxy)< 0.05) || (abs(Electron_EtaSC)> 1.479 && abs(Electron_dz)< 0.20 && abs(Electron_dxy)< 0.10)))==1) && (Sum$(Muon_looseId==1 && Muon_pt>10 && abs(Muon_eta)<2.4 && Muon_pfRelIso04_all<0.2)==0) && (Sum$(Jet_pt>40 && abs(Jet_eta)<4.7 && Jet_jetId!=0 && Jet_puId>0 && Jet_dR_Ljet_Isoel>0.4)==2) && (Sum$(Jet_pt>40 && Jet_jetId!=0 && Jet_puId>0 && abs(Jet_eta)<2.4 && Jet_dR_Ljet_Isoel>0.4 && Jet_btagDeepFlavB>0.6502)==1)"
-            print Tree.GetEntries(cut)"""
-            
+            cut_2J1T1_el_UL2016postVFP = "HLT_Ele32_eta2p1_WPTight_Gsf==1 && (Sum$(Electron_pt>35 && abs(Electron_eta)<2.1 && Electron_cutBased==4 && (abs(Electron_EtaSC)<1.4442 || abs(Electron_EtaSC)>1.5660) && ((abs(Electron_EtaSC)<=1.479 && abs(Electron_dz)< 0.10 && abs(Electron_dxy)< 0.05) || (abs(Electron_EtaSC)> 1.479 && abs(Electron_dz)< 0.20 && abs(Electron_dxy)< 0.10)))==1) && (Sum$(Electron_cutBased>=1 && Electron_pt>15 && abs(Electron_eta)<2.5 && ((abs(Electron_EtaSC)<=1.479 && abs(Electron_dz)< 0.10 && abs(Electron_dxy)< 0.05) || (abs(Electron_EtaSC)> 1.479 && abs(Electron_dz)< 0.20 && abs(Electron_dxy)< 0.10)))==1) && (Sum$(Muon_looseId==1 && Muon_pt>10 && abs(Muon_eta)<2.4 && Muon_pfRelIso04_all<0.2)==0) && (Sum$(Jet_pt>40 && abs(Jet_eta)<4.7 && Jet_jetId!=0 && Jet_puId>0 && Jet_dR_Ljet_Isoel>0.4)==2) && (Sum$(Jet_pt>40 && Jet_jetId!=0 && Jet_puId>0 && abs(Jet_eta)<2.4 && Jet_dR_Ljet_Isoel>0.4 && Jet_btagDeepFlavB>0.6377)==1)"
+            cut_2J1T1_el_UL2016preVFP = "HLT_Ele32_eta2p1_WPTight_Gsf==1 && (Sum$(Electron_pt>35 && abs(Electron_eta)<2.1 && Electron_cutBased==4 && (abs(Electron_EtaSC)<1.4442 || abs(Electron_EtaSC)>1.5660) && ((abs(Electron_EtaSC)<=1.479 && abs(Electron_dz)< 0.10 && abs(Electron_dxy)< 0.05) || (abs(Electron_EtaSC)> 1.479 && abs(Electron_dz)< 0.20 && abs(Electron_dxy)< 0.10)))==1) && (Sum$(Electron_cutBased>=1 && Electron_pt>15 && abs(Electron_eta)<2.5 && ((abs(Electron_EtaSC)<=1.479 && abs(Electron_dz)< 0.10 && abs(Electron_dxy)< 0.05) || (abs(Electron_EtaSC)> 1.479 && abs(Electron_dz)< 0.20 && abs(Electron_dxy)< 0.10)))==1) && (Sum$(Muon_looseId==1 && Muon_pt>10 && abs(Muon_eta)<2.4 && Muon_pfRelIso04_all<0.2)==0) && (Sum$(Jet_pt>40 && abs(Jet_eta)<4.7 && Jet_jetId!=0 && Jet_puId>0 && Jet_dR_Ljet_Isoel>0.4)==2) && (Sum$(Jet_pt>40 && Jet_jetId!=0 && Jet_puId>0 && abs(Jet_eta)<2.4 && Jet_dR_Ljet_Isoel>0.4 && Jet_btagDeepFlavB>0.6502)==1)"
+
+            cut = cut_2J1T1_el_UL2016postVFP
+            TEntry = Tree.GetEntries(cut)
+            print  TEntry
+            treeEntries=treeEntries+TEntry
 
         cmd_grep = 'grep "Arguments" '+Dir+'/condorSetup.sub'
         p = subprocess.Popen(cmd_grep, stdout=subprocess.PIPE, shell=True)
@@ -119,9 +125,10 @@ for channel in channels:
         #print Dir+'/condorSetup.sub'
         if(output.count("Arguments")>0):
             file = output.rsplit(" ")[-5]
-            #print file
+            print file
             cmd_analise_cutflow = "python Analize_Cutflow_histogram.py -f "+file
             os.system(cmd_analise_cutflow)
         print
+        print "treeEntries : ",treeEntries
             
 
