@@ -1,3 +1,9 @@
+#check from where following run number belondws to pre or Post VFP
+ "278769": [[75, 111]] 
+RunF_UL2016_GoldenJSON.txt (seems like it does not belongs this file but previously it was coped here now removed)
+RunF_HIPM_UL2016_GoldenJSON.txt (seems belongs to this file but previousli it was not here now it coped in this file)
+lumi in the below table mite very because of this run number this is beloges to preVFP but i have consider in post VFP
+
 #Run Dependent Pileup distribition can we created 
 pileupCalc.py -i RunC_UL2017.txt --inputLumiJSON pileup_latest.txt --calcMode true --minBiasXsec 69200 --maxPileupBin 99 --numPileupBins 99 MyDataPileupHistogram_RunC_UL2017.root
 
