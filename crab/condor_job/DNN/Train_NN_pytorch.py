@@ -1,4 +1,37 @@
 #source /cvmfs/cms.cern.ch/cmsset_default.sh
+#source /cvmfs/sft.cern.ch/lcg/views/LCG_101cuda/x86_64-centos7-gcc8-opt/setup.sh
+import sys, os
+import argparse as arg
+
+parser = arg.ArgumentParser(description='inputs discription')
+parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
+parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
+args = parser.parse_args()
+
+if (args.year == None or args.lepton == None):
+        print("USAGE: %s [-h] [-y <Data year> -l <lepton>]"%(sys.argv [0]))
+        sys.exit (1)
+
+if args.year[0] not in ['ULpreVFP2016', 'ULpostVFP2016','UL2017','UL2018']:
+    print('Error: Incorrect choice of year, use -h for help')
+    exit()
+
+if args.lepton[0] not in ['el','mu']:
+    print('Error: Incorrect choice of lepton, use -h for help')
+    exit()
+
+print(args)
+
+lep = args.lepton[0]
+year= args.year[0]
+
+if(lep=="mu"):
+	lepton = "Muon"
+elif(lep=="el"):
+        lepton = "Electron"
+print(lepton)
+
+
 import torch
 import pandas as pd
 import numpy as np
@@ -117,7 +150,7 @@ def train_one_epoch(epoch_index, tb_writer, training_loader):
 
     return last_loss
 
-VARS = ['MuonEta', 'MuonPt', 'MuonPhi', 'MuonE',
+VARS = [lepton+'Eta', lepton+'Pt', lepton+'Phi', lepton+'E',
         'lJetEta', 'lJetPt', 'lJetPhi', 'lJetMass',
         'bJetEta', 'bJetPt', 'bJetPhi', 'bJetMass',
         'Px_nu', 'Py_nu', 'Pz_nu',
@@ -134,27 +167,29 @@ y_val_ch = {}
 
 n_tr = 50000
 n_val = 10000
-for count, channel in enumerate(train_ch):
-    df_train[channel] = rt.RDataFrame("Events",'2017_' + channel + '_train.root').AsNumpy()
-    df_val[channel] = rt.RDataFrame("Events",'2017_' + channel + '_valid.root').AsNumpy()
+dir='dataframe_saved/'
+for count, channel in enumerate(train_ch):	
+    print("Events",dir+year+'_' + channel + '_train_'+lep+'.root')
+    df_train[channel] = rt.RDataFrame("Events",dir+year+'_' + channel + '_train_'+lep+'.root').AsNumpy()
+    df_val[channel] = rt.RDataFrame("Events",dir+year+'_' + channel + '_valid_'+lep+'.root').AsNumpy()
     x_tr_ch[channel] = np.vstack([df_train[channel][var] for var in VARS]).T
     x_val_ch[channel] = np.vstack([df_val[channel][var] for var in VARS]).T
     print("shape of x for training " + channel + " " , np.shape(x_tr_ch[channel]))
     print("shape of x for validation " + channel + " " , x_val_ch[channel].shape)
-    sel_tr = np.random.choice(x_tr_ch[channel].shape[0], n_tr, replace=False)
-    sel_val = np.random.choice(x_val_ch[channel].shape[0], n_val, replace=False)
+    #sel_tr = np.random.choice(x_tr_ch[channel].shape[0], n_tr, replace=False)
+    #sel_val = np.random.choice(x_val_ch[channel].shape[0], n_val, replace=False)
     print(np.shape(df_train[channel]['topMass']))
-    y_tr_ch[channel] = np.vstack([np.array([count]*(n_tr)), df_train[channel]['topMass'][sel_tr], np.array([1]*(n_tr))]).T 
-    y_val_ch[channel] = np.vstack([np.array([count]*(n_val)), df_val[channel]['topMass'][sel_val], np.array([1]*(n_val))]).T
+    y_tr_ch[channel] = np.vstack([np.array([count]*(x_tr_ch[channel].shape[0])), df_train[channel]['topMass'], np.array([1]*(x_tr_ch[channel].shape[0]))]).T 
+    y_val_ch[channel] = np.vstack([np.array([count]*(x_val_ch[channel].shape[0])), df_val[channel]['topMass'], np.array([1]*(x_val_ch[channel].shape[0]))]).T
     if count == 0:
-        x_tr = np.vstack([x_tr_ch[channel][sel_tr]])
+        x_tr = np.vstack([x_tr_ch[channel]])
         y_tr = np.vstack([y_tr_ch[channel]])
-        x_val = np.vstack([x_val_ch[channel][sel_val]])
+        x_val = np.vstack([x_val_ch[channel]])
         y_val = np.vstack([y_val_ch[channel]])
     else:
-        x_tr = np.vstack([x_tr, x_tr_ch[channel][sel_tr]])
+        x_tr = np.vstack([x_tr, x_tr_ch[channel]])
         y_tr = np.vstack([y_tr, y_tr_ch[channel]])
-        x_val = np.vstack([x_val, x_val_ch[channel][sel_val]])
+        x_val = np.vstack([x_val, x_val_ch[channel]])
         y_val = np.vstack([y_val, y_val_ch[channel]])
 
 print("shape of x for training" ,x_tr.shape)
@@ -201,7 +236,7 @@ epoch_number = 0
 EPOCHS = 50
 lamda = 0.5
 best_vloss = 1000000
-f = open('loss.csv', 'w')
+f = open('loss'+year+'_'+lep+'.csv', 'w')
 for epoch in range(EPOCHS):
     #print('EPOCH {}:'.format(epoch_number + 1))
 
@@ -236,7 +271,10 @@ for epoch in range(EPOCHS):
     # Track best performance, and save the model's state
     if avg_vloss < best_vloss:
         best_vloss = avg_vloss
-        model_path = 'weights_l1/model_{}_{}'.format(timestamp, epoch_number)
+        wightpath = 'weight/'+year+'/'+lep
+        if not os.path.exists(wightpath): 
+            os.makedirs(wightpath)
+        model_path = wightpath+'/model_{}_{}'.format(timestamp, epoch_number)
         torch.save(model.state_dict(), model_path)
 
     epoch_number += 1
