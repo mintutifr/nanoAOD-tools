@@ -23,11 +23,11 @@ config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1
 
-config.Data.outLFNDirBase = '/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN_v7/Tbarchannel_wtop1p45'
+config.Data.outLFNDirBase = '/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN_v8/Tbarchannel_wtop1p45'
 
 config.Data.publication = True
 
-config.Data.outputDatasetTag = 'Tree_03_Sep22_MCUL2016_Tbarchannel_wtop1p45_v7'
+config.Data.outputDatasetTag = 'Tree_22_Nov22_MCUL2016_Tbarchannel_wtop1p45_v7'
 
 config.section_("Site")
 config.Site.storageSite = 'T2_IN_TIFR'

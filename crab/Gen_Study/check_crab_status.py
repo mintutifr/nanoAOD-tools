@@ -3,7 +3,7 @@ import argparse as arg
 from tqdm import tqdm
 
 parser = arg.ArgumentParser(description='inputs discription')
-parser.add_argument('-y', '--year', dest='inputs', type=str, nargs=1, help="Year [ UL2016preVFP , UL2016postVFP , UL2017 , UL2018 ]")
+parser.add_argument('-y', '--year', dest='inputs', type=str, nargs=1, help="Year [ UL2016 ]")
 parser.add_argument('-s', '--sample', dest='samples', type=str, nargs=1, help="sample [ Mc , Data ]")
 parser.add_argument('-l', '--lepton', dest='leptons', type=str, nargs=1, help="sample [ mu , el ]")
 
@@ -72,8 +72,8 @@ for i in tqdm(range(0,len(RequestNames))):
 
     resubmit_job = 'NO'
     print "failed : ",output.count("failed")," memory : ",output.count("memory")
-    if(output.count("failed")>=2 and output.count("memory")<2):resubmit_job = raw_input("enouter 'failed' twice should I resubmit the job : ")
-    if(output.count("failed")>=3 and output.count("memory")>=2):resubmit_job = raw_input("enouter 'failed' twice should I resubmit the job : ")
+    if(output.count("failed")>=2 and output.count("memory")<2):resubmit_job = "1";#raw_input("enouter 'failed' twice should I resubmit the job : ")
+    if(output.count("failed")>=3 and output.count("memory")>=2):resubmit_job = "1"#raw_input("enouter 'failed' twice should I resubmit the job : ")
     if(resubmit_job=="yes" or resubmit_job=="1"):
 	cmd_crab_resubmit = "crab resubmit -d "+RN# + " --maxmemory 4000"#+" --maxjobruntime 2750"
 	os.system(cmd_crab_resubmit)
