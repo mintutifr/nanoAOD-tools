@@ -52,6 +52,11 @@ if(year == 'UL2017'):
     if sample=="Mc" : Datasets = Datasets_MC_UL2017
     elif sample=="Data" and lep=="mu" : Datasets = Datasets_SingleMuon_data_UL2017
     elif sample=="Data" and lep=="el" : Datasets = Datasets_SingleElectron_data_UL2017
+if(year == 'UL2018'):
+    from dataset_UL2018_phy3 import *
+    if sample=="Mc" : Datasets = Datasets_MC_UL2018
+    elif sample=="Data" and lep=="mu" : Datasets = Datasets_SingleMuon_data_UL2018
+    elif sample=="Data" and lep=="el" : Datasets = Datasets_SingleElectron_data_UL2018
 
 RequestNames = []
 RequestNames.append(channel)

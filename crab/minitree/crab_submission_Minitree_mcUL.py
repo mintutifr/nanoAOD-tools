@@ -39,6 +39,10 @@ if(year == 'UL2017'):
     outputDir = "/store/user/mikumar/RUN2_UL/MiniTree_crab/SEVENTEEN/MC/"
     Datasets = Datasets_MC_UL2017
 
+if(year == 'UL2018'):
+    from dataset_UL2018_phy3 import *
+    outputDir = "/store/user/mikumar/RUN2_UL/MiniTree_crab/EIGHTEEN/MC/"
+    Datasets = Datasets_MC_UL2018
 RequestNames = [
 'Tchannel',
 'Tbarchannel',

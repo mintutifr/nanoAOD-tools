@@ -57,6 +57,8 @@ for i in range(0,len(RequestNames)):
     Input_files="All_input_files_"+RequestName+".txt"
     cmd_dasgoclint = 'dasgoclient -query="file dataset='+Dataset+' instance=prod/phys03" > '+Input_files
     os.system(cmd_dasgoclint) 
+    cmd_dasgoclint = 'dasgoclient -query="file dataset='+Dataset+' instance=prod/phys03"'
+    os.system(cmd_dasgoclint)
 
     Inputline = 'INPUT\n'
 

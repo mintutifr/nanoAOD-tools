@@ -40,8 +40,8 @@ from IPython.display import display
 import glob
 from time import time
 
-
-channels = ['Tchannel', 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'Data'+year] #WWTolnulnu
+channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']#,'Data'] #WWTolnulnu
+channels.append("Data"+year)
 
 datasets = []                                            # this object will be a list of list
 for channel in channels:
@@ -89,20 +89,29 @@ VARS = [lepton+'Eta', lepton+'Pt', lepton+'Phi', lepton+'E',   lepton+'Charge',
         'topMass'
         ]
 
-df = {}  # remember this will be list of dataframe
+df = {}  # remember this will be set of dataframe
 
 for channel_no,channel  in enumerate(channels): #channels: #try to enumare funchtion to remove channel_no in this loop
-     if("Data" not in channel):
+     if("Data" not in channel and "QCD" not in channel):
         df[channel] = pd.DataFrame(datasets[channel_no],columns=VARS) #adding dataframes in the list
         if( channel in ['Tchannel', 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic']):
               df[channel]['Assig'] = np.asarray(corr_assig[channel_no]) # adding new variable in each dataframe of a given channel 
      else:
-        VARS.remove("Xsec_wgt")
-        VARS.remove("LHEWeightSign")
+        if("Xsec_wgt" in VARS): VARS.remove("Xsec_wgt")
+        if("LHEWeightSign" in VARS): VARS.remove("LHEWeightSign")
         df[channel] = pd.DataFrame(datasets[channel_no],columns=VARS) #adding dataframes in the list
+     print("df shape ", channel," : ",df[channel].shape[0])
+     df[channel].to_root('dataframe_saved/'+year+'_'+channel+'_Apply_all_'+lep+'.root',key='Events') 
 
 del datasets
 del corr_assig #this has been added
+print("len of the list of dataframs  = ",len(df))
+print("len of the list of channels  = ",len(channels))
+channels.remove("Data"+year)
+del df["Data"+year]
+
+print("len of the list of dataframs  = ",len(df))
+print("len of the list of channels  = ",len(channels))
 
 #defin dec to store info channel wise
 df_train = {}
@@ -231,7 +240,7 @@ if(df_EWKBKG_train_valid_test[1].shape[0] < final_Events_for_validatation):
         
 df_QCD_train_valid_test = []  #define a new list for train test and validation
 for i,df in enumerate([df_train,df_valid,df_test]):
-    df_QCD_train_valid_test.append(df['Data'+year])
+    df_QCD_train_valid_test.append(df['QCD'])
 
 del df_train,df_valid,df_test # deleting datadames since the full information already absorbed in signal and backgrounds
 

@@ -72,7 +72,7 @@ class cutflow:
                 'UL2016preVFP' : ['HLT_IsoMu24','HLT_IsoTkMu24'],
                 'UL2016postVFP' : ['HLT_IsoMu24','HLT_IsoTkMu24'],
                 'UL2017' : ['HLT_IsoMu27'],
-                'UL2018' : None}
+                'UL2018' : ['HLT_IsoMu24']}
             self.pt_Thes={
                 '2016' : 26,
                 '2017' : 30,
@@ -80,7 +80,7 @@ class cutflow:
                 'UL2016preVFP' : 26,
                 'UL2016postVFP' : 26,
                 'UL2017' : 30,
-                'UL2018' : None}
+                'UL2018' : 26}
         if(self.lepflavour=="el"):
             self.trigger_selection={
                 '2016' : ['HLT_Ele32_eta2p1_WPTight_Gsf'],
@@ -89,7 +89,7 @@ class cutflow:
                 'UL2016preVFP' : ['HLT_Ele32_eta2p1_WPTight_Gsf'],
                 'UL2016postVFP' : ['HLT_Ele32_eta2p1_WPTight_Gsf'],
                 'UL2017' : ['HLT_Ele35_WPTight_Gsf','HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned'],
-                'UL2018' : None	}
+                'UL2018' : ['HLT_Ele32_WPTight_Gsf']}
             self.pt_Thes={
                 '2016' : 35,
                 '2017' : 37,
@@ -97,7 +97,7 @@ class cutflow:
                 'UL2016preVFP' : 35,
                 'UL2016postVFP' : 35,
                 'UL2017' : 37,
-                'UL2018' : None}
+                'UL2018' : 35}
         self.Nocut_npvs=ROOT.TH1F('Nocut_npvs','Nocut_npvs', 100, 0, 1000)
        	self.trig_sel_npvs=ROOT.TH1F('trig_sel_npvs','trig_sel_npvs', 100, 0, 1000)
         self.tight_lep_sel_npvs=ROOT.TH1F('tight_lep_sel_npvs','tight_lep_sel_npvs', 100, 0, 1000)
@@ -457,6 +457,15 @@ cutflowModuleConstr_2J1T0_mu_mc_UL2017 =   lambda : cutflow(2,1,False,"mu",True,
 cutflowModuleConstr_2J1T0_mu_data_UL2017 =   lambda : cutflow(2,1,False,"mu",False,'UL2017')
 cutflowModuleConstr_2J1T0_el_mc_UL2017 =   lambda : cutflow(2,1,False,"el",True,'UL2017')
 
+
+cutflowModuleConstr_2J1T1_mu_mc_UL2018 =   lambda : cutflow(2,1,True,"mu",True,'UL2018')
+cutflowModuleConstr_2J1T1_mu_data_UL2018 =   lambda : cutflow(2,1,True,"mu",False,'UL2018')
+cutflowModuleConstr_2J1T1_el_mc_UL2018 =   lambda : cutflow(2,1,True,"el",True,'UL2018')
+cutflowModuleConstr_2J1T1_el_data_UL2018 =   lambda : cutflow(2,1,True,"el",False,'UL2018')
+
+cutflowModuleConstr_2J1T0_mu_mc_UL2018 =   lambda : cutflow(2,1,False,"mu",True,'UL2018')
+cutflowModuleConstr_2J1T0_mu_data_UL2018 =   lambda : cutflow(2,1,False,"mu",False,'UL2018')
+cutflowModuleConstr_2J1T0_el_mc_UL2018 =   lambda : cutflow(2,1,False,"el",True,'UL2018')
 #if __name__ == "__main__":
 #    if(InFile==None):
 #   	print "provide input file cutflow.py -f inputfile.root"

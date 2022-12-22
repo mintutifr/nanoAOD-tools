@@ -32,11 +32,11 @@ echo $sample
 #------------------------------------------------
 #create the same datasetfile depending on year
 #------------------------------------------------
-Mc_common_channel="Tchannel_wtop0p7_check" #"Tbarchannel_wtop1p31  Tchannel_wtop1p31 Tbarchannel_wtop0p7  Tbarchannel_wtop0p85 Tbarchannel_wtop1p0 Tbarchannel_wtop1p15 Tbarchannel_wtop1p3   Tbarchannel_wtop1p45  Tchannel_wtop0p55  Tchannel_wtop0p7 Tchannel_wtop0p85  Tchannel_wtop1p0  Tchannel_wtop1p15 Tchannel_wtop1p3 Tchannel_wtop1p45" #Tbarchannel_wtop0p55
+Mc_common_channel="Tchannel_wtop1p15" #"Tbarchannel_wtop1p31  Tchannel_wtop1p31  Tbarchannel_wtop0p55 Tbarchannel_wtop0p7  Tbarchannel_wtop0p85 Tbarchannel_wtop1p0 Tbarchannel_wtop1p15 Tbarchannel_wtop1p3   Tbarchannel_wtop1p45  Tchannel_wtop0p55  Tchannel_wtop0p7 Tchannel_wtop0p85  Tchannel_wtop1p0  Tchannel_wtop1p15 Tchannel_wtop1p3 Tchannel_wtop1p45" 
 
 if [[ "UL2016" == "$year" ]]; then
      dataset_file=$crab_dir"/Gen_Study/dataset_UL2016_phy3.py"
-     outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_Nanogen/Mc/"
+     outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_Nanogen/Mc_v8/"
 
      
 	channels="${Mc_common_channel}" 
@@ -141,6 +141,5 @@ for channel in $channels; do
     	     input_file_list=${input_file_list}"'root\://se01.indiacms.res.in/"${ntupleT2Path}"' , "  #adding file in the inputfile list
   	fi
   
-  #condor_submit condorSetup.sub
     done
 done

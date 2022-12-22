@@ -33,6 +33,11 @@ if(year == 'UL2017'):
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SEVENTEEN/MC/"
     Datasets = Datasets_MC_UL2017
 
+if(year == 'UL2018'):
+    from dataset_UL2018 import *
+    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/EIGHTEEN/MC/"
+    Datasets = Datasets_MC_UL2018
+
 RequestNames = Datasets.keys()
 print RequestNames
 print "len(Datasets) = ",len(Datasets)

@@ -107,15 +107,15 @@ elif  [[ "UL2018" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2018_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/EIGHTEEN/"
      if [[ $sample == "Mc" ]]; then
-	channels=""
+	channels="${Mc_common_channel}  ${Mc_QCD_mu}"
      fi
 
      if [[ $sample == "Data" && $lep == "mu" ]]; then
-     	channels="${Mc_common_channel}  ${Mc_QCD_mu}"
+     	channels=""
      fi
      
      if [[ $sample == "Data" && $lep == "el" ]]; then
-     	channels="${Mc_common_channel} ${Mc_QCD_el}"
+     	channels=""
      fi
 
 fi
@@ -147,7 +147,8 @@ tarFile=$baseDir/minitree.tar.gz
 rm -rf $tarFile
 PhysicsTools=${crab_dir}/../../../PhysicsTools
 
-tar --exclude='.git' --exclude=${PhysicsTools}'/NanoAODTools/crab/condor_job'  --exclude=${PhysicsTools}'/NanoAODTools/crab/tree' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study_Sebastien' --exclude=${PhysicsTools}'/NanoAODTools/crab/efficiency' --exclude=${PhysicsTools}'/NanoAODTools/crab/lumi_n_pileup' --exclude=${PhysicsTools}'/NanoAODTools/crab/cutflow' --exclude=${PhysicsTools}'/NanoAODTools/crab/puWeight' --exclude=${PhysicsTools}'/NanoAODTools/crab/Effective_Number' -zcf $tarFile ${PhysicsTools}
+tar --exclude='.git' --exclude=${PhysicsTools}'/NanoAODTools/crab/DNN' --exclude=${PhysicsTools}'/NanoAODTools/crab/condor_job'  --exclude=${PhysicsTools}'/NanoAODTools/crab/tree' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study_Sebastien' --exclude=${PhysicsTools}'/NanoAODTools/crab/efficiency' --exclude=${PhysicsTools}'/NanoAODTools/crab/lumi_n_pileup' --exclude=${PhysicsTools}'/NanoAODTools/crab/cutflow' --exclude=${PhysicsTools}'/NanoAODTools/crab/puWeight' --exclude=${PhysicsTools}'/NanoAODTools/crab/Effective_Number' -zcf $tarFile ${PhysicsTools} 
+echo "file zipped ..... "
 #echo $channels
 echo $channels
 for channel in $channels; do
@@ -211,7 +212,7 @@ for channel in $channels; do
 	     sed -i 's:INPUT:'"$input_file_list"':g' crab_script_Minitree.py 
 	     sed -i "s:INPUT:root\://se01.indiacms.res.in/${outputroot}tree_$count.root:g" condorSetup.sub
 	     #echo "root\://se01.indiacms.res.in/${outputroot}tree_$count.root"
-	     condor_submit condorSetup.sub
+	     #condor_submit condorSetup.sub
 	     cd ../		    	
              input_file_list="inputFiles=["
   	else

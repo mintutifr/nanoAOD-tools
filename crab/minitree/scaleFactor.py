@@ -24,7 +24,8 @@ def elScaleFactor(pt, scEta, lead_Jet_pt, wp, syst,ID_Tight_fSFName,Trigger_Tigh
             fSFIso.append(ROOT.TFile(fSFName,"Read"))
      		 
             if(SF=="ID"): hSFIso.append(fSFIso[sf_].Get("EGamma_SF2D"))
-            else: hSFIso.append(fSFIso[sf_].Get("SF"))
+            elif(SF=="Trigger" and dataYear!='UL2018'): hSFIso.append(fSFIso[sf_].Get("SF"))
+            elif(SF=="Trigger" and dataYear=='UL2018'): hSFIso.append(fSFIso[sf_].Get("EGamma_SF2D"))
 
 	    if((dataYear=='2017' or dataYear=='UL2017') and SF=="Trigger"): #2017 has cross trigger with jet
 		if(abs(lead_Jet_pt) > hSFIso[sf_].GetYaxis().GetXmax()): lead_Jet_pt = hSFIso[sf_].GetYaxis().GetXmax() - 0.01
@@ -102,12 +103,15 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
     if(dataYear=='2016'):
     	binX=[[0,0],[0,0],[0,0]] 
     	binY=[[0,0],[0,0],[0,0]]
-    if(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP' or dataYear=='UL2017'):
-        binX=[[0],[0],[0]]
-        binY=[[0],[0],[0]]
+
     if(dataYear=='2017'):
         binX=[[0,0,0],[0,0,0],[0,0,0]]
         binY=[[0,0,0],[0,0,0],[0,0,0]]
+   
+    if(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP' or dataYear=='UL2017' or dataYear=='UL2018' ):
+        binX=[[0],[0],[0]]
+        binY=[[0],[0],[0]]
+        
     lumi=[];
     if(dataYear=='2016'):
     	lumi.append((19.636*1000.0)/lumiTotal) 
@@ -118,7 +122,9 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
         lumi.append((16.812*1000.0)/lumiTotal)
     if(dataYear=='UL2017'):
 	lumi.append((41.52*1000.0)/lumiTotal)
-
+    if(dataYear=='UL2018'):
+	lumi.append((59.22*1000.0)/lumiTotal)
+    
     if(dataYear=='2017'):
         lumi.append((14.42*1000.0)/lumiTotal)
         lumi.append((13.56*1000.0)/lumiTotal)
@@ -134,6 +140,8 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
         periods.append("") #GH
     if(dataYear=='UL2017'):
 	periods.append("")
+    if(dataYear=='UL2018'):
+        periods.append("")
     if(dataYear=='2017'):
         periods.append("BC")
         periods.append("DE")
@@ -142,14 +150,14 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
     sfs=[]
     sfs.append("ID")
     sfs.append("ISO")
-    if(dataYear=='2016' or dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP' or dataYear=='UL2017'):sfs.append("Trigger") # since for iso<0.06 we are using lagecy sample created files only
+    if(dataYear=='2016' or dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP' or dataYear=='UL2017'  or dataYear=='UL2018'):sfs.append("Trigger") # since for iso<0.06 we are using lagecy sample created files only
     if(dataYear=='2017'): sfs.append("TRI")
 
     #TString fSFName, SF, Period, dirName;
     if(dataYear=='2016' ):
     	fSF=[[0,0],[0,0],[0,0]]
     	hSF=[[0,0],[0,0],[0,0]]
-    if(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP' or dataYear=='UL2017'):
+    if(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP' or dataYear=='UL2017' or dataYear=='UL2018' ):
         fSF=[[0],[0],[0]]
         hSF=[[0],[0],[0]]
     if(dataYear=='2017'):
@@ -167,12 +175,14 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
             elif(SF=="ISO"): dirName="NUM_VeryTightRelIso_DEN_TightIDandIPCut_abseta_pt_syst"
             elif(SF=="Trigger" and (dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP')): dirName="NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoVeryTight_abseta_pt_syst"
             elif(SF=="Trigger" and dataYear=='UL2017'): dirName="NUM_IsoMu27_DEN_CutBasedIdTight_and_PFIsoVeryTight_abseta_pt_syst"
+            elif(SF=="Trigger" and dataYear=='UL2018'): dirName="NUM_IsoMu24_DEN_CutBasedIdTight_and_PFIsoVeryTight_abseta_pt_syst"
 	    elif(SF=='TRI'):dirName="IsoMu27_from_Tight2012_and_dBeta_0p06_pteta"
          
             for prod in range(0,len(periods)):
                 Period=periods[prod]
          	#print Period
-         	if(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP' or dataYear=='UL2017'): fSFName=filter(lambda x: Period+SF+"_SF_0p06.root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
+                #print files
+         	if(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP' or dataYear=='UL2017'or dataYear=='UL2018'): fSFName=filter(lambda x: Period+SF+"_SF_0p06.root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
 		else: fSFName=filter(lambda x: Period+"_"+SF+"_SF_0p06.root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
                 #fSFName=filepath+Period+"_"+SF+"_SF_0p06.root"
          	#print fSFName
@@ -180,7 +190,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
          	#print  "hSF[",sf_,"][",prod,"]"
                 fSF[sf_][prod]=ROOT.TFile.Open(fSFName,"Read")
                 hSF[sf_][prod]=fSF[sf_][prod].Get(dirName)
-         
+                #hSF[sf_][prod].Print()
 	if(iso>=0.2):
             if(dataYear=='2016'):dirName="MC_NUM_TightID_DEN_genTracks_PAR_pt_eta"
          
@@ -191,7 +201,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
                 elif(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP'):fSFName=filter(lambda x: "UL_"+Period+SF+".root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
          	#if(dataYear=='2016'):fSFName=filepath+Period+"_"+SF+".root"
          	#print  "hSF[",sf_,"][",prod,"]"
-         	elif(dataYear=='2017'):fSFName=filter(lambda x: Period+"_SF_"+SF+".root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
+         	elif(dataYear=='2017' or dataYear=='UL2018'):fSFName=filter(lambda x: Period+"_SF_"+SF+".root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
          	elif(dataYear=='UL2017'):fSFName=filter(lambda x: Period+"_SF_"+SF+"_syst.root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
          
          	#if(dataYear=='2017'):fSFName=filepath+Period+"_SF_"+SF+".root"
@@ -199,10 +209,11 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
          	fSF[sf_][prod]=ROOT.TFile.Open(fSFName,"Read")
          	#print  SF , " " ,fSFName , dirName , "/pt_abseta_ratio"
                 if(dataYear=='2016'):hSF[sf_][prod]=fSF[sf_][prod].Get(dirName+"/pt_abseta_ratio")
+         	elif(dataYear=='2017'):hSF[sf_][prod]=fSF[sf_][prod].Get("NUM_TightID_DEN_genTracks")
          	elif(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP'): hSF[sf_][prod]=fSF[sf_][prod].Get("NUM_TightID_DEN_TrackerMuons_abseta_pt_syst")
                 elif(dataYear=='UL2017'): hSF[sf_][prod]=fSF[sf_][prod].Get("NUM_TightID_DEN_genTracks_pt_abseta_syst")
-         	elif(dataYear=='2017'):hSF[sf_][prod]=fSF[sf_][prod].Get("NUM_TightID_DEN_genTracks")
-            
+                elif(dataYear=='UL2018'): hSF[sf_][prod]=fSF[sf_][prod].Get("NUM_TightID_DEN_TrackerMuons_pt_abseta_syst")
+                #print( hSF[sf_][prod].Print())
     #print "-----------------------------------" 	         	
 #Scale factor collection   
     for sf_ in range(0,len(sfs)):
@@ -213,7 +224,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
             Period=periods[prod]
 	    if((dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP') and iso >=0.2): # for iso<0.06 we are using persionlly created file axies are reverted
             	if(pt >= hSF[sf_][prod].GetYaxis().GetXmax()): pt = hSF[sf_][prod].GetYaxis().GetXmax() - 1.0
-            elif((dataYear=='UL2017') and iso >=0.2):
+            elif((dataYear=='UL2017' or dataYear=='UL2018') and iso >=0.2):
                 if(pt >= hSF[sf_][prod].GetXaxis().GetXmax()): pt = hSF[sf_][prod].GetXaxis().GetXmax() - 1.0
 	    else:
 		if(pt >= hSF[sf_][prod].GetYaxis().GetXmax()): pt = hSF[sf_][prod].GetYaxis().GetXmax() - 1.0
@@ -225,7 +236,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
 	    if((dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP') and iso >=0.2): # for iso<0.06 we are using persionlly created file axies are reverted
 	        binX[sf_][prod]=hSF[sf_][prod].GetXaxis().FindBin(eta)
                 binY[sf_][prod]=hSF[sf_][prod].GetYaxis().FindBin(pt)
-	    elif( dataYear=='UL2017' and iso >=0.2):
+	    elif( (dataYear=='UL2017' or dataYear=='UL2018') and iso >=0.2):
 	        binX[sf_][prod]=hSF[sf_][prod].GetXaxis().FindBin(pt)
                 binY[sf_][prod]=hSF[sf_][prod].GetYaxis().FindBin(eta)
             else:
@@ -259,7 +270,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
         elif(syst=="IDUp"): muSF = (idSF[0] + idSFErrUp[0])*lumi[0]  + (idSF[1] + idSFErrUp[1])*lumi[1]
         elif(syst=="IDDown"): muSF =  (idSF[0] - idSFErrDown[0])*lumi[0]  + (idSF[1] - idSFErrDown[1])*lumi[1]
         elif(syst=="IsoUp" or syst=="IsoDown" or syst=="TrigUp" or syst=="TrigDown"): muSF = 1.0
-    elif(iso >= 0.2 and (dataYear=='UL2016preVFP' or  dataYear=='UL2016postVFP' or dataYear=='UL2017')):
+    elif(iso >= 0.2 and (dataYear=='UL2016preVFP' or  dataYear=='UL2016postVFP' or dataYear=='UL2017' or dataYear=='UL2018')):
         #print "idSF[0] = ", idSF[0], "idSF[1] = ", idSF[1]
         if(syst=="noSyst"): muSF =  idSF[0]*lumi[0]  
         elif(syst=="IDUp"): muSF = (idSF[0] + idSFErrUp[0])*lumi[0]  
@@ -288,7 +299,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
         elif(syst=="TrigUp"): muSF= idSF[0]*isoSF[0]*(trigSF[0] + trigSFErrUp[0])*lumi[0] + idSF[1]*isoSF[1]*(trigSF[1] + trigSFErrUp[1])*lumi[1]
         elif(syst=="TrigDown"): muSF= idSF[0]*isoSF[0]*(trigSF[0] - trigSFErrDown[0])*lumi[0] + idSF[1]*isoSF[1]*(trigSF[1] - trigSFErrDown[1])*lumi[1]
 
-    elif(iso <=0.06 and (dataYear=='UL2016preVFP' or  dataYear=='UL2016postVFP' or dataYear=='UL2017' )):
+    elif(iso <=0.06 and (dataYear=='UL2016preVFP' or  dataYear=='UL2016postVFP' or dataYear=='UL2017' or dataYear=='UL2018')):
         #print "id : ",idSF[0],"iso : ",isoSF[0],"trg : ",trigSF[0],"lumi : ",lumi[0] 
         if(syst=="noSyst"): muSF =  idSF[0]*isoSF[0]*trigSF[0]*lumi[0] 
         elif(syst=="IDUp"): muSF = (idSF[0] + idSFErrUp[0])*isoSF[0]*trigSF[0]*lumi[0] 
@@ -312,7 +323,7 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
             hSF[sf_][prod].Delete()
             fSF[sf_][prod].Delete()
     
-    return muSF; 
+    return muSF 
     #canvas = ROOT.TCanvas(" canvas ")
     #canvas.cd()
     #print hSF[0][0].GetName()
@@ -349,7 +360,7 @@ el_InFiles = {
 		'UL2018':{
                         'TightID': 'ElectronSF/2018/UL/egammaEffi.txt_Ele_Tight_EGM2D.root',
                         'vetoID' : 'ElectronSF/2018/UL/egammaEffi.txt_Ele_Veto_EGM2D.root',
-                        'TRI'    : '' # need to update
+                        'TRI'    : 'ElectronSF/2018/UL/trig_2018.root' # need to update
                 },
 	     }
 def create_elSF(dataYear,pt_, scEta_, lead_Jet_pt_, wp_, syst_):
@@ -418,29 +429,29 @@ mu_InFiles = {'2016' : [
 			],
 	     'UL2016preVFP':[
                         'MuonSF/UL2016preVFP/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID_SF_0p06.root', # from matteo
-                        'MuonSF/UL2016preVFP/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root', # UL recomdation
+                        'MuonSF/UL2016preVFP/Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ID.root', # UL recomdation for antiIso
                         'MuonSF/UL2016preVFP/NUM_VeryTightRelIso_DEN_TightIDandIPCut_abseta_pt_HIPM_ISO_SF_0p06.root', # from matteo 
                         'MuonSF/UL2016preVFP/NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoVeryTight_abseta_pt_HIPM_Trigger_SF_0p06.root' # from matteo
                         ],
 	     'UL2016postVFP':[
                         'MuonSF/UL2016postVFP/Efficiencies_muon_generalTracks_Z_Run2016_UL_ID_SF_0p06.root', # from matteo
-                        'MuonSF/UL2016postVFP/Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root', # UL recomdation
+                        'MuonSF/UL2016postVFP/Efficiencies_muon_generalTracks_Z_Run2016_UL_ID.root', # UL recomdation for antiIso
                         'MuonSF/UL2016postVFP/NUM_VeryTightRelIso_DEN_TightIDandIPCut_abseta_pt_ISO_SF_0p06.root', # from matteo
                         'MuonSF/UL2016postVFP/NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoVeryTight_abseta_pt_Trigger_SF_0p06.root' # from matteo
                         ],
 	     'UL2017':[
                         'MuonSF/UL2017/Efficiencies_muon_generalTracks_Z_Run2017_UL_ID_SF_0p06.root', # from matteo
-                        'MuonSF/UL2017/RunBCDEF_SF_ID_syst.root',  # UL recomdation	
+                        'MuonSF/UL2017/RunBCDEF_SF_ID_syst.root',  # UL recomdation	for antiIso
                         'MuonSF/UL2017/NUM_VeryTightRelIso_DEN_TightIDandIPCut_abseta_pt_ISO_SF_0p06.root', # from matteo
                         'MuonSF/UL2017/NUM_IsoMu27_DEN_CutBasedIdTight_and_PFIsoVeryTight_abseta_pt_Trigger_SF_0p06.root' # from matteo
 
 			
 		      ],
 	    'UL2018':[
-                        'MuonSF/UL2017/Efficiencies_muon_generalTracks_Z_Run2018_UL_IDnISO_SF_0p06.root', # from matteo
-                        'MuonSF/UL2017/RunABCD_SF_ID.root',  # UL recomdation
-                        'MuonSF/UL2017/NUM_VeryTightRelIso_DEN_TightIDandIPCut_abseta_pt_ISO_SF_0p06.root' # from matteo
-                        'MuonSF/UL2017/NUM_IsoMu24_DEN_CutBasedIdTight_and_PFIsoVeryTight_abseta_pt_Trigger_SF_0p06.root',# from matteo
+                        'MuonSF/UL2018/Efficiencies_muon_generalTracks_Z_Run2018_UL_ID_SF_0p06.root', # from matteo
+                        'MuonSF/UL2018/RunABCD_SF_ID.root',  # UL recomdation for antiIso
+                        'MuonSF/UL2018/NUM_VeryTightRelIso_DEN_TightIDandIPCut_abseta_pt_ISO_SF_0p06.root', # from matteo
+                        'MuonSF/UL2018/NUM_IsoMu24_DEN_CutBasedIdTight_and_PFIsoVeryTight_abseta_pt_Trigger_SF_0p06.root',# from matteo
 		     ]	
 
 }
@@ -455,7 +466,8 @@ def create_muSF(dataYear,pt_,eta_,iso_,lumiTotal_,syst_):
 #print create_elSF('UL2016preVFP',300,-1.3,50,'Tight','noSyst')
 #print create_elSF('UL2016preVFP',300,-1.3,50,'Veto','noSyst')
 #create_muSF('2016',21.1176013947,0.6142578125,0.3,3485,'noSyst')
-#print create_muSF('UL2017',60.1176013947,-2.0142578125,0.3,3485,'noSyst')
-#print create_muSF('UL2017',29.2907962799,0.0283164978027,0.0297331474721,41520,'noSyst')#19521,16812,41520
-
+#print create_muSF('UL2017',60.1176013947,-2.0142578125,0.3,59222,'noSyst')
+#print create_muSF('UL2018',29.2907962799,0.0283164978027,0.297331474721,59222,'IDUp')#19521,16812,41520,59222
+print create_elSF('UL2018',300,-1.3,50,'Tight','noSyst')
+print create_elSF('UL2018',300,-1.3,50,'Veto','noSyst')
 #print "-------------------------------------------------------"			

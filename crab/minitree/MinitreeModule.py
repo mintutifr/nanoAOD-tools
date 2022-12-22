@@ -305,7 +305,7 @@ class MinitreeProducer(Module):
                 'UL2016preVFP' : 26,
 		'UL2016postVFP' : 26,
                 'UL2017' : 30,
-                'UL2018' : None} #need to check the trigger
+                'UL2018' : 26} #need to check the trigger
 	pt_Thes_el={
                 '2016' : 35,
                 '2017' : 37,
@@ -313,7 +313,7 @@ class MinitreeProducer(Module):
 		'UL2016preVFP' : 35,
                 'UL2016postVFP' : 35,
                 'UL2017' : 37,
-                'UL2018' : None} #need to check the trigger
+                'UL2018' : 35} #need to check the trigger
 	
 	if(self.isMC):
 	    Ele_EtaSC,Electron_SF_Iso,Electron_SF_Iso_IDUp,Electron_SF_Iso_IDDown,Electron_SF_Iso_TrigUp,Electron_SF_Iso_TrigDown,Electron_SF_Veto,Electron_SF_Veto_IDUp,Electron_SF_Veto_IDDown,Electron_SF_Veto_TrigUp,Electron_SF_Veto_TrigDown,Electron_CutbasedID=(-999 for i in range(12))
@@ -998,6 +998,16 @@ MinitreeModuleConstr2J1T0_mu_mc_UL2017 = lambda : MinitreeProducer(2,1,False,'mu
 MinitreeModuleConstr2J1T0_mu_data_UL2017 = lambda : MinitreeProducer(2,1,False,'mu',False,'UL2017')
 MinitreeModuleConstr2J1T0_el_mc_UL2017 = lambda : MinitreeProducer(2,1,False,'el',True,'UL2017')
 MinitreeModuleConstr2J1T0_el_data_UL2017 = lambda : MinitreeProducer(2,1,False,'el',False,'UL2017')
+
+MinitreeModuleConstr2J1T1_mu_mc_UL2018 = lambda : MinitreeProducer(2,1,True,'mu',True,'UL2018')
+MinitreeModuleConstr2J1T1_mu_data_UL2018 = lambda : MinitreeProducer(2,1,True,'mu',False,'UL2018')
+MinitreeModuleConstr2J1T1_el_mc_UL2018 = lambda : MinitreeProducer(2,1,True,'el',True,'UL2018')
+MinitreeModuleConstr2J1T1_el_data_UL2018 = lambda : MinitreeProducer(2,1,True,'el',False,'UL2018')
+
+MinitreeModuleConstr2J1T0_mu_mc_UL2018 = lambda : MinitreeProducer(2,1,False,'mu',True,'UL2018')
+MinitreeModuleConstr2J1T0_mu_data_UL2018 = lambda : MinitreeProducer(2,1,False,'mu',False,'UL2018')
+MinitreeModuleConstr2J1T0_el_mc_UL2018 = lambda : MinitreeProducer(2,1,False,'el',True,'UL2018')
+MinitreeModuleConstr2J1T0_el_data_UL2018 = lambda : MinitreeProducer(2,1,False,'el',False,'UL2018')
 
 #----------------------------------------------2J0T------------------------------------------------
 

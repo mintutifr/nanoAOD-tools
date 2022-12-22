@@ -39,7 +39,7 @@ class MainProducer(Module):
 	 	'UL2016preVFP' : 26,
 	 	'UL2016postVFP' : 26,
                 'UL2017' : 30,
-                'UL2018' : None}
+                'UL2018' : 26}
 
 	pt_Thes_el={
                 '2016' : 35,
@@ -48,7 +48,7 @@ class MainProducer(Module):
 	 	'UL2016preVFP' : 35,
                 'UL2016postVFP' : 35,
                 'UL2017' : 37,
-                'UL2018' : None}
+                'UL2018' : 35}
 
 	if(self.MC):
 	    Ele_EtaSC = [] 
@@ -178,3 +178,7 @@ MainModuleConstr_data_UL2016postVFP_singleElectron = lambda : MainProducer(False
 MainModuleConstr_mc_UL2017 = lambda : MainProducer(True,'UL2017',None)
 MainModuleConstr_data_UL2017_singleMuon = lambda : MainProducer(False,'UL2017','singleMuon')
 MainModuleConstr_data_UL2017_singleElectron = lambda : MainProducer(False,'UL2017','singleElectron')
+
+MainModuleConstr_mc_UL2018 = lambda : MainProducer(True,'UL2018',None)
+MainModuleConstr_data_UL2018_singleMuon = lambda : MainProducer(False,'UL2018','singleMuon')
+MainModuleConstr_data_UL2018_singleElectron = lambda : MainProducer(False,'UL2018','singleElectron')

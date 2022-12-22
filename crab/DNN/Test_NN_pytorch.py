@@ -87,10 +87,10 @@ VARS = [lepton+'Eta', lepton+'Pt', lepton+'Phi', lepton+'E',
 train_ch = ['WS_Top_signal', 'Top_signal', 'Top_bkg', 'WS_Top_bkg', 'EWK_BKG', 'QCD_BKG']
 types = ['train', 'test', 'valid']
 files = []
-dir='dataframe_saved/'
+ML_DIR='dataframe_saved/'
 for channel in train_ch:
     for typ in types:
-        files.append(dir+year+'_' + channel + '_' + typ + '_'+lep+'.root')
+            files.append(ML_DIR+year+'_' + channel + '_' + typ + '_'+lep+'.root')
 
 print(files)
 #files = ['preVFP2016_Top_signal_train.root', 'preVFP2016_EWK_BKG_train.root', 'preVFP2016_Top_bkg_train.root', 'preVFP2016_Top_signal_test.root', 'preVFP2016_EWK_BKG_test.root', 'preVFP2016_Top_bkg_test.root']

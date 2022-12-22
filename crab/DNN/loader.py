@@ -8,7 +8,7 @@ import sys
 import os
 import root_numpy
 
-dir = {
+sampleDir = {
 	'ULpreVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/',
 	'ULpostVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/',
 	'UL2017' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/',
@@ -21,7 +21,7 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
     elif(lep=="el"):
         lepton = "Electron" 
 
-    _branches_mu = [
+    _branches_lep = [
         	lepton+'Eta', lepton+'Pt', lepton+'Phi', lepton+'E', lepton+'Charge',
         	'lJetEta', 'lJetPt', 'lJetPhi', 'lJetMass',
         	'bJetEta', 'bJetPt', 'bJetPhi', 'bJetMass',
@@ -44,7 +44,7 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
         	'event',
         	'topMass'
     	]
-    _branches_mu_Data = [
+    _branches_lep_Data = [
         	lepton+'Eta', lepton+'Pt', lepton+'Phi', lepton+'E',   lepton+'Charge',
         	'lJetEta', 'lJetPt', 'lJetPhi', 'lJetMass',
         	'bJetEta', 'bJetPt', 'bJetPhi', 'bJetMass',
@@ -68,32 +68,51 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
 
 
     chain = ROOT.TChain('Events')
-    if "Data" in channel:
-        _branches_mu.remove('Xsec_wgt')
-        _branches_mu.remove('LHEWeightSign')
-        _branches_mu.remove('Jet_partonFlavour')
+    if "QCD" in channel:
+        _branches_lep.remove('Xsec_wgt')
+        _branches_lep.remove('LHEWeightSign')
+        _branches_lep.remove('Jet_partonFlavour')
 
-        chain.Add(dir[year]+'2J1T0/Minitree_'+channel+'_2J1T0_'+lep+'.root')
-        print( 'Entries Data: ',chain.GetEntries(), "\tSelected : ",max_entries)
-
-        _dataset = root_numpy.tree2array (chain,
-                branches = _branches_mu,
-                selection = '',
-                stop = max_entries
-                )
-        return { b : _dataset[b] for b in _branches_mu }
-    else:
-        chain.Add(dir[year]+'2J1T1/Minitree_'+channel+'_2J1T1_'+lep+'.root')
-
+        chain.Add(sampleDir[year]+'2J1T0/Minitree_Data'+year+'_2J1T0_'+lep+'.root')
+        if(max_entries==-1):
+            max_entries=chain.GetEntries()
         print( 'Entries '+channel+': ',chain.GetEntries(), "\tSelected : ",max_entries)
 
         _dataset = root_numpy.tree2array (chain,
-                branches = _branches_mu,
+                branches = _branches_lep,
+                selection = '',
+                stop = max_entries
+                )
+        return { b : _dataset[b] for b in _branches_lep }
+    elif "Data" in channel:
+        _branches_lep.remove('Xsec_wgt')
+        _branches_lep.remove('LHEWeightSign')
+        _branches_lep.remove('Jet_partonFlavour')
+
+        chain.Add(sampleDir[year]+'2J1T1/Minitree_Data'+year+'_2J1T1_'+lep+'.root')
+        if(max_entries==-1):
+            max_entries=chain.GetEntries()
+        print( 'Entries '+channel+': ',chain.GetEntries(), "\tSelected : ",max_entries)
+
+        _dataset = root_numpy.tree2array (chain,
+               branches = _branches_lep,
+               selection = '',
+               stop = max_entries
+               )
+        return { b : _dataset[b] for b in _branches_lep }
+    else:
+        chain.Add(sampleDir[year]+'2J1T1/Minitree_'+channel+'_2J1T1_'+lep+'.root')
+        if(max_entries==-1):
+            max_entries=chain.GetEntries()
+        print( 'Entries '+channel+': ',chain.GetEntries(), "\tSelected : ",max_entries)
+
+        _dataset = root_numpy.tree2array (chain,
+                branches = _branches_lep,
                 selection = '',
                 stop = max_entries
                 )
 
-        return { b : _dataset[b] for b in _branches_mu }
+        return { b : _dataset[b] for b in _branches_lep }
 
 
 if __name__ == '__main__':
