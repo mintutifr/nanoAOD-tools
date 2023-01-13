@@ -55,7 +55,8 @@ n_bins = 100
 n_sel_sig = np.zeros(n_bins+1)
 n_sel_bkg = np.zeros(n_bins+1)
 
-applydir = 'DNN_output/'
+
+applydir = 'DNN_output_without_mtwCut/' ; output_fileName = "ROC_TGraphs/ROC_info_"+year+"_"+lep+"_without_weights.root"
 
 for key in classes:
     infiles[key] = rt.TFile.Open(applydir +files[key], 'READ')
@@ -70,8 +71,18 @@ for key in classes:
         else:
             n_sel_bkg[j] += hs[key].Integral(j+1, n_bins)
 
+
 x = 100.0*(n_sel_sig/n_sel_sig[0])
 y = 100.0*(n_sel_bkg/n_sel_bkg[0])
+
+roc_int_limit_Sig_effi = False
+roc_int_limit_Bkg_effi = False
+
+for count in range(len(x)):
+    if(x[count]==0): 
+           if(roc_int_limit_Sig_effi == False): roc_int_limit_Sig_effi = count
+    if(y[count]==0): 
+           if(roc_int_limit_Bkg_effi == False): roc_int_limit_Bkg_effi = count
 
 
 roc = rt.TGraph(len(x), x, y)
@@ -84,11 +95,19 @@ roc.SetLineWidth(4)
 
 #print(roc.Integral())
 
-rocInt = float(sp.simps(y[:-10], x[:-10]))
+print(roc_int_limit_Sig_effi," : ",roc_int_limit_Bkg_effi)
+roc_integral_limit = (100-roc_int_limit_Sig_effi) if roc_int_limit_Sig_effi<roc_int_limit_Bkg_effi else (100-roc_int_limit_Bkg_effi)
+roc_integral_limit = 9
+print("roc integral range limit : ",roc_integral_limit)
+if(roc_integral_limit==0):
+    rocInt = float(sp.simps(y[:], x[:]))
+else:
+    rocInt = float(sp.simps(y[:-roc_integral_limit], x[:-roc_integral_limit]))
 print(rocInt)
 rocIntG = rt.TGraph(1, np.array([1.0]),np.array([-1.0*rocInt/10000]))
 
-outfile = rt.TFile("ROC_TGraphs/ROC_info_"+year+"_"+lep+".root", "recreate")
+
+outfile = rt.TFile(output_fileName, "recreate")
 outfile.cd()
 roc.Write("roc")
 rocIntG.Write("rocInt")

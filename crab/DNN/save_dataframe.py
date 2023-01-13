@@ -47,6 +47,7 @@ datasets = []                                            # this object will be a
 for channel in channels:
         datasets.append(load_dataset(-1,channel, lep, year)) #apped all data frames in datasets
 
+print(type(datasets[0]))
 #bjet_deepjet_score = [] 
 corr_assig = []
 for channel_no in range(0,7):#len(channels)-1): 
@@ -101,6 +102,7 @@ for channel_no,channel  in enumerate(channels): #channels: #try to enumare funch
         if("LHEWeightSign" in VARS): VARS.remove("LHEWeightSign")
         df[channel] = pd.DataFrame(datasets[channel_no],columns=VARS) #adding dataframes in the list
      print("df shape ", channel," : ",df[channel].shape[0])
+     #df[channel]=df[channel].loc[(df[channel]['mtwMass']>50)]
      df[channel].to_root('dataframe_saved/'+year+'_'+channel+'_Apply_all_'+lep+'.root',key='Events') 
 
 del datasets
