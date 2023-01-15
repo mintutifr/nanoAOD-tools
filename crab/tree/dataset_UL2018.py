@@ -106,14 +106,11 @@ Datasets_SingleMuon_data_UL2018 = {
 		'Run2018B_mu' : '/SingleMuon/Run2018B-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD',
 		'Run2018C_mu' : '/SingleMuon/Run2018C-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD',
 		'Run2018D_mu' : '/SingleMuon/Run2018D-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD',
-		#'Run2018B_mu' : '/SingleMuon/Run2018B-UL2018_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD', # which samples are these
-		#'Run2018C_mu' : '/SingleMuon/Run2018C-UL2018_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD'
 }
 
 Datasets_SingleElectron_data_UL2018 =   {
-		'Run2018A_el' : '',
-                'Run2018B_el' : '',
-                'Run2018C_el' : '',
-                'Run2018D_el' : '',
-                        
+		'Run2018A_el' : '/EGamma/Run2018A-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD',
+                'Run2018B_el' : '/EGamma/Run2018B-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD',
+                'Run2018C_el' : '/EGamma/Run2018C-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD',
+                'Run2018D_el' : '/EGamma/Run2018D-UL2018_MiniAODv2_NanoAODv9-v3/NANOAOD',
 }
