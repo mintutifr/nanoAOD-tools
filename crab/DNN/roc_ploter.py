@@ -55,6 +55,8 @@ for i in range(len(files_to_read_roc)):
 print(rocInt_array)        
 c1 = rt.TCanvas('c1', '', 800, 800, 800, 800)
 c1.cd()
+#c1.SetLogy()
+#c1.SetLogx()
 
 std.Draw()
 roc_array[0].Draw("same")

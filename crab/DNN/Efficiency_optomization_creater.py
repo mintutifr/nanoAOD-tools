@@ -58,7 +58,7 @@ if(year == "UL2017"):
 
 
 #applydir = 'DNN_output_with_mtwCut/Apply_all/' ;  output_fileName = "ROC_TGraphs/Efficiency_info_"+year+"_"+lep+"_with_weights.root"
-applydir = 'DNN_output_without_mtwCut/Apply_all/' ;  output_fileName = "ROC_TGraphs/Efficiency_Optimization_info_"+year+"_"+lep+"_with_weights.root"
+applydir = 'DNN_output_without_mtwCut/Apply_all/' ;  output_fileName = "ROC_TGraphs/Efficiency_Optimization_with_ttbar_DNNScore_info_"+year+"_"+lep+"_with_weights.root"
 
 channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
 MCcut ="Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)"
@@ -100,7 +100,7 @@ hs_wrong_assignment = {}
 infiles = {}
 intree = {}
 DNN_sig_bins =  np.array([0.0 , 0.05 , 0.1 , 0.15 , 0.2 , 0.25 , 0.3 ,  0.35 , 0.4 , 0.45 , 0.5 , 0.55 , 0.6 , 0.65 , 0.7 , 0.75 ,  0.8 , 0.85 , 0.90, 0.95])
-#DNN_sig_bins =  np.array([0.0 , 0.5])
+#DNN_sig_bins =  np.array([ 0.35, 0.6 ])
 len_DNN_sig_bins = len(DNN_sig_bins)
 n_sel_sig = np.zeros(len_DNN_sig_bins+1)
 n_sel_bkg = np.zeros(len_DNN_sig_bins+1)
@@ -179,10 +179,15 @@ print("Totle_sig = ",Totle_sig," Totle_bkg = ",Totle_bkg)
       
 SToB_ratio = np.zeros(len_DNN_sig_bins)
 
-hs_opt_purity = rt.TH2F('hs_opt_purity', 'Purity;DNN corr. tch assign ; DNN corr. (ttbar+tch) assign ', len_DNN_sig_bins-1, DNN_sig_bins,len_DNN_sig_bins-1, DNN_sig_bins)
+"""hs_opt_purity = rt.TH2F('hs_opt_purity', 'Purity;DNN corr. tch assign ; DNN corr. (ttbar+tch) assign ', len_DNN_sig_bins-1, DNN_sig_bins,len_DNN_sig_bins-1, DNN_sig_bins)
 hs_opt_SE = rt.TH2F('hs_opt_SE', 'Signal Efficiency;DNN corr. tch assign; DNN corr. (ttbar+tch) assign', len_DNN_sig_bins-1, DNN_sig_bins,len_DNN_sig_bins-1, DNN_sig_bins)
 hs_opt_BE = rt.TH2F('hs_opt_BE', 'Bkg Efficiency;DNN corr. tch assign; DNN corr. (ttbar+tch) assign', len_DNN_sig_bins-1, DNN_sig_bins,len_DNN_sig_bins-1, DNN_sig_bins)
-hs_opt_SbB = rt.TH2F('hs_opt_SbB', 'Sig to Bkg ratio;DNN corr. tch assign; DNN corr. (ttbar+tch) assign', len_DNN_sig_bins-1, DNN_sig_bins,len_DNN_sig_bins-1, DNN_sig_bins)
+hs_opt_SbB = rt.TH2F('hs_opt_SbB', 'Sig to Bkg ratio;DNN corr. tch assign; DNN corr. (ttbar+tch) assign', len_DNN_sig_bins-1, DNN_sig_bins,len_DNN_sig_bins-1, DNN_sig_bins)"""
+
+hs_opt_purity = rt.TH2F('hs_opt_purity', 'Purity;DNN corr. tch assign ; DNN corr. ttbar assign ', len_DNN_sig_bins-1, DNN_sig_bins,len_DNN_sig_bins-1, DNN_sig_bins)
+hs_opt_SE = rt.TH2F('hs_opt_SE', 'Signal Efficiency;DNN corr. tch assign; DNN corr. ttbar assign', len_DNN_sig_bins-1, DNN_sig_bins,len_DNN_sig_bins-1, DNN_sig_bins)
+hs_opt_BE = rt.TH2F('hs_opt_BE', 'Bkg Efficiency;DNN corr. tch assign; DNN corr. ttbar assign', len_DNN_sig_bins-1, DNN_sig_bins,len_DNN_sig_bins-1, DNN_sig_bins)
+hs_opt_SbB = rt.TH2F('hs_opt_SbB', 'Sig to Bkg ratio;DNN corr. tch assign; DNN corr. ttbar assign', len_DNN_sig_bins-1, DNN_sig_bins,len_DNN_sig_bins-1, DNN_sig_bins)
 
 
 for DNNcut_bin_ttbar_num,DNNcut_ttbar in enumerate(DNN_sig_bins):
@@ -194,31 +199,31 @@ for DNNcut_bin_ttbar_num,DNNcut_ttbar in enumerate(DNN_sig_bins):
         SToB_ratio = np.zeros(len_DNN_sig_bins)
 
 
-        DNNcut_ttbar_str = "*((t_ch_CAsi+ttbar_CAsi)>"+str(DNNcut_ttbar)+")"
-        #DNNcut_ttbar_str = "*(ttbar_CAsi>"+str(DNNcut_ttbar)+")"
+        #DNNcut_ttbar_str = "*((t_ch_CAsi+ttbar_CAsi)>"+str(DNNcut_ttbar)+")"
+        DNNcut_ttbar_str = "*(ttbar_CAsi>"+str(DNNcut_ttbar)+")"
         for DNNcut_bin_num,DNNcut_sig in enumerate(DNN_sig_bins):
                 print()
-                print("-------------------------  ",  DNNcut_sig,DNNcut_ttbar  ,"  ----------------------------------")
+                print("-------------------------  t-ch : ",  DNNcut_sig," ttbar : ",DNNcut_ttbar  ,"  ----------------------------------")
                 print()
                 DNNcut_sig_str = "*(t_ch_CAsi>"+str(DNNcut_sig)+")"
                 for channel in channels:
                         if(channel=='Tchannel' or channel=='Tbarchannel'):
                                 final_cut_corr_assg =  MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)"+DNNcut_ttbar_str+DNNcut_sig_str
                                 final_cut_wrong_assg = MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)"+DNNcut_ttbar_str+DNNcut_sig_str
-                                print(final_cut_corr_assg)
-                                print(final_cut_wrong_assg)
+                                #print(final_cut_corr_assg)
+                                #print(final_cut_wrong_assg)
                                 intree[channel].Project('hs' + channel, Variable, final_cut_corr_assg)
                                 intree[channel].Project('hs_wrong_assignment' + channel, Variable, final_cut_wrong_assg)
-                                hs[channel].Print()
-                                hs_wrong_assignment[channel].Print()
+                                #hs[channel].Print()
+                                #hs_wrong_assignment[channel].Print()
                         elif(channel!='QCD'):
                                 final_cut_bkg = MCcut+DNNcut_ttbar_str+DNNcut_sig_str
                                 intree[channel].Project('hs' + channel, Variable, final_cut_bkg)
-                                hs[channel].Print()
+                                #hs[channel].Print()
                         else:
                                 final_cut_data = Datacut+DNNcut_ttbar_str+DNNcut_sig_str
                                 intree[channel].Project('hs' + channel, Variable, final_cut_data)
-                                hs[channel].Print()
+                                #hs[channel].Print()
                         if(channel == "Tchannel" or channel == "Tbarchannel"):
                             hs[channel].Scale(MCSF)
                             n_sel_sig[DNNcut_bin_num] += round(hs[channel].Integral(1, Num_bin),4)
@@ -234,22 +239,22 @@ for DNNcut_bin_ttbar_num,DNNcut_ttbar in enumerate(DNN_sig_bins):
                 
                     
                  #signal to background ratio
-                if(n_sel_bkg[DNNcut_bin_num] == 0): SToB_ratio[DNNcut_bin_num] = 100.0
+                if(n_sel_bkg[DNNcut_bin_num] <= 0 or n_sel_sig[DNNcut_bin_num]<=0): SToB_ratio[DNNcut_bin_num] = 0.01
                 else: SToB_ratio[DNNcut_bin_num] = round((n_sel_sig[DNNcut_bin_num]/n_sel_bkg[DNNcut_bin_num]),4)
                     
                 #Purity calculation
-                if((n_sel_sig[DNNcut_bin_num] + n_sel_bkg[DNNcut_bin_num]) == 0): purity[DNNcut_bin_num] = 10.0
+                if(((n_sel_sig[DNNcut_bin_num] + n_sel_bkg[DNNcut_bin_num]) <= 0) or n_sel_sig[DNNcut_bin_num]<=0 or n_sel_bkg[DNNcut_bin_num] <= 0): purity[DNNcut_bin_num] = 0.00001
                 else: purity[DNNcut_bin_num] = round((n_sel_sig[DNNcut_bin_num]/(n_sel_sig[DNNcut_bin_num] + n_sel_bkg[DNNcut_bin_num])),4)
                     
                 #signal efficiency calulation
-                if(n_sel_sig[DNNcut_bin_num] == 0): Sig_effi[DNNcut_bin_num] = 0.00001 
+                if(n_sel_sig[DNNcut_bin_num] <= 0): Sig_effi[DNNcut_bin_num] = 0.00001 
                 else: 
                     Sig_effi[DNNcut_bin_num] = round(n_sel_sig[DNNcut_bin_num]/Totle_sig,4)
                     if(Sig_effi[DNNcut_bin_num]==0): 
                          Sig_effi[DNNcut_bin_num] = 0.00001
                 
                 #Background efficiency calulation
-                if(n_sel_bkg[DNNcut_bin_num] == 0): Bkg_effi[DNNcut_bin_num] =  0.00001
+                if(n_sel_bkg[DNNcut_bin_num] <= 0): Bkg_effi[DNNcut_bin_num] =  0.00001
                 else: 
                      Bkg_effi[DNNcut_bin_num] = round(n_sel_bkg[DNNcut_bin_num]/Totle_bkg,4)
                      if(Bkg_effi[DNNcut_bin_num]==0): 

@@ -127,7 +127,7 @@ applydir = 'DNN_output_with_mtwCut/Apply_all/'
 channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
 MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)" 
 Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
-DNNcut=""#*((t_ch_CAsi+ttbar_CAsi)>0.4)"
+DNNcut="*((t_ch_CAsi+ttbar_CAsi)>0.4)"
 
 Fpaths = {}
 EvtWeight_Fpaths = {} 
@@ -183,6 +183,49 @@ hist_EWK.SetLineColor(rt.kMagenta); hist_EWK.SetLineWidth(2)
 hist_QCD.SetLineColor(rt.kGray); hist_QCD.SetLineWidth(2)
 print
 
+for channel in channels:
+    print channel
+    infiles[channel] = rt.TFile.Open(Fpaths[channel], 'READ')
+    intree[channel] = infiles[channel].Get('Events')
+    if(channel!="QCD"):
+        intree[channel].AddFriend ("Events",EvtWeight_Fpaths[channel])
+    else: intree[channel].AddFriend ("Events",QCDAntiISO_Fpath)
+
+    rt.gROOT.cd()
+
+    hs[channel] = rt.TH1F('hs' + channel, '', Num_bin, lest_bin, max_bin)
+    WAssihs[channel] = rt.TH1F('temphs' + channel, '', Num_bin, lest_bin, max_bin)
+
+    if(channel=='Tchannel' or channel=='Tbarchannel'):
+        intree[channel].Project('hs' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)")
+        intree[channel].Project('temphs' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)")
+        hist_tch_CAssig.Add(hs[channel])
+        hist_tch_WAssig.Add(WAssihs[channel])
+    elif(channel=='tw_top'  or channel=='tw_antitop' or channel=='Schannel' or channel=='ttbar_SemiLeptonic' or channel=='ttbar_FullyLeptonic'):
+        intree[channel].Project('hs' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)")
+        intree[channel].Project('temphs' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)")
+        hist_ttbar_CAssig.Add(hs[channel])
+        hist_ttbar_WAssig.Add(WAssihs[channel])
+    elif(channel=='QCD'):
+        intree[channel].Project('hs' + channel, Variable,Datacut)
+        hist_QCD.Add(hs[channel])
+    else:
+        intree[channel].Project('hs' + channel, Variable,MCcut)
+        hist_EWK.Add(hs[channel])
+
+
+MCSF = NonQCDScale_mtwFit/(hist_tch_CAssig.Integral()+hist_tch_WAssig.Integral()+hist_ttbar_CAssig.Integral()+hist_ttbar_WAssig.Integral()+hist_EWK.Integral())
+QCDSF = QCDScale_mtwFit/(hist_QCD.Integral())
+print
+
+
+hist_tch_CAssig.Reset()
+hist_tch_WAssig.Reset()
+hist_ttbar_CAssig.Reset()
+hist_ttbar_WAssig.Reset()
+hist_EWK.Reset()
+hist_QCD.Reset()
+
 
 for channel in channels:
     print channel
@@ -194,8 +237,8 @@ for channel in channels:
 
     rt.gROOT.cd()
 
-    hs[channel] = rt.TH1F('hs' + channel, '', Num_bin, lest_bin, max_bin)
-    WAssihs[channel] = rt.TH1F('temphs' + channel, '', Num_bin, lest_bin, max_bin)
+    hs[channel].Reset()
+    WAssihs[channel].Reset()
 
     if(channel=='Tchannel' or channel=='Tbarchannel'): 
         intree[channel].Project('hs' + channel, Variable,MCcut+DNNcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)")
@@ -216,8 +259,6 @@ for channel in channels:
 
 print
 
-MCSF = NonQCDScale_mtwFit/(hist_tch_CAssig.Integral()+hist_tch_WAssig.Integral()+hist_ttbar_CAssig.Integral()+hist_ttbar_WAssig.Integral()+hist_EWK.Integral())
-QCDSF = QCDScale_mtwFit/(hist_QCD.Integral())
 
 c1 = rt.TCanvas('c1', '', 800, 800, 800, 800)
 rt.TGaxis.SetMaxDigits(3)

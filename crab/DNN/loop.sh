@@ -48,12 +48,12 @@
 #python roc_creater_from_full_sample_withweights.py -y UL2017 -l el
 
 # cmseenv needed
-python Efficiency_creater.py -y ULpreVFP2016 -l mu
-python Efficiency_creater.py -y ULpreVFP2016 -l el
-python Efficiency_creater.py -y ULpostVFP2016 -l mu
-python Efficiency_creater.py -y ULpostVFP2016 -l el
-python Efficiency_creater.py -y UL2017 -l mu
-python Efficiency_creater.py -y UL2017 -l el
+#python Efficiency_creater.py -y ULpreVFP2016 -l mu
+#python Efficiency_creater.py -y ULpreVFP2016 -l el
+#python Efficiency_creater.py -y ULpostVFP2016 -l mu
+#python Efficiency_creater.py -y ULpostVFP2016 -l el
+#python Efficiency_creater.py -y UL2017 -l mu
+#python Efficiency_creater.py -y UL2017 -l el
 
 # cmseenv needed
 #python Efficiency_ploter.py -y ULpreVFP2016 -l mu
@@ -77,3 +77,6 @@ python Efficiency_creater.py -y UL2017 -l el
 #root -l -q 'Purity_signalEffi.C("mu","ULpostVFP2016")'
 #root -l -q 'Purity_signalEffi.C("el","UL2017")'
 #root -l -q 'Purity_signalEffi.C("mu","UL2017")'
+
+python Efficiency_optomization_creater.py -y ULpreVFP2016 -l mu
+python Efficiency_optomization_creater.py -y ULpreVFP2016 -l el

@@ -11,8 +11,8 @@ lep = args.lepton[0]
 year= args.year[0]
 
 filedir = "ROC_TGraphs/"
- 
-files_to_read = ['Efficiency_Optimization_info_'+year+'_'+lep+'_with_weights.root']
+files_to_read = ['Efficiency_Optimization_with_ttbar_DNNScore_info_'+year+'_'+lep+'_with_weights.root'] 
+#files_to_read = ['Efficiency_Optimization_info_'+year+'_'+lep+'_with_weights.root']
 print("Reading file ......", files_to_read )
 colors = [2,3,4,6,7,216]
 makerstyle = [87,20,21,22,23,34]
@@ -50,5 +50,5 @@ for i in range(0,len(effi_array)):
         effi_array[i].Draw("CONT3 same")
         c2.Update()
 
-        c2.Print('Plots/Optimization_ttbar_tch'+plots[i]+"_"+year+'_'+lep+'_Effi.png')
-        c2.Print('Plots/Optimization_ttbar_tch'+plots[i]+"_"+year+'_'+lep+'_Effi.png')
+        c2.Print('Plots/Optimization_ttbar_'+plots[i]+"_"+year+'_'+lep+'_Effi.png')
+        c2.Print('Plots/Optimization_ttbar_'+plots[i]+"_"+year+'_'+lep+'_Effi.png')
