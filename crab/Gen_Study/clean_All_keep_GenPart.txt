@@ -6,6 +6,8 @@ keep GenJet*
 keep nGenDressedLepton
 keep GenDressedLepton*
 keep Generator_weight
+keep *Weight*
+keep *weight* 
 keep    event
 keep    top_ID
 keep    top_is_lastcopy

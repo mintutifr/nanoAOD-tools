@@ -21,7 +21,7 @@ date   = datetime.datetime.now()
 
 if(year == 'UL2016'):
     from dataset_UL2016 import *
-    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN_v8/"
+    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN_v9/"
     Datasets = Datasets_Alt_MC_UL2016
 
 RequestNames = Datasets.keys()
@@ -48,7 +48,7 @@ for i in tqdm(range(0,len(RequestNames))):
     update_RequestName = "config.General.requestName = '"+RequestName+"_Tree_"+year+"'\n" 
     update_Dataset = "config.Data.inputDataset = '"+Dataset+"'\n"
     update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+RequestName+"'\n"
-    update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName+"_v7'\n"
+    update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName+"_v9'\n"
     update_InputFiles = "config.JobType.inputFiles = ['crab_script_NanoGen_skimtree.py','../../scripts/haddnano.py','clean_All_keep_GenPart.txt','Gen_mass_reconstract_SingleTop.py','Gen_mass_functions.py']\n"    
     update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"
     update_module = "\tmodules=[NanoGenConstr_"+year+"()],\n"

@@ -44,13 +44,20 @@ if(year == 'UL2016postVFP'):
      	Datasets = Datasets_SingleElectron_data_UL2016
 
 if(year == 'UL2017'):
-    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SEVENTEEN/Data_"+lep+"/check/"
+    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SEVENTEEN/Data_"+lep+"/"
     from dataset_UL2017 import *
     if(lep=="mu"):
      	Datasets = Datasets_SingleMuon_data_UL2017
     if(lep=="el"):
      	Datasets = Datasets_SingleElectron_data_UL2017
 
+if(year == 'UL2018'):
+    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/EIGHTEEN/Data_"+lep+"/"
+    from dataset_UL2018 import *
+    if(lep=="mu"):
+        Datasets = Datasets_SingleMuon_data_UL2018
+    if(lep=="el"):
+        Datasets = Datasets_SingleElectron_data_UL2018
 
 RequestNames = Datasets.keys()
 print "\tlen(Datasets) = ",len(Datasets)
@@ -80,7 +87,7 @@ for i in range(0,len(RequestNames)):
     elif(year=='UL2017'): update_Golgonjsonfile = "config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/Legacy_2017/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt'\n"
     elif(year=='UL2018'): update_Golgonjsonfile = "config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/Legacy_2018/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt'\n"
     update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"
-
+    print update_Golgonjsonfile
  
 #    update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_october_Seventeen_"+RequestName[i]+"'\n"
     update_InputFiles = "config.JobType.inputFiles = ['crab_script_skimTree.py','btv.py','../../scripts/haddnano.py','keep_and_drop.txt','MainModule.py']\n"    
