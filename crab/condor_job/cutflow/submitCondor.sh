@@ -42,7 +42,7 @@ fi
 #------------------------------------------------
 common_mc_sample="Tchannel Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTo2L2Nu WZTo2Q2L ZZTo2Q2L" #Tchannel"
 Mc_QCD_mu="QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched"
-Mc_QCD_el=" QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
+Mc_QCD_el="QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
 
 if [[ "UL2016preVFP" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2016preVFP_phy3.py"
@@ -107,16 +107,18 @@ elif  [[ "UL2017" == "$year" ]]; then
 elif  [[ "UL2018" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2018_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/cutFlow_condor/EIGHTEEN/"
-     if [[ $sample == "Mc" ]]; then
-	channels=""
+     if [[ $sample == "Mc" &&  $lep == "mu" ]]; then
+	channels="${common_mc_sample} ${Mc_QCD_mu}"
      fi
-
+     if [[ $sample == "Mc" && $lep == "el" ]]; then
+        channels="${common_mc_sample} ${Mc_QCD_el}"
+     fi
      if [[ $sample == "Data" && $lep == "mu" ]]; then
-     	channels=""
+     	channels="Run2017C_mu"
      fi
      
      if [[ $sample == "Data" && $lep == "el" ]]; then
-     	channels=""
+     	channels="Run2017C_el"
      fi
 
 fi

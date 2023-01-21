@@ -4,7 +4,7 @@
 
 if [ "$#" -ne 4 ]; then                                                                 #check if input parameters are less than 3
   echo "Usage: $0 <year> <sample> <lep> <region>" >&1
-  echo "i.e  ./submitCondor_new.sh UL2016preVFP Mc mu 2J1T1"
+  echo "i.e  ./submitCondor_new.sh < UL2016preVFP > < Mc_Nomi / Mc_Alt / Mc_sys / Data > < mu / el > < 2J1T1 / 3J1T >"
   exit 1
 fi
 if ! [ "$1" ]; then
@@ -23,8 +23,8 @@ if ! [[ "UL2016preVFP" == "$year" || "UL2016postVFP" == "$year" || "UL2017" == "
     exit 1
 fi
 
-if ! [[ "Mc" == "$sample" || "Data" == "$sample" ]]; then
-    echo "wrong choice of sample ["Mc Data"]"
+if ! [[ "Mc_Nomi" == "$sample" || "Mc_Alt" == "$sample" || "Mc_sys" == "$sample" || "Data" == "$sample" ]]; then
+    echo "wrong choice of sample ["Mc_Nomi Mc_Alt Mc_sys Data"]"
     exit 1
 fi
 
@@ -40,21 +40,21 @@ fi
 #------------------------------------------------
 #create the same datasetfile depending on year
 #------------------------------------------------
-Mc_common_channel="Tchannel Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTo2L2Nu WZTo2Q2L ZZTo2Q2L" #Tchannel
+Mc_Nomi_channel="Tchannel Tbarchannel tw_top tw_antitop Schannel ttbar_SemiLeptonic ttbar_FullyLeptonic WJetsToLNu_0J WJetsToLNu_1J WJetsToLNu_2J DYJets WWTo2L2Nu WZTo2Q2L ZZTo2Q2L" #Tchannel
 Mc_QCD_mu="QCD_Pt-15To20_MuEnriched QCD_Pt-20To30_MuEnriched QCD_Pt-30To50_MuEnriched QCD_Pt-50To80_MuEnriched QCD_Pt-80To120_MuEnriched QCD_Pt-120To170_MuEnriched QCD_Pt-170To300_MuEnriched QCD_Pt-300To470_MuEnriched QCD_Pt-470To600_MuEnriched QCD_Pt-600To800_MuEnriched QCD_Pt-800To1000_MuEnriched QCD_Pt-1000_MuEnriched"
 Mc_QCD_el="QCD_Pt-30to50_EMEnriched QCD_Pt-50to80_EMEnriched QCD_Pt-80to120_EMEnriched QCD_Pt-120to170_EMEnriched QCD_Pt-170to300_EMEnriched QCD_Pt-300toInf_EMEnriched"
-
-
+Mc_Alt_channel="Tbarchannel_mtop1695 ttbar_SemiLeptonic_mtop1695   ttbar_FullyLeptonic_mtop1695   Tbarchannel_mtop1735   ttbar_FullyLeptonic_widthx0p55   ttbar_FullyLeptonic_widthx0p7   ttbar_FullyLeptonic_mtop1735   Tbarchannel_mtop1715   ttbar_FullyLeptonic_widthx1p3   ttbar_FullyLeptonic_mtop1755   ttbar_FullyLeptonic_widthx1p45   ttbar_FullyLeptonic_mtop1715   Tchannel_mtop1715   ttbar_SemiLeptonic_mtop1755   ttbar_SemiLeptonic_mtop1735   ttbar_SemiLeptonic_mtop1715   ttbar_FullyLeptonic_widthx0p85   Tbarchannel_mtop1755   Tchannel_mtop1695   ttbar_FullyLeptonic_widthx1p15   Tchannel_mtop1735   Tchannel_mtop1755"
+Mc_sys_channel="Tchannel_TuneCP5CR2  Tchannel_TuneCP5CR1   Tchannel_hdampdown   Tbarchannel_hdampdown   Tchannel_TuneCP5down   Tbarchannel_hdampup   Tchannel_hdampup   Tbarchannel_TuneCP5down   Tchannel_erdON   Tchannel_TuneCP5up   Tbarchannel_TuneCP5up   Tbarchannel_erdON   Tbarchannel_TuneCP5CR1   Tbarchannel_TuneCP5CR2"
 
 if [[ "UL2016preVFP" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2016preVFP_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_preVFP_v5/"
 
-     if [[ $sample == "Mc" && $lep == "mu" ]]; then
-	channels="${Mc_common_channel} ${Mc_QCD_mu}"
+     if [[ $sample == "Mc_Nomi" && $lep == "mu" ]]; then
+	channels="${Mc_Nomi_channel} ${Mc_QCD_mu}"
      fi
-     if [[ $sample == "Mc" && $lep == "el" ]]; then
-        channels="${Mc_common_channel} ${Mc_QCD_el}"
+     if [[ $sample == "Mc_Nomi" && $lep == "el" ]]; then
+        channels="${Mc_Nomi_channel} ${Mc_QCD_el}"
      fi
      if [[ $sample == "Data" && $lep == "mu" ]]; then
      	channels="Run2016B_preVFP_mu Run2016C_preVFP_mu Run2016D_preVFP_mu Run2016E_preVFP_mu Run2016F_preVFP_mu"
@@ -69,10 +69,10 @@ elif  [[ "UL2016postVFP" == "$year" ]]; then
      outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_postVFP_v5/"
  
      if [[ $sample == "Mc" && $lep == "mu" ]]; then
-        channels="${Mc_common_channel} ${Mc_QCD_mu}" 
+        channels="${Mc_Nomi_channel} ${Mc_QCD_mu}" 
      fi
      if [[ $sample == "Mc" && $lep == "el" ]]; then
-        channels="${Mc_common_channel} ${Mc_QCD_el}"
+        channels="${Mc_Nomi_channel} ${Mc_QCD_el}"
      fi
 
      if [[ $sample == "Data" && $lep == "mu" ]]; then
@@ -88,11 +88,11 @@ elif  [[ "UL2017" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2017_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SEVENTEEN_v5/"
      if [[ $sample == "Mc" && $lep == "mu" ]]; then
-	channels="${Mc_common_channel}  ${Mc_QCD_mu}"
+	channels="${Mc_Nomi_channel}  ${Mc_QCD_mu}"
      fi
 
      if [[ $sample == "Mc" && $lep == "el" ]]; then
-        channels="${Mc_common_channel} ${Mc_QCD_el}"
+        channels="${Mc_Nomi_channel} ${Mc_QCD_el}"
      fi
 
      if [[ $sample == "Data" && $lep == "mu" ]]; then
@@ -106,18 +106,27 @@ elif  [[ "UL2017" == "$year" ]]; then
 elif  [[ "UL2018" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2018_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/EIGHTEEN/"
-     if [[ $sample == "Mc" ]]; then
-	channels="${Mc_common_channel}  ${Mc_QCD_mu}"
+     if [[ $sample == "Mc" && $lep == "mu" ]]; then
+	channels="${Mc_Nomi_channel}  ${Mc_QCD_mu}"
      fi
-
+     if [[ $sample == "Mc" && $lep == "el" ]]; then
+        channels="${Mc_Nomi_channel}  ${Mc_QCD_el}"
+     fi
      if [[ $sample == "Data" && $lep == "mu" ]]; then
-     	channels=""
+     	channels="Run2017C_mu"
      fi
      
      if [[ $sample == "Data" && $lep == "el" ]]; then
-     	channels=""
+     	channels="Run2017C_el"
      fi
 
+fi
+
+if [[ $sample == "Mc_Alt" ]]; then
+    channels="${Mc_Alt_channel}"
+fi
+if [[ $sample == "Mc_sys" ]]; then
+    channels="${Mc_sys_channel}"
 fi
 
 if ! [ -e "$dataset_file" ]; then
@@ -212,7 +221,7 @@ for channel in $channels; do
 	     sed -i 's:INPUT:'"$input_file_list"':g' crab_script_Minitree.py 
 	     sed -i "s:INPUT:root\://se01.indiacms.res.in/${outputroot}tree_$count.root:g" condorSetup.sub
 	     #echo "root\://se01.indiacms.res.in/${outputroot}tree_$count.root"
-	     #condor_submit condorSetup.sub
+	     condor_submit condorSetup.sub
 	     cd ../		    	
              input_file_list="inputFiles=["
   	else

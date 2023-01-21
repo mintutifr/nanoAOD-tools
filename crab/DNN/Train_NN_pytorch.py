@@ -165,8 +165,8 @@ y_tr_ch = {}
 x_val_ch = {}
 y_val_ch = {}
 
-n_tr = 50000
-n_val = 10000
+#n_tr = 50000
+#n_val = 10000
 dir='dataframe_saved/'
 for count, channel in enumerate(train_ch):	
     print("Events",dir+year+'_' + channel + '_train_'+lep+'.root')
@@ -236,7 +236,7 @@ epoch_number = 0
 EPOCHS = 50
 lamda = 0.5
 best_vloss = 1000000
-f = open('loss'+year+'_'+lep+'.csv', 'w')
+f = open('weight/loss'+year+'_'+lep+'.csv', 'w')
 for epoch in range(EPOCHS):
     #print('EPOCH {}:'.format(epoch_number + 1))
 

@@ -3,7 +3,7 @@ import argparse as arg
 
 parser = arg.ArgumentParser(description='inputs discription')  
 parser.add_argument('-d', '--dir', dest='CondorDir', type=str, nargs=1, help="condor directory")
-parser.add_argument('-s', '--sample', dest='samples', type=str, nargs=1, help="sample [ Mc , Data ]")
+parser.add_argument('-s', '--sample', dest='samples', type=str, nargs=1, help="sample [ Mc_Nomi , Mc_Alt , Mc_sys , Data ]")
 parser.add_argument('-y', '--year', dest='years', type=str, nargs=1, help="Year [ UL2016preVFP , UL2016postVFP , UL2017 , UL2018 ]")
 parser.add_argument('-l', '--lepton', dest='leptons', type=str, nargs=1, help="sample [ mu , el ]")
 
@@ -18,6 +18,10 @@ if args.years[0] not in ['UL2016preVFP', 'UL2016postVFP','UL2017','UL2018']:
 if args.leptons[0] not in ['mu','el']:
     print('Error: Incorrect choice of lepton type, use -h for help')
     sys.exit(1)
+if args.samples[0] not in ['Mc_Nomi', 'Mc_Alt', 'Mc_sys', 'Data']:
+    print('Error: Incorrect choice of sample type, use -h for help')
+    exit()
+
 
 CondorDir=args.CondorDir[0]
 if not (os.path.isdir(CondorDir)):
@@ -60,6 +64,36 @@ sample = args.samples[0]
 
 if(year == 'UL2016preVFP'):
     from dataset_UL2016preVFP_phy3 import *
+    if sample=="Mc_Nomi" : Datasets = Datasets_MC_UL2016APV
+    if sample=="Mc_Alt" : Datasets = Datasets_Alt_MC_UL2016APV
+    if sample=="Mc_sys" : Datasets = Datasets_sys_MC_UL2016APV
+    elif sample=="Data" and lep=="mu" : Datasets = Datasets_SingleMuon_data_UL2016APV
+    elif sample=="Data" and lep=="el" : Datasets = Datasets = Datasets_SingleElectron_data_UL2016APV
+if(year == 'UL2016postVFP'):
+    from dataset_UL2016postVFP_phy3 import *
+    if sample=="Mc" : Datasets = Datasets_MC_UL2016
+    if sample=="Mc_Alt" : Datasets = Datasets_Alt_MC_UL2016
+    if sample=="Mc_sys" : Datasets = Datasets_sys_MC_UL2016
+    elif sample=="Data" and lep=="mu" : Datasets = Datasets_SingleMuon_data_UL2016
+    elif sample=="Data" and lep=="el" : Datasets = Datasets_SingleElectron_data_UL2016
+if(year == 'UL2017'):
+    from dataset_UL2017_phy3 import *
+    if sample=="Mc" : Datasets = Datasets_MC_UL2017
+    if sample=="Mc_Alt" : Datasets = Datasets_Alt_MC_UL2017
+    if sample=="Mc_sys" : Datasets = Datasets_sys_MC_UL2017
+    elif sample=="Data" and lep=="mu" : Datasets = Datasets_SingleMuon_data_UL2017
+    elif sample=="Data" and lep=="el" : Datasets = Datasets_SingleElectron_data_UL2017
+if(year == 'UL2018'):
+    from dataset_UL2018_phy3 import *
+    if sample=="Mc" : Datasets = Datasets_MC_UL2018
+    if sample=="Mc_Alt" : Datasets = Datasets_Alt_MC_UL2018
+    if sample=="Mc_sys" : Datasets = Datasets_sys_MC_UL2018
+    elif sample=="Data" and lep=="mu" : Datasets = Datasets_SingleMuon_data_UL2018
+    elif sample=="Data" and lep=="el" : Datasets = Datasets_SingleElectron_data_UL2018
+
+
+"""if(year == 'UL2016preVFP'):
+    from dataset_UL2016preVFP_phy3 import *
     if sample=="Mc" : Datasets = Datasets_MC_UL2016APV
     elif sample=="Data" and lep=="mu" : Datasets = Datasets_SingleMuon_data_UL2016APV
     elif sample=="Data" and lep=="el" : Datasets = Datasets = Datasets_SingleElectron_data_UL2016APV
@@ -72,7 +106,7 @@ if(year == 'UL2017'):
     from dataset_UL2017_phy3 import *
     if sample=="Mc" : Datasets = Datasets_MC_UL2017
     elif sample=="Data" and lep=="mu" : Datasets = Datasets_SingleMuon_data_UL2017
-    elif sample=="Data" and lep=="el" : Datasets = Datasets_SingleElectron_data_UL2017
+    elif sample=="Data" and lep=="el" : Datasets = Datasets_SingleElectron_data_UL2017"""
 
 
 #channels=['WWTo2L2Nu']
@@ -131,7 +165,7 @@ for channel in channels:
         (output, err) = p.communicate()
         p_status = p.wait()
         if(output.count("100%")==0 and skip_tranfer_check==False): 
-	     condor_resubmit = "1" #raw_input("did not enouter '100%' tranfer @ " +Dir+"/ to resubmit the job press 1/yes: ")
+	     condor_resubmit = raw_input("did not enouter '100%' tranfer @ " +Dir+"/ to resubmit the job press 1/yes: ")
 	     if(condor_resubmit=="yes" or condor_resubmit=="1"):
 	     	os.chdir(Dir)
 	     	os.system("condor_submit condorSetup.sub")

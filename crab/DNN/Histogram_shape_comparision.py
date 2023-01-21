@@ -49,6 +49,13 @@ elif(Variable=="topMass"):
         lest_bin=100.0
         max_bin=400.0
         Num_bin=15
+
+elif(Variable=="t_ch_CAsi+ttbar_CAsi"):
+        X_axies="Signal+TopBkg Corr. Assign DNN Sore"
+        Y_axies="Events/(0.01)"
+        lest_bin=0.0
+        max_bin=1.0
+        Num_bin=100
         
 elif(Variable=="t_ch_CAsi"):
         X_axies="Signal Corr. Assign DNN Sore"
@@ -72,7 +79,7 @@ elif(Variable=="ttbar_CAsi"):
         Num_bin=100
 
 elif(Variable=="ttbar_WAsi"):
-        X_axies="top bkg Corr. Assign DNN Sore"
+        X_axies="top bkg Wrong Assign DNN Sore"
         Y_axies="Events/(0.01)"
         lest_bin=0.0
         max_bin=1.0
@@ -93,11 +100,34 @@ elif(Variable=="QCD"):
         Num_bin=100
 
 
-applydir = 'DNN_output/Apply_all/'
+if(year == "ULpreVFP2016"):
+        if(lep=="mu"):
+               QCDScale_mtwFit = 10991.0
+               NonQCDScale_mtwFit = 231378.0
+        if(lep=="el"):
+               QCDScale_mtwFit = 6892.0
+               NonQCDScale_mtwFit = 146947.0
+if(year == "ULpostVFP2016"):
+        if(lep=="mu"):
+               QCDScale_mtwFit = 11457.0
+               NonQCDScale_mtwFit = 209030.0
+        if(lep=="el"):
+               QCDScale_mtwFit = 12848.0
+               NonQCDScale_mtwFit = 122089.0
+if(year == "UL2017"):
+        if(lep=="mu"):
+               QCDScale_mtwFit = 30145.0
+               NonQCDScale_mtwFit = 472746.0
+        if(lep=="el"):
+               QCDScale_mtwFit = 7509.0
+               NonQCDScale_mtwFit = 315426.0
+
+
+applydir = 'DNN_output_with_mtwCut/Apply_all/'
 channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
-MCcut ="Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF"
-Datacut = "(dR_bJet_lJet>0.4)"
-DNNcut="*(t_ch_CAsi>0.5)"
+MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)" 
+Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
+DNNcut="*((t_ch_CAsi+ttbar_CAsi)>0.4)"
 
 Fpaths = {}
 EvtWeight_Fpaths = {} 
@@ -105,16 +135,16 @@ for channel in channels:
         Fpaths[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
         if(year=="ULpreVFP2016"): 
             EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T0/Minitree_DataULpreVFP2016_2J1T0_"+lep+".root"
+            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
         elif(year=="ULpostVFP2016"):
             EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T0/Minitree_DataULpreVFP2016_2J1T0_"+lep+".root"
+            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
         elif(year=="UL2017"):
             EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T0/Minitree_DataULpreVFP2016_2J1T0_"+lep+".root"
+            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
         elif(year=="UL2018"):
             EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/minitree/Mc/2J1T0/Minitree_DataULpreVFP2016_2J1T0_"+lep+".root"
+            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
 
            
 print Fpaths
@@ -153,6 +183,50 @@ hist_EWK.SetLineColor(rt.kMagenta); hist_EWK.SetLineWidth(2)
 hist_QCD.SetLineColor(rt.kGray); hist_QCD.SetLineWidth(2)
 print
 
+for channel in channels:
+    print channel
+    infiles[channel] = rt.TFile.Open(Fpaths[channel], 'READ')
+    intree[channel] = infiles[channel].Get('Events')
+    if(channel!="QCD"):
+        intree[channel].AddFriend ("Events",EvtWeight_Fpaths[channel])
+    else: intree[channel].AddFriend ("Events",QCDAntiISO_Fpath)
+
+    rt.gROOT.cd()
+
+    hs[channel] = rt.TH1F('hs' + channel, '', Num_bin, lest_bin, max_bin)
+    WAssihs[channel] = rt.TH1F('temphs' + channel, '', Num_bin, lest_bin, max_bin)
+
+    if(channel=='Tchannel' or channel=='Tbarchannel'):
+        intree[channel].Project('hs' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)")
+        intree[channel].Project('temphs' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)")
+        hist_tch_CAssig.Add(hs[channel])
+        hist_tch_WAssig.Add(WAssihs[channel])
+    elif(channel=='tw_top'  or channel=='tw_antitop' or channel=='Schannel' or channel=='ttbar_SemiLeptonic' or channel=='ttbar_FullyLeptonic'):
+        intree[channel].Project('hs' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)")
+        intree[channel].Project('temphs' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)")
+        hist_ttbar_CAssig.Add(hs[channel])
+        hist_ttbar_WAssig.Add(WAssihs[channel])
+    elif(channel=='QCD'):
+        intree[channel].Project('hs' + channel, Variable,Datacut)
+        hist_QCD.Add(hs[channel])
+        hist_QCD.Print()
+    else:
+        intree[channel].Project('hs' + channel, Variable,MCcut)
+        hist_EWK.Add(hs[channel])
+
+
+MCSF = NonQCDScale_mtwFit/(hist_tch_CAssig.Integral()+hist_tch_WAssig.Integral()+hist_ttbar_CAssig.Integral()+hist_ttbar_WAssig.Integral()+hist_EWK.Integral())
+QCDSF = QCDScale_mtwFit/(hist_QCD.Integral())
+print
+print "MCSF: ",MCSF," QCDSF: ",QCDSF
+
+hist_tch_CAssig.Reset()
+hist_tch_WAssig.Reset()
+hist_ttbar_CAssig.Reset()
+hist_ttbar_WAssig.Reset()
+hist_EWK.Reset()
+hist_QCD.Reset()
+
 
 for channel in channels:
     print channel
@@ -164,8 +238,8 @@ for channel in channels:
 
     rt.gROOT.cd()
 
-    hs[channel] = rt.TH1F('hs' + channel, '', Num_bin, lest_bin, max_bin)
-    WAssihs[channel] = rt.TH1F('temphs' + channel, '', Num_bin, lest_bin, max_bin)
+    hs[channel].Reset()
+    WAssihs[channel].Reset()
 
     if(channel=='Tchannel' or channel=='Tbarchannel'): 
         intree[channel].Project('hs' + channel, Variable,MCcut+DNNcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)")
@@ -186,11 +260,12 @@ for channel in channels:
 
 print
 
+
 c1 = rt.TCanvas('c1', '', 800, 800, 800, 800)
 rt.TGaxis.SetMaxDigits(3)
 c1.cd()
 
-pad1 = rt.TPad("pad1", "pad1",0.0,0.0,0.990,0.990)
+pad1 = rt.TPad("pad1", "pad1",0.0,0.0,1.0,1.0)
 pad1.SetBottomMargin(0.089)
 pad1.SetTicky()
 pad1.SetTickx()
@@ -198,6 +273,14 @@ pad1.SetRightMargin(0.143)
 pad1.Draw()
 pad1.cd()
      
+hist_tch_CAssig.Scale(MCSF)
+hist_tch_WAssig.Scale(MCSF)
+hist_ttbar_CAssig.Scale(MCSF)
+hist_ttbar_WAssig.Scale(MCSF)
+hist_EWK.Scale(MCSF)
+hist_QCD.Scale(QCDSF)
+
+
 hist_tch_CAssig.Draw("hist")
 hist_tch_WAssig.Draw("same;hist")
 hist_ttbar_CAssig.Draw("same;hist")
@@ -212,7 +295,7 @@ print("fix_range = ",fix_range)
 #hist_tch_CAssig.SetMinimum(0.001)
 
 
-legend = rt.TLegend(0.50193646, 0.65435, 0.73293552, 0.8826143) 
+legend = rt.TLegend(0.47193646, 0.65435, 0.70293552, 0.8826143) 
 legend.Clear()
 legend.SetBorderSize(1)
 legend.SetTextSize(0.04)
@@ -234,5 +317,5 @@ c1.Update()
 
 raw_input()
 
-c1.Print('Plots/'+year+'_'+lep+'_'+Variable+'.png')
-c1.Print('Plots/'+year+'_'+lep+'_'+Variable+'.pdf')
+c1.Print('Plots/'+year+'_'+lep+'_'+Variable+'.png')#'_cut_tch_CAssig_p_ttbar_CAssigGT0p4.png')
+c1.Print('Plots/'+year+'_'+lep+'_'+Variable+'.pdf')#'_cut_tch_CAssig_p_ttbar_CAssigGT0p4.pdf')

@@ -95,11 +95,17 @@ train_ch.append("Data"+year)
 
 types = ['Apply_all']#,'train']
 files = []
-ML_DIR='dataframe_saved/'
+
+#ML_DIR='dataframe_saved_with_mtwCut/' ; wightfolder = 'weight_with_mtwCut/' ; MainOutputDir = 'DNN_output_with_mtwCut/'
+ML_DIR='dataframe_saved_without_mtwCut/' ; wightfolder = 'weight_without_mtwCut/' ; MainOutputDir = 'DNN_output_without_mtwCut/'
+
+if not os.path.exists(MainOutputDir): os.mkdir(MainOutputDir)
+if not os.path.exists(MainOutputDir+'Apply_all/'): os.mkdir(MainOutputDir+'Apply_all/')
+
 OriginalFileDir = {
-        "ULpreVFP2016" : "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/dataframe_saved/",
-        "ULpostVFP2016" :  "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/dataframe_saved/",
-        "UL2017" : "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/dataframe_saved/"
+        "ULpreVFP2016" : "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
+        "ULpostVFP2016" :  "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
+        "UL2017" : "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR
 }
 for channel in train_ch:
     for typ in types:
@@ -136,7 +142,7 @@ for fil in files:
 	testing_loader = DataLoader(test_dataset, batch_size = batch, shuffle = False) # create your dataloader
 
 	model = NeuralNetwork().to(device)
-	wightpath = 'weight/'+year+'/'+lep
+	wightpath = wightfolder+year+'/'+lep
 	list_of_files = glob.glob(wightpath+'/*')
 	latest_weight_file = max(list_of_files, key=os.path.getctime)
 	print("using ",latest_weight_file, "file for the evaluation")
@@ -160,4 +166,5 @@ for fil in files:
 	y_arr = y_arr.ravel().view(dtype = np.dtype([('t_ch_WAsi', np.double), ('t_ch_CAsi', np.double), ('ttbar_CAsi', np.double), ('ttbar_WAsi', np.double), ('EWK', np.double), ('QCD', np.double)]))
 	fname, ext = os.path.splitext(fil)
 	print("writing out put file : ", fname.rsplit('/')[-1],"_apply.root")
-	root_numpy.array2root(y_arr, 'DNN_output/Apply_all/'+ fname.rsplit('/')[-1] + '.root', treename='Events',mode='recreate')
+
+	root_numpy.array2root(y_arr, MainOutputDir+'Apply_all/'+ fname.rsplit('/')[-1] + '.root', treename='Events',mode='recreate')

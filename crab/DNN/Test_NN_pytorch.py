@@ -87,7 +87,12 @@ VARS = [lepton+'Eta', lepton+'Pt', lepton+'Phi', lepton+'E',
 train_ch = ['WS_Top_signal', 'Top_signal', 'Top_bkg', 'WS_Top_bkg', 'EWK_BKG', 'QCD_BKG']
 types = ['train', 'test', 'valid']
 files = []
-ML_DIR='dataframe_saved/'
+
+#ML_DIR='dataframe_saved_with_mtwCut/' ; wightfolder = 'weight_with_mtwCut/' ; MainOutputDir = 'DNN_output_with_mtwCut/'
+ML_DIR='dataframe_saved_without_mtwCut/' ; wightfolder = 'weight_without_mtwCut/' ; MainOutputDir = 'DNN_output_without_mtwCut/'
+
+if not os.path.exists(MainOutputDir): os.mkdir(MainOutputDir)
+
 for channel in train_ch:
     for typ in types:
             files.append(ML_DIR+year+'_' + channel + '_' + typ + '_'+lep+'.root')
@@ -112,7 +117,7 @@ for fil in files:
 	tensor_y_te = torch.Tensor(y_te)
 
 	device = "cuda:1" if torch.cuda.is_available() else "cpu"
-	print(f"Using {device} device")
+	print("Using {device} device")
 
 	if torch.cuda.is_available():
 		tensor_x_te = tensor_x_te.to(device)
@@ -124,7 +129,7 @@ for fil in files:
 	testing_loader = DataLoader(test_dataset, batch_size = batch, shuffle = False) # create your dataloader
 
 	model = NeuralNetwork().to(device)
-	wightpath = 'weight/'+year+'/'+lep
+	wightpath = wightfolder+year+'/'+lep
 	list_of_files = glob.glob(wightpath+'/*')
 	latest_weight_file = max(list_of_files, key=os.path.getctime)
 	print("using ",latest_weight_file, "file for the evaluation")
@@ -147,4 +152,4 @@ for fil in files:
 	#print(np.shape(y_arr))
 	y_arr = y_arr.ravel().view(dtype = np.dtype([('t_ch_WAsi', np.double), ('t_ch_CAsi', np.double), ('ttbar_CAsi', np.double), ('ttbar_WAsi', np.double), ('EWK', np.double), ('QCD', np.double)]))
 	fname, ext = os.path.splitext(fil)
-	root_numpy.array2root(y_arr, 'DNN_output/' + fname.rsplit('/')[1] + '_apply.root', mode='recreate')
+	root_numpy.array2root(y_arr, MainOutputDir + fname.rsplit('/')[1] + '_apply.root', mode='recreate')

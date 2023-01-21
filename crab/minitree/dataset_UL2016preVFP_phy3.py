@@ -44,50 +44,50 @@ Datasets_MC_UL2016APV = {
 }
 
 Datasets_Alt_MC_UL2016APV = {
-        'Tchannel_mtop1695' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1695_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tchannel_mtop1695-8957b29c601d60219f5188b9be2eb225/USER','20306826','136.02'],
-        'Tchannel_mtop1715' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1715_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tchannel_mtop1715-8957b29c601d60219f5188b9be2eb225/USER','20842399','136.02'],
-        'Tchannel_mtop1735' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1735_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tchannel_mtop1735-8957b29c601d60219f5188b9be2eb225/USER','21081877','136.02'],
-        'Tchannel_mtop1755' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1755_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tchannel_mtop1755-8957b29c601d60219f5188b9be2eb225/USER','21192574','136.02'],
+        'Tchannel_mtop1695' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1695_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tchannel_mtop1695-8957b29c601d60219f5188b9be2eb225/USER','20306826','136.02'],
+        'Tchannel_mtop1715' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1715_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tchannel_mtop1715-8957b29c601d60219f5188b9be2eb225/USER','20842399','136.02'],
+        'Tchannel_mtop1735' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1735_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tchannel_mtop1735-8957b29c601d60219f5188b9be2eb225/USER','21081877','136.02'],
+        'Tchannel_mtop1755' : ['/ST_t-channel_top_4f_InclusiveDecays_mtop1755_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tchannel_mtop1755-8957b29c601d60219f5188b9be2eb225/USER','21192574','136.02'],
 
-        'Tbarchannel_mtop1695' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1695_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tbarchannel_mtop1695-8957b29c601d60219f5188b9be2eb225/USER','10215978','80.95'],
-        'Tbarchannel_mtop1715' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1715_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_07_Jun22_MCUL2016preVFP_Tbarchannel_mtop1715-8957b29c601d60219f5188b9be2eb225/USER','10005548','80.95'],
-        'Tbarchannel_mtop1735' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1735_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tbarchannel_mtop1735-8957b29c601d60219f5188b9be2eb225/USER','10450560','80.95'],
-        'Tbarchannel_mtop1755' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1755_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tbarchannel_mtop1755-8957b29c601d60219f5188b9be2eb225/USER','9994416','80.95'],
+        'Tbarchannel_mtop1695' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1695_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tbarchannel_mtop1695-8957b29c601d60219f5188b9be2eb225/USER','10215978','80.95'],
+        'Tbarchannel_mtop1715' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1715_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tbarchannel_mtop1715-8957b29c601d60219f5188b9be2eb225/USER','10005548','80.95'],
+        'Tbarchannel_mtop1735' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1735_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tbarchannel_mtop1735-8957b29c601d60219f5188b9be2eb225/USER','10450560','80.95'],
+        'Tbarchannel_mtop1755' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1755_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tbarchannel_mtop1755-8957b29c601d60219f5188b9be2eb225/USER','9994416','80.95'],
 
-        'ttbar_SemiLeptonic_mtop1695' : ['/TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_ttbar_SemiLeptonic_mtop1695-8957b29c601d60219f5188b9be2eb225/USER','56064904','364.31'],
-        'ttbar_SemiLeptonic_mtop1715' : ['/TTToSemiLeptonic_mtop171p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_ttbar_SemiLeptonic_mtop1715-8957b29c601d60219f5188b9be2eb225/USER','52908750','364.31'],
-        'ttbar_SemiLeptonic_mtop1735' : ['/TTToSemiLeptonic_mtop173p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_ttbar_SemiLeptonic_mtop1735-8957b29c601d60219f5188b9be2eb225/USER','54932231','364.31'],
-        'ttbar_SemiLeptonic_mtop1755' : ['/TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_ttbar_SemiLeptonic_mtop1755-8957b29c601d60219f5188b9be2eb225/USER','42815384','364.31'],
+        'ttbar_SemiLeptonic_mtop1695' : ['/TTToSemiLeptonic_mtop169p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_ttbar_SemiLeptonic_mtop1695-8957b29c601d60219f5188b9be2eb225/USER','56064904','364.31'],
+        'ttbar_SemiLeptonic_mtop1715' : ['/TTToSemiLeptonic_mtop171p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_ttbar_SemiLeptonic_mtop1715-8957b29c601d60219f5188b9be2eb225/USER','52908750','364.31'],
+        'ttbar_SemiLeptonic_mtop1735' : ['/TTToSemiLeptonic_mtop173p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_ttbar_SemiLeptonic_mtop1735-8957b29c601d60219f5188b9be2eb225/USER','54932231','364.31'],
+        'ttbar_SemiLeptonic_mtop1755' : ['/TTToSemiLeptonic_mtop175p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_ttbar_SemiLeptonic_mtop1755-8957b29c601d60219f5188b9be2eb225/USER','42815384','364.31'],
 
-        'ttbar_FullyLeptonic_mtop1695' : ['/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_ttbar_FullyLeptonic_mtop1695-8957b29c601d60219f5188b9be2eb225/USER','11278026','87.33'],
-        'ttbar_FullyLeptonic_mtop1715' : ['/TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_ttbar_FullyLeptonic_mtop1715-8957b29c601d60219f5188b9be2eb225/USER','16691938','87.33'],
-        'ttbar_FullyLeptonic_mtop1735' : ['/TTTo2L2Nu_mtop173p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_ttbar_FullyLeptonic_mtop1735-8957b29c601d60219f5188b9be2eb225/USER','16712460','87.33'],
+        'ttbar_FullyLeptonic_mtop1695' : ['/TTTo2L2Nu_mtop169p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_ttbar_FullyLeptonic_mtop1695-8957b29c601d60219f5188b9be2eb225/USER','11278026','87.33'],
+        'ttbar_FullyLeptonic_mtop1715' : ['/TTTo2L2Nu_mtop171p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_ttbar_FullyLeptonic_mtop1715-8957b29c601d60219f5188b9be2eb225/USER','16691938','87.33'],
+        'ttbar_FullyLeptonic_mtop1735' : ['/TTTo2L2Nu_mtop173p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_ttbar_FullyLeptonic_mtop1735-8957b29c601d60219f5188b9be2eb225/USER','16712460','87.33'],
         'ttbar_FullyLeptonic_mtop1755' : ['/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_27_May22_MCUL2016preVFP_ttbar_FullyLeptonic_mtop1755-8957b29c601d60219f5188b9be2eb225/USER','16339114','87.33'],
 
-        'ttbar_FullyLeptonic_widthx0p55' : ['/TTTo2L2Nu_widthx0p55_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_ttbar_FullyLeptonic_widthx0p55-8957b29c601d60219f5188b9be2eb225/USER','17128544','87.33'],
-        'ttbar_FullyLeptonic_widthx0p7'  : ['/TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_ttbar_FullyLeptonic_widthx0p7-8957b29c601d60219f5188b9be2eb225/USER','13924766','87.33'],
-        'ttbar_FullyLeptonic_widthx0p85' : ['/TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_ttbar_FullyLeptonic_widthx0p85-8957b29c601d60219f5188b9be2eb225/USER','15509802','87.33'],
-        'ttbar_FullyLeptonic_widthx1p15' : ['/TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_ttbar_FullyLeptonic_widthx1p15-8957b29c601d60219f5188b9be2eb225/USER','16749584','87.33'],
-        'ttbar_FullyLeptonic_widthx1p3'  : ['/TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_ttbar_FullyLeptonic_widthx1p3-8957b29c601d60219f5188b9be2eb225/USER','16661112','87.33'],
-        'ttbar_FullyLeptonic_widthx1p45' : ['/TTTo2L2Nu_widthx1p45_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_ttbar_FullyLeptonic_widthx1p45-8957b29c601d60219f5188b9be2eb225/USER','17079096','87.33']
+        'ttbar_FullyLeptonic_widthx0p55' : ['/TTTo2L2Nu_widthx0p55_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_ttbar_FullyLeptonic_widthx0p55-8957b29c601d60219f5188b9be2eb225/USER','17128544','87.33'],
+        'ttbar_FullyLeptonic_widthx0p7'  : ['/TTTo2L2Nu_widthx0p7_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_ttbar_FullyLeptonic_widthx0p7-8957b29c601d60219f5188b9be2eb225/USER','13924766','87.33'],
+        'ttbar_FullyLeptonic_widthx0p85' : ['/TTTo2L2Nu_widthx0p85_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_ttbar_FullyLeptonic_widthx0p85-8957b29c601d60219f5188b9be2eb225/USER','15509802','87.33'],
+        'ttbar_FullyLeptonic_widthx1p15' : ['/TTTo2L2Nu_widthx1p15_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_ttbar_FullyLeptonic_widthx1p15-8957b29c601d60219f5188b9be2eb225/USER','16749584','87.33'],
+        'ttbar_FullyLeptonic_widthx1p3'  : ['/TTTo2L2Nu_widthx1p3_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_ttbar_FullyLeptonic_widthx1p3-8957b29c601d60219f5188b9be2eb225/USER','16661112','87.33'],
+        'ttbar_FullyLeptonic_widthx1p45' : ['/TTTo2L2Nu_widthx1p45_TuneCP5_13TeV-powheg-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_ttbar_FullyLeptonic_widthx1p45-8957b29c601d60219f5188b9be2eb225/USER','17079096','87.33']
 }
 
 Datasets_sys_MC_UL2016APV = {
-        'Tchannel_TuneCP5CR2' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5CR2_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tchannel_TuneCP5CR2-8957b29c601d60219f5188b9be2eb225/USER','20230062','136.02'],
-        'Tchannel_TuneCP5CR1' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5CR1_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tchannel_TuneCP5CR1-8957b29c601d60219f5188b9be2eb225/USER','18671220','136.02'],
-        'Tchannel_TuneCP5up' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5up_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tchannel_TuneCP5up-8957b29c601d60219f5188b9be2eb225/USER','20545577','136.02'],
-        'Tchannel_TuneCP5down' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5down_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tchannel_TuneCP5down-8957b29c601d60219f5188b9be2eb225/USER','20681075','136.02'],
-        'Tchannel_hdampup' : ['/ST_t-channel_top_4f_hdampup_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tchannel_hdampup-8957b29c601d60219f5188b9be2eb225/USER','20779593','136.02'],
-        'Tchannel_hdampdown' : ['/ST_t-channel_top_4f_hdampdown_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_27_May22_MCUL2016preVFP_Tchannel_hdampdown-8957b29c601d60219f5188b9be2eb225/USER','20784203','136.02'],
-        'Tchannel_erdON' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_erdON_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tchannel_erdON-8957b29c601d60219f5188b9be2eb225/USER','21487232','136.02'],
+        'Tchannel_TuneCP5CR2' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5CR2_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tchannel_TuneCP5CR2-8957b29c601d60219f5188b9be2eb225/USER','20230062','136.02'],
+        'Tchannel_TuneCP5CR1' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5CR1_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tchannel_TuneCP5CR1-8957b29c601d60219f5188b9be2eb225/USER','18671220','136.02'],
+        'Tchannel_TuneCP5up' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5up_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tchannel_TuneCP5up-8957b29c601d60219f5188b9be2eb225/USER','20545577','136.02'],
+        'Tchannel_TuneCP5down' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5down_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tchannel_TuneCP5down-8957b29c601d60219f5188b9be2eb225/USER','20681075','136.02'],
+        'Tchannel_hdampup' : ['/ST_t-channel_top_4f_hdampup_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tchannel_hdampup-8957b29c601d60219f5188b9be2eb225/USER','20779593','136.02'],
+        'Tchannel_hdampdown' : ['/ST_t-channel_top_4f_hdampdown_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tchannel_hdampdown-8957b29c601d60219f5188b9be2eb225/USER','20784203','136.02'],
+        'Tchannel_erdON' : ['/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_erdON_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tchannel_erdON-8957b29c601d60219f5188b9be2eb225/USER','21487232','136.02'],
 
-        'Tbarchannel_TuneCP5CR2' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5CR2_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tbarchannel_TuneCP5CR2-8957b29c601d60219f5188b9be2eb225/USER','10300876','80.95'],
-        'Tbarchannel_TuneCP5CR1' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5CR1_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tbarchannel_TuneCP5CR1-8957b29c601d60219f5188b9be2eb225/USER','9739578','80.95'],
-        'Tbarchannel_TuneCP5up' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5up_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tbarchannel_TuneCP5up-8957b29c601d60219f5188b9be2eb225/USER','10086078','80.95'],
-        'Tbarchannel_TuneCP5down' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5down_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tbarchannel_TuneCP5down-8957b29c601d60219f5188b9be2eb225/USER','10216908','80.95'],
-        'Tbarchannel_hdampup' : ['/ST_t-channel_antitop_4f_hdampup_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tbarchannel_hdampup-8957b29c601d60219f5188b9be2eb225/USER','9947894','80.95'],
-        'Tbarchannel_hdampdown' : ['/ST_t-channel_antitop_4f_hdampdown_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tbarchannel_hdampdown-8957b29c601d60219f5188b9be2eb225/USER','10124656','80.95'],
-        'Tbarchannel_erdON' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_erdON_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Jun22_MCUL2016preVFP_Tbarchannel_erdON-8957b29c601d60219f5188b9be2eb225/USER','10410358','80.95']
+        'Tbarchannel_TuneCP5CR2' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5CR2_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tbarchannel_TuneCP5CR2-8957b29c601d60219f5188b9be2eb225/USER','10300876','80.95'],
+        'Tbarchannel_TuneCP5CR1' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5CR1_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tbarchannel_TuneCP5CR1-8957b29c601d60219f5188b9be2eb225/USER','9739578','80.95'],
+        'Tbarchannel_TuneCP5up' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5up_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tbarchannel_TuneCP5up-8957b29c601d60219f5188b9be2eb225/USER','10086078','80.95'],
+        'Tbarchannel_TuneCP5down' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5down_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tbarchannel_TuneCP5down-8957b29c601d60219f5188b9be2eb225/USER','10216908','80.95'],
+        'Tbarchannel_hdampup' : ['/ST_t-channel_antitop_4f_hdampup_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tbarchannel_hdampup-8957b29c601d60219f5188b9be2eb225/USER','9947894','80.95'],
+        'Tbarchannel_hdampdown' : ['/ST_t-channel_antitop_4f_hdampdown_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tbarchannel_hdampdown-8957b29c601d60219f5188b9be2eb225/USER','10124656','80.95'],
+        'Tbarchannel_erdON' : ['/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_erdON_13TeV-powheg-madspin-pythia8/mikumar-Tree_06_Aug22_MCUL2016preVFP_Tbarchannel_erdON-8957b29c601d60219f5188b9be2eb225/USER','10410358','80.95']
 }
 
 Datasets_SingleMuon_data_UL2016APV = {
