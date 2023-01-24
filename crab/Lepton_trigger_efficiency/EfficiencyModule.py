@@ -74,7 +74,7 @@ class EfficiencyModule(Module):
         for ele in filter(self.LooseEleSel,electrons):
             loose_ele_counter+=1
             
-        if(jet_counter>2 and loose_ele_counter==0 and tight_ele_counter==1):
+        if(jet_counter>=2 and loose_ele_counter==0 and tight_ele_counter==1):
             for Ele in tight_Ele:    
 	        self.list_of_hist[0].Fill(Ele.pt,Ele.eta) #Event_total
 	        if(getattr(event,Ele_trigger)==1):
