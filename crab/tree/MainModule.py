@@ -17,12 +17,14 @@ class MainProducer(Module):
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-	if(self.MC): print "self.MC = ",self.MC
+	if(self.MC): 
+                print "self.MC = ",self.MC
+        if(self.dataset != "singleMuon"):
+	        self.out.branch("Electron_EtaSC",  "F",lenVar="nElectron")
 	self.out.branch("Jet_dR_Ljet_Isomu",  "F",lenVar="100")
 	self.out.branch("Jet_dR_Ljet_AntiIsomu",  "F",lenVar="101")
 	self.out.branch("Jet_dR_Ljet_Isoel",  "F",lenVar="102")
 	self.out.branch("Jet_dR_Ljet_AntiIsoel",  "F",lenVar="103")
-	self.out.branch("Electron_EtaSC",  "F",lenVar="nElectron")
 
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
