@@ -142,6 +142,13 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
             if(lep=="el"):
                    QCDScale_mtwFit = 7509.0
                    NonQCDScale_mtwFit = 315426.0
+                
+    yearDir={
+                'UL2016preVFP' :  "SIXTEEN_preVFP",
+                'UL2016postVFP' : "SIXTEEN_postVFP",
+                'UL2017' : "SEVENTEEN",
+                'UL2018' : "EIGHTEEN"}
+
     #################### Genral Dir and selection ##################################################
     
     applydir = '/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/Apply_all/'
@@ -160,18 +167,8 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     Data_AntiIso_Fpath = "" 
     for channel in channels_Nomi:
             Fpaths_DNN_apply[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
-            if(year=="ULpreVFP2016"): 
-                EvtWeight_Fpaths_Iso[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-                if(channel=="QCD"): Data_AntiIso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
-            elif(year=="ULpostVFP2016"):
-                EvtWeight_Fpaths_Iso[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-                if(channel=="QCD"): Data_AntiIso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
-            elif(year=="UL2017"):
-                EvtWeight_Fpaths_Iso[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-                if(channel=="QCD"): Data_AntiIso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
-            elif(year=="UL2018"):
-                EvtWeight_Fpaths_Iso[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-                if(channel=="QCD"): Data_AntiIso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
+            EvtWeight_Fpaths_Iso[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/"+yearDir[year]+"/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
+            if(channel=="QCD"): Data_AntiIso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/"+yearDir[year]+"/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
     
                
     #print EvtWeight_Fpaths_Iso
@@ -237,18 +234,8 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     Data_Iso_Fpath = "" 
     for channel in ["QCD","Data"+year]:
            Fpaths_DNN_apply[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
-    if(year=="ULpreVFP2016"):
-        Data_AntiIso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
-        Data_Iso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T1/Minitree_Data"+year+"_2J1T1_"+lep+".root"
-    elif(year=="ULpostVFP2016"):
-        Data_AntiIso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
-        Data_Iso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T1/Minitree_Data"+year+"_2J1T1_"+lep+".root"
-    elif(year=="UL2017"):
-        Data_AntiIso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
-        Data_Iso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T1/Minitree_Data"+year+"_2J1T1_"+lep+".root"
-    elif(year=="UL2018"):
-        Data_AntiIso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
-        Data_Iso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/minitree/Mc/2J1T1/Minitree_Data"+year+"_2J1T1_"+lep+".root"
+    Data_AntiIso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/"+yearDir[year]+"/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
+    Data_Iso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/"+yearDir[year]+"/minitree/Mc/2J1T1/Minitree_Data"+year+"_2J1T1_"+lep+".root"
     
     #print Fpaths_DNN_apply
 
@@ -289,11 +276,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
 
 
     #################### ALternate mass and width  #################################################### 
-    yearDir={
-                'UL2016preVFP' :  "SIXTEEN_preVFP",
-                'UL2016postVFP' : "SIXTEEN_postVFP",
-                'UL2017' : "SEVENTEEN",
-                'UL2018' : "EIGHTEEN"}
+
     
     print "creating histogram for the Alt mass and with samples ............."
     print 
