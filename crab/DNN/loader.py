@@ -15,11 +15,36 @@ sampleDir = {
 	'UL2018' : ''
 }
 
-def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "ULpreVFP2016" ):
+def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "ULpreVFP2016", sample="Mc_Nomi" ):
     if(lep=="mu"):
         lepton = "Muon"
     elif(lep=="el"):
         lepton = "Electron" 
+    if(sample=="Mc_Nomi"):
+        sampleDir = {
+        	'ULpreVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/',
+        	'ULpostVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/',
+        	'UL2017' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/',
+        	'UL2018' : ''
+    }
+    elif(sample=="Mc_Alt"):
+        sampleDir = {
+        	'ULpreVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T1_Alt',
+        	'ULpostVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T1_Alt',
+        	'UL2017' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T1_Alt',
+        	'UL2018' : ''
+    }
+    elif(sample=="Mc_sys"):
+        sampleDir = {
+        	'ULpreVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T1_sys',
+        	'ULpostVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T1_sys',
+        	'UL2017' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T1_sys',
+        	'UL2018' : ''
+    }
+
+
+
+
 
     _branches_lep = [
         	lepton+'Eta', lepton+'Pt', lepton+'Phi', lepton+'E', lepton+'Charge',
@@ -101,7 +126,11 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
                )
         return { b : _dataset[b] for b in _branches_lep }
     else:
-        chain.Add(sampleDir[year]+'2J1T1/Minitree_'+channel+'_2J1T1_'+lep+'.root')
+        if(sample=="Mc_Nomi"):
+            chain.Add(sampleDir[year]+'2J1T1/Minitree_'+channel+'_2J1T1_'+lep+'.root')
+        elif(sample=="Mc_Alt" or sample=="Mc_sys"):
+            chain.Add(sampleDir[year]+'/Minitree_'+channel+'_2J1T1_'+lep+'.root')
+#
         if(max_entries==-1):
             max_entries=chain.GetEntries()
         print( 'Entries '+channel+': ',chain.GetEntries(), "\tSelected : ",max_entries)

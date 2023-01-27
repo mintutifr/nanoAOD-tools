@@ -6,6 +6,7 @@ import argparse as arg
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
+parser.add_argument('-s', '--sample', dest='samples', type=str, nargs=1, help="sample [ Mc_Nomi , Mc_Alt , Mc_sys , Data ]")
 args = parser.parse_args()
 
 if (args.year == None or args.lepton == None):
@@ -20,11 +21,16 @@ if args.lepton[0] not in ['el','mu']:
     print('Error: Incorrect choice of lepton, use -h for help')
     exit()
 
+if args.samples[0] not in ['Mc_Nomi', 'Mc_Alt', 'Mc_sys', 'Data']:
+    print('Error: Incorrect choice of sample type, use -h for help')
+    exit()
+
+
 print(args)
 
 lep = args.lepton[0]
 year= args.year[0]
-
+sample = args.samples[0]
 if(lep=="mu"):
 	lepton = "Muon"
 elif(lep=="el"):
@@ -82,16 +88,28 @@ VARS = [lepton+'Eta', lepton+'Pt', lepton+'Phi', lepton+'E',
         'Px_nu', 'Py_nu', 'Pz_nu',
         'FW1', 'bJetdeepJet', 'lJetdeepJet',
         ]
-
+VARS_list = {lepton+'Eta', lepton+'Pt', lepton+'Phi', lepton+'E',
+        'lJetEta', 'lJetPt', 'lJetPhi', 'lJetMass',
+        'bJetEta', 'bJetPt', 'bJetPhi', 'bJetMass',
+        'Px_nu', 'Py_nu', 'Pz_nu',
+        'FW1', 'bJetdeepJet', 'lJetdeepJet',
+        }
 
 data_channels = {
 	"ULpreVFP2016" : "DataULpreVFP2016",
         "ULpostVFP2016" :  "DataULpostVFP2016",
         "UL2017" : "DataUL2017" 
 	}
-train_ch = ['Tchannel', 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel', 'ttbar_SemiLeptonic', 'ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
-train_ch.append("Data"+year) 
-#train_ch.append(data_channels[year])
+if(sample=="Mc_Nomi"):
+        channels = ['Tchannel', 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel', 'ttbar_SemiLeptonic', 'ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
+        channels.append("Data"+year) 
+elif(sample=="Mc_Alt"):
+        channels = ['Tbarchannel_mtop1695', 'ttbar_SemiLeptonic_mtop1695',   'ttbar_FullyLeptonic_mtop1695',   'Tbarchannel_mtop1735',   'ttbar_FullyLeptonic_widthx0p55',   'ttbar_FullyLeptonic_widthx0p7',   'ttbar_FullyLeptonic_mtop1735',   'Tbarchannel_mtop1715',   'ttbar_FullyLeptonic_widthx1p3',   'ttbar_FullyLeptonic_mtop1755',   'ttbar_FullyLeptonic_widthx1p45',   'ttbar_FullyLeptonic_mtop1715',   'Tchannel_mtop1715',   'ttbar_SemiLeptonic_mtop1755',   'ttbar_SemiLeptonic_mtop1735',   'ttbar_SemiLeptonic_mtop1715',   'ttbar_FullyLeptonic_widthx0p85',   'Tbarchannel_mtop1755',   'Tchannel_mtop1695',   'ttbar_FullyLeptonic_widthx1p15',   'Tchannel_mtop1735',   'Tchannel_mtop1755']
+elif(sample=="Mc_sys"):
+        channels =['Tchannel_TuneCP5CR2',  'Tchannel_TuneCP5CR1',   'Tchannel_hdampdown',   'Tbarchannel_hdampdown',  'Tchannel_TuneCP5down',   'Tbarchannel_hdampup',   'Tchannel_hdampup',   'Tbarchannel_TuneCP5down',   'Tchannel_erdON',   'Tchannel_TuneCP5up',   'Tbarchannel_TuneCP5up',  'Tbarchannel_erdON',   'Tbarchannel_TuneCP5CR1',   'Tbarchannel_TuneCP5CR2']
+
+print(channels)
+#channels.append(data_channels[year])
 
 types = ['Apply_all']#,'train']
 files = []
@@ -101,30 +119,39 @@ ML_DIR='dataframe_saved_without_mtwCut/' ; wightfolder = 'weight_without_mtwCut/
 
 if not os.path.exists(MainOutputDir): os.mkdir(MainOutputDir)
 if not os.path.exists(MainOutputDir+'Apply_all/'): os.mkdir(MainOutputDir+'Apply_all/')
+if not os.path.exists(MainOutputDir+'Apply_all/sys_N_Alt'): os.mkdir(MainOutputDir+'Apply_all/sys_N_Alt')
 
+#if(sample=="Mc_Nomi"):
 OriginalFileDir = {
         "ULpreVFP2016" : "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
         "ULpostVFP2016" :  "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
-        "UL2017" : "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR
-}
-for channel in train_ch:
-    for typ in types:
+        "UL2017" : "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
+        "UL2018" : ""
+ }
+
+for channel in channels:
+    if(sample=="Mc_Nomi"):
+        for typ in types:
             files.append(OriginalFileDir[year]+year+'_'+channel+'_Apply_all_'+lep+'.root')	
-#files = ['/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T1/Minitree_WZTo2Q2L_2J1T1_mu.root']
+    elif(sample=="Mc_Alt" or sample=="Mc_sys"):
+            files.append(OriginalFileDir[year]+"sys_N_Alt/"+year+'_'+channel+'_Apply_all_'+lep+'.root')
+
+#files = ['/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/dataframe_saved_without_mtwCut/sys_N_Alt/UL2017_Tchannel_TuneCP5CR2_Apply_all_mu.root']
 print(files)
 m = nn.LogSoftmax(dim=1)
 for fil in files:
 	print(fil)
-	df_test = rt.RDataFrame("Events",fil).AsNumpy()
+	#df_test = rt.RDataFrame("Events",fil).AsNumpy()
+	df_test = rt.RDataFrame("Events",fil,VARS_list).AsNumpy()
 	print(type(df_test))		
 	#display(df_tr_top_signal_new)
 
 	x_te = np.vstack([df_test[var] for var in VARS]).T
-	print("shape of x for training" ,x_te.shape)
+	print("shape of x for application" ,x_te.shape)
 
 	y_te = np.vstack([0]*(x_te.shape[0]))
 	y_te = np.vstack([y_te]).astype(int)
-	print("shape of y for training", y_te.shape)
+	print("shape of y for application", y_te.shape)
 
 	tensor_x_te = torch.Tensor(x_te) # transform to torch tensor
 	tensor_y_te = torch.Tensor(y_te)
@@ -165,6 +192,7 @@ for fil in files:
 	#print(np.shape(y_arr))
 	y_arr = y_arr.ravel().view(dtype = np.dtype([('t_ch_WAsi', np.double), ('t_ch_CAsi', np.double), ('ttbar_CAsi', np.double), ('ttbar_WAsi', np.double), ('EWK', np.double), ('QCD', np.double)]))
 	fname, ext = os.path.splitext(fil)
-	print("writing out put file : ", fname.rsplit('/')[-1],"_apply.root")
+	print("writing out put file : ", MainOutputDir+'Apply_all/sys_N_Alt/'+fname.rsplit('/')[-1],"_apply.root")
 
-	root_numpy.array2root(y_arr, MainOutputDir+'Apply_all/'+ fname.rsplit('/')[-1] + '.root', treename='Events',mode='recreate')
+	if(sample == "Mc_Nomi"): root_numpy.array2root(y_arr, MainOutputDir+'Apply_all/'+ fname.rsplit('/')[-1] + '.root', treename='Events',mode='recreate')
+	else: root_numpy.array2root(y_arr, MainOutputDir+'Apply_all/sys_N_Alt/'+ fname.rsplit('/')[-1] + '.root', treename='Events',mode='recreate')
