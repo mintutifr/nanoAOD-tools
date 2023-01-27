@@ -152,7 +152,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     #################### Nimonal Samples MC ########################################################
  
 
-    """channels_Nomi = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L','QCD']
+    channels_Nomi = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L','QCD']
 
 
     Fpaths_DNN_apply = {}
@@ -284,7 +284,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     DDQCD.SetLineColor(rt.kGray); DDQCD.SetLineWidth(2)
     
     del hs
-    del Data_Iso_Fpath,Data_AntiIso_Fpath"""
+    del Data_Iso_Fpath,Data_AntiIso_Fpath
 
 
 
@@ -333,8 +333,8 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     hist_corr_assig = {}
     hist_wron_assig = {}
     
-    MCSF = 1 
-    QCDSF = 1
+    #MCSF = 1 
+    #QCDSF = 1
     for channel_no,channel in enumerate(channels_Alt):
         hist_corr_assig[channel] = hists_corr[channel_no].Clone()
         hist_wron_assig[channel] = hists_wron[channel_no].Clone()
@@ -344,7 +344,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     del hists_corr
     del hists_wron
     
-    """hist_to_return = [] 
+    hist_to_return = [] 
 
     hist_to_return.append(top_sig_Nomi)
     hist_to_return.append(top_bkg_Nomi)
@@ -352,13 +352,13 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     hist_to_return.append(DDQCD)
     hist_to_return.append(Data)
 
-    return hist_to_return"""
+    return hist_to_return
 
 
 if __name__ == "__main__":
     
     hists = Create_Workspace_input_file(lep,year,Variable) 
-    """outfile = rt.TFile("Hist_for_workspace/Combine_Input_histograms_"+year+"_"+lep+".root","recreate")
+    outfile = rt.TFile("Hist_for_workspace/Combine_Input_histograms_"+year+"_"+lep+".root","recreate")
     outfile.cd()
     Dir_mu = outfile.mkdir(lep+"jets")
     Dir_mu.cd()
@@ -366,14 +366,8 @@ if __name__ == "__main__":
     for hist in hists:
         hist.Write()
         
-    #rt.gROOT.cd()
- 
-    #outfile.cd()
-    #Dir_el = outfile.mkdir("eljets")
-    #Dir_el.cd()
-
     rt.gROOT.cd()
 
-    outfile.Close()"""
+    outfile.Close()
 
     
