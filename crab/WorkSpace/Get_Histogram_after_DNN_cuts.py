@@ -44,10 +44,10 @@ def get_histogram_with_DNN_cut(lep="mu",year="UL2017",Variable="lntopMass",
 	if(Variable=="lntopMass"):
 	 	Variable="TMath::Log(topMass)"
 	 	X_axies="ln(m_{t})"
-	 	Y_axies="Events/(0.046)"
+	 	Y_axies="Events/(0.092)"
 	 	lest_bin=rt.TMath.Log(100.0)
 	 	max_bin=rt.TMath.Log(400.0)
-	 	Num_bin=30 #one extra overflow bin will be added 
+	 	Num_bin=15 #one extra overflow bin will be added 
 	 
 	elif(Variable=="topMass"):
 	 	X_axies="m_{t}"
@@ -209,7 +209,7 @@ def get_histogram_with_DNN_cut(lep="mu",year="UL2017",Variable="lntopMass",
                 Y_axies="Events/(0.1)"
                 lest_bin=0.0
                 max_bin=1.0
-                Num_bin=10.0
+                Num_bin=10
 	else:
 		print "variable ", Variable," in not define in Get_Histogram_after_DNN_cuts.py" 
 		exit()

@@ -404,6 +404,19 @@ class cutflow:
         self.wightSum_W_bWeight.Write()
 	outfile.Close()	
 
+        print()
+        self.b_tag_jet_sel_npvs.Print()
+        self.Nocut_npvs.Print()
+        self.trig_sel_npvs.Print()
+        self.tight_lep_sel_npvs.Print()
+        self.losse_lep_veto_npvs.Print()
+        self.sec_lep_veto_npvs.Print()
+        self.jet_sel_npvs.Print()
+        self.N_jets.Print()
+        self.N_b_jets.Print()
+        self.wightSum_WO_bWeight.Print()
+        self.wightSum_W_bWeight.Print()
+
 
 
 cutflowModuleConstr_2J1T1_mu_mc_2016 =   lambda : cutflow(2,1,True,"mu",True,'2016')

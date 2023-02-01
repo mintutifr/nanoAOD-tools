@@ -36,11 +36,11 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 	#Filename = rt.TFile("Histogram_input_2016_Run2_controlRegionF0p2T0p82_stat_full.root","Read")
 	Dir = Filename.GetDirectory(lep+'jets')
 
-	top_sig = Dir.Get("top_sig_172p5")
+	top_sig = Dir.Get("top_sig_1725")
 	top_sig.SetFillColor(rt.kRed)
 	top_sig.SetLineColor(rt.kRed)
 
-	top_bkg = Dir.Get("top_bkg_172p5")
+	top_bkg = Dir.Get("top_bkg_1725")
 	top_bkg.SetFillColor(rt.kOrange-1)
 	top_bkg.SetLineColor(rt.kOrange-1)
 

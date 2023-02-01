@@ -68,10 +68,10 @@ elif  [[ "UL2016postVFP" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2016postVFP_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_postVFP_v5/"
  
-     if [[ $sample == "Mc" && $lep == "mu" ]]; then
+     if [[ $sample == "Mc_Nomi" && $lep == "mu" ]]; then
         channels="${Mc_Nomi_channel} ${Mc_QCD_mu}" 
      fi
-     if [[ $sample == "Mc" && $lep == "el" ]]; then
+     if [[ $sample == "Mc_Nomi" && $lep == "el" ]]; then
         channels="${Mc_Nomi_channel} ${Mc_QCD_el}"
      fi
 
@@ -87,11 +87,11 @@ elif  [[ "UL2016postVFP" == "$year" ]]; then
 elif  [[ "UL2017" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2017_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SEVENTEEN_v5/"
-     if [[ $sample == "Mc" && $lep == "mu" ]]; then
+     if [[ $sample == "Mc_Nomi" && $lep == "mu" ]]; then
 	channels="${Mc_Nomi_channel}  ${Mc_QCD_mu}"
      fi
 
-     if [[ $sample == "Mc" && $lep == "el" ]]; then
+     if [[ $sample == "Mc_Nomi" && $lep == "el" ]]; then
         channels="${Mc_Nomi_channel} ${Mc_QCD_el}"
      fi
 
@@ -106,10 +106,10 @@ elif  [[ "UL2017" == "$year" ]]; then
 elif  [[ "UL2018" == "$year" ]]; then
      dataset_file=$crab_dir"/minitree/dataset_UL2018_phy3.py"
      outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/EIGHTEEN/"
-     if [[ $sample == "Mc" && $lep == "mu" ]]; then
+     if [[ $sample == "Mc_Nomi" && $lep == "mu" ]]; then
 	channels="${Mc_Nomi_channel}  ${Mc_QCD_mu}"
      fi
-     if [[ $sample == "Mc" && $lep == "el" ]]; then
+     if [[ $sample == "Mc_Nomi" && $lep == "el" ]]; then
         channels="${Mc_Nomi_channel}  ${Mc_QCD_el}"
      fi
      if [[ $sample == "Data" && $lep == "mu" ]]; then
@@ -155,8 +155,9 @@ mkdir -p $baseDir
 tarFile=$baseDir/minitree.tar.gz
 rm -rf $tarFile
 PhysicsTools=${crab_dir}/../../../PhysicsTools
+echo $tarFile " -------------------" ${crab_dir} "------------"${PhysicsTools}
 
-tar --exclude='.git' --exclude=${PhysicsTools}'/NanoAODTools/crab/DNN' --exclude=${PhysicsTools}'/NanoAODTools/crab/condor_job'  --exclude=${PhysicsTools}'/NanoAODTools/crab/tree' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study_Sebastien' --exclude=${PhysicsTools}'/NanoAODTools/crab/efficiency' --exclude=${PhysicsTools}'/NanoAODTools/crab/lumi_n_pileup' --exclude=${PhysicsTools}'/NanoAODTools/crab/cutflow' --exclude=${PhysicsTools}'/NanoAODTools/crab/puWeight' --exclude=${PhysicsTools}'/NanoAODTools/crab/Effective_Number' -zcf $tarFile ${PhysicsTools} 
+tar --exclude='.git' --exclude=${PhysicsTools}'/NanoAODTools/crab/DNN' --exclude=${PhysicsTools}'/NanoAODTools/crab/condor_job'  --exclude=${PhysicsTools}'/NanoAODTools/crab/tree' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study_Sebastien' --exclude=${PhysicsTools}'/NanoAODTools/crab/efficiency' --exclude=${PhysicsTools}'/NanoAODTools/crab/lumi_n_pileup' --exclude=${PhysicsTools}'/NanoAODTools/crab/cutflow' --exclude=${PhysicsTools}'/NanoAODTools/crab/puWeight' --exclude=${PhysicsTools}'/NanoAODTools/crab/Effective_Number' --exclude=${PhysicsTools}'/NanoAODTools/crab/Lepton_trigger_efficiency' -zcf $tarFile ${PhysicsTools} 
 echo "file zipped ..... "
 #echo $channels
 echo $channels

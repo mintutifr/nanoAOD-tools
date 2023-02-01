@@ -46,21 +46,21 @@ if(year == 'UL2016preVFP'):
     elif sample=="Data" and lep=="el" : Datasets = Datasets = Datasets_SingleElectron_data_UL2016APV
 if(year == 'UL2016postVFP'):
     from dataset_UL2016postVFP_phy3 import *
-    if sample=="Mc" : Datasets = Datasets_MC_UL2016
+    if sample=="Mc_Nomi" : Datasets = Datasets_MC_UL2016
     if sample=="Mc_Alt" : Datasets = Datasets_Alt_MC_UL2016
     if sample=="Mc_sys" : Datasets = Datasets_sys_MC_UL2016
     elif sample=="Data" and lep=="mu" : Datasets = Datasets_SingleMuon_data_UL2016
     elif sample=="Data" and lep=="el" : Datasets = Datasets_SingleElectron_data_UL2016
 if(year == 'UL2017'):
     from dataset_UL2017_phy3 import *
-    if sample=="Mc" : Datasets = Datasets_MC_UL2017
+    if sample=="Mc_Nomi" : Datasets = Datasets_MC_UL2017
     if sample=="Mc_Alt" : Datasets = Datasets_Alt_MC_UL2017
     if sample=="Mc_sys" : Datasets = Datasets_sys_MC_UL2017
     elif sample=="Data" and lep=="mu" : Datasets = Datasets_SingleMuon_data_UL2017
     elif sample=="Data" and lep=="el" : Datasets = Datasets_SingleElectron_data_UL2017
 if(year == 'UL2018'):
     from dataset_UL2018_phy3 import *
-    if sample=="Mc" : Datasets = Datasets_MC_UL2018
+    if sample=="Mc_Nomi" : Datasets = Datasets_MC_UL2018
     if sample=="Mc_Alt" : Datasets = Datasets_Alt_MC_UL2018
     if sample=="Mc_sys" : Datasets = Datasets_sys_MC_UL2018
     elif sample=="Data" and lep=="mu" : Datasets = Datasets_SingleMuon_data_UL2018
