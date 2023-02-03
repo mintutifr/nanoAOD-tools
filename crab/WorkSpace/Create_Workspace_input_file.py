@@ -35,6 +35,13 @@ Variable = args.var[0]
 from Get_Histogram_after_DNN_cuts import get_histogram_with_DNN_cut
 from Get_Nomi_histogram_Integral import Nomi_QCD_NoNQCD_Integral 
 
+def propagate_rate_uncertainity(hist, uncert):
+    for i in range(hist.GetXaxis().GetNbins()):
+        if hist.GetBinContent(i) != 0:
+            hist.SetBinError(i, hist.GetBinContent(i) * uncert * 0.01)
+
+
+
 def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
 
     if(lep=="mu"):
@@ -158,7 +165,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     applydir = '/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/Apply_all/'
     MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)" 
     Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
-    DNNcut="*(t_ch_CAsi>=0.0)"
+    DNNcut="*(t_ch_CAsi>=0.7)"
     
     hist_to_return = [] 
     #################### Nimonal Samples MC ########################################################
@@ -197,6 +204,15 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     hist_wron_assig = {}
 
     for channel_no,channel in enumerate(channels_Nomi[:-1]):
+        if(channel in ["Tchannel","Tbarchannel"]):
+                propagate_rate_uncertainity(hists_corr[channel_no], 15.0)
+                propagate_rate_uncertainity(hists_wron[channel_no], 15.0)
+        elif(channel in ['tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic']):
+                propagate_rate_uncertainity(hists_corr[channel_no], 6.0)
+                propagate_rate_uncertainity(hists_wron[channel_no], 6.0)
+        else:
+                propagate_rate_uncertainity(hists_corr[channel_no], 10.0)
+                propagate_rate_uncertainity(hists_wron[channel_no], 10.0)
         hist_corr_assig[channel] = hists_corr[channel_no].Clone()
         hist_wron_assig[channel] = hists_wron[channel_no].Clone()
         hist_corr_assig[channel].Scale(MCSF)
@@ -214,7 +230,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
 
     top_bkg_Nomi = hist_wron_assig["Tchannel"]; top_bkg_Nomi.Add(hist_wron_assig["Tbarchannel"]);
     for channel in ['tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic']:
-        top_bkg_Nomi.Add(hist_corr_assig[channel]); top_bkg_Nomi.Add(hist_wron_assig[channel]) 
+        top_sig_Nomi.Add(hist_corr_assig[channel]); top_bkg_Nomi.Add(hist_wron_assig[channel]) 
     top_bkg_Nomi.SetLineColor(rt.kOrange-1); top_bkg_Nomi.SetLineWidth(2)
     top_bkg_Nomi.SetName("top_bkg_1725")
     
@@ -268,6 +284,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     DDQCD = hs['QCD'].Clone()
     DDQCD.Scale(QCDSF)
     DDQCD.SetName("QCD_DD")
+    propagate_rate_uncertainity(DDQCD, 50.0)
     DDQCD.Print()
 
     Data.SetName("data_obs")

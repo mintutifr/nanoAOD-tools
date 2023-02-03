@@ -53,10 +53,10 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 	QCD_bkg.SetFillColor(rt.kGray)
 	QCD_bkg.SetLineColor(rt.kGray)
 
-	propagate_rate_uncertainity(top_sig, 15.0)
-	propagate_rate_uncertainity(top_bkg, 6.0)
-	propagate_rate_uncertainity(EWK_bkg, 10.0)
-	propagate_rate_uncertainity(QCD_bkg, 50.0)
+	#propagate_rate_uncertainity(top_sig, 15.0)
+	#propagate_rate_uncertainity(top_bkg, 6.0)
+	#propagate_rate_uncertainity(EWK_bkg, 10.0)
+	#propagate_rate_uncertainity(QCD_bkg, 50.0)
 
 
 	hMC = top_sig.Clone()
