@@ -70,56 +70,56 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
             Y_axies="Events/(0.01)"
             lest_bin=0.0
             max_bin=1.0
-            Num_bin=100
+            Num_bin=10
             
     elif(Variable=="t_ch_CAsi"):
             X_axies="Signal Corr. Assign DNN Sore"
-            Y_axies="Events/(0.01)"
+            Y_axies="Events/(0.1)"
             lest_bin=0.0
             max_bin=1.0
-            Num_bin=100
+            Num_bin=10
       
     elif(Variable=="t_ch_WAsi"):
             X_axies="Signal Wrong Assign DNN Sore"
-            Y_axies="Events/(0.01)"
+            Y_axies="Events/(0.1)"
             lest_bin=0.0
             max_bin=1.0
-            Num_bin=100
+            Num_bin=10
     
     elif(Variable=="ttbar_CAsi"):
             X_axies="top bkg Corr. Assign DNN Sore"
-            Y_axies="Events/(0.01)"
+            Y_axies="Events/(0.1)"
             lest_bin=0.0
             max_bin=1.0
-            Num_bin=100
+            Num_bin=10
     
     elif(Variable=="ttbar_WAsi"):
             X_axies="top bkg Wrong Assign DNN Sore"
-            Y_axies="Events/(0.01)"
+            Y_axies="Events/(0.1)"
             lest_bin=0.0
             max_bin=1.0
-            Num_bin=100
+            Num_bin=10
     
     elif(Variable=="EWK"):
             X_axies="EWK bkg DNN Sore"
-            Y_axies="Events/(0.01)"
+            Y_axies="Events/(0.1)"
             lest_bin=0.0
             max_bin=1.0
-            Num_bin=100
+            Num_bin=10
     
     elif(Variable=="QCD"):
             X_axies="QCD bkg DNN Sore"
-            Y_axies="Events/(0.01)"
+            Y_axies="Events/(0.1)"
             lest_bin=0.0
             max_bin=1.0
-            Num_bin=100
+            Num_bin=10
                 
     elif(Variable=="t_ch_CAsi"):
                 X_axies="DNN Response for corr. assign top signal"
                 Y_axies="Events/(0.1)"
                 lest_bin=0.0
                 max_bin=1.0
-                Num_bin=10.0
+                Num_bin=10
     else:
         print "variable ", Variable," in not define in Create_Workspace_input_file.py" 
         exit()
@@ -158,7 +158,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     applydir = '/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/Apply_all/'
     MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)" 
     Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
-    DNNcut="*(t_ch_CAsi>=0.7)"
+    DNNcut="*(t_ch_CAsi>=0.0)"
     
     hist_to_return = [] 
     #################### Nimonal Samples MC ########################################################

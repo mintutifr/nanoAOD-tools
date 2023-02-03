@@ -1,6 +1,6 @@
-import sys
 import ROOT as rt
 import numpy as np
+#import scipy.integrate as sp
 import argparse as arg
 import math
 
@@ -23,270 +23,176 @@ if args.lepton[0] not in ['el','mu']:
     print('Error: Incorrect choice of lepton, use -h for help')
     exit()
 
+#print
 #print(args)
 
 lep = args.lepton[0]
 year= args.year[0]
 Variable = args.var[0]
 
-def get_histogram_with_DNN_cut(lep="mu",year="UL2017",Variable="lntopMass",
-    channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L'],
-    MCcut = "Xsec_wgt*LHEWeightSign*puWeight*muSF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",
-    Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)",
-    DNNcut="*(t_ch_CAsi>0.7)",Fpaths_DNN_score = {}, Fpaths_ori_with_weight = {}):
 
 
-        if(lep=="mu"):
-                lepton = "Muon"
-        elif(lep=="el"):
-                lepton = "Electron"
+def Nomi_QCD_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "Xsec_wgt*LHEWeightSign*puWeight*muSF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)",EvtWeight_Fpaths_Iso = {},Data_AntiIso_Fpath={},Fpaths_DNN_score = {}):
+    print
+    print("calculating Integral of QCD and NON QCD with DNN Cut .. .. .. .. .. .. ... .......")
+    if(lep=="mu"):
+            lepton = "Muon"
+    elif(lep=="el"):
+            lepton = "Electron"
+    #print(lepton)
+    
+    if(Variable=="lntopMass"):
+            Variable="TMath::Log(topMass)"
+            X_axies="ln(m_{Top})"
+            Y_axies="Events/(20)"
+            lest_bin=math.log(100.0)
+            max_bin=math.log(400.0)
+            Num_bin=15
 
-	if(Variable=="lntopMass"):
-	 	Variable="TMath::Log(topMass)"
-	 	X_axies="ln(m_{t})"
-	 	Y_axies="Events/(0.092)"
-	 	lest_bin=rt.TMath.Log(100.0)
-	 	max_bin=rt.TMath.Log(400.0)
-	 	Num_bin=15 #one extra overflow bin will be added 
-	 
-	elif(Variable=="topMass"):
-	 	X_axies="m_{t}"
-	 	Y_axies="Events/(10)"
-	 	lest_bin=100.0
-	 	max_bin=400.0
-	 	Num_bin=30 #one extra overflow bin will be added
-        elif(Variable=="MuonEta"):
-                X_axies="|#eta_{#mu}|"
-                Y_axies="Events/(0.1)"
-                lest_bin=-2.5
-                max_bin=2.5
-                Num_bin=25
-	elif(Variable == "muSF" and lep=="mu"):
-                Variable=="muSF"
-	 	X_axies="Muon Scale factor"
-	 	Y_axies="Events/0.1"
-                lest_bin=0.7
-                max_bin=1.2	
-	 	Num_bin=25
-        elif(Variable=="PUJetID_SF"):
-                Variable="bJetPUJetID_SF*lJetPUJetID_SF"
-	 	X_axies="jet PUSF"
-	 	Y_axies="Events/0.1"
-                lest_bin=0.7
-                max_bin=1.2	
-	 	Num_bin=25
-        elif(Variable=="lJetPUJetID_SF"):
-                Variable="lJetPUJetID_SF"
-	 	X_axies="l jet puSF"
-	 	Y_axies="Events/0.1"
-                lest_bin=0.7
-	elif(Variable=="bJetPUJetID_SF"):
-                Variable="bJetPUJetID_SF"
-	 	X_axies="b jet puSF"
-	 	Y_axies="Events/0.1"
-                lest_bin=0.7
-	 	Num_bin=25
-	        Num_bin=25
-        elif(Variable == "elSF" and lep=="el"):
-                Variable=="elSF"
-                X_axies="ELectron Scale factor"
-                Y_axies="Events/0.1"
-                lest_bin=0.7
-                max_bin=1.2
-                Num_bin=25
-        elif(Variable == "bWeight"):
-                X_axies="Weight for b quark"
-                Y_axies="Events/(0.05)"
-                lest_bin=0.4
-                max_bin=2.4
-                Num_bin=40
-        elif(Variable == "puWeight"):
-                X_axies="PileUp Weight"
-                Y_axies="Events/(0.05)"
-                lest_bin=0.0
-                max_bin=2.0
-                Num_bin=40
-        elif(Variable == "puWeight_new"):
-                X_axies="new PileUp Weight"
-                Y_axies="Events/(0.05)"
-                lest_bin=0.0
-                max_bin=2.0
-                Num_bin=40
-        elif(Variable == "bJetdeepJet"):
-                X_axies="deep Jet Score for b Jets"
-                Y_axies="Events/(0.05)"
-                lest_bin=-1
-                max_bin=1.1
-                Num_bin=42
-        elif(Variable=="L1PreFiringWeight_Nom"):
-                X_axies="L1 PreFire Weight"
-                Y_axies="Events/(0.05)"
-                lest_bin=0.5
-                max_bin=1.1
-                Num_bin=12
-        elif(Variable == "mtwMass"):
-                X_axies="m_{t}"
-                Y_axies="Events/(10)"
-                lest_bin=0
-                max_bin=200
-                Num_bin=20
-        elif(Variable=="dEta_mu_bJet" or Variable=="dEta_el_bJet"):
-                X_axies="|#Delta#eta_{lb}|"
-                Y_axies="Events/(0.1)"
-                lest_bin=0.0
-                max_bin=3.0
-                Num_bin=30
-	elif(Variable=="bJetPt"):
-                X_axies="b-jet p_{T} (GeV)"
-                Y_axies="Events/(5 GeV)"
-                lest_bin=0.0
-                max_bin=200.0
-                Num_bin=40
-	elif(Variable=="lJetEta"):
-                Variable="abs(lJetEta)";
-                X_axies="light jet #eta"
-                Y_axies="Events/(0.5)"
-                lest_bin=0.0
-                max_bin=5.0
-                Num_bin=10
-        elif(Variable=="lJetPt"):
-                X_axies="light jet p_{T} (GeV)"
-                Y_axies="Events/(5 GeV)"
-                lest_bin=0.0
-                max_bin=200.0
-                Num_bin=40.0
-        elif(Variable=="abs_lJetEta"):
-                Variable="abs(lJetEta)"
-                X_axies="light jet |#eta|"
-                Y_axies="Events/(0.5)"
-                lest_bin=0.0
-                max_bin=5.0
-                Num_bin=10
-        elif(Variable=="jetpTSum"):
-                X_axies="p_{T}^{b}+p_{T}^{j'} {GeV)"
-                Y_axies="Events/(20 GeV)"
-                lest_bin=0.0
-                max_bin=500.0
-                Num_bin=25
-        elif(Variable=="diJetMass"):
-                X_axies="m_{bj'} {GeV)"
-                Y_axies="Events/(20 GeV)"
-                lest_bin=0.0
-                max_bin=600.0
-                Num_bin=30
-        elif(Variable=="cosThetaStar"):
-                X_axies="cos#theta*"
-                Y_axies="Events/(0.1)"
-                lest_bin=-1.0
-                max_bin=1.0
-                Num_bin=20
-        elif(Variable=="dR_bJet_lJet"):
-                X_axies="#DeltaR_{bj'}"
-                Y_axies="Events/(0.2 )"
-                lest_bin=0.0
-                max_bin=5.2
-                Num_bin=27
-        elif(Variable=="FW1"):
-                X_axies="FW1"
-                Y_axies="Events/(0.5)"
-                lest_bin=0.0
-                max_bin=1.0
-                Num_bin=20
-        elif(Variable=="ElectronSCEta"):
-                X_axies="electron #eta_{SC}"
-                Y_axies="Events/(0.5)"
-                lest_bin=-2.5
-                max_bin=2.5
-                Num_bin=10
-        elif(Variable=="ElectronEta"):
-                X_axies="electron |#eta|"
-                Y_axies="Events/(0.1)"
-                lest_bin=-2.5
-                max_bin=2.5
-                Num_bin=25	
-        elif(Variable=="t_ch_CAsi"):
-                X_axies="DNN Response for corr. assign top signal"
-                Y_axies="Events/(0.1)"
-                lest_bin=0.0
-                max_bin=1.0
-                Num_bin=10
-	else:
-		print "variable ", Variable," in not define in Get_Histogram_after_DNN_cuts.py" 
-		exit()
-
-
-	print
-	print "############################   analising the event with the DNN cut applid ", DNNcut, "  ##################"
-	print "lepton = ",lep
-	print "Variable = ",Variable
-	print
-	# Initializing lists for histogram, TFile, TTree of Iso
-	histo_corr_Array = []
-        histo_wron_Array = []
-	#intree = []
-	rt.gROOT.cd()
-
-	print Variable
-	print "bining: ",Num_bin,", ",lest_bin,", ", max_bin
-
-	histo_corr = rt.TH1F('histo_corr', Variable, Num_bin,lest_bin,max_bin)
-        histo_wron = rt.TH1F('histo_wron', Variable, Num_bin,lest_bin,max_bin)
-
-	#histo_corr.Sumw2()
-        MCcut_corr_Assig = MCcut+DNNcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)"
-        MCcut_wron_Assig = MCcut+DNNcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)"
-	for channel in channels:
-    	    print channel, "  ", Fpaths_ori_with_weight[channel]
-            print channel, "  ", Fpaths_DNN_score[channel]
-    	    histo_corr.Reset()
-            histo_wron.Reset()
+    elif(Variable=="mtwMass"):
+            X_axies="m_{T} (GeV)"
+            Y_axies="Events/(10)"
+            lest_bin=0.0
+            max_bin=200.0
+            Num_bin=20
+ 
+    elif(Variable=="topMass"):
+            X_axies="m_{Top}"
+            Y_axies="Events/(20)"
+            lest_bin=100.0
+            max_bin=400.0
+            Num_bin=15
+    
+    elif(Variable=="t_ch_CAsi+ttbar_CAsi"):
+            X_axies="Signal+TopBkg Corr. Assign DNN Sore"
+            Y_axies="Events/(0.01)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=100
             
-            #print filenamei
-            MCFile = rt.TFile.Open(Fpaths_ori_with_weight[channel],'Read')	
-    	    intree = MCFile.Get('Events')
-            intree.AddFriend ("Events",Fpaths_DNN_score[channel])
-	    #intree[-1].Print()
-            rt.gROOT.cd()
-            
-    	    intree.Project('histo_corr', Variable, MCcut_corr_Assig)
-            intree.Project('histo_wron', Variable, MCcut_wron_Assig)
-            
-    	    histo_corr_Array.append(histo_corr.Clone())
-            histo_wron_Array.append(histo_wron.Clone())
-	    histo_corr_Array[-1].SetName(channel)
-            histo_wron_Array[-1].SetName(channel)
-            histo_corr.Print()
-            histo_wron.Print()
-            
-            del intree
+    elif(Variable=="t_ch_CAsi"):
+            X_axies="Signal Corr. Assign DNN Sore"
+            Y_axies="Events/(0.01)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=100
+      
+    elif(Variable=="t_ch_WAsi"):
+            X_axies="Signal Wrong Assign DNN Sore"
+            Y_axies="Events/(0.01)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=100
+    
+    elif(Variable=="ttbar_CAsi"):
+            X_axies="top bkg Corr. Assign DNN Sore"
+            Y_axies="Events/(0.01)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=100
+    
+    elif(Variable=="ttbar_WAsi"):
+            X_axies="top bkg Wrong Assign DNN Sore"
+            Y_axies="Events/(0.01)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=100
+    
+    elif(Variable=="EWK"):
+            X_axies="EWK bkg DNN Sore"
+            Y_axies="Events/(0.01)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=100
+    
+    elif(Variable=="QCD"):
+            X_axies="QCD bkg DNN Sore"
+            Y_axies="Events/(0.01)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=100
+    
+    
+    channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
+    
+    hist = {}
+    WAssihist = {}
+    infiles = {}
+    intree = {}
+    
+    hist_tch_CAssig_temp = rt.TH1F('hist_sig_CAssig_temp', '', Num_bin, lest_bin, max_bin)
+    hist_tch_WAssig_temp = rt.TH1F('hist_sig_WAssig_temp', '', Num_bin, lest_bin, max_bin)
+    hist_ttbar_CAssig_temp = rt.TH1F('hist_bkg_CAssig_temp', '', Num_bin, lest_bin, max_bin)
+    hist_ttbar_WAssig_temp = rt.TH1F('hist_big_WAssig_temp', '', Num_bin, lest_bin, max_bin)
+    hist_EWK_temp = rt.TH1F('hist_EWK_temp', '', Num_bin, lest_bin, max_bin)
+    hist_QCD_temp = rt.TH1F('hist_QCD_temp', '', Num_bin, lest_bin, max_bin)
+    rt.gStyle.SetOptStat(0)
+    
+    hist_tch_CAssig_temp.SetLineColor(rt.kRed);hist_tch_CAssig_temp.SetLineWidth(2)
+    hist_tch_CAssig_temp.GetXaxis().SetTitle(X_axies)
+    hist_tch_CAssig_temp.GetYaxis().SetTitle(Y_axies)  
+    
+    hist_tch_WAssig_temp.SetLineColor(rt.kBlue); hist_tch_WAssig_temp.SetLineWidth(2)
+    hist_ttbar_CAssig_temp.SetLineColor(rt.kOrange-1); hist_ttbar_CAssig_temp.SetLineWidth(2)
+    hist_ttbar_WAssig_temp.SetLineColor(rt.kCyan+1); hist_ttbar_WAssig_temp.SetLineWidth(2)
+    hist_EWK_temp.SetLineColor(rt.kMagenta); hist_EWK_temp.SetLineWidth(2)
+    hist_QCD_temp.SetLineColor(rt.kGray); hist_QCD_temp.SetLineWidth(2)
+    print
+    
+    for channel in channels:
+        if(channel=="QCD"): 
+                print channel, " ", Data_AntiIso_Fpath
+                print channel, " ", Fpaths_DNN_score[channel]
+                infiles[channel] = rt.TFile(Data_AntiIso_Fpath, 'READ')
+        else:
+                print channel, " ", EvtWeight_Fpaths_Iso[channel]
+                print channel, " ", Fpaths_DNN_score[channel]
+                infiles[channel] = rt.TFile(EvtWeight_Fpaths_Iso[channel], 'READ')
+    
+        intree[channel] = infiles[channel].Get('Events')
+        intree[channel].AddFriend("Events",Fpaths_DNN_score[channel])
+        hist[channel] = rt.TH1F('hist' + channel, '', Num_bin, lest_bin, max_bin)
+        WAssihist[channel] = rt.TH1F('temphist' + channel, '', Num_bin, lest_bin, max_bin)
+    
+        if(channel=='Tchannel' or channel=='Tbarchannel'):
+            Mccut_corr_assi = MCcut +"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)"
+            #print "Mccut_corr_assi : ",Mccut_corr_assi
+            intree[channel].Project('hist' + channel, Variable, Mccut_corr_assi) 
+            Mccut_wron_assi = MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)"
+            intree[channel].Project('temphist' + channel, Variable,Mccut_wron_assi)
+            #print "Mccut_wron_assi : ",Mccut_wron_assi
+            hist_tch_CAssig_temp.Add(hist[channel])
+            hist_tch_WAssig_temp.Add(WAssihist[channel])
+            #hist[channel].Print()
+            #WAssihist[channel].Print()
+        elif(channel=='tw_top'  or channel=='tw_antitop' or channel=='Schannel' or channel=='ttbar_SemiLeptonic' or channel=='ttbar_FullyLeptonic'):
+            intree[channel].Project('hist' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)")
+            intree[channel].Project('temphist' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)")
+            hist_ttbar_CAssig_temp.Add(hist[channel])
+            hist_ttbar_WAssig_temp.Add(WAssihist[channel])
+            #hist[channel].Print()
+            #WAssihist[channel].Print()
+        elif(channel=='QCD'):
+            intree[channel].Project('hist' + channel, Variable,Datacut)
+            hist_QCD_temp.Add(hist[channel])
+            #hist_QCD_temp.Print()
+        else:
+            #print MCcut
+            intree[channel].Project('hist' + channel,Variable,MCcut)
+            hist_EWK_temp.Add(hist[channel])
+            #hist[channel].Print()
+    
+    NonQCD_Inte = (hist_tch_CAssig_temp.Integral(0,Num_bin)+hist_tch_WAssig_temp.Integral(0,Num_bin)+hist_ttbar_CAssig_temp.Integral(0,Num_bin)+hist_ttbar_WAssig_temp.Integral(0,Num_bin)+hist_EWK_temp.Integral(0,Num_bin))
+    QCD_Inte = (hist_QCD_temp.Integral(0,Num_bin+1))
+    print 
+    print "NonQCD_Inte: ",NonQCD_Inte," QCD_Inte: ",QCD_Inte
+    
+    return NonQCD_Inte,QCD_Inte
 
-	histo_corr_Array[0].GetXaxis().SetTitle(X_axies)
-        histo_wron_Array[0].GetXaxis().SetTitle(X_axies)
 
-        return histo_corr_Array,histo_wron_Array
-
-if __name__ == '__main__':
-   
-        channels = ['Tchannel']#, 'Tbarchannel', 'tw_top', 'tw_antitop', 'Schannel',
-           #'ttbar', 'WToLNu_0J', 'WToLNu_1J', 'WToLNu_2J', 'DYJetsToLL',
-           #'WWTo1L1Nu2Q', 'WWTo2L2Nu', 'WZTo1L1Nu2Q', 'WZTo2L2Q', 'ZZTo2L2Q',
-           #'QCD']
-        
-        for channel in channels:
-           Fpaths_DNN_score[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
-           if(year=="ULpreVFP2016"): 
-               Fpaths_ori_with_weight[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-           elif(year=="ULpostVFP2016"):
-               Fpaths_ori_with_weight[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-           elif(year=="UL2017"):
-               Fpaths_ori_with_weight[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-           elif(year=="UL2018"):
-               Fpaths_ori_with_weight[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"    
-
-        applydir = 'DNN_output_without_mtwCut/Apply_all/' 
-        hists_corr,hists_wron = get_histogram_with_DNN_cut(lep,year,Variable)
-        print(len(hists))
-        for hist in hists:
-             hist.Print()
-
-
+if __name__ == "__main__":
+    NonQCD_Inte,QCD_Inte =  Nomi_QCD_NoNQCD_Integral()
+    print "NonQCD_Inte: ",NonQCD_Inte," QCD_Inte: ",QCD_Inte
+    
+    #c1.Print('Plots/'+year+'_'+lep+'_'+Variable+'.png')#'_cut_tch_CAssig_p_ttbar_CAssigGT0p4.png')
+    #c1.Print('Plots/'+year+'_'+lep+'_'+Variable+'.pdf')#'_cut_tch_CAssig_p_ttbar_CAssigGT0p4.pdf')

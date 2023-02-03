@@ -33,6 +33,7 @@ from Hist_style import *
 
 def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 	Filename = rt.TFile("/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_histograms_"+year+"_"+lep+".root","Read")
+
 	#Filename = rt.TFile("Histogram_input_2016_Run2_controlRegionF0p2T0p82_stat_full.root","Read")
 	Dir = Filename.GetDirectory(lep+'jets')
 
@@ -110,14 +111,13 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 	hs.Draw("hist")
 	legend.Draw()
 
-	#rt.CMSTEXT_variable("2J1T", lep, True, False, False, True, dataYear)#(region="2J1T", lepton_flv=lep, mtwcut=False, BDTcut=False, tch_Alternatemass=False, preliminary_tag=True, dataYear=dataYear)
-        region_tag = getregion_tag("2J1T", 0.30, 0.9, 0.38, 0.92)
-        region_tag.Draw("same")
         CMSpreliminary = getCMSpre_tag(0.35, 0.84, 0.43, 0.88)
         CMSpreliminary.Draw("same")
         lepjet_tag = leptonjet_tag(lep,0.29, 0.82, 0.32, 0.84)
         lepjet_tag.Draw("same")
-        yearNlumitag = year_tag(year,35, 84, 43, 88)
+        region_tag = getregion_tag("2J1T", 0.17, 0.92, 0.22, 0.96)
+        region_tag.Draw("same")
+        yearNlumitag = year_tag(year,0.82, 0.92, 0.9, 0.96)
         yearNlumitag.Draw("same")
 
 	myComingCanvases.Update()
@@ -166,8 +166,9 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 
 	band.SetFillColor(rt.kGray+3)
 	band.SetFillStyle(3001) 
-	band.GetYaxis().SetTitle("Data/MC") 
-	band.GetXaxis().SetTitle(Data.GetXaxis().GetTitle())
+	band.GetYaxis().SetTitle("Data/MC")
+        band.GetXaxis().SetTitle("m_{T} GeV") 
+	#band.GetXaxis().SetTitle(Data.GetXaxis().GetTitle())
 	band.GetYaxis().CenterTitle(1) 
 	band.GetYaxis().SetTitleOffset(0.35)              
 	band.GetYaxis().SetTitleSize(0.12)
@@ -191,8 +192,8 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 	myComingCanvases.cd()
 	myComingCanvases.Update()
 
-	#myComingCanvases.Print("../Plots/lnmtop_BDT0.82_"+lep+"_"+dataYear+".png")	
 	raw_input()
+	myComingCanvases.Print("Plots/mtwMass_validation_"+lep+"_"+dataYear+".png")	
 
 if __name__ == "__main__":
 
