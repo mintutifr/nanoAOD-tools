@@ -75,6 +75,10 @@ class EfficiencyModule(Module):
             loose_ele_counter+=1
             
         if(jet_counter>=2 and loose_ele_counter==0 and tight_ele_counter==1):
+            Ele_trig = getattr(event,Ele_trigger)
+            Muon_trig = getattr(event,Muon_trigger)
+            Ele_cross_trig = getattr(event,Ele_trigger)
+            print "len_tight_el: ", len(tight_Ele),"Ele_trig: ",Ele_trig, "Muon_trig: ",Muon_trig, "Ele_cross_trig: ",Ele_cross_trig
             for Ele in tight_Ele:    
 	        self.list_of_hist[0].Fill(Ele.pt,Ele.eta) #Event_total
 	        if(getattr(event,Ele_trigger)==1):
@@ -91,7 +95,7 @@ class EfficiencyModule(Module):
                     self.list_of_hist[6].Fill(Ele.pt,Ele.eta)                  #Event_HLT_Ele30_eta2p1_crossJet_HLT_IsoMu27
             if(getattr(event,Muon_trigger)==1 and getattr(event,Ele_trigger)==1 and getattr(event,Ele_cross_trigger)==1):
                     self.list_of_hist[7].Fill(Ele.pt,Ele.eta) #Event_HLT_Ele30_eta2p1_crossJet_HLT_IsoMu27_HLT_Ele30_eta2p1_crossJet
-        else: print(jet_counter," ",loose_ele_counter," ",tight_ele_counter)
+        else: print(jet_counter," ",loose_ele_counter," ",tight_ele_counter,"----------------")
         return True
 
 EfficiencyConstr_UL2017 = lambda : EfficiencyModule('UL2017',jetSelection= lambda j : j.pt > 40, TightEleSelection = lambda e : e.cutBased == 4,LooseEleSelection = lambda e : e.cutBased < 3)

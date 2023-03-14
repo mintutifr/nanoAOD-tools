@@ -5,6 +5,8 @@ import argparse as arg
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
+parser.add_argument('-s', '--sample', dest='samples', type=str, nargs=1, help="sample [ Mc_Nomi , Mc_Alt , Mc_sys ]")
+
 args = parser.parse_args()
 
 if (args.year == None or args.lepton == None):
@@ -19,11 +21,16 @@ if args.lepton[0] not in ['el','mu']:
     print('Error: Incorrect choice of lepton, use -h for help')
     exit()
 
+if args.samples[0] not in ['Mc_Nomi', 'Mc_Alt', 'Mc_sys']:
+    print('Error: Incorrect choice of sample type, use -h for help')
+    exit()
+
+
 print(args)
 
 lep = args.lepton[0]
 year= args.year[0]
-
+sample = args.samples[0]
 if(lep=="mu"):
 	lepton = "Muon"
 elif(lep=="el"):
@@ -40,12 +47,20 @@ from IPython.display import display
 import glob
 from time import time
 
-channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']#,'Data'] #WWTolnulnu
-channels.append("Data"+year)
+if(sample=="Mc_Nomi"):
+   
+      channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']#,'Data'] #WWTolnulnu
+      channels.append("Data"+year)
+elif(sample=="Mc_Alt"):
+        channels = [ 'ttbar_SemiLeptonic_mtop1695',   'ttbar_FullyLeptonic_mtop1695',   'Tbarchannel_mtop1735',   'ttbar_FullyLeptonic_widthx0p55',   'ttbar_FullyLeptonic_widthx0p7',   'ttbar_FullyLeptonic_mtop1735',   'Tbarchannel_mtop1715',   'ttbar_FullyLeptonic_widthx1p3',   'ttbar_FullyLeptonic_widthx1p45',   'ttbar_FullyLeptonic_mtop1715',   'Tchannel_mtop1715',   'ttbar_SemiLeptonic_mtop1755',   'ttbar_SemiLeptonic_mtop1735',   'ttbar_SemiLeptonic_mtop1715',   'ttbar_FullyLeptonic_widthx0p85',   'Tbarchannel_mtop1755',   'Tchannel_mtop1695',   'ttbar_FullyLeptonic_widthx1p15',   'Tchannel_mtop1735',   'Tchannel_mtop1755','ttbar_FullyLeptonic_mtop1755','Tbarchannel_mtop1695']
+elif(sample=="Mc_sys"):
+        channels =['Tchannel_TuneCP5CR2',  'Tchannel_TuneCP5CR1',   'Tchannel_hdampdown',   'Tbarchannel_hdampdown',  'Tchannel_TuneCP5down',   'Tbarchannel_hdampup',   'Tchannel_hdampup',   'Tbarchannel_TuneCP5down',   'Tchannel_erdON',   'Tchannel_TuneCP5up',   'Tbarchannel_TuneCP5up',  'Tbarchannel_erdON',   'Tbarchannel_TuneCP5CR1',   'Tbarchannel_TuneCP5CR2']
 
+
+print channels
 datasets = []                                            # this object will be a list of list
 for channel in channels:
-        datasets.append(load_dataset(-1,channel, lep, year)) #apped all data frames in datasets
+        datasets.append(load_dataset(-1,channel, lep, year,sample)) #apped all data frames in datasets
 
 print(type(datasets[0]))
 #bjet_deepjet_score = [] 
@@ -92,6 +107,9 @@ VARS = [lepton+'Eta', lepton+'Pt', lepton+'Phi', lepton+'E',   lepton+'Charge',
 
 df = {}  # remember this will be set of dataframe
 
+if not os.path.exists('dataframe_saved/'): os.mkdir('dataframe_saved/')
+if not os.path.exists('dataframe_saved/sys_N_Alt'): os.mkdir('dataframe_saved/sys_N_Alt')
+
 for channel_no,channel  in enumerate(channels): #channels: #try to enumare funchtion to remove channel_no in this loop
      if("Data" not in channel and "QCD" not in channel):
         df[channel] = pd.DataFrame(datasets[channel_no],columns=VARS) #adding dataframes in the list
@@ -101,10 +119,13 @@ for channel_no,channel  in enumerate(channels): #channels: #try to enumare funch
         if("Xsec_wgt" in VARS): VARS.remove("Xsec_wgt")
         if("LHEWeightSign" in VARS): VARS.remove("LHEWeightSign")
         df[channel] = pd.DataFrame(datasets[channel_no],columns=VARS) #adding dataframes in the list
+        
      print("df shape ", channel," : ",df[channel].shape[0])
      #df[channel]=df[channel].loc[(df[channel]['mtwMass']>50)]
-     df[channel].to_root('dataframe_saved/'+year+'_'+channel+'_Apply_all_'+lep+'.root',key='Events') 
+     if(sample=="Mc_Nomi"):df[channel].to_root('dataframe_saved/'+year+'_'+channel+'_Apply_all_'+lep+'.root',key='Events') 
+     else:df[channel].to_root('dataframe_saved/sys_N_Alt/'+year+'_'+channel+'_Apply_all_'+lep+'.root',key='Events')
 
+if(sample!="Mc_Nomi"): sys.exit(sample+" saved")
 del datasets
 del corr_assig #this has been added
 print("len of the list of dataframs  = ",len(df))
