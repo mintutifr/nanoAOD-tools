@@ -26,7 +26,7 @@ std.GetYaxis().SetTitleOffset(1.3)
 std.SetTitle("")
 filedir = "ROC_TGraphs/"
  
-files_to_read = ['Efficiency_info_'+year+'_'+lep+'_without_weights.root']
+files_to_read = ['Efficiency_info_'+year+'_'+lep+'_with_weights.root']
 print("Reading file ......", files_to_read )
 colors = [2,3,4,6,7,216]
 makerstyle = [87,20,21,22,23,34]
