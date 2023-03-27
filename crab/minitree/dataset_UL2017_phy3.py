@@ -90,6 +90,13 @@ Datasets_sys_MC_UL2017 = {
 }
 
 Datasets_SingleMuon_data_UL2017 = {
+                'Run2017B_mu' : '/SingleMuon/mikumar-Tree_26_Jan23_Run2017B_mu_v10-e6635e73df2540cc94e3526bd434df87/USER',
+                'Run2017C_mu' : '/SingleMuon/mikumar-Tree_26_Jan23_Run2017C_mu_v10-e6635e73df2540cc94e3526bd434df87/USER',
+                'Run2017D_mu' : '/SingleMuon/mikumar-Tree_26_Jan23_Run2017D_mu_v10-e6635e73df2540cc94e3526bd434df87/USER',
+                'Run2017E_mu' : '/SingleMuon/mikumar-Tree_26_Jan23_Run2017E_mu_v10-e6635e73df2540cc94e3526bd434df87/USER',
+                'Run2017F_mu' : '/SingleMuon/mikumar-Tree_26_Jan23_Run2017F_mu_v10-e6635e73df2540cc94e3526bd434df87/USER',
+}
+Datasets_SingleMuon_data_UL2017_old = {
 		'Run2017B_mu' : '/SingleMuon/mikumar-Tree_15_Jul22_Run2017B_mu-e6635e73df2540cc94e3526bd434df87/USER',
 		'Run2017C_mu' : '/SingleMuon/mikumar-Tree_15_Jul22_Run2017C_mu-e6635e73df2540cc94e3526bd434df87/USER',
 		'Run2017D_mu' : '/SingleMuon/mikumar-Tree_15_Jul22_Run2017D_mu-e6635e73df2540cc94e3526bd434df87/USER',
