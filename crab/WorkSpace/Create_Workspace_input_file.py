@@ -8,6 +8,7 @@ parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
 parser.add_argument('-v', '--var  ', dest='var', type=str, nargs=1, help="var [ lntopMass topMass t_ch_CAsi]")
+parser.add_argument('-D', '--DNNscale  ', dest='DNNscale', type=str, nargs=1, help="if need to apply DNNscale [ 0 , 1]")
 
 args = parser.parse_args()
 
@@ -32,15 +33,57 @@ print(args)
 lep = args.lepton[0]
 year= args.year[0]
 Variable = args.var[0]
+DNN_rescale = args.DNNscale[0]
+from Histogram_discribtions import get_histogram_distciption 
 from Get_Histogram_after_DNN_cuts import get_histogram_with_DNN_cut
 from Get_Nomi_histogram_Integral import Nomi_QCD_NoNQCD_Integral 
+from Overflow_N_Underflowbin import DrawOverflow_N_DrawUnderflow
 
 def propagate_rate_uncertainity(hist, uncert):
-    for i in range(hist.GetXaxis().GetNbins()):
+    for i in range(1,hist.GetXaxis().GetNbins()+1):
         if hist.GetBinContent(i) != 0:
             hist.SetBinError(i, hist.GetBinContent(i) * uncert * 0.01)
 
+################################# DNN scale ################ get from the lepton chage ratio max diff of Data amd MC ###########
 
+DNN_bais_scale={
+        "mu" : {
+                "UL2017" : 0.854347,
+                },
+        "el" :{
+                "UL2017" :  0.846341,      
+               }
+}
+
+ ################################################## QCD and NonQCD Nomalization form mtw fit #############################
+QCDScale_mtwFit = {
+        "mu" : {
+                "ULpreVFP2016" : 10991.0,
+                "ULpostVFP2016" : 11457.0, 
+                "UL2017" : 30145.0,
+                "UL2018" : 1.0
+        },
+        "el" : {
+                "ULpreVFP2016" : 6892.0,
+                "ULpostVFP2016" : 12848.0, 
+                "UL2017" : 7509.0,
+                "UL2018" : 1.0
+        }
+    }
+NonQCDScale_mtwFit = {
+        "mu" : {
+                "ULpreVFP2016" : 231378.0,
+                "ULpostVFP2016" : 209030.0,
+                "UL2017" : 472746.0,
+                "UL2018" : 1.0
+        },
+        "el" : {
+                "ULpreVFP2016" : 146947.0,
+                "ULpostVFP2016" : 122089.0,
+                "UL2017" : 315426.0,
+                "UL2018" : 1.0
+        }
+} 
 
 def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
 
@@ -50,113 +93,12 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
             lepton = "Electron"
     print(lepton)
     
-    if(Variable=="lntopMass"):
-            Variable="TMath::Log(topMass)"
-            X_axies="ln(m_{t})"
-            Y_axies="Events/(0.092)"
-            lest_bin=math.log(100.0)
-            max_bin=math.log(400.0)
-            Num_bin=15
-    
-    elif(Variable=="topMass"):
-            X_axies="m_{t}"
-            Y_axies="Events/(20)"
-            lest_bin=100.0
-            max_bin=400.0
-            Num_bin=15
-
-    elif(Variable=="mtwMass"):
-            X_axies="m_{T} (GeV)"
-            Y_axies="Events/(10)"
-            lest_bin=0.0
-            max_bin=200.0
-            Num_bin=20
-    
-    elif(Variable=="t_ch_CAsi+ttbar_CAsi"):
-            X_axies="Signal+TopBkg Corr. Assign DNN Sore"
-            Y_axies="Events/(0.01)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=10
-            
-    elif(Variable=="t_ch_CAsi"):
-            X_axies="Signal Corr. Assign DNN Sore"
-            Y_axies="Events/(0.1)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=10
-      
-    elif(Variable=="t_ch_WAsi"):
-            X_axies="Signal Wrong Assign DNN Sore"
-            Y_axies="Events/(0.1)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=10
-    
-    elif(Variable=="ttbar_CAsi"):
-            X_axies="top bkg Corr. Assign DNN Sore"
-            Y_axies="Events/(0.1)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=10
-    
-    elif(Variable=="ttbar_WAsi"):
-            X_axies="top bkg Wrong Assign DNN Sore"
-            Y_axies="Events/(0.1)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=10
-    
-    elif(Variable=="EWK"):
-            X_axies="EWK bkg DNN Sore"
-            Y_axies="Events/(0.1)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=10
-    
-    elif(Variable=="QCD"):
-            X_axies="QCD bkg DNN Sore"
-            Y_axies="Events/(0.1)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=10
-                
-    elif(Variable=="t_ch_CAsi"):
-                X_axies="DNN Response for corr. assign top signal"
-                Y_axies="Events/(0.1)"
-                lest_bin=0.0
-                max_bin=1.0
-                Num_bin=10
-    else:
-        print "variable ", Variable," in not define in Create_Workspace_input_file.py" 
-        exit()
-
-   ################################################## QCD and NonQCD scale form mtw fit ############################# 
-    if(year == "ULpreVFP2016"):
-            if(lep=="mu"):
-                   QCDScale_mtwFit = 10991.0
-                   NonQCDScale_mtwFit = 231378.0
-            if(lep=="el"):
-                   QCDScale_mtwFit = 6892.0
-                   NonQCDScale_mtwFit = 146947.0
-    if(year == "ULpostVFP2016"):
-            if(lep=="mu"):
-                   QCDScale_mtwFit = 11457.0
-                   NonQCDScale_mtwFit = 209030.0
-            if(lep=="el"):
-                   QCDScale_mtwFit = 12848.0
-                   NonQCDScale_mtwFit = 122089.0
-    if(year == "UL2017"):
-            if(lep=="mu"):
-                   QCDScale_mtwFit = 30145.0
-                   NonQCDScale_mtwFit = 472746.0
-            if(lep=="el"):
-                   QCDScale_mtwFit = 7509.0
-                   NonQCDScale_mtwFit = 315426.0
+    Variable,X_axies,Y_axies,lest_bin,max_bin,Num_bin = get_histogram_distciption(Variable)
+    print(X_axies," ",Y_axies," ",lest_bin," ",max_bin," ",Num_bin)
                 
     yearDir={
-                'UL2016preVFP' :  "SIXTEEN_preVFP",
-                'UL2016postVFP' : "SIXTEEN_postVFP",
+                'ULpreVFP2016' :  "SIXTEEN_preVFP",
+                'ULpostVFP2016' : "SIXTEEN_postVFP",
                 'UL2017' : "SEVENTEEN",
                 'UL2018' : "EIGHTEEN"}
 
@@ -195,8 +137,8 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     del EvtWeight_Fpaths_Iso
     del Data_AntiIso_Fpath
 
-    MCSF = NonQCDScale_mtwFit/NonQCD_Inte
-    QCDSF = QCDScale_mtwFit/QCD_Inte
+    MCSF = NonQCDScale_mtwFit[lep][year]/NonQCD_Inte
+    QCDSF = QCDScale_mtwFit[lep][year]/QCD_Inte
     print
     print "MCSF: ",MCSF," QCDSF: ",QCDSF
 
@@ -207,6 +149,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
         if(channel in ["Tchannel","Tbarchannel"]):
                 propagate_rate_uncertainity(hists_corr[channel_no], 15.0)
                 propagate_rate_uncertainity(hists_wron[channel_no], 15.0)
+                
         elif(channel in ['tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic']):
                 propagate_rate_uncertainity(hists_corr[channel_no], 6.0)
                 propagate_rate_uncertainity(hists_wron[channel_no], 6.0)
@@ -217,10 +160,13 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
         hist_wron_assig[channel] = hists_wron[channel_no].Clone()
         hist_corr_assig[channel].Scale(MCSF)
         hist_wron_assig[channel].Scale(MCSF)        
+        if(DNN_rescale=="1"):
+                hist_corr_assig[channel].Scale(DNN_bais_scale[lep][year])
+                hist_wron_assig[channel].Scale(DNN_bais_scale[lep][year])
 
     del hists_corr
     del hists_wron
-
+        
     #print hist_corr_assig
     #print hist_wron_assig
     top_sig_Nomi = hist_corr_assig["Tchannel"]; top_sig_Nomi.Add(hist_corr_assig["Tbarchannel"]);
@@ -234,11 +180,18 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     top_bkg_Nomi.SetLineColor(rt.kOrange-1); top_bkg_Nomi.SetLineWidth(2)
     top_bkg_Nomi.SetName("top_bkg_1725")
     
+
     hist_EWK = hist_corr_assig["WJetsToLNu_0J"]; hist_EWK.Add(hist_wron_assig["WJetsToLNu_0J"])
     for channel in ['WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L']:
         hist_EWK.Add(hist_corr_assig[channel]); hist_EWK.Add(hist_wron_assig[channel])
     hist_EWK.SetLineColor(rt.kMagenta); hist_EWK.SetLineWidth(2)
     hist_EWK.SetName("EWK_bkg")
+
+    #for i in range(1,top_sig_Nomi.GetNbinsX()+1):
+    #    print "--------------------"
+    #    print "top sig : ",top_sig_Nomi.GetBinContent(i), top_sig_Nomi.GetBinError(i)
+    #    print "top bkg : ",top_bkg_Nomi.GetBinContent(i), top_bkg_Nomi.GetBinError(i)
+    #    print "EWK bkg : ",hist_EWK.GetBinContent(i), hist_EWK.GetBinError(i)
 
     #################### Data and DD QCD  ######################################################## 
     print    
@@ -277,14 +230,19 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
         #rt.gROOT.cd()
     
         intree[channel].Project('hs' + channel, Variable,Datacut+DNNcut)
+        #hs[channel] = DrawOverflow_N_DrawUnderflow(hs[channel])
         #hs[channel].Print()
         
     rt.gROOT.cd()
     Data = hs['Data'+year].Clone()
     DDQCD = hs['QCD'].Clone()
     DDQCD.Scale(QCDSF)
+    if(DNN_rescale=="1"): DDQCD.Scale(DNN_bais_scale[lep][year])
     DDQCD.SetName("QCD_DD")
     propagate_rate_uncertainity(DDQCD, 50.0)
+    #for i in range(1,DDQCD.GetNbinsX()+1):
+    #    print "--------------------"
+    #    print "QCD DDD : ",DDQCD.GetBinContent(i), DDQCD.GetBinError(i)
     DDQCD.Print()
 
     Data.SetName("data_obs")
@@ -485,7 +443,8 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
 if __name__ == "__main__":
     
     hists = Create_Workspace_input_file(lep,year,Variable) 
-    outfile = rt.TFile("Hist_for_workspace/Combine_Input_histograms_"+year+"_"+lep+".root","recreate")
+    output_file = "Hist_for_workspace/Combine_Input_histograms_"+year+"_"+lep+".root"
+    outfile = rt.TFile(output_file,"recreate")
     outfile.cd()
     Dir_mu = outfile.mkdir(lep+"jets")
     Dir_mu.cd()

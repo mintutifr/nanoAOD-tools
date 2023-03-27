@@ -5,7 +5,7 @@ import argparse as arg
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
-
+parser.add_argument('-D', '--DNNscale ', dest='DNNscale', type=str, nargs=1, help="if need to apply DNN scale [ 0 , 1 ]")
 args = parser.parse_args()
 
 if (args.year == None or args.lepton == None):
@@ -22,22 +22,35 @@ if args.lepton[0] not in ['el','mu']:
 
 print(args)
 
-
 def propagate_rate_uncertainity(hist, uncert):
-    for i in range(hist.GetXaxis().GetNbins()):
+    for i in range(1,hist.GetXaxis().GetNbins()+1):
         if hist.GetBinContent(i) != 0:
             hist.SetBinError(i, hist.GetBinContent(i) * uncert * 0.01)
 
 from Hist_style import *
 
+DNN_bais_scale={
+        "mu" : {
+                "UL2017" : 0.854347,
+                },
+        "el" :{
+                "UL2017" :  0.846341,      
+               }
+}
+def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0"):
+        Filename = "/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_histograms_"+year+"_"+lep+".root" 
+	File = rt.TFile(Filename,"Read")
 
-def stack_plot_from_histfile(lep='mu',dataYear='2016'):
-	Filename = rt.TFile("/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_histograms_"+year+"_"+lep+".root","Read")
+        if(DNN_recale=="1"):
+                print" ####################################           ############     ##################"
+                print("Please make sure the DNN rescaling is not applied while creating "+Filename+" Other vise rescaling will be twice which will distort the Data Vs Mc plots")
+                print"####################################            ###########     ##################"
 
-	#Filename = rt.TFile("Histogram_input_2016_Run2_controlRegionF0p2T0p82_stat_full.root","Read")
-	Dir = Filename.GetDirectory(lep+'jets')
+	#File = rt.TFile("Histogram_input_2016_Run2_controlRegionF0p2T0p82_stat_full.root","Read")
+	Dir = File.GetDirectory(lep+'jets')
 
 	top_sig = Dir.Get("top_sig_1725")
+
 	top_sig.SetFillColor(rt.kRed)
 	top_sig.SetLineColor(rt.kRed)
 
@@ -53,6 +66,18 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 	QCD_bkg.SetFillColor(rt.kGray)
 	QCD_bkg.SetLineColor(rt.kGray)
 
+        #for i in range(1,top_sig.GetNbinsX()+1):
+        #        print "--------------------"
+        #        print "top sig : ",top_sig.GetBinContent(i), top_sig.GetBinError(i)
+        #        print "top BKG : ",top_bkg.GetBinContent(i), top_bkg.GetBinError(i)
+        #        print "EWK BKG : ",EWK_bkg.GetBinContent(i), EWK_bkg.GetBinError(i)
+        #        print "QCD DDD : ",QCD_bkg.GetBinContent(i), QCD_bkg.GetBinError(i)
+ 
+        if(DNN_recale=="1"):
+            top_sig.Scale(DNN_bais_scale[lep][dataYear])
+            top_bkg.Scale(DNN_bais_scale[lep][dataYear])
+            EWK_bkg.Scale(DNN_bais_scale[lep][dataYear])    
+            QCD_bkg.Scale(DNN_bais_scale[lep][dataYear])
 	#propagate_rate_uncertainity(top_sig, 15.0)
 	#propagate_rate_uncertainity(top_bkg, 6.0)
 	#propagate_rate_uncertainity(EWK_bkg, 10.0)
@@ -63,6 +88,12 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 	hMC.Add(top_bkg)
 	hMC.Add(EWK_bkg)
 	hMC.Add(QCD_bkg)
+
+        hMC_unct_band = hMC.Clone()
+        #hMC_unct_band.GetXaxis.SetLabelSize(0.0)
+        hMC_unct_band.SetLineColor(rt.kGray+3)
+        hMC_unct_band.SetFillColor(rt.kGray+3)
+        hMC_unct_band.SetFillStyle(3018)
 
 	Data = Dir.Get("data_obs")
 	Data.SetMarkerColor(1)
@@ -80,8 +111,8 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 	legend.SetFillStyle(1001)
 	#legend.SetHeader("beNDC", "C")
 	legend.AddEntry(Data, "Data", "ple1")
-	legend.AddEntry(top_sig, "#it{t}-ch.", "f")
-	legend.AddEntry(top_bkg, "t#bar{t}", "f")
+	legend.AddEntry(top_sig, "Corr. top ", "f")
+	legend.AddEntry(top_bkg, "InCorr. top ", "f")
 	legend.AddEntry(EWK_bkg, "V+Jets, VV", "f")
 	legend.AddEntry(QCD_bkg, "QCD", "f")
 	#legend.AddEntry(hMC,"Total Unc.","f")
@@ -92,7 +123,7 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 	myComingCanvases.cd()
 	rt.TGaxis.SetMaxDigits(3)
 
-	top_sig.GetXaxis().SetTitle("M_{top}") 
+	top_sig.GetXaxis().SetTitle(top_sig.GetXaxis().GetTitle()) 
      	hs = rt.THStack("hs",";"";Events")
 	hs.Add(QCD_bkg)
 	hs.Add(EWK_bkg)
@@ -121,6 +152,8 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
         yearNlumitag.Draw("same")
 
 	myComingCanvases.Update()
+        hMC_unct_band.Draw("E2;same")
+        myComingCanvases.Update()
 
 ######################################## if it tis top mass comment out below this #######
 	Data.Draw("Same;E1")
@@ -136,9 +169,10 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 	pad2.Draw()
 	pad2.cd()
 
-	print Data.GetBinContent(6)
-        print hMC.GetBinContent(6)
+	#print Data.GetBinContent(6)
+        #print hMC.GetBinContent(6)
 	h_ratio = rt.TGraphAsymmErrors(Data, hMC, 'pois')
+        #h_ratio.Print()
 	axis = h_ratio.GetXaxis()
 	axis.SetLimits(Data.GetXaxis().GetXmin(), Data.GetXaxis().GetXmax())
 	h_ratio.SetMarkerColor(1)
@@ -154,7 +188,7 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 	uedge = h2_ratio.GetXaxis().GetXmax()
 	band = rt.TH1D('Band', '', nbin, ledge, uedge)
 	rt.gStyle.SetOptStat(0)
-	for i in range(nbin+1):
+	for i in range(nbin):
 		band.SetBinContent(i+1, 1.0)
 		if (hMC.GetBinContent(i+1)!=0 and Data.GetBinContent(i+1)!=0):
 			err = (hMC.GetBinError(i+1) * h2_ratio.GetBinContent(i+1)) / hMC.GetBinContent(i+1)
@@ -167,7 +201,7 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 	band.SetFillColor(rt.kGray+3)
 	band.SetFillStyle(3001) 
 	band.GetYaxis().SetTitle("Data/MC")
-        band.GetXaxis().SetTitle("m_{T} GeV") 
+        band.GetXaxis().SetTitle(top_sig.GetXaxis().GetTitle()) 
 	#band.GetXaxis().SetTitle(Data.GetXaxis().GetTitle())
 	band.GetYaxis().CenterTitle(1) 
 	band.GetYaxis().SetTitleOffset(0.35)              
@@ -193,11 +227,13 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016'):
 	myComingCanvases.Update()
 
 	raw_input()
-	myComingCanvases.Print("Plots/mtwMass_validation_"+lep+"_"+dataYear+".png")	
+	myComingCanvases.Print("Plots/"+top_sig.GetXaxis().GetTitle()+"_validation_"+lep+"_"+dataYear+".png")	
 
 if __name__ == "__main__":
 
         lep = args.lepton[0]
         year= args.year[0]
-        stack_plot_from_histfile(lep,year)
+        DNN_recale = args.DNNscale[0]
+        print DNN_recale
+        stack_plot_from_histfile(lep,year,DNN_recale)
 

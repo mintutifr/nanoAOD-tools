@@ -4,30 +4,9 @@ import numpy as np
 import argparse as arg
 import math
 
-parser = arg.ArgumentParser(description='inputs discription')
-parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
-parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
-parser.add_argument('-v', '--var  ', dest='var', type=str, nargs=1, help="var [ lntopMass topMass t_ch_CAsi]")
-
-args = parser.parse_args()
-
-if (args.year == None or args.lepton == None):
-        print("USAGE: %s [-h] [-y <Data year> -l <lepton>]"%(sys.argv [0]))
-        sys.exit (1)
-
-if args.year[0] not in ['ULpreVFP2016', 'ULpostVFP2016','UL2017','UL2018']:
-    print('Error: Incorrect choice of year, use -h for help')
-    exit()
-
-if args.lepton[0] not in ['el','mu']:
-    print('Error: Incorrect choice of lepton, use -h for help')
-    exit()
-
 #print(args)
-
-lep = args.lepton[0]
-year= args.year[0]
-Variable = args.var[0]
+from Histogram_discribtions import get_histogram_distciption
+from Overflow_N_Underflowbin import DrawOverflow_N_DrawUnderflow 
 
 def get_histogram_with_DNN_cut(lep="mu",year="UL2017",Variable="lntopMass",
     channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L'],
@@ -41,179 +20,8 @@ def get_histogram_with_DNN_cut(lep="mu",year="UL2017",Variable="lntopMass",
         elif(lep=="el"):
                 lepton = "Electron"
 
-	if(Variable=="lntopMass"):
-	 	Variable="TMath::Log(topMass)"
-	 	X_axies="ln(m_{t})"
-	 	Y_axies="Events/(0.092)"
-	 	lest_bin=rt.TMath.Log(100.0)
-	 	max_bin=rt.TMath.Log(400.0)
-	 	Num_bin=15 #one extra overflow bin will be added 
-	 
-	elif(Variable=="topMass"):
-	 	X_axies="m_{t}"
-	 	Y_axies="Events/(10)"
-	 	lest_bin=100.0
-	 	max_bin=400.0
-	 	Num_bin=30 #one extra overflow bin will be added
-        elif(Variable=="MuonEta"):
-                X_axies="|#eta_{#mu}|"
-                Y_axies="Events/(0.1)"
-                lest_bin=-2.5
-                max_bin=2.5
-                Num_bin=25
-	elif(Variable == "muSF" and lep=="mu"):
-                Variable=="muSF"
-	 	X_axies="Muon Scale factor"
-	 	Y_axies="Events/0.1"
-                lest_bin=0.7
-                max_bin=1.2	
-	 	Num_bin=25
-        elif(Variable=="PUJetID_SF"):
-                Variable="bJetPUJetID_SF*lJetPUJetID_SF"
-	 	X_axies="jet PUSF"
-	 	Y_axies="Events/0.1"
-                lest_bin=0.7
-                max_bin=1.2	
-	 	Num_bin=25
-        elif(Variable=="lJetPUJetID_SF"):
-                Variable="lJetPUJetID_SF"
-	 	X_axies="l jet puSF"
-	 	Y_axies="Events/0.1"
-                lest_bin=0.7
-	elif(Variable=="bJetPUJetID_SF"):
-                Variable="bJetPUJetID_SF"
-	 	X_axies="b jet puSF"
-	 	Y_axies="Events/0.1"
-                lest_bin=0.7
-	 	Num_bin=25
-	        Num_bin=25
-        elif(Variable == "elSF" and lep=="el"):
-                Variable=="elSF"
-                X_axies="ELectron Scale factor"
-                Y_axies="Events/0.1"
-                lest_bin=0.7
-                max_bin=1.2
-                Num_bin=25
-        elif(Variable == "bWeight"):
-                X_axies="Weight for b quark"
-                Y_axies="Events/(0.05)"
-                lest_bin=0.4
-                max_bin=2.4
-                Num_bin=40
-        elif(Variable == "puWeight"):
-                X_axies="PileUp Weight"
-                Y_axies="Events/(0.05)"
-                lest_bin=0.0
-                max_bin=2.0
-                Num_bin=40
-        elif(Variable == "puWeight_new"):
-                X_axies="new PileUp Weight"
-                Y_axies="Events/(0.05)"
-                lest_bin=0.0
-                max_bin=2.0
-                Num_bin=40
-        elif(Variable == "bJetdeepJet"):
-                X_axies="deep Jet Score for b Jets"
-                Y_axies="Events/(0.05)"
-                lest_bin=-1
-                max_bin=1.1
-                Num_bin=42
-        elif(Variable=="L1PreFiringWeight_Nom"):
-                X_axies="L1 PreFire Weight"
-                Y_axies="Events/(0.05)"
-                lest_bin=0.5
-                max_bin=1.1
-                Num_bin=12
-        elif(Variable == "mtwMass"):
-                X_axies="m_{t}"
-                Y_axies="Events/(10)"
-                lest_bin=0
-                max_bin=200
-                Num_bin=20
-        elif(Variable=="dEta_mu_bJet" or Variable=="dEta_el_bJet"):
-                X_axies="|#Delta#eta_{lb}|"
-                Y_axies="Events/(0.1)"
-                lest_bin=0.0
-                max_bin=3.0
-                Num_bin=30
-	elif(Variable=="bJetPt"):
-                X_axies="b-jet p_{T} (GeV)"
-                Y_axies="Events/(5 GeV)"
-                lest_bin=0.0
-                max_bin=200.0
-                Num_bin=40
-	elif(Variable=="lJetEta"):
-                Variable="abs(lJetEta)";
-                X_axies="light jet #eta"
-                Y_axies="Events/(0.5)"
-                lest_bin=0.0
-                max_bin=5.0
-                Num_bin=10
-        elif(Variable=="lJetPt"):
-                X_axies="light jet p_{T} (GeV)"
-                Y_axies="Events/(5 GeV)"
-                lest_bin=0.0
-                max_bin=200.0
-                Num_bin=40.0
-        elif(Variable=="abs_lJetEta"):
-                Variable="abs(lJetEta)"
-                X_axies="light jet |#eta|"
-                Y_axies="Events/(0.5)"
-                lest_bin=0.0
-                max_bin=5.0
-                Num_bin=10
-        elif(Variable=="jetpTSum"):
-                X_axies="p_{T}^{b}+p_{T}^{j'} {GeV)"
-                Y_axies="Events/(20 GeV)"
-                lest_bin=0.0
-                max_bin=500.0
-                Num_bin=25
-        elif(Variable=="diJetMass"):
-                X_axies="m_{bj'} {GeV)"
-                Y_axies="Events/(20 GeV)"
-                lest_bin=0.0
-                max_bin=600.0
-                Num_bin=30
-        elif(Variable=="cosThetaStar"):
-                X_axies="cos#theta*"
-                Y_axies="Events/(0.1)"
-                lest_bin=-1.0
-                max_bin=1.0
-                Num_bin=20
-        elif(Variable=="dR_bJet_lJet"):
-                X_axies="#DeltaR_{bj'}"
-                Y_axies="Events/(0.2 )"
-                lest_bin=0.0
-                max_bin=5.2
-                Num_bin=27
-        elif(Variable=="FW1"):
-                X_axies="FW1"
-                Y_axies="Events/(0.5)"
-                lest_bin=0.0
-                max_bin=1.0
-                Num_bin=20
-        elif(Variable=="ElectronSCEta"):
-                X_axies="electron #eta_{SC}"
-                Y_axies="Events/(0.5)"
-                lest_bin=-2.5
-                max_bin=2.5
-                Num_bin=10
-        elif(Variable=="ElectronEta"):
-                X_axies="electron |#eta|"
-                Y_axies="Events/(0.1)"
-                lest_bin=-2.5
-                max_bin=2.5
-                Num_bin=25	
-        elif(Variable=="t_ch_CAsi"):
-                X_axies="DNN Response for corr. assign top signal"
-                Y_axies="Events/(0.1)"
-                lest_bin=0.0
-                max_bin=1.0
-                Num_bin=10
-	else:
-		print "variable ", Variable," in not define in Get_Histogram_after_DNN_cuts.py" 
-		exit()
-
+        Variable,X_axies,Y_axies,lest_bin,max_bin,Num_bin = get_histogram_distciption(Variable)
+        print(X_axies," ",Y_axies," ",lest_bin," ",max_bin," ",Num_bin)
 
 	print
 	print "############################   analising the event with the DNN cut applid ", DNNcut, "  ##################"
@@ -250,7 +58,14 @@ def get_histogram_with_DNN_cut(lep="mu",year="UL2017",Variable="lntopMass",
             
     	    intree.Project('histo_corr', Variable, MCcut_corr_Assig)
             intree.Project('histo_wron', Variable, MCcut_wron_Assig)
-            
+           
+            #rt.gROOT.cd()
+
+            #histo_corr = DrawOverflow_N_DrawUnderflow(histo_corr)
+            #histo_wron = DrawOverflow_N_DrawUnderflow(histo_wron) 
+
+        
+            rt.gROOT.cd()
     	    histo_corr_Array.append(histo_corr.Clone())
             histo_wron_Array.append(histo_wron.Clone())
 	    histo_corr_Array[-1].SetName(channel)
@@ -267,6 +82,29 @@ def get_histogram_with_DNN_cut(lep="mu",year="UL2017",Variable="lntopMass",
 
 if __name__ == '__main__':
    
+        parser = arg.ArgumentParser(description='inputs discription')
+        parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
+        parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
+        parser.add_argument('-v', '--var  ', dest='var', type=str, nargs=1, help="var [ lntopMass topMass t_ch_CAsi]")
+
+        args = parser.parse_args()
+
+        if (args.year == None or args.lepton == None):
+                print("USAGE: %s [-h] [-y <Data year> -l <lepton>]"%(sys.argv [0]))
+                sys.exit (1)
+
+        if args.year[0] not in ['ULpreVFP2016', 'ULpostVFP2016','UL2017','UL2018']:
+                print('Error: Incorrect choice of year, use -h for help')
+                exit()
+
+        if args.lepton[0] not in ['el','mu']:
+                print('Error: Incorrect choice of lepton, use -h for help')
+                exit()
+
+        lep = args.lepton[0]
+        year= args.year[0]
+        Variable = args.var[0]
+
         channels = ['Tchannel']#, 'Tbarchannel', 'tw_top', 'tw_antitop', 'Schannel',
            #'ttbar', 'WToLNu_0J', 'WToLNu_1J', 'WToLNu_2J', 'DYJetsToLL',
            #'WWTo1L1Nu2Q', 'WWTo2L2Nu', 'WZTo1L1Nu2Q', 'WZTo2L2Q', 'ZZTo2L2Q',

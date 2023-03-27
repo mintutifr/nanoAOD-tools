@@ -3,34 +3,7 @@ import numpy as np
 #import scipy.integrate as sp
 import argparse as arg
 import math
-
-parser = arg.ArgumentParser(description='inputs discription')
-parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
-parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
-parser.add_argument('-v', '--var  ', dest='var', type=str, nargs=1, help="var [ lntopMass topMass t_ch_CAsi]")
-
-args = parser.parse_args()
-
-if (args.year == None or args.lepton == None):
-        print("USAGE: %s [-h] [-y <Data year> -l <lepton>]"%(sys.argv [0]))
-        sys.exit (1)
-
-if args.year[0] not in ['ULpreVFP2016', 'ULpostVFP2016','UL2017','UL2018']:
-    print('Error: Incorrect choice of year, use -h for help')
-    exit()
-
-if args.lepton[0] not in ['el','mu']:
-    print('Error: Incorrect choice of lepton, use -h for help')
-    exit()
-
-#print
-#print(args)
-
-lep = args.lepton[0]
-year= args.year[0]
-Variable = args.var[0]
-
-
+from Histogram_discribtions import get_histogram_distciption
 
 def Nomi_QCD_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "Xsec_wgt*LHEWeightSign*puWeight*muSF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)",EvtWeight_Fpaths_Iso = {},Data_AntiIso_Fpath={},Fpaths_DNN_score = {}):
     print
@@ -41,77 +14,8 @@ def Nomi_QCD_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "
             lepton = "Electron"
     #print(lepton)
     
-    if(Variable=="lntopMass"):
-            Variable="TMath::Log(topMass)"
-            X_axies="ln(m_{Top})"
-            Y_axies="Events/(20)"
-            lest_bin=math.log(100.0)
-            max_bin=math.log(400.0)
-            Num_bin=15
-
-    elif(Variable=="mtwMass"):
-            X_axies="m_{T} (GeV)"
-            Y_axies="Events/(10)"
-            lest_bin=0.0
-            max_bin=200.0
-            Num_bin=20
- 
-    elif(Variable=="topMass"):
-            X_axies="m_{Top}"
-            Y_axies="Events/(20)"
-            lest_bin=100.0
-            max_bin=400.0
-            Num_bin=15
-    
-    elif(Variable=="t_ch_CAsi+ttbar_CAsi"):
-            X_axies="Signal+TopBkg Corr. Assign DNN Sore"
-            Y_axies="Events/(0.01)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=100
-            
-    elif(Variable=="t_ch_CAsi"):
-            X_axies="Signal Corr. Assign DNN Sore"
-            Y_axies="Events/(0.01)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=100
-      
-    elif(Variable=="t_ch_WAsi"):
-            X_axies="Signal Wrong Assign DNN Sore"
-            Y_axies="Events/(0.01)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=100
-    
-    elif(Variable=="ttbar_CAsi"):
-            X_axies="top bkg Corr. Assign DNN Sore"
-            Y_axies="Events/(0.01)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=100
-    
-    elif(Variable=="ttbar_WAsi"):
-            X_axies="top bkg Wrong Assign DNN Sore"
-            Y_axies="Events/(0.01)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=100
-    
-    elif(Variable=="EWK"):
-            X_axies="EWK bkg DNN Sore"
-            Y_axies="Events/(0.01)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=100
-    
-    elif(Variable=="QCD"):
-            X_axies="QCD bkg DNN Sore"
-            Y_axies="Events/(0.01)"
-            lest_bin=0.0
-            max_bin=1.0
-            Num_bin=100
-    
+    Variable,X_axies,Y_axies,lest_bin,max_bin,Num_bin = get_histogram_distciption(Variable)
+    print(X_axies," ",Y_axies," ",lest_bin," ",max_bin," ",Num_bin)
     
     channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
     
@@ -182,7 +86,7 @@ def Nomi_QCD_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "
             hist_EWK_temp.Add(hist[channel])
             #hist[channel].Print()
     
-    NonQCD_Inte = (hist_tch_CAssig_temp.Integral(0,Num_bin)+hist_tch_WAssig_temp.Integral(0,Num_bin)+hist_ttbar_CAssig_temp.Integral(0,Num_bin)+hist_ttbar_WAssig_temp.Integral(0,Num_bin)+hist_EWK_temp.Integral(0,Num_bin))
+    NonQCD_Inte = (hist_tch_CAssig_temp.Integral(0,Num_bin+1)+hist_tch_WAssig_temp.Integral(0,Num_bin+1)+hist_ttbar_CAssig_temp.Integral(0,Num_bin+1)+hist_ttbar_WAssig_temp.Integral(0,Num_bin+1)+hist_EWK_temp.Integral(0,Num_bin+1))
     QCD_Inte = (hist_QCD_temp.Integral(0,Num_bin+1))
     print 
     print "NonQCD_Inte: ",NonQCD_Inte," QCD_Inte: ",QCD_Inte
@@ -191,8 +95,38 @@ def Nomi_QCD_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "
 
 
 if __name__ == "__main__":
-    NonQCD_Inte,QCD_Inte =  Nomi_QCD_NoNQCD_Integral()
-    print "NonQCD_Inte: ",NonQCD_Inte," QCD_Inte: ",QCD_Inte
+
+        parser = arg.ArgumentParser(description='inputs discription')
+        parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
+        parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
+        parser.add_argument('-v', '--var  ', dest='var', type=str, nargs=1, help="var [ lntopMass topMass t_ch_CAsi]")
+
+        args = parser.parse_args()
+
+        if (args.year == None or args.lepton == None):
+                print("USAGE: %s [-h] [-y <Data year> -l <lepton>]"%(sys.argv [0]))
+                sys.exit (1)
+
+        if args.year[0] not in ['ULpreVFP2016', 'ULpostVFP2016','UL2017','UL2018']:
+                print('Error: Incorrect choice of year, use -h for help')
+                exit()
+
+        if args.lepton[0] not in ['el','mu']:
+                print('Error: Incorrect choice of lepton, use -h for help')
+                exit()
+
+        #print
+        #print(args)
+
+        lep = args.lepton[0]
+        year= args.year[0]
+        Variable = args.var[0]
+
+
+
+
+        NonQCD_Inte,QCD_Inte =  Nomi_QCD_NoNQCD_Integral()
+        print "NonQCD_Inte: ",NonQCD_Inte," QCD_Inte: ",QCD_Inte
     
-    #c1.Print('Plots/'+year+'_'+lep+'_'+Variable+'.png')#'_cut_tch_CAssig_p_ttbar_CAssigGT0p4.png')
-    #c1.Print('Plots/'+year+'_'+lep+'_'+Variable+'.pdf')#'_cut_tch_CAssig_p_ttbar_CAssigGT0p4.pdf')
+        #c1.Print('Plots/'+year+'_'+lep+'_'+Variable+'.png')#'_cut_tch_CAssig_p_ttbar_CAssigGT0p4.png')
+        #c1.Print('Plots/'+year+'_'+lep+'_'+Variable+'.pdf')#'_cut_tch_CAssig_p_ttbar_CAssigGT0p4.pdf')

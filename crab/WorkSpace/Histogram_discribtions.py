@@ -1,0 +1,99 @@
+import math
+
+def get_histogram_distciption(Variable="lntopMass"):
+
+    if(Variable=="lntopMass"):
+            Variable="TMath::Log(topMass)"
+            X_axies="ln(m_{t})"
+            Y_axies="Events/(0.092)"
+            lest_bin=math.log(100.0)
+            max_bin=math.log(300.0)
+            Num_bin=15
+    
+    elif(Variable=="topMass"):
+            X_axies="m_{t}"
+            Y_axies="Events/(20)"
+            lest_bin=100.0
+            max_bin=400.0
+            Num_bin=15
+
+    elif(Variable=="mtwMass"):
+            X_axies="m_{T} (GeV)"
+            Y_axies="Events/(10)"
+            lest_bin=0.0
+            max_bin=200.0
+            Num_bin=20
+    elif(Variable=="MuonCharge"):
+            X_axies="#mu charge"
+            Y_axies="Events/bin"
+            lest_bin=-1.1
+            max_bin=1.1
+            Num_bin=3
+
+    elif(Variable=="ElectronCharge"):
+            X_axies="e charge"
+            Y_axies="Events/bin"
+            lest_bin=-1.1
+            max_bin=1.1
+            Num_bin=3
+    
+    elif(Variable=="t_ch_CAsi+ttbar_CAsi"):
+            X_axies="Signal+TopBkg Corr. Assign DNN Sore"
+            Y_axies="Events/(0.01)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=10
+            
+    elif(Variable=="t_ch_CAsi"):
+            X_axies="Signal Corr. Assign DNN Sore"
+            Y_axies="Events/(0.1)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=10
+      
+    elif(Variable=="t_ch_WAsi"):
+            X_axies="Signal Wrong Assign DNN Sore"
+            Y_axies="Events/(0.1)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=10
+    
+    elif(Variable=="ttbar_CAsi"):
+            X_axies="top bkg Corr. Assign DNN Sore"
+            Y_axies="Events/(0.1)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=10
+    
+    elif(Variable=="ttbar_WAsi"):
+            X_axies="top bkg Wrong Assign DNN Sore"
+            Y_axies="Events/(0.1)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=10
+    
+    elif(Variable=="EWK"):
+            X_axies="EWK bkg DNN Sore"
+            Y_axies="Events/(0.1)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=10
+    
+    elif(Variable=="QCD"):
+            X_axies="QCD bkg DNN Sore"
+            Y_axies="Events/(0.1)"
+            lest_bin=0.0
+            max_bin=1.0
+            Num_bin=10
+                
+    elif(Variable=="t_ch_CAsi"):
+                X_axies="DNN Response for corr. assign top signal"
+                Y_axies="Events/(0.1)"
+                lest_bin=0.0
+                max_bin=1.0
+                Num_bin=10
+    else:
+        print "variable ", Variable," in not define in Create_Workspace_input_file.py" 
+        exit()
+
+    return Variable,X_axies,Y_axies, lest_bin, max_bin, Num_bin
