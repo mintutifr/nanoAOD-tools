@@ -34,10 +34,10 @@ class EfficiencyModule(Module):
 
 	if(self.datayear=='UL2017'):
             Pt_Edges = np.array([10,20,35,50,100,200,500],dtype='float64')
-            Eta_Edges = np.array([-2.5,-2.0,-1.566,-1.4442, -0.8, 0.0, 0.8, 1.4442, 1.566, 2.0, 2.5],dtype='float64')
+            Eta_Edges = np.array([-2.5,-2.1,-1.566,-1.4442, -0.8, 0.0, 0.8, 1.4442, 1.566, 2.1, 2.5],dtype='float64')
 
 	for i in range(0, len(self.list_of_hist)):
-	    self.list_of_hist[i] = ROOT.TH2D(self.list_of_hist[i],"",len(Pt_Edges)-1,Pt_Edges,len(Eta_Edges)-1,Eta_Edges)
+	    self.list_of_hist[i] = ROOT.TH2D(self.list_of_hist[i],"",len(Eta_Edges)-1,Eta_Edges,len(Pt_Edges)-1,Pt_Edges)
 
 	for i in range(0,len(self.list_of_hist)):
 	    self.addObject(self.list_of_hist[i])
@@ -48,7 +48,7 @@ class EfficiencyModule(Module):
             Tight_electron = 1
             Loose_electron = 0
             Ele_trigger = "HLT_Ele35_WPTight_Gsf"
-            Ele_cross_trigger = "HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned"
+            EleJet_cross_trigger = "HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned"
             Muon_trigger = "HLT_IsoMu27"
 
         jets = Collection(event, "Jet")
@@ -78,23 +78,23 @@ class EfficiencyModule(Module):
             Ele_trig = getattr(event,Ele_trigger)
             Muon_trig = getattr(event,Muon_trigger)
             Ele_cross_trig = getattr(event,Ele_trigger)
-            print "len_tight_el: ", len(tight_Ele),"Ele_trig: ",Ele_trig, "Muon_trig: ",Muon_trig, "Ele_cross_trig: ",Ele_cross_trig
+            #print "len_tight_el: ", len(tight_Ele),"Ele_trig: ",Ele_trig, "Muon_trig: ",Muon_trig, "Ele_cross_trig: ",Ele_cross_trig
             for Ele in tight_Ele:    
-	        self.list_of_hist[0].Fill(Ele.pt,Ele.eta) #Event_total
+	        self.list_of_hist[0].Fill(Ele.eta+Ele.deltaEtaSC,Ele.pt) #Event_total
 	        if(getattr(event,Ele_trigger)==1):
-                    self.list_of_hist[1].Fill(Ele.pt,Ele.eta)  #Event_HLT_Ele35
-	        if(getattr(event,Ele_cross_trigger)==1):
-                    self.list_of_hist[2].Fill(Ele.pt,Ele.eta)  #Event_HLT_Ele30_eta2p1_crossJet
+                    self.list_of_hist[1].Fill(Ele.eta+Ele.deltaEtaSC,Ele.pt)  #Event_HLT_Ele35
+	        if(getattr(event,EleJet_cross_trigger)==1):
+                    self.list_of_hist[2].Fill(Ele.eta+Ele.deltaEtaSC,Ele.pt)  #Event_HLT_Ele30_eta2p1_crossJet
 	        if(getattr(event,Muon_trigger)==1):
-                    self.list_of_hist[3].Fill(Ele.pt,Ele.eta)  #Event_HLT_IsoMu27
+                    self.list_of_hist[3].Fill(Ele.eta+Ele.deltaEtaSC,Ele.pt)  #Event_HLT_IsoMu27
             if(getattr(event,Muon_trigger)==1 and getattr(event,Ele_trigger)==1): 
-                    self.list_of_hist[4].Fill(Ele.pt,Ele.eta)                            #Event_Event_HLT_Ele35_HLT_IsoMu27
-            if(getattr(event,Ele_trigger)==1 and getattr(event,Ele_cross_trigger)==1):
-                    self.list_of_hist[5].Fill(Ele.pt,Ele.eta)                  #Event_Event_HLT_Ele35_HLT_Ele30_eta2p1_crossJet
-            if(getattr(event,Muon_trigger)==1 and getattr(event,Ele_cross_trigger)==1):
-                    self.list_of_hist[6].Fill(Ele.pt,Ele.eta)                  #Event_HLT_Ele30_eta2p1_crossJet_HLT_IsoMu27
-            if(getattr(event,Muon_trigger)==1 and getattr(event,Ele_trigger)==1 and getattr(event,Ele_cross_trigger)==1):
-                    self.list_of_hist[7].Fill(Ele.pt,Ele.eta) #Event_HLT_Ele30_eta2p1_crossJet_HLT_IsoMu27_HLT_Ele30_eta2p1_crossJet
+                    self.list_of_hist[4].Fill(Ele.eta+Ele.deltaEtaSC,Ele.pt)                            #Event_Event_HLT_Ele35_HLT_IsoMu27
+            if(getattr(event,Ele_trigger)==1 and getattr(event,EleJet_cross_trigger)==1):
+                    self.list_of_hist[5].Fill(Ele.eta+Ele.deltaEtaSC,Ele.pt)                  #Event_Event_HLT_Ele35_HLT_Ele30_eta2p1_crossJet
+            if(getattr(event,Muon_trigger)==1 and getattr(event,EleJet_cross_trigger)==1):
+                    self.list_of_hist[6].Fill(Ele.eta+Ele.deltaEtaSC,Ele.pt)                  #Event_HLT_Ele30_eta2p1_crossJet_HLT_IsoMu27
+            if(getattr(event,Muon_trigger)==1 and getattr(event,Ele_trigger)==1 and getattr(event,EleJet_cross_trigger)==1):
+                    self.list_of_hist[7].Fill(Ele.eta+Ele.deltaEtaSC,Ele.pt) #Event_HLT_Ele30_eta2p1_crossJet_HLT_IsoMu27_HLT_Ele30_eta2p1_crossJet
         else: print(jet_counter," ",loose_ele_counter," ",tight_ele_counter,"----------------")
         return True
 

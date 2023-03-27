@@ -9,9 +9,7 @@ from EfficiencyModule import *
 
 
 treecut="Sum$(Electron_cutBased==4)==1 && Sum$(Electron_cutBased<3)==0 && Sum$(Jet_pt > 40 && abs(Jet_eta)<4.7)>=2 && HLT_IsoMu27==1 && HLT_Ele35_WPTight_Gsf==1"
-#inputFiles=["root://cms-xrd-global.cern.ch///store/mc/RunIISummer16NanoAODv3/ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1/NANOAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v1/120000/E4046A1B-A2E1-E811-8878-0025905B85DC.root"]
-inputFiles=["A85EB5FE-5F7F-7947-A070-1FC00B3A4591.root"]
-#/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/condor_job/lepton_trigger_eff/tree_5.root"]
+inputFiles=["root://se01.indiacms.res.in//store/user/mikumar/RUN2_UL/Tree_crab/SEVENTEEN_new/MC/ttbar_FullyLeptonic/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Tree_15_Jul22_MCUL2017_ttbar_FullyLeptonic/220715_133732/0000/tree_60.root"]
 p=PostProcessor(".",
 		inputFiles,
 		treecut,  #efficecncy histogram there should be no cut
