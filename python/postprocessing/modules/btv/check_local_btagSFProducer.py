@@ -69,4 +69,4 @@ reststop = timeit.default_timer()
 
 print('Time for rest code : ', reststop - reststart)
 
-print sf 
+print(sf) 
