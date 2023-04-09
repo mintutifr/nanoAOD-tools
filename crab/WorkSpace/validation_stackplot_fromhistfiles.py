@@ -5,7 +5,8 @@ import argparse as arg
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
-parser.add_argument('-D', '--DNNscale ', dest='DNNscale', type=str, nargs=1, help="if need to apply DNN scale [ 0 , 1 ]")
+parser.add_argument('-DS', '--DNNscale ', dest='DNNscale', type=str, nargs=1, help="if need to apply DNN scale [ 0 , 1 ]")
+parser.add_argument('-f', '--InFile ', dest='InFile', type=str, nargs=1, help="In put file whist has histogram files i.e Hist_for_workspace/Combine_Input_t_ch_CAsi_histograms_UL2017_mu.root")
 args = parser.parse_args()
 
 if (args.year == None or args.lepton == None):
@@ -29,16 +30,28 @@ def propagate_rate_uncertainity(hist, uncert):
 
 from Hist_style import *
 
-DNN_bais_scale={
+
+DNN_fit_Norm={
         "mu" : {
-                "UL2017" : 0.854347,
+                "UL2017" : {
+                              "t-ch" :  56374.9875488, #55179.0,
+                              "ttbar":  325837.998657, #328963.4,
+                              "EWK"  :  88405.6998596, #89545.6,
+                              "QCD"  :  30144.999176, #39083.6
+                           }
                 },
         "el" :{
-                "UL2017" :  0.846341,      
+                "UL2017" :  {
+                               "t-ch" :  30668.5039673, #31238.9612427, #30668.5039673,
+                               "ttbar":  221822.425674, #218688.997574, #221822.425674,
+                               "EWK"  :  64096.1574707, #62922.0999527, #64096.1574707,
+                               "QCD"  :  8606.14349556, #7508.99983978, #8606.14349556, 
+                            }  
                }
 }
-def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0"):
-        Filename = "/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_histograms_"+year+"_"+lep+".root" 
+def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0",InFile="Hist_for_workspace/Combine_Input_t_ch_CAsi_histograms_UL2017_mu.root"):
+        #Filename = "/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_histograms_"+year+"_"+lep+".root" 
+        Filename = InFile
 	File = rt.TFile(Filename,"Read")
 
         if(DNN_recale=="1"):
@@ -49,8 +62,8 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0"):
 	#File = rt.TFile("Histogram_input_2016_Run2_controlRegionF0p2T0p82_stat_full.root","Read")
 	Dir = File.GetDirectory(lep+'jets')
 
-	top_sig = Dir.Get("top_sig_1725")
-
+	top_sig = Dir.Get("top_sig_1725");
+               
 	top_sig.SetFillColor(rt.kRed)
 	top_sig.SetLineColor(rt.kRed)
 
@@ -74,10 +87,13 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0"):
         #        print "QCD DDD : ",QCD_bkg.GetBinContent(i), QCD_bkg.GetBinError(i)
  
         if(DNN_recale=="1"):
-            top_sig.Scale(DNN_bais_scale[lep][dataYear])
-            top_bkg.Scale(DNN_bais_scale[lep][dataYear])
-            EWK_bkg.Scale(DNN_bais_scale[lep][dataYear])    
-            QCD_bkg.Scale(DNN_bais_scale[lep][dataYear])
+            print(top_sig.Integral()," ",top_bkg.Integral()," ",EWK_bkg.Integral()," ",QCD_bkg.Integral())
+            print(DNN_fit_Norm[lep][dataYear]["t-ch"], " ",DNN_fit_Norm[lep][dataYear]["ttbar"]," ",DNN_fit_Norm[lep][dataYear]["EWK"]," ",DNN_fit_Norm[lep][dataYear]["QCD"])
+            top_sig.Scale(DNN_fit_Norm[lep][dataYear]["t-ch"]/top_sig.Integral())
+            top_bkg.Scale(DNN_fit_Norm[lep][dataYear]["ttbar"]/top_bkg.Integral())
+            EWK_bkg.Scale(DNN_fit_Norm[lep][dataYear]["EWK"]/EWK_bkg.Integral())    
+            QCD_bkg.Scale(DNN_fit_Norm[lep][dataYear]["QCD"]/QCD_bkg.Integral())
+            print(top_sig.Integral()," ",top_bkg.Integral()," ",EWK_bkg.Integral()," ",QCD_bkg.Integral())
 	#propagate_rate_uncertainity(top_sig, 15.0)
 	#propagate_rate_uncertainity(top_bkg, 6.0)
 	#propagate_rate_uncertainity(EWK_bkg, 10.0)
@@ -111,8 +127,8 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0"):
 	legend.SetFillStyle(1001)
 	#legend.SetHeader("beNDC", "C")
 	legend.AddEntry(Data, "Data", "ple1")
-	legend.AddEntry(top_sig, "Corr. top ", "f")
-	legend.AddEntry(top_bkg, "InCorr. top ", "f")
+	legend.AddEntry(top_sig, "sig. top","f")#"Corr. top ", "f")
+	legend.AddEntry(top_bkg, "top bkg", "f")#"InCorr. top ", "f")
 	legend.AddEntry(EWK_bkg, "V+Jets, VV", "f")
 	legend.AddEntry(QCD_bkg, "QCD", "f")
 	#legend.AddEntry(hMC,"Total Unc.","f")
@@ -136,18 +152,19 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0"):
 	pad1.SetTicky()
 	pad1.SetTickx()
 	#pad1.SetRightMargin(0.143)
+        pad1.SetLogy()
 	pad1.Draw()
 	pad1.cd()
 
 	hs.Draw("hist")
 	legend.Draw()
 
-        CMSpreliminary = getCMSpre_tag(0.35, 0.84, 0.43, 0.88)
+        CMSpreliminary = getCMSpre_tag(0.38, 0.84, 0.46, 0.88)
         CMSpreliminary.Draw("same")
-        lepjet_tag = leptonjet_tag(lep,0.29, 0.82, 0.32, 0.84)
+        lepjet_tag = leptonjet_tag(lep,0.32, 0.80, 0.43, 0.83)
         lepjet_tag.Draw("same")
-        region_tag = getregion_tag("2J1T", 0.17, 0.92, 0.22, 0.96)
-        region_tag.Draw("same")
+        #region_tag = getregion_tag("2J1T", 0.17, 0.92, 0.22, 0.96)
+        #region_tag.Draw("same")
         yearNlumitag = year_tag(year,0.82, 0.92, 0.9, 0.96)
         yearNlumitag.Draw("same")
 
@@ -234,6 +251,7 @@ if __name__ == "__main__":
         lep = args.lepton[0]
         year= args.year[0]
         DNN_recale = args.DNNscale[0]
+        InFile = args.InFile[0]
         print DNN_recale
-        stack_plot_from_histfile(lep,year,DNN_recale)
+        stack_plot_from_histfile(lep,year,DNN_recale,InFile)
 

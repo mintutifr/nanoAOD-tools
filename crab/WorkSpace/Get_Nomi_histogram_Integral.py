@@ -23,13 +23,24 @@ def Nomi_QCD_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "
     WAssihist = {}
     infiles = {}
     intree = {}
-    
-    hist_tch_CAssig_temp = rt.TH1F('hist_sig_CAssig_temp', '', Num_bin, lest_bin, max_bin)
-    hist_tch_WAssig_temp = rt.TH1F('hist_sig_WAssig_temp', '', Num_bin, lest_bin, max_bin)
-    hist_ttbar_CAssig_temp = rt.TH1F('hist_bkg_CAssig_temp', '', Num_bin, lest_bin, max_bin)
-    hist_ttbar_WAssig_temp = rt.TH1F('hist_big_WAssig_temp', '', Num_bin, lest_bin, max_bin)
-    hist_EWK_temp = rt.TH1F('hist_EWK_temp', '', Num_bin, lest_bin, max_bin)
-    hist_QCD_temp = rt.TH1F('hist_QCD_temp', '', Num_bin, lest_bin, max_bin)
+
+    if(Variable=="t_ch_CAsi"):
+        BINS = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,1.0]
+        print("redefine assymatic histogram bins ", BINS)
+        hist_tch_CAssig_temp = rt.TH1F('hist_sig_CAssig_temp', '', len(BINS)-1,np.array(BINS))
+        hist_tch_WAssig_temp = rt.TH1F('hist_sig_WAssig_temp', '', len(BINS)-1,np.array(BINS))
+        hist_ttbar_CAssig_temp = rt.TH1F('hist_bkg_CAssig_temp', '', len(BINS)-1,np.array(BINS))
+        hist_ttbar_WAssig_temp = rt.TH1F('hist_big_WAssig_temp', '', len(BINS)-1,np.array(BINS))
+        hist_EWK_temp = rt.TH1F('hist_EWK_temp', '', len(BINS)-1,np.array(BINS))
+        hist_QCD_temp = rt.TH1F('hist_QCD_temp', '', len(BINS)-1,np.array(BINS))      
+   
+    else: 
+        hist_tch_CAssig_temp = rt.TH1F('hist_sig_CAssig_temp', '', Num_bin, lest_bin, max_bin)
+        hist_tch_WAssig_temp = rt.TH1F('hist_sig_WAssig_temp', '', Num_bin, lest_bin, max_bin)
+        hist_ttbar_CAssig_temp = rt.TH1F('hist_bkg_CAssig_temp', '', Num_bin, lest_bin, max_bin)
+        hist_ttbar_WAssig_temp = rt.TH1F('hist_big_WAssig_temp', '', Num_bin, lest_bin, max_bin)
+        hist_EWK_temp = rt.TH1F('hist_EWK_temp', '', Num_bin, lest_bin, max_bin)
+        hist_QCD_temp = rt.TH1F('hist_QCD_temp', '', Num_bin, lest_bin, max_bin)
     rt.gStyle.SetOptStat(0)
     
     hist_tch_CAssig_temp.SetLineColor(rt.kRed);hist_tch_CAssig_temp.SetLineWidth(2)
@@ -55,8 +66,14 @@ def Nomi_QCD_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "
     
         intree[channel] = infiles[channel].Get('Events')
         intree[channel].AddFriend("Events",Fpaths_DNN_score[channel])
-        hist[channel] = rt.TH1F('hist' + channel, '', Num_bin, lest_bin, max_bin)
-        WAssihist[channel] = rt.TH1F('temphist' + channel, '', Num_bin, lest_bin, max_bin)
+        if(Variable=="t_ch_CAsi"):
+                BINS = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,1.0]
+                print("redefine assymatic histogram bins ", BINS)
+                hist[channel] = rt.TH1F('hist' + channel, '',len(BINS)-1,np.array(BINS))
+                WAssihist[channel] = rt.TH1F('temphist' + channel, '', len(BINS)-1,np.array(BINS))
+        else:
+                hist[channel] = rt.TH1F('hist' + channel, '', Num_bin, lest_bin, max_bin)
+                WAssihist[channel] = rt.TH1F('temphist' + channel, '', Num_bin, lest_bin, max_bin)
     
         if(channel=='Tchannel' or channel=='Tbarchannel'):
             Mccut_corr_assi = MCcut +"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)"

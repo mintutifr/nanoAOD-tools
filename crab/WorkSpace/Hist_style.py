@@ -23,7 +23,7 @@ def getCMSpre_tag(x1=0.385, y1=0.86, x2=0.495, y2=0.88):
         cntrl.AddText("#bf{CMS} #it{Preliminary}")
         return cntrl
 
-def leptonjet_tag(lep="mu",x1=0.25, y1=0.82, x2=0.28, y2=0.84):
+def leptonjet_tag(lep="mu",x1=0.25, y1=0.82, x2=0.28, y2=0.84,region="2J1T"):
         cntrl = rt.TPaveText(x1,y1,x2,y2,"brNDC")
         cntrl.SetFillStyle(0)
         cntrl.SetBorderSize(0)
@@ -31,8 +31,8 @@ def leptonjet_tag(lep="mu",x1=0.25, y1=0.82, x2=0.28, y2=0.84):
         cntrl.SetTextFont(42)
         cntrl.SetTextSize(0.05)
         cntrl.SetTextAlign(33)
-        if(lep=="mu"):cntrl.AddText("#it{#mu+jets}")
-        if(lep=="el"):cntrl.AddText("#it{e+jets}")
+        if(lep=="mu"):cntrl.AddText("#it{#mu+jets},"+region)
+        if(lep=="el"):cntrl.AddText("#it{e+jets},"+region)
         return cntrl
 
 def year_tag(dataYear="UL2016preVFP",x1=0.948, y1=0.8555, x2=0.95, y2=0.84):

@@ -12,9 +12,9 @@ def get_histogram_with_DNN_cut(lep="mu",year="UL2017",Variable="lntopMass",
     channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L'],
     MCcut = "Xsec_wgt*LHEWeightSign*puWeight*muSF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",
     Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)",
-    DNNcut="*(t_ch_CAsi>0.7)",Fpaths_DNN_score = {}, Fpaths_ori_with_weight = {}):
+    DNNcut="0.7",Fpaths_DNN_score = {}, Fpaths_ori_with_weight = {}):
 
-
+        DNNcut="*(t_ch_CAsi>"+DNNcut+")"
         if(lep=="mu"):
                 lepton = "Muon"
         elif(lep=="el"):
@@ -37,8 +37,14 @@ def get_histogram_with_DNN_cut(lep="mu",year="UL2017",Variable="lntopMass",
 	print Variable
 	print "bining: ",Num_bin,", ",lest_bin,", ", max_bin
 
-	histo_corr = rt.TH1F('histo_corr', Variable, Num_bin,lest_bin,max_bin)
-        histo_wron = rt.TH1F('histo_wron', Variable, Num_bin,lest_bin,max_bin)
+        if(Variable=="t_ch_CAsi"):
+                BINS = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,1.0]
+                print("redefine assymatic histogram bins ", BINS)
+                histo_corr = rt.TH1F('histo_corr', Variable, len(BINS)-1,np.array(BINS))
+                histo_wron = rt.TH1F('histo_wron', Variable, len(BINS)-1,np.array(BINS))
+        else:
+	        histo_corr = rt.TH1F('histo_corr', Variable, Num_bin,lest_bin,max_bin)
+                histo_wron = rt.TH1F('histo_wron', Variable, Num_bin,lest_bin,max_bin)
 
 	#histo_corr.Sumw2()
         MCcut_corr_Assig = MCcut+DNNcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)"

@@ -8,7 +8,8 @@ parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
 parser.add_argument('-v', '--var  ', dest='var', type=str, nargs=1, help="var [ lntopMass topMass t_ch_CAsi]")
-parser.add_argument('-D', '--DNNscale  ', dest='DNNscale', type=str, nargs=1, help="if need to apply DNNscale [ 0 , 1]")
+parser.add_argument('-DS', '--DNNscale  ', dest='DNNscale', type=str, nargs=1, help="if need to apply DNNscale [ 0 , 1]")
+parser.add_argument('-DC', '--DNNCut  ', dest='DNNCut', type=str, nargs=1, help="if need to apply DNNCut [ 0.0 ,0.7]")
 
 args = parser.parse_args()
 
@@ -34,6 +35,7 @@ lep = args.lepton[0]
 year= args.year[0]
 Variable = args.var[0]
 DNN_rescale = args.DNNscale[0]
+DNNCut = args.DNNCut[0]
 from Histogram_discribtions import get_histogram_distciption 
 from Get_Histogram_after_DNN_cuts import get_histogram_with_DNN_cut
 from Get_Nomi_histogram_Integral import Nomi_QCD_NoNQCD_Integral 
@@ -107,8 +109,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     applydir = '/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/Apply_all/'
     MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)" 
     Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
-    DNNcut="*(t_ch_CAsi>=0.7)"
-    
+    DNNcut_str = "*(t_ch_CAsi>="+DNNCut+")" 
     hist_to_return = [] 
     #################### Nimonal Samples MC ########################################################
  
@@ -131,7 +132,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     # claculation of the scale QCD and NonQCD
     NonQCD_Inte,QCD_Inte = Nomi_QCD_NoNQCD_Integral(lep,year,Variable,MCcut,Datacut,EvtWeight_Fpaths_Iso,Data_AntiIso_Fpath,Fpaths_DNN_apply)
     # get histogram with DNN cut
-    hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,channels_Nomi[:-1], MCcut , Datacut , DNNcut ,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
+    hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,channels_Nomi[:-1], MCcut , Datacut , DNNCut ,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
     if(Variable=="lntopMass"):   Variable="TMath::Log(topMass)" 
     del Fpaths_DNN_apply
     del EvtWeight_Fpaths_Iso
@@ -195,7 +196,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
 
     #################### Data and DD QCD  ######################################################## 
     print    
-    print "Data and DDQCD with ", DNNcut, " .. .. .. .... ..... ..."
+    print "Data and DDQCD with ", DNNcut_str, " .. .. .. .... ..... ..."
     print
     
     hs = {}
@@ -229,7 +230,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
         hs[channel] = rt.TH1F('hs' + channel, '', Num_bin, lest_bin, max_bin)
         #rt.gROOT.cd()
     
-        intree[channel].Project('hs' + channel, Variable,Datacut+DNNcut)
+        intree[channel].Project('hs' + channel, Variable,Datacut+DNNcut_str)
         #hs[channel] = DrawOverflow_N_DrawUnderflow(hs[channel])
         #hs[channel].Print()
         
@@ -300,7 +301,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     #print EvtWeight_Fpaths_Iso   
     if(Variable=="TMath::Log(topMass)"): Variable="lntopMass"
     # get histogram with DNN cut
-    hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,channels_Alt, MCcut , Datacut , DNNcut ,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
+    hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,channels_Alt, MCcut , Datacut , DNNCut ,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
     if(Variable=="lntopMass"):   Variable="TMath::Log(topMass)" 
     del Fpaths_DNN_apply
     del EvtWeight_Fpaths_Iso
@@ -384,7 +385,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     #print EvtWeight_Fpaths_Iso   
     if(Variable=="TMath::Log(topMass)"): Variable="lntopMass"
     # get histogram with DNN cut
-    hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,Channels_systs, MCcut , Datacut , DNNcut ,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
+    hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,Channels_systs, MCcut , Datacut , DNNCut ,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
     if(Variable=="lntopMass"):   Variable="TMath::Log(topMass)"
     del Fpaths_DNN_apply
     del EvtWeight_Fpaths_Iso
@@ -443,7 +444,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
 if __name__ == "__main__":
     
     hists = Create_Workspace_input_file(lep,year,Variable) 
-    output_file = "Hist_for_workspace/Combine_Input_histograms_"+year+"_"+lep+".root"
+    output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+".root"
     outfile = rt.TFile(output_file,"recreate")
     outfile.cd()
     Dir_mu = outfile.mkdir(lep+"jets")
@@ -455,5 +456,5 @@ if __name__ == "__main__":
     rt.gROOT.cd()
 
     outfile.Close()
-
+    print("File write into "+output_file+" and saved")
     
