@@ -75,7 +75,7 @@ def replacemachine(fileName, sourceText, replaceText):
     print "All went well, the modifications are done"
     ##################################################################
 
-for i in range(0,len(RequestNames)):
+for i in range(0,1):#len(RequestNames)):
     RequestName = RequestNames[i]
     Dataset = Datasets[RequestName]
     print Dataset
@@ -93,7 +93,7 @@ for i in range(0,len(RequestNames)):
     print update_Golgonjsonfile
  
 #    update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_october_Seventeen_"+RequestName[i]+"'\n"
-    update_InputFiles = "config.JobType.inputFiles = ['crab_script_skimTree.py','btv.py','../../scripts/haddnano.py','keep_and_drop.txt','MainModule.py']\n"    
+    update_InputFiles = "config.JobType.inputFiles = ['crab_script_skimTree.py','../../scripts/haddnano.py','keep_and_drop.txt','MainModule.py']\n"    
     if(lep=="el"): update_module = "\t\tmodules=[MainModuleConstr_data_"+year+"_singleElectron()],\n"
     if(lep=="mu"): update_module = "\t\tmodules=[MainModuleConstr_data_"+year+"_singleMuon()],\n"
     print update_module
