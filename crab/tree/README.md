@@ -9,15 +9,8 @@
 ## Crab submission for MC skimtree
 
 * Lines in crab_cfg_skimTree.py must check before submission:
-                for MC:
-                        config.Data.splitting = 'FileBased'
-                        config.Data.unitsPerJob = 1
-                        config.Data.publication = True
                 for data:
-                        config.Data.splitting = 'LumiBased'
-                        config.Data.unitsPerJob = 150
                         config.Data.lumiMask = <path to Json file>
-                        config.Data.publication = True
 
 		these chages chages has to be done before we run "crab_submission_mcUL.py" or "crab_submission_dataUL.py" since these file can not modify the line starting with "#"
 		other configuration are taken care by "crab_submission_mcUL.py" and "crab_submission_dataUL.py" file

@@ -1,5 +1,6 @@
 import fileinput, string, sys, os, time, datetime
 import argparse as arg 
+import re
 
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-y', '--year', dest='years', type=str, nargs=1, help="Year [ UL2016preVFP , UL2016postVFP , UL2017 , UL2018]")
@@ -86,7 +87,9 @@ for i in range(0,len(RequestNames)):
     if(year=='UL2016postVFP' or year=='UL2016preVFP'): update_Golgonjsonfile = "config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt'\n"
     elif(year=='UL2017'): update_Golgonjsonfile = "config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/Legacy_2017/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt'\n"
     elif(year=='UL2018'): update_Golgonjsonfile = "config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/Legacy_2018/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt'\n"
-    update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"
+    update_site = "config.Site.storageSite = 'T3_CH_CERNBOX'\n" #'T2_IN_TIFR'\n"
+    update_data_splitting = "config.Data.splitting = 'LumiBased'\n"
+    update_data_unitsPerJon = "config.Data.unitsPerJob = 150\n"
     print update_Golgonjsonfile
  
 #    update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_october_Seventeen_"+RequestName[i]+"'\n"
@@ -104,6 +107,8 @@ for i in range(0,len(RequestNames)):
     replacemachine(cfgfile,'config.JobType.inputFiles =', update_InputFiles )
     replacemachine(cfgfile,'config.Data.lumiMask =', update_Golgonjsonfile )
     replacemachine(cfgfile,'config.Site.storageSite =', update_site )
+    replacemachine(cfgfile,'config.Data.splitting =', update_data_splitting )
+    replacemachine(cfgfile,'config.Data.unitsPerJob =', update_data_unitsPerJon )
     replacemachine(scriptfile,'modules=', update_module )
 
     cmd_crab_submit = "crab submit -c crab_cfg_skimTree.py"

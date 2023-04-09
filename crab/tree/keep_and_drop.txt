@@ -86,9 +86,7 @@ keep Muon_miniPFRelIso_chg
 keep Muon_mvaId
 keep Muon_genPartIdx
 keep Muon_nTrackerLayers
-keep L1PreFiringWeight_Dn
-keep L1PreFiringWeight_Nom
-keep L1PreFiringWeight_Up
+keep L1PreFiringWeight*
 
 keep nJet
 keep Jet_pt

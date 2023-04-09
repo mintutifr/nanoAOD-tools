@@ -55,7 +55,7 @@ def replacemachine(fileName, sourceText, replaceText):
     ##################################################################
 
 #print RequestName
-for i in tqdm(range(0,len(RequestNames))):
+for i in tqdm(range(0,1)):#len(RequestNames))):
     RequestName = RequestNames[i]
     Dataset = Datasets[RequestName]
     print RequestName, " : ",Dataset
@@ -64,8 +64,10 @@ for i in tqdm(range(0,len(RequestNames))):
     update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+RequestName+"'\n"
     update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName+"'\n"
     update_InputFiles = "config.JobType.inputFiles = ['crab_script_skimTree.py','../../scripts/haddnano.py','keep_and_drop.txt','MainModule.py','btv.py']\n"    
-    update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"
-    update_module = "\t\tmodules=[MainModuleConstr_mc_"+year+"(),btagSF"+year+"(),puWeight_"+year+"()],\n"
+    update_site = "config.Site.storageSite = 'T3_CH_CERNBOX'\n" #'T2_IN_TIFR'\n"
+    update_module = "\t\tmodules=[MainModuleConstr_mc_"+year+"(),puWeight_"+year+"()],\n"
+    update_data_splitting = "config.Data.splitting = 'FileBased'\n" 
+    update_data_unitsPerJon = "config.Data.unitsPerJob = 1\n"
 
     print "RequestName = ",update_RequestName ,"\tDatasets = ",update_Dataset,"\tDirBase = ",update_DirBase,"\tDatasetTag = ",update_DatasetTag 
     print "InputFiles = ",update_InputFiles
@@ -78,10 +80,12 @@ for i in tqdm(range(0,len(RequestNames))):
     replacemachine(cfgfile,'config.Data.outputDatasetTag =', update_DatasetTag )
     replacemachine(cfgfile,'config.JobType.inputFiles =', update_InputFiles )
     replacemachine(cfgfile,'config.Site.storageSite =', update_site )
+    replacemachine(cfgfile,'config.Data.splitting =', update_data_splitting )
+    replacemachine(cfgfile,'config.Data.unitsPerJob =', update_data_unitsPerJon )
     replacemachine(scriptfile,'modules=', update_module ) 
 
     cmd_crab_submit = "crab submit -c "+cfgfile
-    os.system(cmd_crab_submit)  
+    #os.system(cmd_crab_submit)  
  
     #cmd_crab_kill = "crab kill -d crab_"+RequestName[i]
     #os.system(cmd_crab_kill)
@@ -91,5 +95,5 @@ for i in tqdm(range(0,len(RequestNames))):
 
 
     print "DONE -----",RequestName,"--------------------------------------------------------------------------------------------"
-    time.sleep(10) 
+    #time.sleep(10) 
     
