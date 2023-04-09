@@ -10,7 +10,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from Mc_prob_cal_forBweght import *
 from foxwol_n_fourmomentumSolver import *
 from scaleFactor import *
-#from correctionlib import _core
+from correctionlib import *
 
 # Load CorrectionSet
 
@@ -64,9 +64,9 @@ class MinitreeProducer(Module):
              if JetPUJetID_effi_file[self.dataYear].endswith(".json.gz"):
                 with gzip.open(JetPUJetID_effi_file[self.dataYear],'rt') as file:
                         data = file.read().strip()
-                        self.evaluator = _core.CorrectionSet.from_string(data)
+                        self.evaluator = CorrectionSet.from_string(data)
              else:
-                        self.evaluator = _core.CorrectionSet.from_file(JetPUJetID_effi_file[self.dataYear])
+                        self.evaluator = CorrectionSet.from_file(JetPUJetID_effi_file[self.dataYear])
 
         """rc_corrections={
                 '2016' : 'RoccoR2016.txt',

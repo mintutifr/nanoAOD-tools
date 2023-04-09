@@ -182,8 +182,8 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
                 Period=periods[prod]
                 #print Period
                 #print files
-                if(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP' or dataYear=='UL2017'or dataYear=='UL2018'): fSFName=filter(lambda x: Period+SF+"_SF_0p06.root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
-                else: fSFName=filter(lambda x: Period+"_"+SF+"_SF_0p06.root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
+                if(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP' or dataYear=='UL2017'or dataYear=='UL2018'): fSFName=next(filter(lambda x: Period+SF+"_SF_0p06.root" in x,files))#[0] #filter function gave a list which has 1 file name always i.e [0]
+                else: fSFName=next(filter(lambda x: Period+"_"+SF+"_SF_0p06.root" in x,files))#[0] #filter function gave a list which has 1 file name always i.e [0]
                 #fSFName=filepath+Period+"_"+SF+"_SF_0p06.root"
                 #print fSFName
                 #print  SF , " " ,fSFName , dirName 
@@ -197,12 +197,12 @@ def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
             for prod in range(0,len(periods)):
                 Period=periods[prod]
                 #print Period
-                if(dataYear=='2016'):fSFName=filter(lambda x: Period+"_"+SF+".root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
-                elif(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP'):fSFName=filter(lambda x: "UL_"+Period+SF+".root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
+                if(dataYear=='2016'):fSFName=next(filter(lambda x: Period+"_"+SF+".root" in x,files))#[0] #filter function gave a list which has 1 file name always i.e [0]
+                elif(dataYear=='UL2016preVFP' or dataYear=='UL2016postVFP'):fSFName=next(filter(lambda x: "UL_"+Period+SF+".root" in x,files))#[0] #filter function gave a list which has 1 file name always i.e [0]
                 #if(dataYear=='2016'):fSFName=filepath+Period+"_"+SF+".root"
                 #print  "hSF[",sf_,"][",prod,"]"
-                elif(dataYear=='2017' or dataYear=='UL2018'):fSFName=filter(lambda x: Period+"_SF_"+SF+".root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
-                elif(dataYear=='UL2017'):fSFName=filter(lambda x: Period+"_SF_"+SF+"_syst.root" in x,files)[0] #filter function gave a list which has 1 file name always i.e [0]
+                elif(dataYear=='2017' or dataYear=='UL2018'):fSFName=next(filter(lambda x: Period+"_SF_"+SF+".root" in x,files))#[0] #filter function gave a list which has 1 file name always i.e [0]
+                elif(dataYear=='UL2017'):fSFName=next(filter(lambda x: Period+"_SF_"+SF+"_syst.root" in x,files))#[0] #filter function gave a list which has 1 file name always i.e [0]
          
                 #if(dataYear=='2017'):fSFName=filepath+Period+"_SF_"+SF+".root"
                 #print  SF , " " ,fSFName 
