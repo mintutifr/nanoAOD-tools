@@ -5,8 +5,8 @@ import argparse as arg
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
-parser.add_argument('-DS', '--DNNscale ', dest='DNNscale', type=str, nargs=1, help="if need to apply DNN scale [ 0 , 1 ]")
-parser.add_argument('-f', '--InFile ', dest='InFile', type=str, nargs=1, help="In put file whist has histogram files i.e Hist_for_workspace/Combine_Input_t_ch_CAsi_histograms_UL2017_mu.root")
+parser.add_argument('-DS', '--DNNscale ', dest='DNNscale', type=str, nargs=1, help="if need to apply DNN renomalization and the unct. propagation [ 0 , 1 ]")
+parser.add_argument('-f', '--InFile ', dest='InFile', type=str, nargs=1, help="In put file whist has histogram files i.e /home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_t_ch_CAsi_histograms_UL2017_mu.root")
 args = parser.parse_args()
 
 if (args.year == None or args.lepton == None):
@@ -31,24 +31,20 @@ def propagate_rate_uncertainity(hist, uncert):
 from Hist_style import *
 
 
-DNN_fit_Norm={
-        "mu" : {
-                "UL2017" : {
-                              "t-ch" :  56374.9875488, #55179.0,
-                              "ttbar":  325837.998657, #328963.4,
-                              "EWK"  :  88405.6998596, #89545.6,
-                              "QCD"  :  30144.999176, #39083.6
-                           }
-                },
-        "el" :{
-                "UL2017" :  {
-                               "t-ch" :  30668.5039673, #31238.9612427, #30668.5039673,
-                               "ttbar":  221822.425674, #218688.997574, #221822.425674,
-                               "EWK"  :  64096.1574707, #62922.0999527, #64096.1574707,
-                               "QCD"  :  8606.14349556, #7508.99983978, #8606.14349556, 
-                            }  
-               }
-}
+DNN_fit_Norm={'mu': {'UL2017': 
+                                {'EWK_bkg': 87623.96197509766, 'top_bkg': 331315.24798583984, 'top_sig': 49252.98974609375, 'QCD_bkg': 44660.70780944824} 
+                    },
+              'el': {'UL2017': 
+                                {'EWK_bkg': 62411.08840942383, 'top_bkg': 222443.86553955078, 'top_sig': 28728.223205566406, 'QCD_bkg': 11670.211818695068} 
+                    }
+             }
+
+
+constaints_from_DNNfit={'UL2017':
+                                {'cons_Error': {'EWK_bkg': 0.38546591592322027, 'top_bkg': 0.11233931892639833, 'top_sig': 0.028335178023900065, 'QCD_bkg': 0.07051797306158672}, 'cons_val': {'EWK_bkg': 0.020444778967009924, 'top_bkg': 0.2731953345407996, 'top_sig': 0.843581148448588, 'QCD_bkg': 1.1252490194404465}}
+                       }
+                                
+
 def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0",InFile="Hist_for_workspace/Combine_Input_t_ch_CAsi_histograms_UL2017_mu.root"):
         #Filename = "/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_histograms_"+year+"_"+lep+".root" 
         Filename = InFile
@@ -69,7 +65,7 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0",InFile="His
 
 	top_bkg = Dir.Get("top_bkg_1725")
 	top_bkg.SetFillColor(rt.kOrange-1)
-	top_bkg.SetLineColor(rt.kOrange-1)
+        top_bkg.SetLineColor(rt.kOrange-1)
 
 	EWK_bkg = Dir.Get("EWK_bkg")
 	EWK_bkg.SetFillColor(rt.kGreen-2)
@@ -86,18 +82,18 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0",InFile="His
         #        print "EWK BKG : ",EWK_bkg.GetBinContent(i), EWK_bkg.GetBinError(i)
         #        print "QCD DDD : ",QCD_bkg.GetBinContent(i), QCD_bkg.GetBinError(i)
  
+        print(top_sig.Integral()," ",top_bkg.Integral()," ",EWK_bkg.Integral()," ",QCD_bkg.Integral())
         if(DNN_recale=="1"):
+            print(DNN_fit_Norm[lep][dataYear]["top_sig"], " ",DNN_fit_Norm[lep][dataYear]["top_bkg"]," ",DNN_fit_Norm[lep][dataYear]["EWK_bkg"]," ",DNN_fit_Norm[lep][dataYear]["QCD_bkg"])
+            top_sig.Scale(DNN_fit_Norm[lep][dataYear]["top_sig"]/top_sig.Integral())
+            top_bkg.Scale(DNN_fit_Norm[lep][dataYear]["top_bkg"]/top_bkg.Integral())
+            EWK_bkg.Scale(DNN_fit_Norm[lep][dataYear]["EWK_bkg"]/EWK_bkg.Integral())    
+            QCD_bkg.Scale(DNN_fit_Norm[lep][dataYear]["QCD_bkg"]/QCD_bkg.Integral())
             print(top_sig.Integral()," ",top_bkg.Integral()," ",EWK_bkg.Integral()," ",QCD_bkg.Integral())
-            print(DNN_fit_Norm[lep][dataYear]["t-ch"], " ",DNN_fit_Norm[lep][dataYear]["ttbar"]," ",DNN_fit_Norm[lep][dataYear]["EWK"]," ",DNN_fit_Norm[lep][dataYear]["QCD"])
-            top_sig.Scale(DNN_fit_Norm[lep][dataYear]["t-ch"]/top_sig.Integral())
-            top_bkg.Scale(DNN_fit_Norm[lep][dataYear]["ttbar"]/top_bkg.Integral())
-            EWK_bkg.Scale(DNN_fit_Norm[lep][dataYear]["EWK"]/EWK_bkg.Integral())    
-            QCD_bkg.Scale(DNN_fit_Norm[lep][dataYear]["QCD"]/QCD_bkg.Integral())
-            print(top_sig.Integral()," ",top_bkg.Integral()," ",EWK_bkg.Integral()," ",QCD_bkg.Integral())
-	#propagate_rate_uncertainity(top_sig, 15.0)
-	#propagate_rate_uncertainity(top_bkg, 6.0)
-	#propagate_rate_uncertainity(EWK_bkg, 10.0)
-	#propagate_rate_uncertainity(QCD_bkg, 50.0)
+	    propagate_rate_uncertainity(top_sig, constaints_from_DNNfit[dataYear]['cons_Error']['top_sig']*100)
+	    propagate_rate_uncertainity(top_bkg, constaints_from_DNNfit[dataYear]['cons_Error']['top_bkg']*100)
+	    propagate_rate_uncertainity(EWK_bkg, constaints_from_DNNfit[dataYear]['cons_Error']['EWK_bkg']*100)
+  	    propagate_rate_uncertainity(QCD_bkg, constaints_from_DNNfit[dataYear]['cons_Error']['QCD_bkg']*100)
 
 
 	hMC = top_sig.Clone()
@@ -201,9 +197,9 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0",InFile="His
 	h2_ratio = Data.Clone()
 	h2_ratio.Divide(hMC)
 	nbin = h2_ratio.GetXaxis().GetNbins()
-	ledge = h2_ratio.GetXaxis().GetXmin()
-	uedge = h2_ratio.GetXaxis().GetXmax()
-	band = rt.TH1D('Band', '', nbin, ledge, uedge)
+	#ledge = h2_ratio.GetXaxis().GetXmin()
+	#uedge = h2_ratio.GetXaxis().GetXmax()
+	band = top_sig.Clone();band.Reset();band.SetTitle("")  #rt.TH1D('Band', '', nbin, ledge, uedge)
 	rt.gStyle.SetOptStat(0)
 	for i in range(nbin):
 		band.SetBinContent(i+1, 1.0)
