@@ -23,6 +23,7 @@ keep HLT_IsoMu27*
 keep HLT_IsoTkMu27*
 keep HLT_IsoMu30*
 
+keep SV*
 
 keep PV*
 
@@ -34,6 +35,10 @@ keep GenPart*
 
 keep GenJet*
 
+keep GenVisTau*
+
+keep GenDressedLepton*
+
 keep Generator*
 
 keep PSWeight*
@@ -43,50 +48,14 @@ keep LHEScaleWeight*
 keep LHEWeight*
 
 keep nElectron
-keep Electron_pt	
-keep Electron_eta
-keep Electron_phi	
-keep Electron_mass	
-keep Electron_charge	
-keep Electron_deltaEtaSC
-keep Electron_EtaSC
-keep Electron_cutBased
-keep Electron_pfRelIso03_all
-keep Electron_pfRelIso03_chg	
-keep Electron_miniPFRelIso_all
-keep Electron_miniPFRelIso_chg
-keep Electron_dz
-keep Electron_dzErr
-keep Electron_dxy
-keep Electron_dxyErr	
-keep Electron_cleanmask
-keep Electron_dr03EcalRecHitSumEt
-keep Electron_dr03TkSumPt
-keep Electron_hoe
-keep Electron_genPartIdx
-keep Electron_r9
+keep Electron*
 
 keep nMuon
-keep Muon_pt
-keep Muon_eta
-keep Muon_phi
-keep Muon_mass
-keep Muon_charge
-keep Muon_isPFcand
-keep Muon_isGlobal
-keep Muon_isTracker
-keep Muon_mediumId	
-keep Muon_looseId
-keep Muon_tightId
-keep Muon_pfRelIso04_all
-keep Muon_pfRelIso03_all
-keep Muon_pfRelIso03_chg
-keep Muon_miniPFRelIso_all
-keep Muon_miniPFRelIso_chg
-keep Muon_mvaId
-keep Muon_genPartIdx
-keep Muon_nTrackerLayers
+keep Muon*
 keep L1PreFiringWeight*
+
+keep nTau
+keep Tau_*
 
 keep nJet
 keep Jet_pt
@@ -117,7 +86,6 @@ keep Jet_bRegRes
  
 keep MET*
 keep PuppiMET*
-
 
 #added in main module
 keep Jet_dR_Ljet_Isomu
