@@ -49,7 +49,7 @@ class MainProducer(Module):
                 '2018' : None,
 	        'UL2016preVFP' : 35,
                 'UL2016postVFP' : 35,
-                'UL2017' : 37,
+                'UL2017' : 35,
                 'UL2018' : 35}
 
         if(self.MC):
@@ -62,7 +62,7 @@ class MainProducer(Module):
                  for lep in electrons :
                     #print "elPt : ",lep.pt, "elSCEta : ",lep.deltaEtaSC + lep.eta
                     Ele_EtaSC.append(lep.deltaEtaSC + lep.eta)
-                    if((len(Jet_dR_Ljet_Isoel)==0 or len(Jet_dR_Ljet_AntiIsoel)==0) and lep.pt>pt_Thes_el[self.datayear] and abs(lep.eta)<2.1 and lep.cutBased>=1 and (abs(Ele_EtaSC[count])<1.4442 or abs(Ele_EtaSC[count])>1.5660) and ((abs(Ele_EtaSC[count])<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(Ele_EtaSC[count])> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10))):
+                    if((len(Jet_dR_Ljet_Isoel)==0 or len(Jet_dR_Ljet_AntiIsoel)==0) and lep.pt>pt_Thes_el[self.datayear] and abs(lep.eta)<2.4 and lep.cutBased>=1 and (abs(Ele_EtaSC[count])<1.4442 or abs(Ele_EtaSC[count])>1.5660) and ((abs(Ele_EtaSC[count])<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(Ele_EtaSC[count])> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10))):
                         el4v = ROOT.TLorentzVector(0.,0.,0.,0.)
                         el4v = lep.p4()
                         #print "el pt =",el4v.Pt()

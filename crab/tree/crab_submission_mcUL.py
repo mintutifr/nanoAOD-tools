@@ -56,6 +56,7 @@ def replacemachine(fileName, sourceText, replaceText):
 
 #print RequestName
 for i in tqdm(range(0,1)):#len(RequestNames))):
+#for RequestName in ["Tbarchannel","Tchannel"]:
     RequestName = RequestNames[i]
     Dataset = Datasets[RequestName]
     print RequestName, " : ",Dataset
@@ -68,6 +69,7 @@ for i in tqdm(range(0,1)):#len(RequestNames))):
     update_module = "\t\tmodules=[MainModuleConstr_mc_"+year+"(),puWeight_"+year+"()],\n"
     update_data_splitting = "config.Data.splitting = 'FileBased'\n" 
     update_data_unitsPerJon = "config.Data.unitsPerJob = 1\n"
+    update_Golgonjsonfile = '"""config.Data.lumiMask ="""\n'
 
     print "RequestName = ",update_RequestName ,"\tDatasets = ",update_Dataset,"\tDirBase = ",update_DirBase,"\tDatasetTag = ",update_DatasetTag 
     print "InputFiles = ",update_InputFiles
@@ -82,6 +84,7 @@ for i in tqdm(range(0,1)):#len(RequestNames))):
     replacemachine(cfgfile,'config.Site.storageSite =', update_site )
     replacemachine(cfgfile,'config.Data.splitting =', update_data_splitting )
     replacemachine(cfgfile,'config.Data.unitsPerJob =', update_data_unitsPerJon )
+    replacemachine(cfgfile,'config.Data.lumiMask =', update_Golgonjsonfile )
     replacemachine(scriptfile,'modules=', update_module ) 
 
     cmd_crab_submit = "crab submit -c "+cfgfile

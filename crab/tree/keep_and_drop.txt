@@ -13,6 +13,9 @@ keep HLT_Ele38_WPTight_Gsf*
 keep HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned*
 keep HLT_Ele27_eta2p1_WPTight_Gsf*
 keep HLT_Ele32_eta2p1_WPTight_Gsf*
+keep HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*
+keep nTrigObj*
+keep TrigObj_*
 
 keep HLT_IsoMu20*
 keep HLT_IsoTkMu20*

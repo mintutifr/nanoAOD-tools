@@ -106,13 +106,14 @@ for i in range(0,1):#len(RequestNames)):
     replacemachine(cfgfile,'config.Data.outputDatasetTag =', update_DatasetTag )
     replacemachine(cfgfile,'config.JobType.inputFiles =', update_InputFiles )
     replacemachine(cfgfile,'config.Data.lumiMask =', update_Golgonjsonfile )
+    replacemachine(cfgfile,'"""config.Data.lumiMask ="""', update_Golgonjsonfile )
     replacemachine(cfgfile,'config.Site.storageSite =', update_site )
     replacemachine(cfgfile,'config.Data.splitting =', update_data_splitting )
     replacemachine(cfgfile,'config.Data.unitsPerJob =', update_data_unitsPerJon )
     replacemachine(scriptfile,'modules=', update_module )
 
     cmd_crab_submit = "crab submit -c crab_cfg_skimTree.py"
-    os.system(cmd_crab_submit)  
+    #os.system(cmd_crab_submit)  
  
     #cmd_crab_kill = "crab kill -d crab_"+RequestName[i]
     #os.system(cmd_crab_kill)
