@@ -90,6 +90,7 @@ for i in range(0,1):#len(RequestNames)):
     update_site = "config.Site.storageSite = 'T3_CH_CERNBOX'\n" #'T2_IN_TIFR'\n"
     update_data_splitting = "config.Data.splitting = 'LumiBased'\n"
     update_data_unitsPerJon = "config.Data.unitsPerJob = 150\n"
+    update_publication = "config.Data.publication = False\n"
     print update_Golgonjsonfile
  
 #    update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_october_Seventeen_"+RequestName[i]+"'\n"
@@ -110,10 +111,11 @@ for i in range(0,1):#len(RequestNames)):
     replacemachine(cfgfile,'config.Site.storageSite =', update_site )
     replacemachine(cfgfile,'config.Data.splitting =', update_data_splitting )
     replacemachine(cfgfile,'config.Data.unitsPerJob =', update_data_unitsPerJon )
+    replacemachine(cfgfile,'config.Data.publication =', update_publication )
     replacemachine(scriptfile,'modules=', update_module )
 
     cmd_crab_submit = "crab submit -c crab_cfg_skimTree.py"
-    #os.system(cmd_crab_submit)  
+    os.system(cmd_crab_submit)  
  
     #cmd_crab_kill = "crab kill -d crab_"+RequestName[i]
     #os.system(cmd_crab_kill)

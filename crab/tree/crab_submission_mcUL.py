@@ -55,7 +55,7 @@ def replacemachine(fileName, sourceText, replaceText):
     ##################################################################
 
 #print RequestName
-for i in tqdm(range(0,1)):#len(RequestNames))):
+for i in tqdm(range(0,len(RequestNames))):
 #for RequestName in ["Tbarchannel","Tchannel"]:
     RequestName = RequestNames[i]
     Dataset = Datasets[RequestName]
@@ -70,6 +70,7 @@ for i in tqdm(range(0,1)):#len(RequestNames))):
     update_data_splitting = "config.Data.splitting = 'FileBased'\n" 
     update_data_unitsPerJon = "config.Data.unitsPerJob = 1\n"
     update_Golgonjsonfile = '"""config.Data.lumiMask ="""\n'
+    update_publication = "config.Data.publication = False\n"
 
     print "RequestName = ",update_RequestName ,"\tDatasets = ",update_Dataset,"\tDirBase = ",update_DirBase,"\tDatasetTag = ",update_DatasetTag 
     print "InputFiles = ",update_InputFiles
@@ -84,6 +85,7 @@ for i in tqdm(range(0,1)):#len(RequestNames))):
     replacemachine(cfgfile,'config.Site.storageSite =', update_site )
     replacemachine(cfgfile,'config.Data.splitting =', update_data_splitting )
     replacemachine(cfgfile,'config.Data.unitsPerJob =', update_data_unitsPerJon )
+    replacemachine(cfgfile,'config.Data.publication =', update_publication )
     replacemachine(cfgfile,'config.Data.lumiMask =', update_Golgonjsonfile )
     replacemachine(scriptfile,'modules=', update_module ) 
 
@@ -98,5 +100,4 @@ for i in tqdm(range(0,1)):#len(RequestNames))):
 
 
     print "DONE -----",RequestName,"--------------------------------------------------------------------------------------------"
-    time.sleep(10) 
-    
+    time.sleep(10)
