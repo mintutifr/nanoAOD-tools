@@ -22,7 +22,7 @@ date   = datetime.datetime.now()
 if(year == 'UL2016'):
     from dataset_UL2016 import *
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN_v9/"
-    Datasets = Datasets_Alt_MC_UL2016
+    Datasets = Datasets_AltMass_MC_UL2016
 
 RequestNames = Datasets.keys()
 print RequestNames
@@ -77,5 +77,5 @@ for i in tqdm(range(0,len(RequestNames))):
 
 
     print "DONE -----",RequestName,"--------------------------------------------------------------------------------------------"
-    time.sleep(1) 
+    time.sleep(10) 
     

@@ -51,7 +51,7 @@ if(year == 'UL2017'):
 if(year == 'UL2016'):
     from dataset_UL2016 import *
     outputDir = "/store/user/mikumar/RUN2_UL/"
-    if sample=="Mc" : Datasets = Datasets_Alt_MC_UL2016
+    if sample=="Mc" : Datasets = Datasets_AltMass_MC_UL2016
 
 
 RequestNames = Datasets.keys()
