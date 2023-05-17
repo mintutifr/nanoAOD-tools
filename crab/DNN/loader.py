@@ -15,30 +15,30 @@ sampleDir = {
 	'UL2018' : ''
 }
 
-def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "ULpreVFP2016", sample="Mc_Nomi" ):
+def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "ULpreVFP2016",region="2J1T" ,sample="Mc_Nomi" ):
     if(lep=="mu"):
         lepton = "Muon"
     elif(lep=="el"):
         lepton = "Electron" 
     if(sample=="Mc_Nomi"):
         sampleDir = {
-        	'ULpreVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/',
-        	'ULpostVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/',
-        	'UL2017' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/',
+        	'ULpreVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/'+region,
+        	'ULpostVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/'+region,
+        	'UL2017' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/'+region,
         	'UL2018' : ''
     }
     elif(sample=="Mc_Alt"):
         sampleDir = {
-        	'ULpreVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T1_Alt',
-        	'ULpostVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T1_Alt',
-        	'UL2017' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T1_Alt',
+        	'ULpreVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/'+region+'_Alt',
+        	'ULpostVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/'+region+'_Alt',
+        	'UL2017' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/'+region+'_Alt',
         	'UL2018' : ''
     }
     elif(sample=="Mc_sys"):
         sampleDir = {
-        	'ULpreVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T1_sys',
-        	'ULpostVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T1_sys',
-        	'UL2017' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T1_sys',
+        	'ULpreVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/'+region+'_sys',
+        	'ULpostVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/'+region+'_sys',
+        	'UL2017' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/'+region+'_sys',
         	'UL2018' : ''
     }
 
@@ -98,7 +98,7 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
         _branches_lep.remove('LHEWeightSign')
         _branches_lep.remove('Jet_partonFlavour')
 
-        chain.Add(sampleDir[year]+'2J1T0/Minitree_Data'+year+'_2J1T0_'+lep+'.root')
+        chain.Add(sampleDir[year]+'0/Minitree_Data'+year+'_'+region+'0_'+lep+'.root')
         if(max_entries==-1):
             max_entries=chain.GetEntries()
         print( 'Entries '+channel+': ',chain.GetEntries(), "\tSelected : ",max_entries)
@@ -114,7 +114,7 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
         _branches_lep.remove('LHEWeightSign')
         _branches_lep.remove('Jet_partonFlavour')
 
-        chain.Add(sampleDir[year]+'2J1T1/Minitree_Data'+year+'_2J1T1_'+lep+'.root')
+        chain.Add(sampleDir[year]+'1/Minitree_Data'+year+'_'+region+'1_'+lep+'.root')
         if(max_entries==-1):
             max_entries=chain.GetEntries()
         print( 'Entries '+channel+': ',chain.GetEntries(), "\tSelected : ",max_entries)
@@ -127,9 +127,9 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
         return { b : _dataset[b] for b in _branches_lep }
     else:
         if(sample=="Mc_Nomi"):
-            chain.Add(sampleDir[year]+'2J1T1/Minitree_'+channel+'_2J1T1_'+lep+'.root')
+            chain.Add(sampleDir[year]+'1/Minitree_'+channel+'_'+region+'1_'+lep+'.root')
         elif(sample=="Mc_Alt" or sample=="Mc_sys"):
-            chain.Add(sampleDir[year]+'/Minitree_'+channel+'_2J1T1_'+lep+'.root')
+            chain.Add(sampleDir[year]+'/Minitree_'+channel+'_'+region+'1_'+lep+'.root')
 #
         if(max_entries==-1):
             max_entries=chain.GetEntries()
