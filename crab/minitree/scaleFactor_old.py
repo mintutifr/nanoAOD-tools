@@ -2,13 +2,13 @@
 import os, sys
 import ROOT
 
-def elScaleFactor(pt, scEta, wp, syst,ID_fSFName,Trigger_fSFName,dataYear):
+def elScaleFactor(pt, scEta, lead_Jet_pt, wp, syst,ID_Tight_fSFName,Trigger_Tight_fSFName,veto_fSFName,dataYear):
 
     ROOT.gStyle.SetOptStat(0)
     elSF=1.0
     SF = ROOT.TString("") 
 
-    if(wp == "Tight" or wp == "Veto"):
+    if(wp == "Tight"):
         #print "wp = ",wp
         Xbin=[] 
         Ybin=[]
@@ -19,27 +19,37 @@ def elScaleFactor(pt, scEta, wp, syst,ID_fSFName,Trigger_fSFName,dataYear):
         for sf_ in range(0,len(sfs)):
             SF=sfs[sf_]
             #print "SF = ",SF
-            if(SF=="ID"): fSFName=ID_fSFName
-            else: fSFName=Trigger_fSFName
-
-            #print fSFName
-
+            if(SF=="ID"): fSFName=ID_Tight_fSFName
+            else: fSFName=Trigger_Tight_fSFName
             fSFIso.append(ROOT.TFile(fSFName,"Read"))
-            hSFIso.append(fSFIso[sf_].Get("EGamma_SF2D"))    
-                        
-            if(scEta > hSFIso[sf_].GetXaxis().GetXmax()): scEta = hSFIso[sf_].GetXaxis().GetXmax() - 0.01
-            if(scEta < hSFIso[sf_].GetXaxis().GetXmin()): scEta = hSFIso[sf_].GetXaxis().GetXmin() + 0.01
+                 
+            if(SF=="ID"): hSFIso.append(fSFIso[sf_].Get("EGamma_SF2D"))
+            elif(SF=="Trigger" and dataYear!='UL2018'): hSFIso.append(fSFIso[sf_].Get("SF"))
+            elif(SF=="Trigger" and dataYear=='UL2018'): hSFIso.append(fSFIso[sf_].Get("EGamma_SF2D"))
+
+            if((dataYear=='2017' or dataYear=='UL2017') and SF=="Trigger"): #2017 has cross trigger with jet
+                if(abs(lead_Jet_pt) > hSFIso[sf_].GetYaxis().GetXmax()): lead_Jet_pt = hSFIso[sf_].GetYaxis().GetXmax() - 0.01
+            else:
+                if(scEta > hSFIso[sf_].GetXaxis().GetXmax()): scEta = hSFIso[sf_].GetXaxis().GetXmax() - 0.01
+                if(scEta < hSFIso[sf_].GetXaxis().GetXmin()): scEta = hSFIso[sf_].GetXaxis().GetXmin() + 0.01
 
             #print "scEta = ",scEta
-            if(pt > hSFIso[sf_].GetYaxis().GetXmax()): pt = hSFIso[sf_].GetYaxis().GetXmax() - 1.0
+            if((dataYear=='2017' or dataYear=='UL2017') and SF=="Trigger"):
+                if(pt > hSFIso[sf_].GetXaxis().GetXmax()): pt = hSFIso[sf_].GetXaxis().GetXmax() - 1.0
+            else:
+                if(pt > hSFIso[sf_].GetYaxis().GetXmax()): pt = hSFIso[sf_].GetYaxis().GetXmax() - 1.0
 
-            Xbin.append(hSFIso[sf_].GetXaxis().FindBin(scEta)) 
-            Ybin.append(hSFIso[sf_].GetYaxis().FindBin(pt))
-
+            if((dataYear=='2017' or dataYear=='UL2017') and SF=="Trigger"):
+                Xbin.append(hSFIso[sf_].GetXaxis().FindBin(pt))
+                Ybin.append(hSFIso[sf_].GetYaxis().FindBin(abs(lead_Jet_pt)))
+            else: 
+                Xbin.append(hSFIso[sf_].GetXaxis().FindBin(scEta)) 
+                Ybin.append(hSFIso[sf_].GetYaxis().FindBin(pt))
         #print "%s;%s;%s;%s;%s;%s" %(wp,syst,Xbin[0],Ybin[0],Xbin[1],Ybin[1])#"%s;%s;%s;%s;%s;%s" % (wp,syst,Xbin[0],Ybin[0],Xbin[1],Ybin[1]) 
         if(syst=="noSyst"): elSF = hSFIso[0].GetBinContent(Xbin[0],Ybin[0]) * hSFIso[1].GetBinContent(Xbin[1],Ybin[1])
-        if(syst=="IDUp"): elSF = (hSFIso[0].GetBinContent(Xbin[0],Ybin[0]) + hSFIso[0].GetBinErrorUp(Xbin[0],Ybin[0])) * hSFIso[1].GetBinContent(Xbin[1],Ybin[1])
-        #print "%s;%s;%s;%s;%s;%s;%s;%s"%(Xbin[0],Ybin[0],Xbin[1],Ybin[1],hSFIso[0].GetBinContent(Xbin[0],Ybin[0]),hSFIso[0].GetBinErrorUp(Xbin[0],Ybin[0]),hSFIso[1].GetBinContent(Xbin[1],Ybin[1]),hSFIso[1].GetBinErrorLow(Xbin[1],Ybin[1]))
+        if(syst=="IDUp"): 
+            elSF = (hSFIso[0].GetBinContent(Xbin[0],Ybin[0]) + hSFIso[0].GetBinErrorUp(Xbin[0],Ybin[0])) * hSFIso[1].GetBinContent(Xbin[1],Ybin[1])
+            #print "%s;%s;%s;%s;%s;%s;%s%s"%(Xbin[0],Ybin[0],Xbin[1],Ybin[1],hSFIso[0].GetBinContent(Xbin[0],Ybin[0]),hSFIso[0].GetBinErrorUp(Xbin[0],Ybin[0]),hSFIso[1].GetBinContent(Xbin[1],Ybin[1]),elSF)
         if(syst=="IDDown"): elSF = ( hSFIso[0].GetBinContent(Xbin[0],Ybin[0]) - hSFIso[0].GetBinErrorLow(Xbin[0],Ybin[0]) ) * hSFIso[1].GetBinContent(Xbin[1],Ybin[1])
         if(syst=="TrigUp"): elSF = hSFIso[0].GetBinContent(Xbin[0],Ybin[0]) * ( hSFIso[1].GetBinContent(Xbin[1],Ybin[1]) + hSFIso[1].GetBinErrorUp(Xbin[1],Ybin[1]) )
         if(syst=="TrigDown"): elSF = hSFIso[0].GetBinContent(Xbin[0],Ybin[0]) * ( hSFIso[1].GetBinContent(Xbin[1],Ybin[1]) - hSFIso[1].GetBinErrorLow(Xbin[1],Ybin[1]) )
@@ -47,11 +57,31 @@ def elScaleFactor(pt, scEta, wp, syst,ID_fSFName,Trigger_fSFName,dataYear):
         for sf_ in range(0,len(sfs)):
             hSFIso[sf_].Delete()
             fSFIso[sf_].Delete()
+        
+    elif(wp == "Veto"):
+        fSFName=veto_fSFName
+        fSFSB=ROOT.TFile.Open(fSFName,"Read")
+        hSFSB=fSFSB.Get("EGamma_SF2D")
+
+        if(scEta > hSFSB.GetXaxis().GetXmax()): scEta = hSFSB.GetXaxis().GetXmax() - 0.01
+        if(scEta < hSFSB.GetXaxis().GetXmin()): scEta = hSFSB.GetXaxis().GetXmin() + 0.01
+        if(pt > hSFSB.GetYaxis().GetXmax()): pt = hSFSB.GetYaxis().GetXmax() - 1.0
+        #print "scEta = ",scEta
+        binX=hSFSB.GetXaxis().FindBin(scEta)
+        binY=hSFSB.GetYaxis().FindBin(pt)
+        #print "Xbin = %s ; Ybin = %s" % (binX,binY)i
+        #print hSFSB.GetBinError(binX,binY) ,';',hSFSB.GetBinErrorUp(binX,binY), ';', hSFSB.GetBinErrorLow(binX,binY)
+        if(syst=="noSyst"): elSF = hSFSB.GetBinContent(binX,binY)
+        if(syst=="IDUp"): elSF =  hSFSB.GetBinContent(binX,binY) + hSFSB.GetBinErrorUp(binX,binY)
+        if(syst=="IDDown"): elSF = hSFSB.GetBinContent(binX,binY) - hSFSB.GetBinErrorLow(binX,binY)
+        if(syst=="TrigUp" or syst=="TrigDown"): elSF=1.0
+        #print "hSFSB.GetBinContent(binX,binY) = %s " % (hSFSB.GetBinContent(binX,binY))
+        hSFSB.Delete() 
+        fSFSB.Delete()
     else:
         elSF = -999
         #print("WP is nither 'Tight' nor 'Veto'")    
-    return elSF    
-   
+    return elSF
 def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
     eta = abs(eta)
     if(iso >0.06 and iso<0.2): return -999
@@ -304,7 +334,7 @@ el_InFiles = {
                 '2016':{
                         'TightID': 'ElectronSF/2016postVFP/ElectronSF_tightID.root',
                         'vetoID' : 'ElectronSF/2016postVFP/ElectronSF_vetoID.root',
-                        'TRI_Tight'    : 'ElectronSF/2016postVFP/SF_HLT_Ele32_eta2p1.root'
+                        'TRI'    : 'ElectronSF/2016postVFP/SF_HLT_Ele32_eta2p1.root'
                 },
 
                 '2017':{
@@ -315,39 +345,30 @@ el_InFiles = {
                 'UL2016preVFP':{
                         'TightID': 'ElectronSF/2016preVFP/UL/egammaEffi.txt_Ele_Tight_preVFP_EGM2D.root',
                         'vetoID' : 'ElectronSF/2016preVFP/UL/egammaEffi.txt_Ele_Veto_preVFP_EGM2D.root',
-                        'TRI_Tight'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_preVFP_Tight.root',
-                        'TRI_Veto'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_preVFP_Veto.root'
+                        'TRI'    : 'ElectronSF/2016postVFP/SF_HLT_Ele32_eta2p1.root' #need to update
                 },
                 'UL2016postVFP':{
                         'TightID': 'ElectronSF/2016postVFP/UL/egammaEffi.txt_Ele_Tight_postVFP_EGM2D.root',
                         'vetoID' : 'ElectronSF/2016postVFP/UL/egammaEffi.txt_Ele_Veto_postVFP_EGM2D.root',
-                        'TRI_Tight'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_postVFP_Tight.root',
-                        'TRI_Veto'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_postVFP_Veto.root'
+                        'TRI'    : 'ElectronSF/2016postVFP/SF_HLT_Ele32_eta2p1.root'  #need to update
                 },
                 'UL2017':{
                         'TightID': 'ElectronSF/2017/UL/egammaEffi.txt_EGM2D_Tight_UL17.root',
                         'vetoID' : 'ElectronSF/2017/UL/egammaEffi.txt_EGM2D_Veto_UL17.root',
-                        'TRI_Tight'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2017_Tight.root',
-                        'TRI_Veto'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2017_Veto.root'
+                        'TRI'    : 'ElectronSF/2017/HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned_OR_HLT_Ele35_WPTight_Gsf.root' #need to update
                 },
                 'UL2018':{
                         'TightID': 'ElectronSF/2018/UL/egammaEffi.txt_Ele_Tight_EGM2D.root',
                         'vetoID' : 'ElectronSF/2018/UL/egammaEffi.txt_Ele_Veto_EGM2D.root',
-                        'TRI_Tight'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2018_Tight.root',
-                        'TRI_Veto'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2018_Veto.root'
+                        'TRI'    : 'ElectronSF/2018/UL/trig_2018.root' # need to update
                 },
              }
-def create_elSF(dataYear,pt_, scEta_, wp_, syst_):
+def create_elSF(dataYear,pt_, scEta_, lead_Jet_pt_, wp_, syst_):
     dataYear = str(dataYear)
-    
-    if(wp_=="Tight"):
-        Trigger_fSFName_ = el_InFiles[dataYear]['TRI_Tight']
-        ID_fSFName_ = el_InFiles[dataYear]['TightID']
-    if(wp_=="Veto"):
-        Trigger_fSFName_ = el_InFiles[dataYear]['TRI_Veto']
-        ID_fSFName_ = el_InFiles[dataYear]['vetoID']
-    #`print(Trigger_fSFName_,ID_fSFName_)
-    elSF = elScaleFactor(pt_, scEta_, wp_, syst_,ID_fSFName_,Trigger_fSFName_,dataYear)
+    ID_Tight_el_fSFName_ = el_InFiles[dataYear]['TightID']
+    Trigger_Tight_el_fSFName_ = el_InFiles[dataYear]['TRI']
+    veto_el_fSFName_ = el_InFiles[dataYear]['vetoID']
+    elSF = elScaleFactor(pt_, scEta_, lead_Jet_pt_, wp_, syst_,ID_Tight_el_fSFName_,Trigger_Tight_el_fSFName_,veto_el_fSFName_,dataYear)
     return elSF 
 
 mu_InFiles = {'2016' : [
@@ -447,6 +468,6 @@ def create_muSF(dataYear,pt_,eta_,iso_,lumiTotal_,syst_):
 #create_muSF('2016',21.1176013947,0.6142578125,0.3,3485,'noSyst')
 #print create_muSF('UL2017',60.1176013947,-2.0142578125,0.3,59222,'noSyst')
 #print create_muSF('UL2018',29.2907962799,0.0283164978027,0.297331474721,59222,'IDUp')#19521,16812,41520,59222
-print(create_elSF('UL2017',50,-1.3,'Tight','noSyst'))
-print(create_elSF('UL2017',50,-1.3,'Veto','noSyst'))
+print(create_elSF('UL2018',300,-1.3,50,'Tight','noSyst'))
+print(create_elSF('UL2018',300,-1.3,50,'Veto','noSyst'))
 #print "-------------------------------------------------------"                        
