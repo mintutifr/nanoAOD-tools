@@ -54,3 +54,14 @@ Datasets_AltMass_MC_UL2016 ={
 		'ttbar_FullyLeptonic_mtop1735' : '/TTTo2L2Nu_mtop173p5_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM',
 		'ttbar_FullyLeptonic_mtop1755' : '/TTTo2L2Nu_mtop175p5_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM',
 }
+Datasets_AltMass_MC_L2016 ={
+		'Tchannel_mtop1725_Sum16' : '/ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v2/NANOAODSIM',
+		'Tbarchannel_mtop1725_Sum16' : '/ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM',
+		'Tchannel_mtop1695_Sum16' :   '/ST_t-channel_top_4f_mtop1695_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM',
+                'Tchannel_mtop1735_Sum16' :   '/ST_t-channel_top_4f_mtop1735_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM',
+                'Tchannel_mtop1755_Sum16' :    '/ST_t-channel_top_4f_mtop1755_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM',
+                'Tbarchannel_mtop1715_Sum16' :    '/ST_t-channel_antitop_4f_mtop1715_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM',
+                'Tbarchannel_mtop1715_ext_Sum16' :    '/ST_t-channel_antitop_4f_mtop1715_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8_ext1-v1/NANOAODSIM',
+                'Tbarchannel_mtop1755_Sum16'  :   '/ST_t-channel_antitop_4f_mtop1755_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM',
+                'Tbarchannel_mtop1785_Sum16'  :  '/ST_t-channel_antitop_4f_mtop1785_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM'
+}
