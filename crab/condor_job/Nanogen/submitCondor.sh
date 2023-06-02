@@ -32,32 +32,11 @@ echo $sample
 #------------------------------------------------
 #create the same datasetfile depending on year
 #------------------------------------------------
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 Mc_common_channel="Tchannel_wtop1p0  Tchannel_wtop1p15 Tchannel_wtop1p3" #" Tchannel_wtop1p31  Tbarchannel_wtop0p55 Tbarchannel_wtop0p7  Tbarchannel_wtop0p85 Tbarchannel_wtop1p0 Tbarchannel_wtop1p15 Tbarchannel_wtop1p3   Tbarchannel_wtop1p45  Tchannel_wtop0p55  Tchannel_wtop0p7 Tchannel_wtop0p85  Tchannel_wtop1p0  Tchannel_wtop1p15 Tchannel_wtop1p3 Tchannel_wtop1p45" # Tbarchannel_wtop1p31" 
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-Mc_common_channel="Tchannel_mtop1725_sum16 Tbarchannel_mtop1725_sum16"
+#"Tchannel_mtop1725_sum16 Tbarchannel_mtop1725_sum16"
 #"Tchannel_mtop1695_sum16 Tchannel_mtop1715_sum16 Tchannel_mtop1735_sum16 Tchannel_mtop1755_sum16 Tbarchannel_mtop1715_sum16 Tbarchannel_mtop1755_sum16 Tbarchannel_mtop1785_sum16"
 #"Tchannel_1695 Tchannel_1715 Tchannel_1735 Tchannel_1755 Tbarchannel_1695 Tbarchannel_1715 Tbarchannel_1735 Tbarchannel_1755"
  #"Tbarchannel_wtop1p31  Tchannel_wtop1p31  Tbarchannel_wtop0p55 Tbarchannel_wtop0p7  Tbarchannel_wtop0p85 Tbarchannel_wtop1p0 Tbarchannel_wtop1p15 Tbarchannel_wtop1p3   Tbarchannel_wtop1p45  Tchannel_wtop0p55  Tchannel_wtop0p7 Tchannel_wtop0p85  Tchannel_wtop1p0  Tchannel_wtop1p15 Tchannel_wtop1p3 Tchannel_wtop1p45" 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 if [[ "UL2016" == "$year" ]]; then
      dataset_file=$crab_dir"/Gen_Study/dataset_UL2016_phy3.py"

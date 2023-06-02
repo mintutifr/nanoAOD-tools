@@ -36,13 +36,6 @@ def reset_stack_range(stack, xmin, xmax):
     histograms = stack.GetHists()
     for hist in histograms:
         hist.GetXaxis().SetRangeUser(xmin, xmax)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0",Combine_InFile="Hist_for_workspace/Combine_Input_t_ch_CAsi_histograms_UL2017_mu.root",Fitdignostic_outFile="fitDiagnostics_M1725_DNNfit_UL2017.root"):
         Combine_year_tag={
@@ -50,33 +43,8 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0",Combine_InF
                 'ULpostVFP2016' : "_ULpost16",
                 'UL2017' : "_UL17",
                 'UL2018' : "_UL18"} 	
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         tag = Combine_year_tag[year] 
-=======
-        tag = ""#Combine_year_tag[year] 
->>>>>>> Stashed changes
 
-=======
-
-def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0",Combine_InFile="Hist_for_workspace/Combine_Input_t_ch_CAsi_histograms_UL2017_mu.root",Fitdignostic_outFile="fitDiagnostics_M1725_DNNfit_UL2017.root"):
-        Combine_year_tag={
-                'ULpreVFP2016' :  "_ULpre16",
-                'ULpostVFP2016' : "_ULpost16",
-                'UL2017' : "_UL17",
-                'UL2018' : "_UL18"} 	
-        tag = ""#Combine_year_tag[year] 
-
->>>>>>> Stashed changes
-=======
-        tag = ""#Combine_year_tag[year] 
-
->>>>>>> Stashed changes
-=======
-        tag = ""#Combine_year_tag[year] 
-
->>>>>>> Stashed changes
         #Filename = "/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_histograms_"+year+"_"+lep+".root" 
         fitdignostic_outrootfile = Fitdignostic_outFile 
 	File = rt.TFile(Combine_InFile,"Read")
@@ -92,19 +60,6 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016',DNN_recale="0",Combine_InF
 	Dir = File.GetDirectory(lep+'jets')
 
 	top_sig = Dir.Get("top_sig_1725"+tag);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-               
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 	top_sig.SetFillColor(rt.kRed)
 	top_sig.SetLineColor(rt.kRed)
              
