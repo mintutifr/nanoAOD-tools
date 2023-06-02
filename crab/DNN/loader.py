@@ -98,7 +98,7 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
         _branches_lep.remove('LHEWeightSign')
         _branches_lep.remove('Jet_partonFlavour')
 
-        chain.Add(sampleDir[year]+'0/Minitree_Data'+year+'_'+region+'0_'+lep+'.root')
+        chain.Add(sampleDir[year]+'0/Minitree_Data'+year+'_'+region+'_'+lep+'.root')
         if(max_entries==-1):
             max_entries=chain.GetEntries()
         print( 'Entries '+channel+': ',chain.GetEntries(), "\tSelected : ",max_entries)
@@ -114,7 +114,7 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
         _branches_lep.remove('LHEWeightSign')
         _branches_lep.remove('Jet_partonFlavour')
 
-        chain.Add(sampleDir[year]+'1/Minitree_Data'+year+'_'+region+'1_'+lep+'.root')
+        chain.Add(sampleDir[year]+'1/Minitree_Data'+year+'_'+region+'_'+lep+'.root')
         if(max_entries==-1):
             max_entries=chain.GetEntries()
         print( 'Entries '+channel+': ',chain.GetEntries(), "\tSelected : ",max_entries)
@@ -127,9 +127,9 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
         return { b : _dataset[b] for b in _branches_lep }
     else:
         if(sample=="Mc_Nomi"):
-            chain.Add(sampleDir[year]+'1/Minitree_'+channel+'_'+region+'1_'+lep+'.root')
+            chain.Add(sampleDir[year]+'1/Minitree_'+channel+'_'+region+'_'+lep+'.root')
         elif(sample=="Mc_Alt" or sample=="Mc_sys"):
-            chain.Add(sampleDir[year]+'/Minitree_'+channel+'_'+region+'1_'+lep+'.root')
+            chain.Add(sampleDir[year]+'/Minitree_'+channel+'_'+region+'_'+lep+'.root')
 #
         if(max_entries==-1):
             max_entries=chain.GetEntries()
