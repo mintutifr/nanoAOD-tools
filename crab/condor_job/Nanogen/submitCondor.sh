@@ -32,11 +32,18 @@ echo $sample
 #------------------------------------------------
 #create the same datasetfile depending on year
 #------------------------------------------------
-Mc_common_channel="Tchannel_wtop1p15" #"Tbarchannel_wtop1p31  Tchannel_wtop1p31  Tbarchannel_wtop0p55 Tbarchannel_wtop0p7  Tbarchannel_wtop0p85 Tbarchannel_wtop1p0 Tbarchannel_wtop1p15 Tbarchannel_wtop1p3   Tbarchannel_wtop1p45  Tchannel_wtop0p55  Tchannel_wtop0p7 Tchannel_wtop0p85  Tchannel_wtop1p0  Tchannel_wtop1p15 Tchannel_wtop1p3 Tchannel_wtop1p45" 
+<<<<<<< Updated upstream
+Mc_common_channel="Tchannel_wtop1p0  Tchannel_wtop1p15 Tchannel_wtop1p3" #" Tchannel_wtop1p31  Tbarchannel_wtop0p55 Tbarchannel_wtop0p7  Tbarchannel_wtop0p85 Tbarchannel_wtop1p0 Tbarchannel_wtop1p15 Tbarchannel_wtop1p3   Tbarchannel_wtop1p45  Tchannel_wtop0p55  Tchannel_wtop0p7 Tchannel_wtop0p85  Tchannel_wtop1p0  Tchannel_wtop1p15 Tchannel_wtop1p3 Tchannel_wtop1p45" # Tbarchannel_wtop1p31" 
+=======
+Mc_common_channel="Tchannel_mtop1725_sum16 Tbarchannel_mtop1725_sum16"
+#"Tchannel_mtop1695_sum16 Tchannel_mtop1715_sum16 Tchannel_mtop1735_sum16 Tchannel_mtop1755_sum16 Tbarchannel_mtop1715_sum16 Tbarchannel_mtop1755_sum16 Tbarchannel_mtop1785_sum16"
+#"Tchannel_1695 Tchannel_1715 Tchannel_1735 Tchannel_1755 Tbarchannel_1695 Tbarchannel_1715 Tbarchannel_1735 Tbarchannel_1755"
+ #"Tbarchannel_wtop1p31  Tchannel_wtop1p31  Tbarchannel_wtop0p55 Tbarchannel_wtop0p7  Tbarchannel_wtop0p85 Tbarchannel_wtop1p0 Tbarchannel_wtop1p15 Tbarchannel_wtop1p3   Tbarchannel_wtop1p45  Tchannel_wtop0p55  Tchannel_wtop0p7 Tchannel_wtop0p85  Tchannel_wtop1p0  Tchannel_wtop1p15 Tchannel_wtop1p3 Tchannel_wtop1p45" 
+>>>>>>> Stashed changes
 
 if [[ "UL2016" == "$year" ]]; then
      dataset_file=$crab_dir"/Gen_Study/dataset_UL2016_phy3.py"
-     outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_Nanogen/Mc_v8/"
+     outputDir="/store/user/mikumar/RUN2_UL/MiniTree_condor/SIXTEEN_Nanogen/Mc_v10/"
 
      
 	channels="${Mc_common_channel}" 
@@ -69,7 +76,7 @@ tarFile=$baseDir/minitree.tar.gz
 rm -rf $tarFile
 PhysicsTools=${crab_dir}/../../../PhysicsTools
 
-tar --exclude='.git' --exclude=${PhysicsTools}'/NanoAODTools/crab/condor_job'  --exclude=${PhysicsTools}'/NanoAODTools/crab/tree' --exclude=${PhysicsTools}'/NanoAODTools/crab/minitree' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study_Sebastien' --exclude=${PhysicsTools}'/NanoAODTools/crab/efficiency' --exclude=${PhysicsTools}'/NanoAODTools/crab/lumi_n_pileup' --exclude=${PhysicsTools}'/NanoAODTools/crab/cutflow' --exclude=${PhysicsTools}'/NanoAODTools/crab/puWeight' --exclude=${PhysicsTools}'/NanoAODTools/crab/Effective_Number' -zcf $tarFile ${PhysicsTools}
+tar --exclude='.git' --exclude=${PhysicsTools}'/NanoAODTools/crab/condor_job'  --exclude=${PhysicsTools}'/NanoAODTools/crab/tree' --exclude=${PhysicsTools}'/NanoAODTools/crab/minitree' --exclude=${PhysicsTools}'/NanoAODTools/crab/Gen_Study_Sebastien' --exclude=${PhysicsTools}'/NanoAODTools/crab/efficiency' --exclude=${PhysicsTools}'/NanoAODTools/crab/lumi_n_pileup' --exclude=${PhysicsTools}'/NanoAODTools/crab/cutflow' --exclude=${PhysicsTools}'/NanoAODTools/crab/puWeight' --exclude=${PhysicsTools}'/NanoAODTools/crab/Effective_Number' --exclude=${PhysicsTools}'/NanoAODTools/crab/Lepton_trigger_efficiency' --exclude=${PhysicsTools}'/NanoAODTools/crab/DNN' --exclude=${PhysicsTools}'/NanoAODTools/crab/WorkSpace' -zcf $tarFile ${PhysicsTools}
 #echo $channels
 
 echo $channels
@@ -134,7 +141,7 @@ for channel in $channels; do
 	     sed -i 's:INPUT:'"$input_file_list"':g'  crab_script_NanoGen_minitree.py
 	     sed -i "s:INPUT:root\://se01.indiacms.res.in/${outputroot}tree_$count.root:g" condorSetup.sub
 	     #echo "root\://se01.indiacms.res.in/${outputroot}tree_$count.root"
-	     condor_submit condorSetup.sub
+	     #condor_submit condorSetup.sub
 	     cd ../		    	
              input_file_list="inputFiles=["
   	else

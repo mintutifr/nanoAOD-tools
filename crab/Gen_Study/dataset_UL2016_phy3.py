@@ -29,5 +29,14 @@ Datasets_MC_mass_UL2016 = {
 	'Tbarchannel_1735' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1735_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_13_May23_MCUL2016_Tbarchannel_mtop1735_v9-76de701442013e6ff941c86cd482e64d/USER'],
 	'Tbarchannel_1755' : ['/ST_t-channel_antitop_4f_InclusiveDecays_mtop1755_TuneCP5_13TeV-powheg-madspin-pythia8/mikumar-Tree_13_May23_MCUL2016_Tbarchannel_mtop1755_v9-76de701442013e6ff941c86cd482e64d/USER'],
 }
-
-
+Datasets_MC_mass_L2016 = {
+        'Tchannel_mtop1725_sum16' : ['/ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1/mikumar-Tree_21_May23_MCUL2016_Tchannel_mtop1725_Sum16_v9-8ecc050433dbcfb7ea89627141b876b6/USER'],
+        'Tbarchannel_mtop1725_sum16' : ['/ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1/mikumar-Tree_21_May23_MCUL2016_Tbarchannel_mtop1725_Sum16_v9-8ecc050433dbcfb7ea89627141b876b6/USER'],
+	'Tchannel_mtop1715_sum16' : ['/ST_t-channel_antitop_4f_mtop1715_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/mikumar-Tree_18_May23_MCUL2016_Tbarchannel_mtop1715_Sum16_v9-8ecc050433dbcfb7ea89627141b876b6/USER'],
+	'Tchannel_mtop1735_sum16' : ['/ST_t-channel_top_4f_mtop1735_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/mikumar-Tree_19_May23_MCUL2016_Tchannel_mtop1735_Sum16_v9-8ecc050433dbcfb7ea89627141b876b6/USER'],
+	'Tchannel_mtop1755_sum16' : ['/ST_t-channel_top_4f_mtop1755_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/mikumar-Tree_18_May23_MCUL2016_Tchannel_mtop1755_Sum16_v9-8ecc050433dbcfb7ea89627141b876b6/USER'],
+	'Tchannel_mtop1695_sum16' : ['/ST_t-channel_top_4f_mtop1695_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/mikumar-Tree_18_May23_MCUL2016_Tchannel_mtop1695_Sum16_v9-8ecc050433dbcfb7ea89627141b876b6/USER'],
+	'Tbarchannel_mtop1715_sum16' : ['/ST_t-channel_antitop_4f_mtop1715_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/mikumar-Tree_18_May23_MCUL2016_Tbarchannel_mtop1715_ext_Sum16_v9-8ecc050433dbcfb7ea89627141b876b6/USER'],
+	'Tbarchannel_mtop1755_sum16' : ['/ST_t-channel_antitop_4f_mtop1755_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/mikumar-Tree_18_May23_MCUL2016_Tbarchannel_mtop1755_Sum16_v9-8ecc050433dbcfb7ea89627141b876b6/USER'],
+	'Tbarchannel_mtop1785_sum16' : ['/ST_t-channel_antitop_4f_mtop1785_inclusiveDecays_13TeV-powhegV2-madspin-pythia8/mikumar-Tree_18_May23_MCUL2016_Tbarchannel_mtop1785_Sum16_v9-8ecc050433dbcfb7ea89627141b876b6/USER'],
+}

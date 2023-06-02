@@ -78,17 +78,39 @@ for channel in channels:
         if(proceed=="1" or proceed=="yes"): continue
         else: exit()
     Dirs=get_dirs(CondorDir+"/"+channel)
+
     for Dir in Dirs:
         cmd_grep = 'grep "Server responded with an error" '+Dir+'/*'
-        #os.system(cmd_grep)
-
         p = subprocess.Popen(cmd_grep, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
         p_status = p.wait()
-
-
+        skip_tranfer_check = False
         if(output.count("Server responded with an error")>0):
-                print "file acess error in ",Dir
+                print "Server responded with an error in ",Dir
+                #print os.system(cmd_grep)
+                skip_tranfer_check = True
+                condor_resubmit = raw_input("file acess error in @@ " +Dir+"/ to resubmit the job press 1/yes: ")
+                if(condor_resubmit=="yes" or condor_resubmit=="1"):
+                        os.chdir(Dir)
+                        os.system("rm condor_out_*.std*")
+                        os.system("condor_submit condorSetup.sub")
+                        os.chdir(cwd)
+
+
+        cmd_grep = 'grep "Redirect limit has been reached" '+Dir+'/*'
+        p = subprocess.Popen(cmd_grep, stdout=subprocess.PIPE, shell=True)
+        (output, err) = p.communicate()
+        p_status = p.wait()
+        if(output.count("Redirect limit has been reached")>0):
+                print "Redirect limit has been reached ",Dir
+                #print os.system(cmd_grep)
+                skip_tranfer_check = True
+                condor_resubmit = raw_input("file acess error in @@ " +Dir+"/ to resubmit the job press 1/yes: ")
+                if(condor_resubmit=="yes" or condor_resubmit=="1"):
+                       os.chdir(Dir)
+                       os.system("rm condor_out_*.std*")
+                       os.system("condor_submit condorSetup.sub")
+                       os.chdir(cwd)
 
 
         cmd_grep = 'grep "100%" '+Dir+'/*'

@@ -8,7 +8,7 @@ parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
 parser.add_argument('-v', '--var  ', dest='var', type=str, nargs=1, help="var [ lntopMass topMass t_ch_CAsi]")
-parser.add_argument('-DS', '--DNNscale  ', dest='DNNscale', type=str, nargs=1, help="if need to apply DNNscale [ 0 , 1]")
+#parser.add_argument('-DS', '--DNNscale  ', dest='DNNscale', type=str, nargs=1, help="if need to apply DNNscale [ 0 , 1]")
 parser.add_argument('-DC', '--DNNCut  ', dest='DNNCut', type=str, nargs=1, help="if need to apply DNNCut [ 0.0 ,0.7]")
 
 args = parser.parse_args()
@@ -34,7 +34,7 @@ print(args)
 lep = args.lepton[0]
 year= args.year[0]
 Variable = args.var[0]
-DNN_rescale = args.DNNscale[0]
+DNN_rescale = 0 #args.DNNscale[0]
 DNNCut = args.DNNCut[0]
 from Histogram_discribtions import get_histogram_distciption 
 from Get_Histogram_after_DNN_cuts import get_histogram_with_DNN_cut
@@ -52,10 +52,10 @@ def propagate_rate_uncertainity(hist, uncert):
 
 DNN_bais_scale={
         "mu" : {
-                "UL2017" : 0.854347,
+                "UL2017" : 0.0 ,
                 },
         "el" :{
-                "UL2017" :  0.846341,      
+                "UL2017" :  0.0,      
                }
 }
 
@@ -66,24 +66,48 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
             lepton = "Electron"
     print(lepton)
     
-
-    #####  Nominal MC samples #######
-
-    print("\n #################   Nominal hist ############## \n")
-    hist_to_return = [] 
-    applydir = '/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/Apply_all/'
-    MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)" 
-    Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
-    DNNcut_str = "*(t_ch_CAsi>="+DNNCut+")" 
     yearDir={
                 'ULpreVFP2016' :  "SIXTEEN_preVFP",
                 'ULpostVFP2016' : "SIXTEEN_postVFP",
                 'UL2017' : "SEVENTEEN",
         } 
+    Combine_year_tag={
+                'ULpreVFP2016' :  "_ULpre16",
+                'ULpostVFP2016' : "_ULpost16",
+                'UL2017' : "_UL17",
+                'UL2018' : "_UL18"}
 
+    hist_to_return = [] 
+    applydir = '/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/2J1T1/Apply_all/'
+    MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)" 
+    Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
+    DNNcut_str = "*(t_ch_CAsi>="+DNNCut+")"
+ 
+    """##### shapes from control region ############
+  
+    ttbar_bkg_channels = ['tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic']
+    EWK_bkg_channels = ['WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L']
+    hists_3J2T_con = Get_samples_hist_wo_NonQCD_Norm(lep=lep,year=year,Variable=Variable,MCcut = MCcut,Channels=ttbar_bkg_channels,region="3J2T",DNNCut=DNNCut,hist_sys_name="")
+    hists_2J1L0T_con = Get_samples_hist_wo_NonQCD_Norm(lep=lep,year=year,Variable=Variable,MCcut = MCcut,Channels=EWK_bkg_channels,region="2J1L0T",DNNCut=DNNCut,hist_sys_name="")
+    del ttbar_bkg_channels
+    del EWK_bkg_channels"""
+
+
+
+
+    #####  Nominal MC samples #######
+    print("\n #################   Nominal hist ############## \n")
     hists_Nomi = Get_additive_sys_samples(lep=lep,year=year,Variable=Variable,MCcut = MCcut,DNNCut=DNNCut,hist_sys_name="")
-    for Hist in hists_Nomi:
-        hist_to_return.append(Hist.Clone())
+    
+    #hists_3J2T_con[1].Scale(hists_Nomi[1].Integral()/hists_3J2T_con[1].Integral())    
+    #hists_2J1L0T_con[2].Scale(hists_Nomi[2].Integral()/hists_2J1L0T_con[2].Integral())
+    #hist_to_return.append(hists_3J2T_con[1].Clone())
+    #hist_to_return.append(hists_2J1L0T_con[2].Clone())
+    hist_to_return.append(hists_Nomi[1].Clone())
+    hist_to_return.append(hists_Nomi[2].Clone())
+    hist_to_return.append(hists_Nomi[0].Clone())
+    #del hists_3J2T_con
+    #del hists_2J1L0T_con
     del hists_Nomi
 
     #################### Data and DD QCD  ######################################################## 
@@ -130,6 +154,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
                 print("redefine assymatic histogram bins ", BINS)
                 hs[channel] = rt.TH1F('hs' + channel, '', len(BINS)-1,np.array(BINS))
         else:
+                Variable,X_axies,Y_axies,lest_bin,max_bin,Num_bin = get_histogram_distciption(Variable)
                 hs[channel] = rt.TH1F('hs' + channel, '', Num_bin, lest_bin, max_bin)
         #rt.gROOT.cd()
     
@@ -142,7 +167,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     DDQCD = hs['QCD'].Clone()
     DDQCD.Scale(QCDSF)
     if(DNN_rescale=="1"): DDQCD.Scale(DNN_bais_scale[lep][year])
-    DDQCD.SetName("QCD_DD")
+    DDQCD.SetName("QCD_DD"+Combine_year_tag[year])
     propagate_rate_uncertainity(DDQCD, 50.0)
     #for i in range(1,DDQCD.GetNbinsX()+1):
     #    print "--------------------"

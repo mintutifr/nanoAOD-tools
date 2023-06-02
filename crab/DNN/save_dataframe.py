@@ -6,6 +6,7 @@ parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
 parser.add_argument('-s', '--sample', dest='samples', type=str, nargs=1, help="sample [ Mc_Nomi , Mc_Alt , Mc_sys ]")
+parser.add_argument('-r', '--region', dest='regions', type=str, nargs=1, help="sample [ 2J1T , 3J1T , 2J1L0T , 3J2T , 2J0T ]")
 
 args = parser.parse_args()
 
@@ -31,11 +32,17 @@ print(args)
 lep = args.lepton[0]
 year= args.year[0]
 sample = args.samples[0]
+region = args.regions[0]
+
 if(lep=="mu"):
 	lepton = "Muon"
 elif(lep=="el"):
         lepton = "Electron"
 print(lepton)
+
+
+#if not os.path.exists('dataframe_saved/'+region+'1/'): os.makedirs('dataframe_saved/'+region+'1/')
+if not os.path.exists('dataframe_saved/'+region+'1/sys_N_Alt'): os.makedirs('dataframe_saved/'+region+'1/sys_N_Alt')
 
 from loader import *
 import ROOT 
@@ -48,11 +55,12 @@ import glob
 from time import time
 
 if(sample=="Mc_Nomi"):
-   
       channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']#,'Data'] #WWTolnulnu
       channels.append("Data"+year)
+
 elif(sample=="Mc_Alt"):
         channels = [ 'ttbar_SemiLeptonic_mtop1695',   'ttbar_FullyLeptonic_mtop1695',   'Tbarchannel_mtop1735',   'ttbar_FullyLeptonic_widthx0p55',   'ttbar_FullyLeptonic_widthx0p7',   'ttbar_FullyLeptonic_mtop1735',   'Tbarchannel_mtop1715',   'ttbar_FullyLeptonic_widthx1p3',   'ttbar_FullyLeptonic_widthx1p45',   'ttbar_FullyLeptonic_mtop1715',   'Tchannel_mtop1715',   'ttbar_SemiLeptonic_mtop1755',   'ttbar_SemiLeptonic_mtop1735',   'ttbar_SemiLeptonic_mtop1715',   'ttbar_FullyLeptonic_widthx0p85',   'Tbarchannel_mtop1755',   'Tchannel_mtop1695',   'ttbar_FullyLeptonic_widthx1p15',   'Tchannel_mtop1735',   'Tchannel_mtop1755','ttbar_FullyLeptonic_mtop1755','Tbarchannel_mtop1695']
+
 elif(sample=="Mc_sys"):
         channels =['Tchannel_TuneCP5CR2',  'Tchannel_TuneCP5CR1',   'Tchannel_hdampdown',   'Tbarchannel_hdampdown',  'Tchannel_TuneCP5down',   'Tbarchannel_hdampup',   'Tchannel_hdampup',   'Tbarchannel_TuneCP5down',   'Tchannel_erdON',   'Tchannel_TuneCP5up',   'Tbarchannel_TuneCP5up',  'Tbarchannel_erdON',   'Tbarchannel_TuneCP5CR1',   'Tbarchannel_TuneCP5CR2']
 
@@ -60,7 +68,7 @@ elif(sample=="Mc_sys"):
 print channels
 datasets = []                                            # this object will be a list of list
 for channel in channels:
-        datasets.append(load_dataset(-1,channel, lep, year,sample)) #apped all data frames in datasets
+        datasets.append(load_dataset(-1,channel, lep, year,region,sample)) #apped all data frames in datasets
 
 print(type(datasets[0]))
 #bjet_deepjet_score = [] 
@@ -107,8 +115,6 @@ VARS = [lepton+'Eta', lepton+'Pt', lepton+'Phi', lepton+'E',   lepton+'Charge',
 
 df = {}  # remember this will be set of dataframe
 
-if not os.path.exists('dataframe_saved/'): os.mkdir('dataframe_saved/')
-if not os.path.exists('dataframe_saved/sys_N_Alt'): os.mkdir('dataframe_saved/sys_N_Alt')
 
 for channel_no,channel  in enumerate(channels): #channels: #try to enumare funchtion to remove channel_no in this loop
      if("Data" not in channel and "QCD" not in channel):
@@ -122,8 +128,8 @@ for channel_no,channel  in enumerate(channels): #channels: #try to enumare funch
         
      print("df shape ", channel," : ",df[channel].shape[0])
      #df[channel]=df[channel].loc[(df[channel]['mtwMass']>50)]
-     if(sample=="Mc_Nomi"):df[channel].to_root('dataframe_saved/'+year+'_'+channel+'_Apply_all_'+lep+'.root',key='Events') 
-     else:df[channel].to_root('dataframe_saved/sys_N_Alt/'+year+'_'+channel+'_Apply_all_'+lep+'.root',key='Events')
+     if(sample=="Mc_Nomi"):df[channel].to_root('dataframe_saved/'+region+'1/'+year+'_'+channel+'_Apply_all_'+lep+'.root',key='Events') 
+     else:df[channel].to_root('dataframe_saved/'+region+'1/sys_N_Alt/'+year+'_'+channel+'_Apply_all_'+lep+'.root',key='Events')
 
 if(sample!="Mc_Nomi"): sys.exit(sample+" saved")
 del datasets
@@ -300,9 +306,9 @@ df_signal_train_valid_test_wrong_assign[2] = df_signal_train_valid_test_wrong_as
 print( "only wrong assignment signal")
 print( "train : ", df_signal_train_wrong_assign_final.shape, "valid : ", df_signal_valid_wrong_assign_final.shape, "test : ", df_signal_train_valid_test_wrong_assign[2].shape)
 
-df_signal_train_wrong_assign_final.to_root('dataframe_saved/'+year+'_WS_Top_signal_train_'+lep+'.root',key='Events') # write df in root file
-df_signal_valid_wrong_assign_final.to_root('dataframe_saved/'+year+'_WS_Top_signal_valid_'+lep+'.root',key='Events')
-df_signal_train_valid_test_wrong_assign[2].to_root('dataframe_saved/'+year+'_WS_Top_signal_test_'+lep+'.root',key='Events')
+df_signal_train_wrong_assign_final.to_root('dataframe_saved/'+region+'1/'+year+'_WS_Top_signal_train_'+lep+'.root',key='Events') # write df in root file
+df_signal_valid_wrong_assign_final.to_root('dataframe_saved/'+region+'1/'+year+'_WS_Top_signal_valid_'+lep+'.root',key='Events')
+df_signal_train_valid_test_wrong_assign[2].to_root('dataframe_saved/'+region+'1/'+year+'_WS_Top_signal_test_'+lep+'.root',key='Events')
 
 del df_signal_train_valid_test_wrong_assign # delete this dataframe since information is alreadyadded to new list of top backgrounds df
 del df_signal_train_wrong_assign_final
@@ -317,9 +323,9 @@ df_signal_train_valid_test_correct_assign[2] = df_signal_train_valid_test_correc
 print("only correct assignment signal")
 print("train : ", df_signal_train_correct_assign_final.shape, "valid : ", df_signal_valid_correct_assign_final.shape, "test : ", df_signal_train_valid_test_correct_assign[2].shape)
 
-df_signal_train_correct_assign_final.to_root('dataframe_saved/'+year+'_Top_signal_train_'+lep+'.root',key='Events') # write df in root file
-df_signal_valid_correct_assign_final.to_root('dataframe_saved/'+year+'_Top_signal_valid_'+lep+'.root',key='Events')
-df_signal_train_valid_test_correct_assign[2].to_root('dataframe_saved/'+year+'_Top_signal_test_'+lep+'.root',key='Events')
+df_signal_train_correct_assign_final.to_root('dataframe_saved/'+region+'1/'+year+'_Top_signal_train_'+lep+'.root',key='Events') # write df in root file
+df_signal_valid_correct_assign_final.to_root('dataframe_saved/'+region+'1/'+year+'_Top_signal_valid_'+lep+'.root',key='Events')
+df_signal_train_valid_test_correct_assign[2].to_root('dataframe_saved/'+region+'1/'+year+'_Top_signal_test_'+lep+'.root',key='Events')
 
 del df_signal_train_valid_test_correct_assign
 del df_signal_train_correct_assign_final
@@ -337,9 +343,9 @@ df_TopBKG_train_valid_test_correct_assign[2] = df_TopBKG_train_valid_test_correc
 print("only correct assignment Top background")
 print( "train : ", df_TopBKG_train_correct_assign_final.shape, "valid : ", df_TopBKG_valid_correct_assign_final.shape, "test : ", df_TopBKG_train_valid_test_correct_assign[2].shape)
 
-df_TopBKG_train_correct_assign_final.to_root('dataframe_saved/'+year+'_Top_bkg_train_'+lep+'.root',key='Events')
-df_TopBKG_valid_correct_assign_final.to_root('dataframe_saved/'+year+'_Top_bkg_valid_'+lep+'.root',key='Events')
-df_TopBKG_train_valid_test_correct_assign[2].to_root('dataframe_saved/'+year+'_Top_bkg_test_'+lep+'.root',key='Events')
+df_TopBKG_train_correct_assign_final.to_root('dataframe_saved/'+region+'1/'+year+'_Top_bkg_train_'+lep+'.root',key='Events')
+df_TopBKG_valid_correct_assign_final.to_root('dataframe_saved/'+region+'1/'+year+'_Top_bkg_valid_'+lep+'.root',key='Events')
+df_TopBKG_train_valid_test_correct_assign[2].to_root('dataframe_saved/'+region+'1/'+year+'_Top_bkg_test_'+lep+'.root',key='Events')
 
 del df_TopBKG_train_valid_test_correct_assign
 del df_TopBKG_train_correct_assign_final
@@ -354,9 +360,9 @@ df_TopBKG_train_valid_test_wrong_assign[2] = df_TopBKG_train_valid_test_wrong_as
 print("only wrong assignment Top background")
 print("train : ", df_TopBKG_train_wrong_assign_final.shape, "valid : ", df_TopBKG_valid_wrong_assign_final.shape, "test : ", df_TopBKG_train_valid_test_wrong_assign[2].shape)
 
-df_TopBKG_train_wrong_assign_final.to_root('dataframe_saved/'+year+'_WS_Top_bkg_train_'+lep+'.root',key='Events')
-df_TopBKG_valid_wrong_assign_final.to_root('dataframe_saved/'+year+'_WS_Top_bkg_valid_'+lep+'.root',key='Events')
-df_TopBKG_train_valid_test_wrong_assign[2].to_root('dataframe_saved/'+year+'_WS_Top_bkg_test_'+lep+'.root',key='Events')
+df_TopBKG_train_wrong_assign_final.to_root('dataframe_saved/'+region+'1/'+year+'_WS_Top_bkg_train_'+lep+'.root',key='Events')
+df_TopBKG_valid_wrong_assign_final.to_root('dataframe_saved/'+region+'1/'+year+'_WS_Top_bkg_valid_'+lep+'.root',key='Events')
+df_TopBKG_train_valid_test_wrong_assign[2].to_root('dataframe_saved/'+region+'1/'+year+'_WS_Top_bkg_test_'+lep+'.root',key='Events')
 
 del df_TopBKG_train_valid_test_wrong_assign
 del df_TopBKG_train_wrong_assign_final
@@ -372,9 +378,9 @@ print("\n==========================================================")
 print("EWK background")
 print("train : ", df_EWKBKG_train_final.shape, " valid : ", df_EWKBKG_valid_final.shape, " test : ", df_EWKBKG_train_valid_test[2].shape)
 
-df_EWKBKG_train_final.to_root('dataframe_saved/'+year+'_EWK_BKG_train_'+lep+'.root',key='Events')
-df_EWKBKG_valid_final.to_root('dataframe_saved/'+year+'_EWK_BKG_valid_'+lep+'.root',key='Events')
-df_EWKBKG_train_valid_test[2].to_root('dataframe_saved/'+year+'_EWK_BKG_test_'+lep+'.root',key='Events')
+df_EWKBKG_train_final.to_root('dataframe_saved/'+region+'1/'+year+'_EWK_BKG_train_'+lep+'.root',key='Events')
+df_EWKBKG_valid_final.to_root('dataframe_saved/'+region+'1/'+year+'_EWK_BKG_valid_'+lep+'.root',key='Events')
+df_EWKBKG_train_valid_test[2].to_root('dataframe_saved/'+region+'1/'+year+'_EWK_BKG_test_'+lep+'.root',key='Events')
 
 del df_EWKBKG_train_valid_test
 del df_EWKBKG_train_final
@@ -389,9 +395,9 @@ print("\n==========================================================")
 print("QCD background")
 print("train : ", df_QCD_train_final.shape, " valid : ", df_QCD_valid_final.shape, " test : ", df_QCD_train_valid_test[2].shape)
 
-df_QCD_train_final.to_root('dataframe_saved/'+year+'_QCD_BKG_train_'+lep+'.root',key='Events')
-df_QCD_valid_final.to_root('dataframe_saved/'+year+'_QCD_BKG_valid_'+lep+'.root',key='Events')
-df_QCD_train_valid_test[2].to_root('dataframe_saved/'+year+'_QCD_BKG_test_'+lep+'.root',key='Events')
+df_QCD_train_final.to_root('dataframe_saved/'+region+'1/'+year+'_QCD_BKG_train_'+lep+'.root',key='Events')
+df_QCD_valid_final.to_root('dataframe_saved/'+region+'1/'+year+'_QCD_BKG_valid_'+lep+'.root',key='Events')
+df_QCD_train_valid_test[2].to_root('dataframe_saved/'+region+'1/'+year+'_QCD_BKG_test_'+lep+'.root',key='Events')
 
 
 del df_QCD_train_valid_test

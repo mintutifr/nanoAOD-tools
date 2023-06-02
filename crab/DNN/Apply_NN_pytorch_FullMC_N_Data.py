@@ -7,6 +7,8 @@ parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
 parser.add_argument('-s', '--sample', dest='samples', type=str, nargs=1, help="sample [ Mc_Nomi , Mc_Alt , Mc_sys , Data ]")
+parser.add_argument('-r', '--region', dest='regions', type=str, nargs=1, help="sample [ 2J1T , 3J1T , 2J1L0T , 3J2T , 2J0T ]")
+
 args = parser.parse_args()
 
 if (args.year == None or args.lepton == None):
@@ -31,6 +33,8 @@ print(args)
 lep = args.lepton[0]
 year= args.year[0]
 sample = args.samples[0]
+region = args.regions[0]
+
 if(lep=="mu"):
 	lepton = "Muon"
 elif(lep=="el"):
@@ -114,12 +118,12 @@ print(channels)
 types = ['Apply_all']#,'train']
 files = []
 
-#ML_DIR='dataframe_saved_with_mtwCut/' ; wightfolder = 'weight_with_mtwCut/' ; MainOutputDir = 'DNN_output_with_mtwCut/'
-ML_DIR='dataframe_saved_without_mtwCut/' ; wightfolder = 'weight_without_mtwCut/' ; MainOutputDir = 'DNN_output_without_mtwCut/'
+#ML_DIR='dataframe_saved_with_mtwCut/'+region+'1/' ; wightfolder = 'weight_with_mtwCut/' ; MainOutputDir = 'DNN_output_with_mtwCut/'
+ML_DIR='dataframe_saved_without_mtwCut/'+region+'1/' ; wightfolder = 'weight_without_mtwCut/' ; MainOutputDir = 'DNN_output_without_mtwCut/'+region+'1/'
 
-if not os.path.exists(MainOutputDir): os.mkdir(MainOutputDir)
-if not os.path.exists(MainOutputDir+'Apply_all/'): os.mkdir(MainOutputDir+'Apply_all/')
-if not os.path.exists(MainOutputDir+'Apply_all/sys_N_Alt'): os.mkdir(MainOutputDir+'Apply_all/sys_N_Alt')
+#if not os.path.exists(MainOutputDir): os.mkdir(MainOutputDir)
+#if not os.path.exists(MainOutputDir+'Apply_all/'): os.mkdir(MainOutputDir+'Apply_all/')
+if not os.path.exists(MainOutputDir+'Apply_all/sys_N_Alt'): os.makedirs(MainOutputDir+'Apply_all/sys_N_Alt')
 
 #if(sample=="Mc_Nomi"):
 OriginalFileDir = {
@@ -192,7 +196,11 @@ for fil in files:
 	#print(np.shape(y_arr))
 	y_arr = y_arr.ravel().view(dtype = np.dtype([('t_ch_WAsi', np.double), ('t_ch_CAsi', np.double), ('ttbar_CAsi', np.double), ('ttbar_WAsi', np.double), ('EWK', np.double), ('QCD', np.double)]))
 	fname, ext = os.path.splitext(fil)
+
+        if(sample == "Mc_Nomi"):outputfile = MainOutputDir+'Apply_all/'+ fname.rsplit('/')[-1] + '.root'
+	else: outputfile =  MainOutputDir+'Apply_all/sys_N_Alt/'+ fname.rsplit('/')[-1] + '.root'
 	print("writing out put file : ", MainOutputDir+'Apply_all/sys_N_Alt/'+fname.rsplit('/')[-1],"_apply.root")
 
-	if(sample == "Mc_Nomi"): root_numpy.array2root(y_arr, MainOutputDir+'Apply_all/'+ fname.rsplit('/')[-1] + '.root', treename='Events',mode='recreate')
-	else: root_numpy.array2root(y_arr, MainOutputDir+'Apply_all/sys_N_Alt/'+ fname.rsplit('/')[-1] + '.root', treename='Events',mode='recreate')
+	root_numpy.array2root(y_arr, outputfile, treename='Events',mode='recreate')
+	
+	

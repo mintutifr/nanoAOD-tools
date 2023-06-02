@@ -21,8 +21,8 @@ def get_histogram_distciption(Variable="lntopMass"):
             X_axies="m_{T} (GeV)"
             Y_axies="Events/(10)"
             lest_bin=0.0
-            max_bin=200.0
-            Num_bin=20
+            max_bin=150.0
+            Num_bin=15
     elif(Variable=="MuonCharge"):
             X_axies="#mu charge"
             Y_axies="Events/bin"
