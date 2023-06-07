@@ -447,6 +447,6 @@ def create_muSF(dataYear,pt_,eta_,iso_,lumiTotal_,syst_):
 #create_muSF('2016',21.1176013947,0.6142578125,0.3,3485,'noSyst')
 #print create_muSF('UL2017',60.1176013947,-2.0142578125,0.3,59222,'noSyst')
 #print create_muSF('UL2018',29.2907962799,0.0283164978027,0.297331474721,59222,'IDUp')#19521,16812,41520,59222
-print(create_elSF('UL2017',50,-1.3,'Tight','noSyst'))
-print(create_elSF('UL2017',50,-1.3,'Veto','noSyst'))
+#print(create_elSF('UL2017',50,-1.3,'Tight','noSyst'))
+#print(create_elSF('UL2017',50,-1.3,'Veto','noSyst'))
 #print "-------------------------------------------------------"                        
