@@ -135,13 +135,11 @@ Datasets_sys_MC_UL2017 = {
 }
 
 Datasets_SingleMuon_data_UL2017 = {
-		'Run2017B_mu' : '/SingleMuon/Run2017B-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
-		'Run2017C_mu' : '/SingleMuon/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
-		'Run2017D_mu' : '/SingleMuon/Run2017D-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
-		'Run2017E_mu' : '/SingleMuon/Run2017E-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
-		'Run2017F_mu' : '/SingleMuon/Run2017F-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD'
-#		'/SingleMuon/Run2017G-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',  # Era Run2017G is the 5 TeV Run
-#		'/SingleMuon/Run2017H-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',  # Era Run2017H is low PU
+		'Run2017B_mu' : '/SingleMuon/Run2017B-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD',
+		'Run2017C_mu' : '/SingleMuon/Run2017C-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD',
+		'Run2017D_mu' : '/SingleMuon/Run2017D-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD',
+		'Run2017E_mu' : '/SingleMuon/Run2017E-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD',
+		'Run2017F_mu' : '/SingleMuon/Run2017F-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD'
 }
 
 Datasets_SingleElectron_data_UL2017 =   {	
