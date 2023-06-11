@@ -43,7 +43,7 @@ if __name__ == '__main__':
     for dataset in datasets:
         #print(dataset)
         local_script_output_dir = Out_dir + year_folder[year]+'/'+region+'/'+Lep+'/'+dataset + '/' 
-        os.makedirs(local_script_output_dir, exist_ok = True)
+        os.makedirs(local_script_output_dir+'/log/', exist_ok = True)
         #print('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + dataset)
         in_files = glob.glob('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + dataset + '**/**/**/**/**/*.root')
         Hadded_out_file_name = 'Minitree_'+ dataset+'_'+region+'_'+Lep+ '.root '
@@ -55,7 +55,7 @@ if __name__ == '__main__':
             num = fil.split('/')[-1].split('.')[0].split('_')[-1]
             Hadd_N_createoutfile_cmd[dataset] += local_script_output_dir + 'tree_' + num + '_Skim.root '
             #print(Hadd_N_createoutfile_cmd[dataset])
-            run_commands.append('pwd; cmsenv; python3 crab_script_Minitree_local.py -p ' + fil + ' -d ' + dataset + ' -t ' + tag + ' -o ' + local_script_output_dir + ' &> ' + local_script_output_dir + 'log_' + num + '.txt')
+            run_commands.append('pwd; cmsenv; python3 crab_script_Minitree_local.py -p ' + fil + ' -d ' + dataset + ' -t ' + tag + ' -o ' + local_script_output_dir + ' &> ' + local_script_output_dir + 'log/log_' + num + '.txt')
             i=i+1
             #if(i==2): break #switch od test perpose take only two file and the scripts
     print(run_commands)
