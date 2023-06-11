@@ -5,12 +5,12 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import *
 #this takes care of converting the input files from CRAB
 from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputFiles,runsAndLumis
 
-from MinitreeModule import *
+import MinitreeModule as minitree
 import cut_strings  as cs
-from hdamp_ttbar_variation_module import *
-from btv_readfromJson import *
-from dummy_module import *
-from jme import *
+import hdamp_ttbar_variation_module as hdamp
+import btv_readfromJson as btv
+import dummy_module as dummy
+import jme as JME
 import argparse
 
 parser = argparse.ArgumentParser(description='Process some integers.')
@@ -22,26 +22,43 @@ args = parser.parse_args()
 print('--------------------')
 print(args)
 
-#Minitree_module = getattr(mt , 'MinitreeModuleConstr' + args.tag)
-treecut_tag = args.tag.split('_')[0] + '_' + args.tag.split('_')[1] + '_' + args.tag.split('_')[3]
-treecut = getattr(cs, 'cut_' + treecut_tag)
+
+region = args.tag.split('_')[0]
+lep = args.tag.split('_')[1]
 year = args.tag.split('_')[3]
-print('treecut : ',treecut)
-inputFiles = [args.path]
-print('inputFiles : ',inputFiles)
 dataset = args.dataset
-#for inputFil in inputFiles:
+inputFiles = [args.path]
 num = inputFiles[0].split('/')[-1].split('.')[0].split('_')[-1]
-print(num)
-#inputFile = [inputFil]
+
+#Minitree_module = getattr(mt , 'MinitreeModuleConstr' + args.tag)
+treecut = getattr(cs, 'cut_' + region + '_' + lep + '_' + year)
+btvmodule = getattr(btv,'btagSF'+year)
+minitreemodule = getattr(minitree,'MinitreeModuleConstr'+region+'_'+lep+'_mc_'+year)
+jmeCorrection = getattr(JME,'jmeCorrections'+year+'_MC_AK4CHS')
+hdampmodule = getattr(hdamp,'hdamp_vari_mainModule')
+
+
+if( ('ttbar_SemiLeptonic' == dataset) or ('ttbar_FullyLeptonic' == dataset)):
+	runmodules = [btvmodule(),minitreemodule(),jmeCorrection(),hdampmodule()]
+else:
+	runmodules = [btvmodule(),minitreemodule(),jmeCorrection()]
+
+
+print('treecut : ',treecut)
+print('inputFiles : ',inputFiles)
+print('file number : ',num)
+print('modules imported : ','btagSF'+year,'MinitreeModuleConstr'+region+'_'+lep+'_mc_'+year,'jmeCorrections'+year+'_MC_AK4CHS','hdamp_vari_mainModule')
+print('modules run : ',runmodules)
+
 print('--------------------')
+
+
 p=PostProcessor(args.out_dir,
-    		inputFiles,
-		treecut,   #in cutflow there should not be any cut
-		modules=[btagSFUL2017(),MinitreeModuleConstr2J1T1_el_mc_UL2017(),jmeCorrectionsUL2017_MC_AK4CHS()],
+    	inputFiles,
+		treecut,
+		modules=runmodules,
 		provenance=True,
 		fwkJobReport=False,
-        	#haddFileName=args.out_dir + '/Minitree_' + num + '.root',
 		jsonInput=runsAndLumis())
 p.run()
 print("DONE")

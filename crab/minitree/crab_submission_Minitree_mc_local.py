@@ -34,8 +34,8 @@ if __name__ == '__main__':
     year_folder = {'UL2016preVFP': 'SIXTEEN', 'UL2016postVFP': 'SIXTEEN_postVFP', 'UL2017': 'SEVENTEEN', 'UL2018': 'EIGHTEEN'}
     tag =   region+'_'+Lep + '_' + MC_Data + '_' + year
     Out_dir = args.out_dir
-    datasets = ['Tchannel','Tbarchannel','QCD_Pt-15To20_MuEnriched', 'QCD_Pt-20To30_MuEnriched', 'QCD_Pt-30To50_MuEnriched', 'QCD_Pt-50To80_MuEnriched', 'QCD_Pt-80To120_MuEnriched', 'QCD_Pt-120To170_MuEnriched', 'QCD_Pt-170To300_MuEnriched', 'QCD_Pt-300To470_MuEnriched', 'QCD_Pt-470To600_MuEnriched', 'QCD_Pt-600To800_MuEnriched', 'QCD_Pt-800To1000_MuEnriched', 'QCD_Pt-1000_MuEnriched', 'tw_antitop', 'tw_top', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2L2Nu', 'ZZTo2Q2L'] 
-    datasets = ['Tchannel']#['ttbar_SemiLeptonic','ttbar_FullyLeptonic']#, 'ttbar_SemiLeptonic']
+    datasets = ['Tchannel','Tbarchannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','QCD_Pt-15To20_MuEnriched', 'QCD_Pt-20To30_MuEnriched', 'QCD_Pt-30To50_MuEnriched', 'QCD_Pt-50To80_MuEnriched', 'QCD_Pt-80To120_MuEnriched', 'QCD_Pt-120To170_MuEnriched', 'QCD_Pt-170To300_MuEnriched', 'QCD_Pt-300To470_MuEnriched', 'QCD_Pt-470To600_MuEnriched', 'QCD_Pt-600To800_MuEnriched', 'QCD_Pt-800To1000_MuEnriched', 'QCD_Pt-1000_MuEnriched', 'tw_antitop', 'tw_top', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2L2Nu', 'ZZTo2Q2L'] 
+    #datasets = ['Tchannel']#[]#, 'ttbar_SemiLeptonic']
 	#['QCD_Pt-120to170_EMEnriched', 'QCD_Pt-170to300_EMEnriched', 'QCD_Pt-300toInf_EMEnriched', 'QCD_Pt-30to50_EMEnriched', 'QCD_Pt-50to80_EMEnriched', 'QCD_Pt-80to120_EMEnriched', 'SLep', 'TbarLep', 'TLep', 'ttbar_FullyLeptonic', 'ttbar_SemiLeptonic', 'tw_antitop', 'tw_top', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2L2Nu', 'ZZTo2Q2L', 'DYJets'] 'ttbar_FullyLeptonic', 'ttbar_SemiLeptonic',
     run_commands = []
     Hadd_N_createoutfile_cmd = {}
@@ -55,16 +55,11 @@ if __name__ == '__main__':
             num = fil.split('/')[-1].split('.')[0].split('_')[-1]
             Hadd_N_createoutfile_cmd[dataset] += local_script_output_dir + 'tree_' + num + '_Skim.root '
             #print(Hadd_N_createoutfile_cmd[dataset])
-            run_commands.append('pwd; cmsenv; python3 crab_script_Minitree_local.py -p ' + fil + ' -d ' + dataset + ' -t ' + tag + ' -o ' + local_script_output_dir)
+            run_commands.append('pwd; cmsenv; python3 crab_script_Minitree_local.py -p ' + fil + ' -d ' + dataset + ' -t ' + tag + ' -o ' + local_script_output_dir + ' &> ' + local_script_output_dir + 'log_' + num + '.txt')
             i=i+1
             #if(i==2): break #switch od test perpose take only two file and the scripts
     print(run_commands)
     #print(Hadd_N_createoutfile_cmd[dataset])
-
-    updateModule="\t\tmodules=[btagSF"+year+"(),MinitreeModuleConstr"+region+"_"+Lep+"_mc_"+year+"(),jmeCorrections"+year+"_MC_AK4CHS()],\n"
-    if( ('ttbar_SemiLeptonic' in datasets) or ('ttbar_FullyLeptonic' in datasets)):
-      updateModule="\t\tmodules=[btagSF"+year+"(),MinitreeModuleConstr"+region+"_"+Lep+"_mc_"+year+"(),jmeCorrections"+year+"_MC_AK4CHS(),hdamp_vari_mainModule()],\n"
-    replacemachine('crab_script_Minitree_local.py', 'modules=[', updateModule) 
 
     pool = mp.Pool(processes=15)
     pool.map(run_cutflow, run_commands)
