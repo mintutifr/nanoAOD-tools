@@ -14,7 +14,7 @@ import jme as JME
 import argparse
 
 parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument('-p', '--path', dest='path', type=str, default='', help="Path to input file")
+parser.add_argument('-p', '--path', dest='path',  nargs='+',type=str, default='', help="Path to input file")
 parser.add_argument('-d', '--dataset', dest='dataset', type=str, default='', help="Dataset")
 parser.add_argument('-t', '--tag', dest='tag', type=str, default='', help="year and mode tag")
 parser.add_argument('-o', '--out', dest='out_dir', type=str, default='', help="output_dir")
@@ -27,8 +27,8 @@ region = args.tag.split('_')[0]
 lep = args.tag.split('_')[1]
 year = args.tag.split('_')[3]
 dataset = args.dataset
-inputFiles = [args.path]
-num = inputFiles[0].split('/')[-1].split('.')[0].split('_')[-1]
+inputFiles = args.path
+#num = inputFiles[0].split('/')[-1].split('.')[0].split('_')[-1]
 
 #Minitree_module = getattr(mt , 'MinitreeModuleConstr' + args.tag)
 treecut = getattr(cs, 'cut_' + region + '_' + lep + '_' + year)
@@ -46,7 +46,7 @@ else:
 
 print('treecut : ',treecut)
 print('inputFiles : ',inputFiles)
-print('file number : ',num)
+#@print('file number : ',num)
 print('modules imported : ','btagSF'+year,'MinitreeModuleConstr'+region+'_'+lep+'_mc_'+year,'jmeCorrections'+year+'_MC_AK4CHS','hdamp_vari_mainModule')
 print('modules run : ',runmodules)
 
