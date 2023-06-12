@@ -28,7 +28,7 @@ https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#CurRec
 	brilcalc lumi --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_PHYSICS.json -u /fb -i Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt
 	brilcalc lumi --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_PHYSICS.json -u /fb -i Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt 
 
-|UL206			|Lumi (1/ub)	|Lumi (1/pb)|
+|UL2016			|Lumi (1/ub)	|Lumi (1/pb)|
 |:---------------------:|:-------------:|:----------|
 |2016 RUN B_ver1	|0		|0	    |
 |2016 RUN B_ver2	|5829427727	|5.829427727|
@@ -43,6 +43,10 @@ https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#CurRec
 |total FGH		|16812151722	|16.81215172|
 |All era		|36333380074	|36.33338007|
 
+
+UL2017 data (5 (+2) eras: B, C, D, E, F, (+G (5 TeV) and H (lowPU)))
+
+https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis
 
 
 |UL2017		|Lumi (1/ub)		|Lumi ( 1/fb)|
