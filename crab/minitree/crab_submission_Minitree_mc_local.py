@@ -22,7 +22,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('-l', '--lepton', dest='lepton', type=str, default='mu', help="lepton flavor [ el , mu ]")
     parser.add_argument('-r', '--region', dest='region', type=str, default='2J1T1', help="region of caluation [ 2J1T1 , 2J1T0 ]")
-    parser.add_argument('-y', '--year', dest='year', type=str, default='UL2017', help="2017")
+    parser.add_argument('-y', '--year', dest='year', type=str, default='UL2017', help=" UL2017 UL2016preVFP UL2016postVFP UL2018 ")
     parser.add_argument('-mc', '--ISMC', dest='ISMC', type=bool, default=True, help=" is MC sample [ True False ]")
     parser.add_argument('-o', '--out_dir', dest='out_dir', type=str, default='/nfs/home/common/RUN2_UL/Minitree_crab/', help="Set Dir for the output files")
     args = parser.parse_args()
@@ -31,11 +31,11 @@ if __name__ == '__main__':
     region = args.region
     year = args.year
     MC_Data = "mc" if args.ISMC else "data"
-    year_folder = {'UL2016preVFP': 'SIXTEEN', 'UL2016postVFP': 'SIXTEEN_postVFP', 'UL2017': 'SEVENTEEN', 'UL2018': 'EIGHTEEN'}
+    year_folder = {'UL2016preVFP': 'SIXTEEN_preVFP', 'UL2016postVFP': 'SIXTEEN_postVFP', 'UL2017': 'SEVENTEEN', 'UL2018': 'EIGHTEEN'}
     tag =   region+'_'+Lep + '_' + MC_Data + '_' + year
     Out_dir = args.out_dir
     datasets = ['Tchannel','Tbarchannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','QCD_Pt-15To20_MuEnriched', 'QCD_Pt-20To30_MuEnriched', 'QCD_Pt-30To50_MuEnriched', 'QCD_Pt-50To80_MuEnriched', 'QCD_Pt-80To120_MuEnriched', 'QCD_Pt-120To170_MuEnriched', 'QCD_Pt-170To300_MuEnriched', 'QCD_Pt-300To470_MuEnriched', 'QCD_Pt-470To600_MuEnriched', 'QCD_Pt-600To800_MuEnriched', 'QCD_Pt-800To1000_MuEnriched', 'QCD_Pt-1000_MuEnriched', 'tw_antitop', 'tw_top', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2L2Nu', 'ZZTo2Q2L'] 
-    #datasets = ['WJetsToLNu_0J']#[]#, 'ttbar_SemiLeptonic']
+    datasets = ['ttbar_SemiLeptonic','ttbar_FullyLeptonic']#[]#, 'ttbar_SemiLeptonic']
 	#['QCD_Pt-120to170_EMEnriched', 'QCD_Pt-170to300_EMEnriched', 'QCD_Pt-300toInf_EMEnriched', 'QCD_Pt-30to50_EMEnriched', 'QCD_Pt-50to80_EMEnriched', 'QCD_Pt-80to120_EMEnriched', 'SLep', 'TbarLep', 'TLep', 'ttbar_FullyLeptonic', 'ttbar_SemiLeptonic', 'tw_antitop', 'tw_top', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2L2Nu', 'ZZTo2Q2L', 'DYJets'] 'ttbar_FullyLeptonic', 'ttbar_SemiLeptonic',
     run_commands = []
     Hadd_N_createoutfile_cmd = {}
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     print(run_commands)
     #print(Hadd_N_createoutfile_cmd[dataset])
 
-    pool = mp.Pool(processes=10)
+    pool = mp.Pool(processes=15)
     pool.map(run_cmd, run_commands)
 
 

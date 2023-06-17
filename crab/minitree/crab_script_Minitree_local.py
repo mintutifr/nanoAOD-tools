@@ -29,6 +29,14 @@ year = args.tag.split('_')[3]
 dataset = args.dataset
 inputFiles = args.path
 #num = inputFiles[0].split('/')[-1].split('.')[0].split('_')[-1]
+file_str=""
+for File in inputFiles: file_str +=File+" "
+
+print()
+print("python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir.split(lep)[0]+ " -p "+ file_str +"  &> "+args.out_dir+"log/log_5.txt\n")
+
+
+
 
 #Minitree_module = getattr(mt , 'MinitreeModuleConstr' + args.tag)
 treecut = getattr(cs, 'cut_' + region + '_' + lep + '_' + year)
