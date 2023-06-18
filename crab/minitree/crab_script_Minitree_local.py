@@ -9,6 +9,7 @@ import MinitreeModule as minitree
 import cut_strings  as cs
 import hdamp_ttbar_variation_module as hdamp
 import btv_readfromJson as btv
+import gen_info_module as genInfo
 import dummy_module as dummy
 import jme as JME
 import argparse
@@ -39,15 +40,17 @@ print("python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o
 
 
 #Minitree_module = getattr(mt , 'MinitreeModuleConstr' + args.tag)
-treecut = getattr(cs, 'cut_' + region + '_' + lep + '_' + year)
+treecut = getattr(cs, 'cut_' + region + '_' + lep + '_' + year)  # + " && Entry$<500"
 btvmodule = getattr(btv,'btagSF'+year)
 minitreemodule = getattr(minitree,'MinitreeModuleConstr'+region+'_'+lep+'_mc_'+year)
 jmeCorrection = getattr(JME,'jmeCorrections'+year+'_MC_AK4CHS')
 hdampmodule = getattr(hdamp,'hdamp_vari_mainModule')
+geninfomodule =  getattr(genInfo,'gen_info_Module')
 
-
-if( ('ttbar_SemiLeptonic' == dataset) or ('ttbar_FullyLeptonic' == dataset)):
-	runmodules = [btvmodule(),minitreemodule(),jmeCorrection(),hdampmodule()]
+if( (dataset in ['ttbar_SemiLeptonic','ttbar_FullyLeptonic']) and region == "2J1T1"):
+	runmodules = [btvmodule(),minitreemodule(),jmeCorrection(),hdampmodule(),geninfomodule()]
+elif((dataset in ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel']) and region == "2J1T1"):
+	runmodules = [btvmodule(),minitreemodule(),jmeCorrection(),geninfomodule()]
 else:
 	runmodules = [btvmodule(),minitreemodule(),jmeCorrection()]
 

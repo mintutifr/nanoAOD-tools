@@ -34,8 +34,8 @@ if __name__ == '__main__':
     year_folder = {'UL2016preVFP': 'SIXTEEN_preVFP', 'UL2016postVFP': 'SIXTEEN_postVFP', 'UL2017': 'SEVENTEEN', 'UL2018': 'EIGHTEEN'}
     tag =   region+'_'+Lep + '_' + MC_Data + '_' + year
     Out_dir = args.out_dir
-    datasets = ['Tchannel','Tbarchannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','QCD_Pt-15To20_MuEnriched', 'QCD_Pt-20To30_MuEnriched', 'QCD_Pt-30To50_MuEnriched', 'QCD_Pt-50To80_MuEnriched', 'QCD_Pt-80To120_MuEnriched', 'QCD_Pt-120To170_MuEnriched', 'QCD_Pt-170To300_MuEnriched', 'QCD_Pt-300To470_MuEnriched', 'QCD_Pt-470To600_MuEnriched', 'QCD_Pt-600To800_MuEnriched', 'QCD_Pt-800To1000_MuEnriched', 'QCD_Pt-1000_MuEnriched', 'tw_antitop', 'tw_top', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2L2Nu', 'ZZTo2Q2L'] 
-    datasets = ['ttbar_SemiLeptonic','ttbar_FullyLeptonic']#[]#, 'ttbar_SemiLeptonic']
+    datasets = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','QCD_Pt-15To20_MuEnriched', 'QCD_Pt-20To30_MuEnriched', 'QCD_Pt-30To50_MuEnriched', 'QCD_Pt-50To80_MuEnriched', 'QCD_Pt-80To120_MuEnriched', 'QCD_Pt-120To170_MuEnriched', 'QCD_Pt-170To300_MuEnriched', 'QCD_Pt-300To470_MuEnriched', 'QCD_Pt-470To600_MuEnriched', 'QCD_Pt-600To800_MuEnriched', 'QCD_Pt-800To1000_MuEnriched', 'QCD_Pt-1000_MuEnriched', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2L2Nu', 'ZZTo2Q2L'] 
+    datasets = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel']#,'ttbar_SemiLeptonic','ttbar_FullyLeptonic']#[]#, 'ttbar_SemiLeptonic']
 	#['QCD_Pt-120to170_EMEnriched', 'QCD_Pt-170to300_EMEnriched', 'QCD_Pt-300toInf_EMEnriched', 'QCD_Pt-30to50_EMEnriched', 'QCD_Pt-50to80_EMEnriched', 'QCD_Pt-80to120_EMEnriched', 'SLep', 'TbarLep', 'TLep', 'ttbar_FullyLeptonic', 'ttbar_SemiLeptonic', 'tw_antitop', 'tw_top', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2L2Nu', 'ZZTo2Q2L', 'DYJets'] 'ttbar_FullyLeptonic', 'ttbar_SemiLeptonic',
     run_commands = []
     Hadd_N_createoutfile_cmd = {}
