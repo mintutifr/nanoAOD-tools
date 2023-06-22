@@ -134,7 +134,7 @@ Datasets_sys_MC_UL2017 = {
 			'ttbar_SemiLeptonic_PSweights' : '/TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16NanoAODv7-PUMoriond17_Nano02Apr2020_102X_mcRun2_asymptotic_v8-v1/NANOAODSIM',
 }
 
-Datasets_SingleMuon_data_UL2017 = {
+Datasets_SingleMuon_data_UL2017_GT36 = {
 		'Run2017B_mu' : '/SingleMuon/Run2017B-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD', #these data not complitly tranfered (25% remain)
 		'Run2017C_mu' : '/SingleMuon/Run2017C-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD',
 		'Run2017D_mu' : '/SingleMuon/Run2017D-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD',
@@ -142,6 +142,14 @@ Datasets_SingleMuon_data_UL2017 = {
 		'Run2017F_mu' : '/SingleMuon/Run2017F-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD', #these data not complitly tranfered (0.02% remain)
 		#'Run2017G_mu' : '/SingleMuon/Run2017G-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD', # (5 TeV) # https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis 
 		#'Run2017H_mu' : '/SingleMuon/Run2017H-UL2017_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD', # (lowPU) # https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis
+}
+
+Datasets_SingleMuon_data_UL2017 = {
+		'Run2017B_mu' : '/SingleMuon/Run2017B-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
+		'Run2017C_mu' : '/SingleMuon/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
+		'Run2017D_mu' : '/SingleMuon/Run2017D-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
+		'Run2017E_mu' : '/SingleMuon/Run2017E-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD',
+		'Run2017F_mu' : '/SingleMuon/Run2017F-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD'
 }
 
 Datasets_SingleElectron_data_UL2017 =   {	
