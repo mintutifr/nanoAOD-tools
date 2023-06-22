@@ -97,6 +97,21 @@
 		The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
 		The jets that are used to correct MET are also required to have electromagnetic energy fraction smaller than 0.9 and not to be overlapping with the pf muon candidate. 
 
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFiltersRun2#2016_data_and_MC_UL
+
+		MetFilter applied (UL2016)as OR comnibanation of flags listed below
+
+		|filter 		|NanoAOD flag used 			| bit	|
+ 		|:---------------------:|:-------------------------------------:|:------|
+		|primary vertex filter  |Flag_goodVertices 			| 1	| 	 
+		|beam halo filter 	|Flag_globalSuperTightHalo2016Filter	|1	|
+		|HBHE noise filter 	|Flag_HBHENoiseFilter			|1	|
+		|HBHEiso noise filter 	|Flag_HBHENoiseIsoFilter		| 1	|
+		|ECAL TP filter 	|Flag_EcalDeadCellTriggerPrimitiveFilter|1	|
+		|Bad PF Muon Filter 	|Flag_BadPFMuonFilter			|1	| 
+		|Bad PF Muon Dz Filter 	|Flag_BadPFMuonDzFilter			|1	|
+		|ee badSC noise filter 	|Flag_eeBadScFilter			|1	|
+ 
 *	Pileup weight / minimum bias x-sec (When using UltraLegacy samples)
 	https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
 
@@ -135,8 +150,8 @@
 				Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ISO.root ##BCDEF (remonnded but we are not using them for iso>0.2 and we retrun SF=1) 
 				Efficiencies_muon_generalTracks_Z_Run2016_UL_ISO.root #GH (remonnded but we are not using them for iso>0.2 and we retrun SF=1)
 
-				EfficienciesAndSF_Run2016_UL_HIPM_ISO_SF_0p06.roo (personly created for iso<0.06 and need to update this is taken from lagecy samples and renamed acc.)
-                        	EfficienciesAndSF_Run2016_UL_ISO_SF_0p06.roo  (personly created for iso<0.06 and need to update this taken from lagecy samples and renamed acc.)	
+				EfficienciesAndSF_Run2016_UL_HIPM_ISO_SF_0p06.root (personly created for iso<0.06 and need to update this is taken from lagecy samples and renamed acc.)
+                        	EfficienciesAndSF_Run2016_UL_ISO_SF_0p06.root  (personly created for iso<0.06 and need to update this taken from lagecy samples and renamed acc.)	
 
 			TRI:
 				Trigger efficiency: provided in json formet only ((remonnded but we are not using them for iso>0.2 and we retrun SF=1))
@@ -155,7 +170,9 @@
 						/eos/cms/store/group/phys_egamma/SF-Repository/UL16/preVFP/Electrons/Tight/egammaEffi.txt_Ele_Tight_preVFP_EGM2D.root
 	
 			Cut Based ID    Trigger :
-						can we use the same which we have used in lagecy samples
+						TRI_Tight    : ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_preVFP_Tight.root  # privatly produced Trigger+tightid
+                        			TRI_Veto    :  ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_preVFP_Veto.root   #privatly produced Trigger_vetoid
+        
 
 *	LumiSectionsJSONFile
 	https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideGoodLumiSectionsJSONFile (json file paths are taken from here)
@@ -232,6 +249,22 @@
                 The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
                 The jets that are used to correct MET are also required to have electromagnetic energy fraction smaller than 0.9 and not to be overlapping with the pf muon candidate.
 
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFiltersRun2#2016_data_and_MC_UL
+
+                MetFilter applied (UL2016) as OR comnibanation of flags listed below
+
+                |filter                 |NanoAOD flag used                      | bit   | 
+                |:---------------------:|:-------------------------------------:|:------|
+                |primary vertex filter  |Flag_goodVertices                      |   1    |                        
+                |beam halo filter       |Flag_globalSuperTightHalo2016Filter    |   1    |
+                |HBHE noise filter      |Flag_HBHENoiseFilter                   |   1    |
+                |HBHEiso noise filter   |Flag_HBHENoiseIsoFilter                |   1    |
+                |ECAL TP filter         |Flag_EcalDeadCellTriggerPrimitiveFilter|   1    |
+                |Bad PF Muon Filter     |Flag_BadPFMuonFilter                   |   1    | 
+                |Bad PF Muon Dz Filter  |Flag_BadPFMuonDzFilter                 |   1    |
+                |ee badSC noise filter  |Flag_eeBadScFilter                     |   1    |
+
+	
 *	Pileup weight / minimum bias x-sec (When using UltraLegacy samples)
 	https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
 
@@ -263,8 +296,8 @@
                                 Efficiencies_muon_generalTracks_Z_Run2016_UL_HIPM_ISO.root ##BCDEF (remonnded but we are not using them for iso>0.2 and we retrun SF=1)
                                 Efficiencies_muon_generalTracks_Z_Run2016_UL_ISO.root #GH (remonnded but we are not using them for iso>0.2 and we retrun SF=1)
 
-                                EfficienciesAndSF_Run2016_UL_HIPM_ISO_SF_0p06.roo (personly created for iso<0.06 and need to update this is taken from lagecy samples and renamed acc.)
-                                EfficienciesAndSF_Run2016_UL_ISO_SF_0p06.roo  (personly created for iso<0.06 and need to update this taken from lagecy samples and renamed acc.)
+                                EfficienciesAndSF_Run2016_UL_HIPM_ISO_SF_0p06.root (personly created for iso<0.06 and need to update this is taken from lagecy samples and renamed acc.)
+                                EfficienciesAndSF_Run2016_UL_ISO_SF_0p06.root  (personly created for iso<0.06 and need to update this taken from lagecy samples and renamed acc.)
 
                         TRI:
                                 Trigger efficiency: provided in json formet only ((remonnded but we are not using them for iso>0.2 and we retrun SF=1))
@@ -286,7 +319,10 @@
 
 
                         Cut Based ID    Trigger :
-                                                corrently using root file form lagecy samples #need to update
+						TRI_Tight    : ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_postVFP_Tight.root # privaltly produced trigger_tightID
+                        			TRI_Veto    :  ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_postVFP_Veto.root # privatly produced # tigger+veto
+                                                
+ 
 *	LumiSectionsJSONFile
         https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideGoodLumiSectionsJSONFile (json file paths are taken from here)
         https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#CurRec (these recommadation seems old)
@@ -367,6 +403,23 @@
                 The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
                 The jets that are used to correct MET are also required to have electromagnetic energy fraction smaller than 0.9 and not to be overlapping with the pf muon candidate.
 
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFiltersRun2#2018_2017_data_and_MC_UL
+
+                MetFilter applied (UL2017) as OR comnibanation of flags listed below
+
+                |filter                 |NanoAOD flag used                      | bit   | 
+                |:---------------------:|:-------------------------------------:|:------|
+                |primary vertex filter  |Flag_goodVertices                      |   1    |                        
+                |beam halo filter       |Flag_globalSuperTightHalo2016Filter    |   1    |
+                |HBHE noise filter      |Flag_HBHENoiseFilter                   |   1    |
+                |HBHEiso noise filter   |Flag_HBHENoiseIsoFilter                |   1    |
+                |ECAL TP filter         |Flag_EcalDeadCellTriggerPrimitiveFilter|   1    |
+                |Bad PF Muon Filter     |Flag_BadPFMuonFilter                   |   1    | 
+                |Bad PF Muon Dz Filter  |Flag_BadPFMuonDzFilter                 |   1    |
+                |ee badSC noise filter  |Flag_eeBadScFilter                     |   1    |
+		|ECAL bad calibration filter update |Flag_ecalBadCalibFilter	|   1 	| 
+
+
 *	Pileup weight / minimum bias x-sec( did not say )
         https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
 
@@ -423,7 +476,11 @@
 						scp /eos/cms/store/group/phys_egamma/SF-Repository/UL17/Electrons/Tight/passingTight94XV2/egammaEffi.txt_EGM2D.root egammaEffi.txt_EGM2D_Tight_UL17.root
 
                         Cut Based ID    Trigger :
-					corrently using root file form lagecy samples #need to update                                                
+		        	TRI_Tight    : ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2017_Tight.root # privatly produced trigger+TightID
+                        	TRI_Veto'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2017_Veto.root # privatlay produced Trigger_VetoID
+ 
+
+                                                
 *	LumiSectionsJSONFile
         https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideGoodLumiSectionsJSONFile (json file paths are taken from here)
         https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#CurRec (these recommadation seems old)
@@ -503,6 +560,23 @@
                 The jet collection used in Type-I corrections for PF MET is AK4PFchs jets with JES corrected Pt>15 GeV (using the L1L2L3 -L1 scheme). 
                 The jets that are used to correct MET are also required to have electromagnetic energy fraction smaller than 0.9 and not to be overlapping with the pf muon candidate.
 	
+
+	 https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFiltersRun2#2018_2017_data_and_MC_UL
+
+                MetFilter applied (UL2018) as OR comnibanation of flags listed below
+
+                |filter                 |NanoAOD flag used                      | bit   |
+                |:---------------------:|:-------------------------------------:|:------|
+                |primary vertex filter  |Flag_goodVertices                      |   1    |
+                |beam halo filter       |Flag_globalSuperTightHalo2016Filter    |   1    |
+                |HBHE noise filter      |Flag_HBHENoiseFilter                   |   1    |
+                |HBHEiso noise filter   |Flag_HBHENoiseIsoFilter                |   1    |
+                |ECAL TP filter         |Flag_EcalDeadCellTriggerPrimitiveFilter|   1    |
+                |Bad PF Muon Filter     |Flag_BadPFMuonFilter                   |   1    |
+                |Bad PF Muon Dz Filter  |Flag_BadPFMuonDzFilter                 |   1    |
+                |ee badSC noise filter  |Flag_eeBadScFilter                     |   1    |
+                |ECAL bad calibration filter update |Flag_ecalBadCalibFilter    |   1    |
+
 *	 Pileup weight / minimum bias x-sec (When using UltraLegacy samples)
          https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
 
@@ -550,7 +624,9 @@
 						scp /eos/cms/store/group/phys_egamma/SF-Repository/UL18/Electrons/Tight/passingTight94XV2/egammaEffi.txt_EGM2D.root egammaEffi.txt_Ele_Tight_EGM2D.root
 
                         Cut Based ID    Trigger :
-                                                #need to update
+                                                TRI_Tight : ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2018_Tight.root # privatly producec Tigger+TightID
+						TRI_Veto  : ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2018_Veto.root # privatly produced Trigger_vetoID
+
 *	LumiSectionsJSONFile
         https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideGoodLumiSectionsJSONFile (json file paths are taken from here)
         https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#CurRec (these recommadation seems old)
