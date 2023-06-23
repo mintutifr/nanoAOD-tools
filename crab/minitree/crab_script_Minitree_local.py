@@ -19,6 +19,8 @@ parser.add_argument('-p', '--path', dest='path',  nargs='+',type=str, default=''
 parser.add_argument('-d', '--dataset', dest='dataset', type=str, default='', help="Dataset")
 parser.add_argument('-t', '--tag', dest='tag', type=str, default='', help="year and mode tag")
 parser.add_argument('-o', '--out', dest='out_dir', type=str, default='', help="output_dir")
+parser.add_argument('-data',"--ISDATA", action="store_true", help="enbale this feature to run on data")
+
 args = parser.parse_args()
 print('--------------------')
 print(args)
@@ -33,24 +35,36 @@ inputFiles = args.path
 file_str=""
 for File in inputFiles: file_str +=File+" "
 
-print()
-print("python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir.split(lep)[0]+ " -p "+ file_str +"  &> "+args.out_dir+"log/log_5.txt\n")
 
+if(args.ISDATA): print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir.split(lep)[0]+ " -p "+ file_str +" -data  &> "+args.out_dir+"log/log_5.txt\n")
+else: print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir.split(lep)[0]+ " -p "+ file_str + "  &> "+args.out_dir+"log/log_5.txt\n")
+if(year in ['UL2016_preVFP','UL2016_postVFP']):
+	poststing = "_"+year.split("_")[-1] # required to define the module of jme correction for data
+else:
+	poststing = ""
 
 
 
 #Minitree_module = getattr(mt , 'MinitreeModuleConstr' + args.tag)
 treecut = getattr(cs, 'cut_' + region + '_' + lep + '_' + year)  # + " && Entry$<500"
 btvmodule = getattr(btv,'btagSF'+year)
-minitreemodule = getattr(minitree,'MinitreeModuleConstr'+region+'_'+lep+'_mc_'+year)
 jmeCorrection = getattr(JME,'jmeCorrections'+year+'_MC_AK4CHS')
 hdampmodule = getattr(hdamp,'hdamp_vari_mainModule')
 geninfomodule =  getattr(genInfo,'gen_info_Module')
+
+if(args.ISDATA):
+	minitreemodule = getattr(minitree,'MinitreeModuleConstr'+region+'_'+lep+'_data_'+year)
+	jmeCorrection = getattr(JME, "jmeCorrectionsUL"+dataset.split('_')[0]+poststing+"_DATA_AK4CHS")				
+else:
+	minitreemodule = getattr(minitree,'MinitreeModuleConstr'+region+'_'+lep+'_mc_'+year)
+	jmeCorrection = getattr(JME,'jmeCorrections'+year+'_MC_AK4CHS')
 
 if( (dataset in ['ttbar_SemiLeptonic','ttbar_FullyLeptonic']) and region == "2J1T1"):
 	runmodules = [btvmodule(),minitreemodule(),jmeCorrection(),hdampmodule(),geninfomodule()]
 elif((dataset in ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel']) and region == "2J1T1"):
 	runmodules = [btvmodule(),minitreemodule(),jmeCorrection(),geninfomodule()]
+elif('Run' in dataset):
+	 runmodules =[minitreemodule(),jmeCorrection()]
 else:
 	runmodules = [btvmodule(),minitreemodule(),jmeCorrection()]
 
@@ -58,8 +72,8 @@ else:
 print('treecut : ',treecut)
 print('inputFiles : ',inputFiles)
 #@print('file number : ',num)
-print('modules imported : ','btagSF'+year,'MinitreeModuleConstr'+region+'_'+lep+'_mc_'+year,'jmeCorrections'+year+'_MC_AK4CHS','hdamp_vari_mainModule')
-print('modules run : ',runmodules)
+print('\n modules imported : ','btagSF'+year,'MinitreeModuleConstr'+region+'_'+lep+'_mc_'+year,'MinitreeModuleConstr'+region+'_'+lep+'_data_'+year,'jmeCorrections'+year+'_MC_AK4CHS'," jmeCorrectionsUL"+dataset.split('_')[0]+poststing+"_DATA_AK4CHS",'hdamp_vari_mainModule')
+print('\n modules run : ',runmodules)
 
 print('--------------------')
 
