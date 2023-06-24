@@ -50,7 +50,7 @@ if __name__ == '__main__':
     elif(MC_Data=="data"):
 	    if(year=='UL2017'): Channels = [ 'Run2017B_'+Lep, 'Run2017C_'+Lep, 'Run2017D_'+Lep, 'Run2017E_'+Lep, 'Run2017F_'+Lep]
 
-    Channels = ['Run2017B_'+Lep] #[]#, 'ttbar_SemiLeptonic']
+    #Channels = ['Run2017B_'+Lep] #[]#, 'ttbar_SemiLeptonic']
 
     print(Channels)
 
@@ -91,7 +91,7 @@ if __name__ == '__main__':
     print(run_commands)
     #print(Hadd_N_createoutfile_cmd[Channel])
 
-    pool = mp.Pool(processes=5)
+    pool = mp.Pool(processes=15)
     pool.map(run_cmd, run_commands)
 
 

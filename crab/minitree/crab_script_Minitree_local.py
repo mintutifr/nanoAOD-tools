@@ -54,7 +54,12 @@ geninfomodule =  getattr(genInfo,'gen_info_Module')
 
 if(args.ISDATA):
 	minitreemodule = getattr(minitree,'MinitreeModuleConstr'+region+'_'+lep+'_data_'+year)
-	jmeCorrection = getattr(JME, "jmeCorrectionsUL"+dataset.split('_')[0]+poststing+"_DATA_AK4CHS")				
+	jmeCorrection = getattr(JME, "jmeCorrectionsUL"+dataset.split('_')[0]+poststing+"_DATA_AK4CHS")			
+
+	Met_filter_UL16 = " && (Flag_goodVertices || Flag_globalSuperTightHalo2016Filter || Flag_HBHENoiseFilter || Flag_HBHENoiseIsoFilter || Flag_EcalDeadCellTriggerPrimitiveFilter || Flag_BadPFMuonFilter || Flag_BadPFMuonDzFilter || Flag_eeBadScFilter)==1"
+	Met_filter_UL17_UL18 = " && (Flag_goodVertices || Flag_globalSuperTightHalo2016Filter || Flag_HBHENoiseFilter || Flag_HBHENoiseIsoFilter || Flag_EcalDeadCellTriggerPrimitiveFilter || Flag_BadPFMuonFilter || Flag_BadPFMuonDzFilter || Flag_eeBadScFilter || Flag_ecalBadCalibFilter)==1"
+	if(year in ["UL2017", "UL2018"]): treecut = treecut+Met_filter_UL17_UL18	
+	elif(year in ["UL2016_preVFP", "UL2016_postVFP"]): treecut = treecut+Met_filter_UL16
 else:
 	minitreemodule = getattr(minitree,'MinitreeModuleConstr'+region+'_'+lep+'_mc_'+year)
 	jmeCorrection = getattr(JME,'jmeCorrections'+year+'_MC_AK4CHS')
@@ -69,8 +74,8 @@ else:
 	runmodules = [btvmodule(),minitreemodule(),jmeCorrection()]
 
 
-print('treecut : ',treecut)
-print('inputFiles : ',inputFiles)
+print('\n treecut : ',treecut)
+print('\n inputFiles : ',inputFiles)
 #@print('file number : ',num)
 print('\n modules imported : ','btagSF'+year,'MinitreeModuleConstr'+region+'_'+lep+'_mc_'+year,'MinitreeModuleConstr'+region+'_'+lep+'_data_'+year,'jmeCorrections'+year+'_MC_AK4CHS'," jmeCorrectionsUL"+dataset.split('_')[0]+poststing+"_DATA_AK4CHS",'hdamp_vari_mainModule')
 print('\n modules run : ',runmodules)
