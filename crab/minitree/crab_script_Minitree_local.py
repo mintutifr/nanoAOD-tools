@@ -19,6 +19,7 @@ parser.add_argument('-p', '--path', dest='path',  nargs='+',type=str, default=''
 parser.add_argument('-d', '--dataset', dest='dataset', type=str, default='', help="Dataset")
 parser.add_argument('-t', '--tag', dest='tag', type=str, default='', help="year and mode tag")
 parser.add_argument('-o', '--out', dest='out_dir', type=str, default='', help="output_dir")
+parser.add_argument('-n', '--lognum', dest='lognum', type=str, default='', help="log txt file number")
 parser.add_argument('-data',"--ISDATA", action="store_true", help="enbale this feature to run on data")
 
 args = parser.parse_args()
@@ -36,8 +37,8 @@ file_str=""
 for File in inputFiles: file_str +=File+" "
 
 
-if(args.ISDATA): print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir.split(lep)[0]+ " -p "+ file_str +" -data  &> "+args.out_dir+"log/log_5.txt\n")
-else: print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir.split(lep)[0]+ " -p "+ file_str + "  &> "+args.out_dir+"log/log_5.txt\n")
+if(args.ISDATA): print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ " -p "+ file_str +" -data  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
+else: print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ " -p "+ file_str + "  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
 if(year in ['UL2016_preVFP','UL2016_postVFP']):
 	poststing = "_"+year.split("_")[-1] # required to define the module of jme correction for data
 else:
@@ -65,13 +66,13 @@ else:
 	jmeCorrection = getattr(JME,'jmeCorrections'+year+'_MC_AK4CHS')
 
 if( (dataset in ['ttbar_SemiLeptonic','ttbar_FullyLeptonic']) and region == "2J1T1"):
-	runmodules = [btvmodule(),minitreemodule(),jmeCorrection(),hdampmodule(),geninfomodule()]
+	runmodules = [btvmodule(),minitreemodule(dataset),jmeCorrection(),hdampmodule(),geninfomodule()]
 elif((dataset in ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel']) and region == "2J1T1"):
-	runmodules = [btvmodule(),minitreemodule(),jmeCorrection(),geninfomodule()]
+	runmodules = [btvmodule(),minitreemodule(dataset),jmeCorrection(),geninfomodule()]
 elif('Run' in dataset):
 	 runmodules =[minitreemodule(),jmeCorrection()]
 else:
-	runmodules = [btvmodule(),minitreemodule(),jmeCorrection()]
+	runmodules = [btvmodule(),minitreemodule(dataset),jmeCorrection()]
 
 
 print('\n treecut : ',treecut)
