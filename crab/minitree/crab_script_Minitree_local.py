@@ -37,8 +37,8 @@ file_str=""
 for File in inputFiles: file_str +=File+" "
 
 
-if(args.ISDATA): print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ " -p "+ file_str +" -data  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
-else: print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ " -p "+ file_str + "  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
+if(args.ISDATA): print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ "-n "+ args.lognum +" -p "+ file_str +" -data  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
+else: print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ "-n "+ args.lognum +" -p "+ file_str + "  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
 if(year in ['UL2016_preVFP','UL2016_postVFP']):
 	poststing = "_"+year.split("_")[-1] # required to define the module of jme correction for data
 else:

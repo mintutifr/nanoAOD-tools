@@ -37,7 +37,7 @@ if __name__ == '__main__':
     Out_dir = args.out_dir
     print(args.ISDATA," ",MC_Data)
     if(MC_Data=="mc"):
-	    Channels_commom = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2L2Nu', 'ZZTo2Q2L'] 
+	    Channels_commom = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2L2Nu', 'ZZTo2Q2L','DYJetsToLL'] 
 
 	    if(Lep=="mu"): Channel_QCD = ['QCD_Pt-15To20_MuEnriched', 'QCD_Pt-20To30_MuEnriched', 'QCD_Pt-30To50_MuEnriched', 'QCD_Pt-50To80_MuEnriched', 'QCD_Pt-80To120_MuEnriched', 'QCD_Pt-120To170_MuEnriched', 'QCD_Pt-170To300_MuEnriched', 'QCD_Pt-300To470_MuEnriched', 'QCD_Pt-470To600_MuEnriched', 'QCD_Pt-600To800_MuEnriched', 'QCD_Pt-800To1000_MuEnriched', 'QCD_Pt-1000_MuEnriched']
 
@@ -48,9 +48,11 @@ if __name__ == '__main__':
 	    Channels = Channels_commom + Channel_QCD #+Channel_sys 
 
     elif(MC_Data=="data"):
-	    if(year=='UL2017'): Channels = [ 'Run2017B_'+Lep, 'Run2017C_'+Lep, 'Run2017D_'+Lep, 'Run2017E_'+Lep, 'Run2017F_'+Lep]
-
-    #Channels = ['Run2017B_'+Lep] #[]#, 'ttbar_SemiLeptonic']
+        if(year=='UL2016preVFP'): Channels = [ 'Run2016B-ver1_'+Lep, 'Run2016B-ver2_'+Lep, 'Run2016C-HIPM_'+Lep, 'Run2016D-HIPM_'+Lep, 'Run2016E-HIPM_'+Lep, 'Run2016F-HIPM_'+Lep]
+        if(year=='UL2016postVFP'): Channels = [ 'Run2016F_'+Lep, 'Run2016G_'+Lep, 'Run2016H_'+Lep]
+        if(year=='UL2017'): Channels = [ 'Run2017B_'+Lep, 'Run2017C_'+Lep, 'Run2017D_'+Lep, 'Run2017E_'+Lep, 'Run2017F_'+Lep]
+        if(year=='UL2018'): Channels = [ 'Run2018A_'+Lep,'Run2018B_'+Lep, 'Run2018C_'+Lep, 'Run2018D_'+Lep] 
+    #Channels = ['ttbar_FullyLeptonic'] #[]#, 'ttbar_SemiLeptonic']
 
     print(Channels)
 
@@ -61,7 +63,7 @@ if __name__ == '__main__':
         print(Channel)
        	local_script_output_dir = Out_dir + year_folder[year]+'/'+region+'/'+Lep+'/'+Channel + '/' 
        	os.makedirs(local_script_output_dir+'log/', exist_ok = True)
-       	#print('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel)
+       	print(' files beeing read from /nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root')
        	if(MC_Data=="mc"): in_files = glob.glob('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root')
         elif(MC_Data=="data"):  in_files = glob.glob('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/Data_' + Lep + '/' + Channel + '/**/**/**/**/*.root')
        	print("total file selected : ",len(in_files))
@@ -83,12 +85,12 @@ if __name__ == '__main__':
             infils = infils+fil+" "
             if(fileSetcounter%total_file_in_set==0 or count+1==len(inputFiles)):
                 #infils = infils+"]"
-                run_commands.append(commom_run_cmd + ' -p ' + infils + ' &> ' + local_script_output_dir + 'log/log_' +str(count+1) + '.txt' )
+                run_commands.append(commom_run_cmd + ' -p ' + infils + ' -n ' + str(count+1) +' &> ' + local_script_output_dir + 'log/log_' +str(count+1) + '.txt' )
                 fileSetcounter = 0
                 infils = ''
             i=i+1
             #if(i==total_file_in_set): break #switch of test perpose take only two file and the scripts
-    print(run_commands)
+    #print(run_commands)
     #print(Hadd_N_createoutfile_cmd[Channel])
 
     pool = mp.Pool(processes=15)
