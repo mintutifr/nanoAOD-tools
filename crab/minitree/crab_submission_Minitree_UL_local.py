@@ -24,7 +24,7 @@ if __name__ == '__main__':
     parser.add_argument('-r', '--region', dest='region', type=str, default='2J1T1', help="region of caluation [ 2J1T1 , 2J1T0 ]")
     parser.add_argument('-y', '--year', dest='year', type=str, default='UL2017', help=" UL2017 UL2016preVFP UL2016postVFP UL2018 ")
     parser.add_argument('-data',"--ISDATA", action="store_true", help="enbale this feature to run on data")
-    parser.add_argument('-o', '--out_dir', dest='out_dir', type=str, default='/nfs/home/common/RUN2_UL/Minitree_crab/', help="Set Dir for the output files")
+    parser.add_argument('-o', '--out_dir', dest='out_dir', type=str, default='/nfs/home/common/RUN2_UL/Minitree_trial/', help="Set Dir for the output files")
 
     args = parser.parse_args()
 

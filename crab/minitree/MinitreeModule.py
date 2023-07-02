@@ -315,7 +315,7 @@ class MinitreeProducer(Module):
                 '2018' : None,
                 'UL2016preVFP' : 35,
                 'UL2016postVFP' : 35,
-                'UL2017' : 37,
+                'UL2017' : 35,
                 'UL2018' : 35} #need to check the trigger
         
         if(self.isMC):
