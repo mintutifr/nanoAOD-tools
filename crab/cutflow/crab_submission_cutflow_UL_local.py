@@ -52,7 +52,7 @@ if __name__ == '__main__':
         if(year=='UL2016postVFP'): Channels = [ 'Run2016F_'+Lep, 'Run2016G_'+Lep, 'Run2016H_'+Lep]
         if(year=='UL2017'): Channels = [ 'Run2017B_'+Lep, 'Run2017C_'+Lep, 'Run2017D_'+Lep, 'Run2017E_'+Lep, 'Run2017F_'+Lep]
         if(year=='UL2018'): Channels = [ 'Run2018A_'+Lep,'Run2018B_'+Lep, 'Run2018C_'+Lep, 'Run2018D_'+Lep] 
-    Channels = ['Run2018C_'+Lep] #[]#, 'ttbar_SemiLeptonic']
+    #Channels = ['Tchannel'] #[]#, 'ttbar_SemiLeptonic']
 
     print(Channels)
 
@@ -63,9 +63,12 @@ if __name__ == '__main__':
         print(Channel)
        	local_script_output_dir = Out_dir + year_folder[year]+'/'+region+'/'+Lep+'/'+Channel + '/' 
        	os.makedirs(local_script_output_dir+'log/', exist_ok = True)
-       	print(' files beeing read from /nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root')
-       	if(MC_Data=="mc"): in_files = glob.glob('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root')
-        elif(MC_Data=="data"):  in_files = glob.glob('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/Data_' + Lep + '/' + Channel + '/**/**/**/**/*.root')
+       	if(MC_Data=="mc"): 
+            in_files = glob.glob('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root')
+            print(' files beeing read from /nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root')
+        elif(MC_Data=="data"):  
+            in_files = glob.glob('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/Data_' + Lep + '/' + Channel + '/**/**/**/**/*.root')
+            print(' files beeing read from /nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/Data_' + Lep + '/' + Channel + '/**/**/**/**/*.root')
        	print("total file selected : ",len(in_files))
        	Hadded_out_file_name = 'Cutflow_'+ Channel+'_'+region+'_'+Lep+ '.root '
        	print(in_files)
@@ -89,11 +92,11 @@ if __name__ == '__main__':
                 fileSetcounter = 0
                 infils = ''
             i=i+1
-            if(i==total_file_in_set): break #switch of test perpose take only two file and the scripts
+            #if(i==total_file_in_set): break #switch of test perpose take only two file and the scripts
     print(run_commands)
     #print(Hadd_N_createoutfile_cmd[Channel])
 
-    pool = mp.Pool(processes=15)
+    pool = mp.Pool(processes=10)
     pool.map(run_cmd, run_commands)
 
 

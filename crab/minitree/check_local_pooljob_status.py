@@ -9,9 +9,10 @@ def run_cmd(run_command):
 
 if __name__ == '__main__':
 	parser = arg.ArgumentParser(description='inputs discription')  
-	parser.add_argument('-d', '--dir', dest='LocalDir', type=str, default=['/nfs/home/common/RUN2_UL/Minitree_crab/SEVENTEEN/2J1T1'], nargs=1, help="condor directory")
+	parser.add_argument('-d', '--dir', dest='LocalDir', type=str, default=['/nfs/home/common/RUN2_UL/Minitree_crab/SEVENTEEN/2J1T1/'], nargs=1, help="condor directory")
 	parser.add_argument('-s', '--sample', dest='samples', type=str, default=['Mc_Nomi'], nargs=1, help="sample [ Mc_Nomi , Mc_Alt , Mc_sys , Data ]")
 	parser.add_argument('-l', '--lepton', dest='leptons', type=str, default=['mu'], nargs=1, help="sample [ mu , el ]")
+	parser.add_argument('-data',"--ISDATA", action="store_true", help="enbale this feature to run on data")
 	
 	args = parser.parse_args()
 	
@@ -32,19 +33,36 @@ if __name__ == '__main__':
 	    exit()
 	
 	year_folder = {'SIXTEEN_preVFP':'UL2016preVFP', 'SIXTEEN_postVFP':'UL2016postVFP', 'SEVENTEEN':'UL2017', 'EIGHTEEN':'UL2018'}
-	year = year_folder[LocalDir.split('/')[-2]] 
+	#print("year : ",year_folder[LocalDir.split('/')[-3]])
+	year = year_folder[LocalDir.split('/')[-3]] 
 	
 	lep = args.leptons[0]
 	sample = args.samples[0]
 	print(year)
-	if(sample=="Mc_Nomi"):
-	    channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']#,'Data'] #WWTolnulnu
-	    channels.append("Data"+year)
 
-	elif(sample=="Mc_sys"):
-	    channels =['Tchannel_TuneCP5CR2',  'Tchannel_TuneCP5CR1',   'Tchannel_hdampdown',   'Tbarchannel_hdampdown',  'Tchannel_TuneCP5down',   'Tbarchannel_hdampup',   'Tchannel_hdampup',   'Tbarchannel_TuneCP5down',   'Tchannel_erdON',   'Tchannel_TuneCP5up',   'Tbarchannel_TuneCP5up',  'Tbarchannel_erdON',   'Tbarchannel_TuneCP5CR1',   'Tbarchannel_TuneCP5CR2']	
+	MC_Data = "data" if args.ISDATA else "mc"
+	print(args.ISDATA," ",MC_Data)
+
+	if(MC_Data=="mc"):
+		Channels_commom = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel','ttbar_Semileptonic','ttbar_Fullyleptonic','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2Q2L','DYJetsToLL']
+
+		if(lep=="mu"): Channel_QCD = ['QCD_Pt-15To20_MuEnriched', 'QCD_Pt-20To30_MuEnriched', 'QCD_Pt-30To50_MuEnriched', 'QCD_Pt-50To80_MuEnriched', 'QCD_Pt-80To120_MuEnriched', 'QCD_Pt-120To170_MuEnriched', 'QCD_Pt-170To300_MuEnriched', 'QCD_Pt-300To470_MuEnriched', 'QCD_Pt-470To600_MuEnriched', 'QCD_Pt-600To800_MuEnriched', 'QCD_Pt-800To1000_MuEnriched', 'QCD_Pt-1000_MuEnriched']
+
+		elif(lep=="el"): Channel_QCD = ['QCD_Pt-15to20_EMEnriched', 'QCD_Pt-20to30_EMEnriched', 'QCD_Pt-30to50_EMEnriched', 'QCD_Pt-50to80_EMEnriched', 'QCD_Pt-80to120_EMEnriched', 'QCD_Pt-120to170_EMEnriched' , 'QCD_Pt-170to300_EMEnriched', 'QCD_Pt-300toInf_EMEnriched' ]
+
+		Channel_sys = ['Tchannel_QCDinspired', 'Tchannel_Gluonmove', 'Tchannel_TuneCP5up', 'Tchannel_TuneCP5down', 'Tchannel_erdON', 'Tchannel_PSweights', 'Tbachannel_QCDinspired', 'Tbachannel_Gluonmove', 'Tbachannel_TuneCP5up', 'Tbachannel_TuneCP5down', 'Tbachannel_erdON', 'Tbarchannel_PSweights', 'ttbar_Fullyleptonic_QCDinspired', 'ttbar_Fullyleptonic_Gluonmove', 'ttbar_Fullyleptonic_erdON', 'ttbar_Fullyleptonic_TuneCPup', 'ttbar_Fullyleptonic_TuneCPdown', 'ttbar_Fullyleptonic_PSweights', 'ttbar_Semileptonic_QCDinspired', 'ttbar_Semileptonic_Gluonmove', 'ttbar_Semileptonic_erdON', 'ttbar_Semileptonic_TuneCP5up', 'ttbar_Semileptonic_TuneCP5down', 'ttbar_Semileptonic_PSweights']
+
+		Channels = Channels_commom + Channel_QCD #+Channel_sys
+
+	elif(MC_Data=="data"):
+		if(year=='UL2016preVFP'): Channels = [ 'Run2016B-ver1_'+lep, 'Run2016B-ver2_'+lep, 'Run2016C-HIPM_'+lep, 'Run2016D-HIPM_'+lep, 'Run2016E-HIPM_'+lep, 'Run2016F-HIPM_'+lep]
+		if(year=='UL2016postVFP'): Channels = [ 'Run2016F_'+lep, 'Run2016G_'+lep, 'Run2016H_'+lep]
+		if(year=='UL2017'): Channels = [ 'Run2017B_'+lep, 'Run2017C_'+lep, 'Run2017D_'+lep, 'Run2017E_'+lep, 'Run2017F_'+lep]
+		if(year=='UL2018'): Channels = [ 'Run2018A_'+lep,'Run2018B_'+lep, 'Run2018C_'+lep, 'Run2018D_'+lep]
+
+
 	
-	#python3 crab_script_Minitree_local.py  -d ttbar_SemiLeptonic -t 2J1T1_mu_mc_UL2017 -o /nfs/home/common/RUN2_UL/Minitree_crab/SEVENTEEN/2J1T1/ -p /nfs/home/common/RUN2_UL/Tree_crab/SEVENTEEN/MC/ttbar_SemiLeptonic/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Tree_12_May23_MCUL2017_ttbar_SemiLeptonic/230512_063649/0000/tree_194.root /nfs/home/common/RUN2_UL/Tree_crab/SEVENTEEN/MC/ttbar_SemiLeptonic/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Tree_12_May23_MCUL2017_ttbar_SemiLeptonic/230512_063649/0000/tree_1.root /nfs/home/common/RUN2_UL/Tree_crab/SEVENTEEN/MC/ttbar_SemiLeptonic/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Tree_12_May23_MCUL2017_ttbar_SemiLeptonic/230512_063649/0000/tree_195.root /nfs/home/common/RUN2_UL/Tree_crab/SEVENTEEN/MC/ttbar_SemiLeptonic/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Tree_12_May23_MCUL2017_ttbar_SemiLeptonic/230512_063649/0000/tree_10.root /nfs/home/common/RUN2_UL/Tree_crab/SEVENTEEN/MC/ttbar_SemiLeptonic/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/Tree_12_May23_MCUL2017_ttbar_SemiLeptonic/230512_063649/0000/tree_145.root   &> /nfs/home/common/RUN2_UL/Minitree_crab/SEVENTEEN/2J1T1/mu/ttbar_SemiLeptonic/log/log_5.txt
+	#python3 crab_script_Minitree_local.py  -d ttbar_Semileptonic -t 2J1T1_mu_mc_UL2017 -o /nfs/home/common/RUN2_UL/Minitree_crab/SEVENTEEN/2J1T1/ -p /nfs/home/common/RUN2_UL/Tree_crab/SEVENTEEN/MC/ttbar_Semileptonic/TTToSemileptonic_TuneCP5_13TeV-powheg-pythia8/Tree_12_May23_MCUL2017_ttbar_Semileptonic/230512_063649/0000/tree_194.root /nfs/home/common/RUN2_UL/Tree_crab/SEVENTEEN/MC/ttbar_Semileptonic/TTToSemileptonic_TuneCP5_13TeV-powheg-pythia8/Tree_12_May23_MCUL2017_ttbar_Semileptonic/230512_063649/0000/tree_1.root /nfs/home/common/RUN2_UL/Tree_crab/SEVENTEEN/MC/ttbar_Semileptonic/TTToSemileptonic_TuneCP5_13TeV-powheg-pythia8/Tree_12_May23_MCUL2017_ttbar_Semileptonic/230512_063649/0000/tree_195.root /nfs/home/common/RUN2_UL/Tree_crab/SEVENTEEN/MC/ttbar_Semileptonic/TTToSemileptonic_TuneCP5_13TeV-powheg-pythia8/Tree_12_May23_MCUL2017_ttbar_Semileptonic/230512_063649/0000/tree_10.root /nfs/home/common/RUN2_UL/Tree_crab/SEVENTEEN/MC/ttbar_Semileptonic/TTToSemileptonic_TuneCP5_13TeV-powheg-pythia8/Tree_12_May23_MCUL2017_ttbar_Semileptonic/230512_063649/0000/tree_145.root   &> /nfs/home/common/RUN2_UL/Minitree_crab/SEVENTEEN/2J1T1/mu/ttbar_Semileptonic/log/log_5.txt
 	
 	print()
 	print("-----------------------------------------    chacking     --------------------------------")
@@ -52,28 +70,29 @@ if __name__ == '__main__':
 	
 	rerun_list = []
 	cwd = os.getcwd()
-	channels = ['ttbar_SemiLeptonic']
-	for channel in channels:
-	    outputDir = LocalDir + '/' + lep + '/' + channel + '/log'
-	    log_files = glob.glob(outputDir + '/log_*.txt')
-	    print(outputDir + '/log_*.txt') 
-	    print(log_files)
-	    for log_file in log_files:
-	        cmd_grep = 'grep "Error" '+log_file
-	        p = subprocess.Popen(cmd_grep, stdout=subprocess.PIPE, shell=True)
-	        (output, err) = p.communicate()
-	        p_status = p.wait()
-	        skip_tranfer_check = False
-	        #print(type(output))
-	        output = str(output)
-	        #print(output.count('Error'))
-	        if(output.count("Error")>0):
-	            cmd_grep2 = 'grep "python3 crab_script_Minitree_local.py" '+log_file
-	            p2 = subprocess.Popen(cmd_grep2, stdout=subprocess.PIPE, shell=True)
-	            (output2, err2) = p2.communicate()
-	            rerun_list.append(str(output2)[2:-3]) # remove /n and b' from and end of command
+
+	Channels = ['Tbarchannel']
+	Error = "crash"
+	for channel in Channels:
+		print("----------------------\n"+channel+"\n-----------------------\n")
+		outputDir = LocalDir + '/' + lep + '/' + channel + '/log'
+		log_files = glob.glob(outputDir + '/log_*.txt')
+		print(outputDir + '/log_*.txt') 
+		#print("All log files list : ",log_files)
+		for log_file in log_files:
+			cmd_grep = 'grep "'+Error+'" '+log_file
+			#print(cmd_grep)
+			p = subprocess.Popen(cmd_grep, stdout=subprocess.PIPE, shell=True)
+			(output, err) = p.communicate()
+			p_status = p.wait()
+			skip_tranfer_check = False
+			output = str(output)
+			if(output.count(Error)>0):
+				cmd_grep2 = 'grep "python3 crab_script_Minitree_local.py" '+log_file
+				p2 = subprocess.Popen(cmd_grep2, stdout=subprocess.PIPE, shell=True)
+				(output2, err2) = p2.communicate()
+				rerun_list.append(str(output2)[3:-3]) # remove /n and b' from and end of command
 	print(rerun_list)
+	print("runing the jobs .... .... ")
 	pool = mp.Pool(processes=10)
 	pool.map(run_cmd, rerun_list)
-
-

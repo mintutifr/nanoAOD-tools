@@ -30,6 +30,7 @@ print(args)
 region = args.tag.split('_')[0]
 lep = args.tag.split('_')[1]
 year = args.tag.split('_')[3]
+
 dataset = args.dataset
 inputFiles = args.path
 #num = inputFiles[0].split('/')[-1].split('.')[0].split('_')[-1]
@@ -37,10 +38,10 @@ file_str=""
 for File in inputFiles: file_str +=File+" "
 
 
-if(args.ISDATA): print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ "-n "+ args.lognum +" -p "+ file_str +" -data  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
-else: print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ "-n "+ args.lognum +" -p "+ file_str + "  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
-if(year in ['UL2016_preVFP','UL2016_postVFP']):
-	poststing = "_"+year.split("_")[-1] # required to define the module of jme correction for data
+if(args.ISDATA): print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ " -n "+ args.lognum +" -p "+ file_str +" -data  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
+else: print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ " -n "+ args.lognum +" -p "+ file_str + "  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
+if('2016preVFP' in year):
+	poststing = '_'+dataset.split("_")[1] # required to define the module of jme correction for data
 else:
 	poststing = ""
 
@@ -55,7 +56,7 @@ geninfomodule =  getattr(genInfo,'gen_info_Module')
 
 if(args.ISDATA):
 	minitreemodule = getattr(minitree,'MinitreeModuleConstr'+region+'_'+lep+'_data_'+year)
-	jmeCorrection = getattr(JME, "jmeCorrectionsUL"+dataset.split('_')[0]+poststing+"_DATA_AK4CHS")			
+	jmeCorrection = getattr(JME, "jmeCorrectionsUL"+dataset.split('_')[0]+poststing+"_DATA_AK4CHS")
 
 	Met_filter_UL16 = " && (Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter)==1"
 	Met_filter_UL17_UL18 = " && (Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilter)==1"

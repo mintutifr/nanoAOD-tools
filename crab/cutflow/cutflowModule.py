@@ -1,20 +1,17 @@
+#!/usr/bin/env python
+import os, sys
 import ROOT
-import numpy as np
-import sys
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 from importlib import import_module
-
-#import argparse as arg
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
-from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
-from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
-
 sys.path.insert(0, '../minitree/')
 from Mc_prob_cal_forBweght import *
-from scaleFactor import *
+from scaleFactor import * 
+
+from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
+from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import gzip
 from correctionlib import _core
-
 
 class cutflow(Module):
     def __init__(self,Total_Njets,BTag_Njets,Isolation,lepflavour,isMC,dataYear,MCsample=None):
@@ -41,27 +38,27 @@ class cutflow(Module):
              else:
                         self.evaluator = _core.CorrectionSet.from_file(JetPUJetID_effi_file[self.dataYear])
 
-        self.TotalLumi = {
-            '2016' : 35882.5,
-            '2017' : 41529.5,
-            '2018' : None,
-            'UL2016preVFP' :  19521,
-            'UL2016postVFP' : 16812,
-            'UL2017' : 41529,
-            'UL2018' : 59222}
+        self.TotalLumi = {  '2016' : 35882.5,
+                            '2017' : 41529.5,
+                            '2018' : None,
+                            'UL2016preVFP' :  19521,
+                            'UL2016postVFP' : 16812,
+                            'UL2017' : 41529,
+                            'UL2018' : 59222}
+
         if(self.isMC == True):
-                from Xsec_Nevent import MCsample_Nevent_Xsec
-                x_sec = float(MCsample_Nevent_Xsec[self.dataYear][self.MCsample][1])
-                NEvents = float(MCsample_Nevent_Xsec[self.dataYear][self.MCsample][0])
-                self.Xsec_wgt = (x_sec*self.TotalLumi[self.dataYear])/NEvents
+            from Xsec_Nevent import MCsample_Nevent_Xsec
+            x_sec = float(MCsample_Nevent_Xsec[self.dataYear][self.MCsample][1])
+            NEvents = float(MCsample_Nevent_Xsec[self.dataYear][self.MCsample][0])
+            self.Xsec_wgt = (x_sec*self.TotalLumi[self.dataYear])/NEvents
         self.Tight_b_tag_crite={
-            '2016' : 0.7527, 
-            '2017' : 0.8001,
-            '2018' : None,
-            'UL2016preVFP' : 0.6502, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
-            'UL2016postVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
-            'UL2017' : 0.7476, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
-            'UL2018' : 0.7100} # https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
+                        '2016' : 0.7527, 
+                        '2017' : 0.8001,
+                        '2018' : None,
+                        'UL2016preVFP' : 0.6502, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
+                        'UL2016postVFP' : 0.6377, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL16postVFP
+                        'UL2017' : 0.7476, # https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation106XUL17
+                        'UL2018' : 0.7100} # https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation106XUL18
         if(self.lepflavour=="mu"):
             self.trigger_selection={
                 '2016' : ['HLT_IsoMu24','HLT_IsoTkMu24'],
@@ -94,8 +91,10 @@ class cutflow(Module):
                 '2018' : None,
                 'UL2016preVFP' : 35,
                 'UL2016postVFP' : 35,
-                'UL2017' : 37,
+                'UL2017' : 35,
                 'UL2018' : 35}
+
+
     def beginJob(self,histFile=None,histDirName=None):
         Module.beginJob(self,histFile,histDirName)
 
@@ -123,10 +122,11 @@ class cutflow(Module):
         self.addObject(self.wightSum_W_bWeight)
         self.addObject(self.N_jets)
         self.addObject(self.N_b_jets)
+
+
     def analyze(self, event):
-        
         try:
-                LHEWeightSign = getattr(event,'LHEWeight_originalXWGTUP')/abs(getattr(event,'LHEWeight_originalXWGTUP'))
+            LHEWeightSign = getattr(event,'LHEWeight_originalXWGTUP')/abs(getattr(event,'LHEWeight_originalXWGTUP'))
         except:
                 LHEWeightSign = 1
         if(self.isMC == True):
@@ -134,41 +134,34 @@ class cutflow(Module):
         PreFireWeight = getattr(event,'L1PreFiringWeight_Nom')
         PV_npvs = getattr(event, "PV_npvs")
         if(self.isMC == True):self.Nocut_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight) 
-        else:self.Nocut_npvs.Fill(PV_npvs)  
+        else:self.Nocut_npvs.Fill(PV_npvs*PreFireWeight)
+        #print "Xsec_wgt = ", self.Xsec_wgt
+        #print "PuWeight = ", PuWeight
+        #print "PreFireWeight = ",PreFireWeight
 
-        ##################################
-        #trigger selection	--0--
-        ###################################
-    
-        trigger_value=0 
+##################################
+#trigger selection	--0--
+###################################
+
+        trigger=0;
         if(self.lepflavour=="mu"):
-            for Trigger in self.trigger_selection[self.dataYear]: 
-                    trigger_value=trigger_value+getattr(event,Trigger)   #trigger value will be o or 1. So sum = 1 if any given trigger is true
-            if(trigger_value != 0):
-                    if(self.isMC == True):self.trig_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight) 
-                    else:self.trig_sel_npvs.Fill(PV_npvs)
+            #print(self.trigger_selection[self.dataYear])
+            for value in self.trigger_selection[self.dataYear]: trigger=trigger+getattr(event,value)
+            if(trigger != 0):
+                if(self.isMC == True):self.trig_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight) 
+                else:self.trig_sel_npvs.Fill(PV_npvs*PreFireWeight)
             else:
-                    return True
+                return True
         elif(self.lepflavour=="el"):
-            for Trigger in self.trigger_selection[self.dataYear]: 
-                trigger_value=trigger_value+getattr(event,Trigger)
-
-            TrigObj_filter = 0
-            if(self.dataYear=="UL2017"): # special case for UL to emulate the ele32 trigger
-                idbits = []
-                for bits_id in getattr(event,'TrigObj_id'): idbits.append(bits_id)
-                for i,bits_filter in enumerate(getattr(event,'TrigObj_filterBits')):
-                    if((bits_filter & 1024) !=0 and idbits[i]==11):
-                        TrigObj_filter = 1   
-            else: TrigObj_filter = 1
-
-            if((trigger_value*TrigObj_filter) !=0): 
-                    if(self.isMC == True):self.trig_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight) 
-                    else:self.trig_sel_npvs.Fill(PV_npvs)
+            for value in self.trigger_selection[self.dataYear]: trigger=trigger+getattr(event,value)
+            if(trigger != 0):
+                if(self.isMC == True):
+                    self.trig_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight) 
+                else:
+                    self.trig_sel_npvs.Fill(PV_npvs*PreFireWeight)
             else:
-                    return True
-        #print "---------------------------------trigger selection      --0------------"
-
+                return True
+	#print "---------------------------------trigger selection      --0------------"
         ##################################
         #one tight lepon selection-1-      
         ###################################
@@ -421,42 +414,11 @@ class cutflow(Module):
                 if(self.lepflavour=="el"): self.MET_filter_npvs.Fill(PV_npvs)
             else:
                 return True
+        elif(self.isMC == True):
+            if(self.lepflavour=="mu"): self.MET_filter_npvs.Fill(1.0)
+            if(self.lepflavour=="el"): self.MET_filter_npvs.Fill(1.0)
+
         return True
-
-
-
-
-        """ outfile = ROOT.TFile( 'Cutflow_hist.root', 'RECREATE' )
-        hist_dir = outfile.mkdir("histograms")
-        hist_dir.cd()
-        self.Nocut_npvs.Write()
-        self.trig_sel_npvs.Write()
-        self.tight_lep_sel_npvs.Write()
-        self.losse_lep_veto_npvs.Write()
-        self.sec_lep_veto_npvs.Write()
-        self.jet_sel_npvs.Write()
-        self.b_tag_jet_sel_npvs.Write()
-        self.N_jets.Write()
-        self.N_b_jets.Write()
-        self.wightSum_WO_bWeight.Write()
-        self.wightSum_W_bWeight.Write()
-        outfile.Close()	
-
-        print()
-        self.b_tag_jet_sel_npvs.Print()
-        self.Nocut_npvs.Print()
-        self.trig_sel_npvs.Print()
-        self.tight_lep_sel_npvs.Print()
-        self.losse_lep_veto_npvs.Print()
-        self.sec_lep_veto_npvs.Print()
-        self.jet_sel_npvs.Print()
-        self.N_jets.Print()
-        self.N_b_jets.Print()
-        self.wightSum_WO_bWeight.Print()
-        self.wightSum_W_bWeight.Print()"""
-        
-
-
 
 cutflowModuleConstr_2J1T1_mu_mc_UL2016preVFP =   lambda MCsample : cutflow(2,1,True,"mu",True,'UL2016preVFP',MCsample)
 cutflowModuleConstr_2J1T1_mu_data_UL2016preVFP =   lambda : cutflow(2,1,True,"mu",False,'UL2016preVFP')
@@ -500,13 +462,3 @@ cutflowModuleConstr_2J1T0_mu_mc_UL2018 =   lambda MCsample : cutflow(2,1,False,"
 cutflowModuleConstr_2J1T0_mu_data_UL2018 =   lambda : cutflow(2,1,False,"mu",False,'UL2018')
 cutflowModuleConstr_2J1T0_el_mc_UL2018 =   lambda MCsample : cutflow(2,1,False,"el",True,'UL2018',MCsample)
 cutflowModuleConstr_2J1T0_el_data_UL2018 =   lambda : cutflow(2,1,False,"el",False,'UL2018')
-#if __name__ == "__main__":
-#    if(InFile==None):
-#   	print "provide input file cutflow.py -f inputfile.root"
-#   	sys.exit()
-
-
-
-    #cutflow_2J1T1_mu_mc_UL2016preVFP = cutflow_class(2,1,True,"el",True,'UL2016preVFP',MCsample)
-    #cutflow_2J1T1_mu_mc_UL2016preVFP.analyze(myTree)
-     

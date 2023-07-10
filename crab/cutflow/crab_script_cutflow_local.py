@@ -8,7 +8,7 @@ sys.path.insert(0, '../minitree/')
 import cut_strings  as cs
 import btv_readfromJson as btv
 
-import cutflowModule_new2 as cf
+import cutflowModule as cf
 
 import argparse
 
@@ -35,8 +35,8 @@ file_str=""
 for File in inputFiles: file_str +=File+" "
 
 
-if(args.ISDATA): print("\n python3 crab_script_cuflow_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ "-n "+ args.lognum +" -p "+ file_str +" -data  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
-else: print("\n python3 crab_script_cutflow_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ "-n "+ args.lognum +" -p "+ file_str + "  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
+if(args.ISDATA): print("\n python3 crab_script_cutflow_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ " -n "+ args.lognum +" -p "+ file_str +" -data  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
+else: print("\n python3 crab_script_cutflow_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ " -n "+ args.lognum +" -p "+ file_str + "  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
 if(year in ['UL2016_preVFP','UL2016_postVFP']):
 	poststing = "_"+year.split("_")[-1] # required to define the module of jme correction for data
 else:
@@ -45,7 +45,7 @@ else:
 
 
 #Minitree_module = getattr(mt , 'MinitreeModuleConstr' + args.tag)
-treecut = "" #getattr(cs, 'cut_' + region + '_' + lep + '_' + year)  # + " && Entry$<500"
+treecut = ""#nGenJet>0" #Entry$<500" nGenDressedLepton>0
 btvmodule = getattr(btv,'btagSF'+year)
 
 if(args.ISDATA):
@@ -76,8 +76,9 @@ p=PostProcessor(
 	provenance=True,
 	fwkJobReport=False,
 	jsonInput=runsAndLumis(),
+	friend=True,
 	noOut=False,
 	histFileName=args.out_dir+"/Cutflow_hist_"+args.lognum+".root",
 	histDirName="histograms")
 p.run()
-
+print("Done")

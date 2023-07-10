@@ -565,7 +565,7 @@ class MinitreeProducer(Module):
         
         for jet in filter(lambda j:(j.btagDeepFlavB>Tight_b_tag_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
             btagjet_id.append(jet) 
-        #print "btagJet_id = ", btagjet_id
+        #print("btagJet_id = ", btagjet_id)
         #if(len(btagjet_id)):   return True
         if(self.Total_Njets == 2 and  self.BTag_Njets == 1 and len(btagjet_id)==0):
                 for jet in filter(lambda j:(j.btagDeepFlavB>Lose_b_tag_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
@@ -984,219 +984,176 @@ MinitreeModuleConstr2J1T1_mu_data_UL2018 = lambda : MinitreeProducer(2,1,True,'m
 MinitreeModuleConstr2J1T1_el_mc_UL2018 = lambda MCsample : MinitreeProducer(2,1,True,'el',True,'UL2018',MCsample)
 MinitreeModuleConstr2J1T1_el_data_UL2018 = lambda : MinitreeProducer(2,1,True,'el',False,'UL2018')
 
-MinitreeModuleConstr2J1T0_mu_mc_UL2018 = lambda : MinitreeProducer(2,1,False,'mu','UL2018',MCsample)
+MinitreeModuleConstr2J1T0_mu_mc_UL2018 = lambda MCsample : MinitreeProducer(2,1,False,'mu',True,'UL2018',MCsample)
 MinitreeModuleConstr2J1T0_mu_data_UL2018 = lambda : MinitreeProducer(2,1,False,'mu',False,'UL2018')
-MinitreeModuleConstr2J1T0_el_mc_UL2018 = lambda : MinitreeProducer(2,1,False,'el','UL2018',MCsample)
+MinitreeModuleConstr2J1T0_el_mc_UL2018 = lambda MCsample : MinitreeProducer(2,1,False,'el',True,'UL2018',MCsample)
 MinitreeModuleConstr2J1T0_el_data_UL2018 = lambda : MinitreeProducer(2,1,False,'el',False,'UL2018')
 
 #----------------------------------------------2J0T------------------------------------------------
 
 
-MinitreeModuleConstr2J0T1_mu_mc_UL2016preVFP = lambda : MinitreeProducer(2,0,True,'mu',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr2J0T1_mu_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(2,0,True,'mu',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr2J0T1_mu_data_UL2016preVFP = lambda : MinitreeProducer(2,0,True,'mu',False,'UL2016preVFP')
-MinitreeModuleConstr2J0T1_el_mc_UL2016preVFP = lambda : MinitreeProducer(2,0,True,'el',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr2J0T1_el_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(2,0,True,'el',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr2J0T1_el_data_UL2016preVFP = lambda : MinitreeProducer(2,0,True,'el',False,'UL2016preVFP')
 
-MinitreeModuleConstr2J0T0_mu_mc_UL2016preVFP = lambda : MinitreeProducer(2,0,False,'mu',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr2J0T0_mu_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(2,0,False,'mu',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr2J0T0_mu_data_UL2016preVFP = lambda : MinitreeProducer(2,0,False,'mu',False,'UL2016preVFP')
-MinitreeModuleConstr2J0T0_el_mc_UL2016preVFP = lambda : MinitreeProducer(2,0,False,'el',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr2J0T0_el_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(2,0,False,'el',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr2J0T0_el_data_UL2016preVFP = lambda : MinitreeProducer(2,0,False,'el',False,'UL2016preVFP')
 
-MinitreeModuleConstr2J0T1_mu_mc_UL2016postVFP = lambda : MinitreeProducer(2,0,True,'mu',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr2J0T1_mu_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(2,0,True,'mu',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr2J0T1_mu_data_UL2016postVFP = lambda : MinitreeProducer(2,0,True,'mu',False,'UL2016postVFP')
-MinitreeModuleConstr2J0T1_el_mc_UL2016postVFP = lambda : MinitreeProducer(2,0,True,'el',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr2J0T1_el_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(2,0,True,'el',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr2J0T1_el_data_UL2016postVFP = lambda : MinitreeProducer(2,0,True,'el',False,'UL2016postVFP')
 
-MinitreeModuleConstr2J0T0_mu_mc_UL2016postVFP = lambda : MinitreeProducer(2,0,False,'mu',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr2J0T0_mu_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(2,0,False,'mu',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr2J0T0_mu_data_UL2016postVFP = lambda : MinitreeProducer(2,0,False,'mu',False,'UL2016postVFP')
-MinitreeModuleConstr2J0T0_el_mc_UL2016postVFP = lambda : MinitreeProducer(2,0,False,'el',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr2J0T0_el_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(2,0,False,'el',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr2J0T0_el_data_UL2016postVFP = lambda : MinitreeProducer(2,0,False,'el',False,'UL2016postVFP')
 
-MinitreeModuleConstr2J0T1_mu_mc_UL2017 = lambda : MinitreeProducer(2,0,True,'mu',True,'UL2017',MCsample)
+MinitreeModuleConstr2J0T1_mu_mc_UL2017 = lambda MCsample : MinitreeProducer(2,0,True,'mu',True,'UL2017',MCsample)
 MinitreeModuleConstr2J0T1_mu_data_UL2017 = lambda : MinitreeProducer(2,0,True,'mu',False,'UL2017')
-MinitreeModuleConstr2J0T1_el_mc_UL2017 = lambda : MinitreeProducer(2,0,True,'el',True,'UL2017',MCsample)
+MinitreeModuleConstr2J0T1_el_mc_UL2017 = lambda MCsample : MinitreeProducer(2,0,True,'el',True,'UL2017',MCsample)
 MinitreeModuleConstr2J0T1_el_data_UL2017 = lambda : MinitreeProducer(2,0,True,'el',False,'UL2017')
 
-MinitreeModuleConstr2J0T0_mu_mc_UL2017 = lambda : MinitreeProducer(2,0,False,'mu',True,'UL2017',MCsample)
+MinitreeModuleConstr2J0T0_mu_mc_UL2017 = lambda MCsample : MinitreeProducer(2,0,False,'mu',True,'UL2017',MCsample)
 MinitreeModuleConstr2J0T0_mu_data_UL2017 = lambda : MinitreeProducer(2,0,False,'mu',False,'UL2017')
-MinitreeModuleConstr2J0T0_el_mc_UL2017 = lambda : MinitreeProducer(2,0,False,'el',True,'UL2017',MCsample)
+MinitreeModuleConstr2J0T0_el_mc_UL2017 = lambda MCsample : MinitreeProducer(2,0,False,'el',True,'UL2017',MCsample)
 MinitreeModuleConstr2J0T0_el_data_UL2017 = lambda : MinitreeProducer(2,0,False,'el',False,'UL2017')
 
-MinitreeModuleConstr2J0T1_mu_mc_UL2018 = lambda : MinitreeProducer(2,0,True,'mu',True,'UL2018',MCsample)
+MinitreeModuleConstr2J0T1_mu_mc_UL2018 = lambda MCsample : MinitreeProducer(2,0,True,'mu',True,'UL2018',MCsample)
 MinitreeModuleConstr2J0T1_mu_data_UL2018 = lambda : MinitreeProducer(2,0,True,'mu',False,'UL2018')
-MinitreeModuleConstr2J0T1_el_mc_UL2018 = lambda : MinitreeProducer(2,0,True,'el',True,'UL2018',MCsample)
+MinitreeModuleConstr2J0T1_el_mc_UL2018 = lambda MCsample : MinitreeProducer(2,0,True,'el',True,'UL2018',MCsample)
 MinitreeModuleConstr2J0T1_el_data_UL2018 = lambda : MinitreeProducer(2,0,True,'el',False,'UL2018')
 
-MinitreeModuleConstr2J0T0_mu_mc_UL2018 = lambda : MinitreeProducer(2,0,False,'mu',True,'UL2018',MCsample)
+MinitreeModuleConstr2J0T0_mu_mc_UL2018 = lambda MCsample : MinitreeProducer(2,0,False,'mu',True,'UL2018',MCsample)
 MinitreeModuleConstr2J0T0_mu_data_UL2018 = lambda : MinitreeProducer(2,0,False,'mu',False,'UL2018')
-MinitreeModuleConstr2J0T0_el_mc_UL2018 = lambda : MinitreeProducer(2,0,False,'el',True,'UL2018',MCsample)
+MinitreeModuleConstr2J0T0_el_mc_UL2018 = lambda MCsample : MinitreeProducer(2,0,False,'el',True,'UL2018',MCsample)
 MinitreeModuleConstr2J0T0_el_data_UL2018 = lambda : MinitreeProducer(2,0,False,'el',False,'UL2018')
 
 #----------------------------------------------3J1T-----------------------------------------------
 
-MinitreeModuleConstr3J1T1_mu_mc_UL2016preVFP = lambda : MinitreeProducer(3,1,True,'mu',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr3J1T1_mu_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(3,1,True,'mu',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr3J1T1_mu_data_UL2016preVFP = lambda : MinitreeProducer(3,1,True,'mu',False,'UL2016preVFP')
-MinitreeModuleConstr3J1T1_el_mc_UL2016preVFP = lambda : MinitreeProducer(3,1,True,'el',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr3J1T1_el_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(3,1,True,'el',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr3J1T1_el_data_UL2016preVFP = lambda : MinitreeProducer(3,1,True,'el',False,'UL2016preVFP')
 
-MinitreeModuleConstr3J1T0_mu_mc_UL2016preVFP = lambda : MinitreeProducer(3,1,False,'mu',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr3J1T0_mu_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(3,1,False,'mu',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr3J1T0_mu_data_UL2016preVFP = lambda : MinitreeProducer(3,1,False,'mu',False,'UL2016preVFP')
-MinitreeModuleConstr3J1T0_el_mc_UL2016preVFP = lambda : MinitreeProducer(3,1,False,'el',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr3J1T0_el_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(3,1,False,'el',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr3J1T0_el_data_UL2016preVFP = lambda : MinitreeProducer(3,1,False,'el',False,'UL2016preVFP')
 
-MinitreeModuleConstr3J1T1_mu_mc_UL2016postVFP = lambda : MinitreeProducer(3,1,True,'mu',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr3J1T1_mu_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(3,1,True,'mu',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr3J1T1_mu_data_UL2016postVFP = lambda : MinitreeProducer(3,1,True,'mu',False,'UL2016postVFP')
-MinitreeModuleConstr3J1T1_el_mc_UL2016postVFP = lambda : MinitreeProducer(3,1,True,'el',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr3J1T1_el_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(3,1,True,'el',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr3J1T1_el_data_UL2016postVFP = lambda : MinitreeProducer(3,1,True,'el',False,'UL2016postVFP')
 
-MinitreeModuleConstr3J1T0_mu_mc_UL2016postVFP = lambda : MinitreeProducer(3,1,False,'mu',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr3J1T0_mu_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(3,1,False,'mu',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr3J1T0_mu_data_UL2016postVFP = lambda : MinitreeProducer(3,1,False,'mu',False,'UL2016postVFP')
-MinitreeModuleConstr3J1T0_el_mc_UL2016postVFP = lambda : MinitreeProducer(3,1,False,'el',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr3J1T0_el_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(3,1,False,'el',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr3J1T0_el_data_UL2016postVFP = lambda : MinitreeProducer(3,1,False,'el',False,'UL2016postVFP')
 
-MinitreeModuleConstr3J1T1_mu_mc_UL2017 = lambda : MinitreeProducer(3,1,True,'mu',True,'UL2017',MCsample)
+MinitreeModuleConstr3J1T1_mu_mc_UL2017 = lambda MCsample : MinitreeProducer(3,1,True,'mu',True,'UL2017',MCsample)
 MinitreeModuleConstr3J1T1_mu_data_UL2017 = lambda : MinitreeProducer(3,1,True,'mu',False,'UL2017')
-MinitreeModuleConstr3J1T1_el_mc_UL2017 = lambda : MinitreeProducer(3,1,True,'el',True,'UL2017',MCsample)
+MinitreeModuleConstr3J1T1_el_mc_UL2017 = lambda MCsample : MinitreeProducer(3,1,True,'el',True,'UL2017',MCsample)
 MinitreeModuleConstr3J1T1_el_data_UL2017 = lambda : MinitreeProducer(3,1,True,'el',False,'UL2017')
 
-MinitreeModuleConstr3J1T0_mu_mc_UL2017 = lambda : MinitreeProducer(3,1,False,'mu',True,'UL2017',MCsample)
+MinitreeModuleConstr3J1T0_mu_mc_UL2017 = lambda MCsample : MinitreeProducer(3,1,False,'mu',True,'UL2017',MCsample)
 MinitreeModuleConstr3J1T0_mu_data_UL2017 = lambda : MinitreeProducer(3,1,False,'mu',False,'UL2017')
-MinitreeModuleConstr3J1T0_el_mc_UL2017 = lambda : MinitreeProducer(3,1,False,'el',True,'UL2017',MCsample)
+MinitreeModuleConstr3J1T0_el_mc_UL2017 = lambda MCsample : MinitreeProducer(3,1,False,'el',True,'UL2017',MCsample)
 MinitreeModuleConstr3J1T0_el_data_UL2017 = lambda : MinitreeProducer(3,1,False,'el',False,'UL2017')
 
-MinitreeModuleConstr3J1T1_mu_mc_UL2018 = lambda : MinitreeProducer(3,1,True,'mu',True,'UL2018',MCsample)
+MinitreeModuleConstr3J1T1_mu_mc_UL2018 = lambda MCsample : MinitreeProducer(3,1,True,'mu',True,'UL2018',MCsample)
 MinitreeModuleConstr3J1T1_mu_data_UL2018 = lambda : MinitreeProducer(3,1,True,'mu',False,'UL2018')
-MinitreeModuleConstr3J1T1_el_mc_UL2018 = lambda : MinitreeProducer(3,1,True,'el',True,'UL2018',MCsample)
+MinitreeModuleConstr3J1T1_el_mc_UL2018 = lambda MCsample : MinitreeProducer(3,1,True,'el',True,'UL2018',MCsample)
 MinitreeModuleConstr3J1T1_el_data_UL2018 = lambda : MinitreeProducer(3,1,True,'el',False,'UL2018')
 
-MinitreeModuleConstr3J1T0_mu_mc_UL2018 = lambda : MinitreeProducer(3,1,False,'mu',True,'UL2018',MCsample)
+MinitreeModuleConstr3J1T0_mu_mc_UL2018 = lambda MCsample : MinitreeProducer(3,1,False,'mu',True,'UL2018',MCsample)
 MinitreeModuleConstr3J1T0_mu_data_UL2018 = lambda : MinitreeProducer(3,1,False,'mu',False,'UL2018')
-MinitreeModuleConstr3J1T0_el_mc_UL2018 = lambda : MinitreeProducer(3,1,False,'el',True,'UL2018',MCsample)
+MinitreeModuleConstr3J1T0_el_mc_UL2018 = lambda MCsample : MinitreeProducer(3,1,False,'el',True,'UL2018',MCsample)
 MinitreeModuleConstr3J1T0_el_data_UL2018 = lambda : MinitreeProducer(3,1,False,'el',False,'UL2018')
 
 #------------------------------------------3J2T---------------------------------------------------
 
-MinitreeModuleConstr3J2T1_mu_mc_2016 = lambda : MinitreeProducer(3,2,True,'mu',True,'2016')
-MinitreeModuleConstr3J2T1_mu_data_2016 = lambda : MinitreeProducer(3,2,True,'mu',False,'2016')
-MinitreeModuleConstr3J2T1_el_mc_2016 = lambda : MinitreeProducer(3,2,True,'el',True,'2016')
-MinitreeModuleConstr3J2T1_el_data_2016 = lambda : MinitreeProducer(3,2,True,'el',False,'2016')
 
-MinitreeModuleConstr3J2T0_mu_mc_2016 = lambda : MinitreeProducer(3,2,False,'mu',True,'2016')
-MinitreeModuleConstr3J2T0_mu_data_2016 = lambda : MinitreeProducer(3,2,False,'mu',False,'2016')
-MinitreeModuleConstr3J2T0_el_mc_2016 = lambda : MinitreeProducer(3,2,False,'el',True,'2016')
-MinitreeModuleConstr3J2T0_el_data_2016 = lambda : MinitreeProducer(3,2,False,'el',False,'2016')
-
-MinitreeModuleConstr3J2T1_mu_mc_2017 = lambda : MinitreeProducer(3,2,True,'mu',True,'2017')
-MinitreeModuleConstr3J2T1_mu_data_2017 = lambda : MinitreeProducer(3,2,True,'mu',False,'2017')
-MinitreeModuleConstr3J2T1_el_mc_2017 = lambda : MinitreeProducer(3,2,True,'el',True,'2017')
-MinitreeModuleConstr3J2T1_el_data_2017 = lambda : MinitreeProducer(3,2,True,'el',False,'2017')
-
-MinitreeModuleConstr3J2T0_mu_mc_2017 = lambda : MinitreeProducer(3,2,False,'mu',True,'2017')
-MinitreeModuleConstr3J2T0_mu_data_2017 = lambda : MinitreeProducer(3,2,False,'mu',False,'2017')
-MinitreeModuleConstr3J2T0_el_mc_2017 = lambda : MinitreeProducer(3,2,False,'el',True,'2017')
-MinitreeModuleConstr3J2T0_el_data_2017 = lambda : MinitreeProducer(3,2,False,'el',False,'2017')
-
-#------------------------------------   UL --------------------------------------------------------
-
-
-MinitreeModuleConstr3J2T1_mu_mc_UL2016preVFP = lambda : MinitreeProducer(3,2,True,'mu',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr3J2T1_mu_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(3,2,True,'mu',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr3J2T1_mu_data_UL2016preVFP = lambda : MinitreeProducer(3,2,True,'mu',False,'UL2016preVFP')
-MinitreeModuleConstr3J2T1_el_mc_UL2016preVFP = lambda : MinitreeProducer(3,2,True,'el',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr3J2T1_el_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(3,2,True,'el',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr3J2T1_el_data_UL2016preVFP = lambda : MinitreeProducer(3,2,True,'el',False,'UL2016preVFP')
 
-MinitreeModuleConstr3J2T0_mu_mc_UL2016preVFP = lambda : MinitreeProducer(3,2,False,'mu',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr3J2T0_mu_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(3,2,False,'mu',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr3J2T0_mu_data_UL2016preVFP = lambda : MinitreeProducer(3,2,False,'mu',False,'UL2016preVFP')
-MinitreeModuleConstr3J2T0_el_mc_UL2016preVFP = lambda : MinitreeProducer(3,2,False,'el',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr3J2T0_el_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(3,2,False,'el',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr3J2T0_el_data_UL2016preVFP = lambda : MinitreeProducer(3,2,False,'el',False,'UL2016preVFP')
 
-MinitreeModuleConstr3J2T1_mu_mc_UL2016postVFP = lambda : MinitreeProducer(3,2,True,'mu',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr3J2T1_mu_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(3,2,True,'mu',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr3J2T1_mu_data_UL2016postVFP = lambda : MinitreeProducer(3,2,True,'mu',False,'UL2016postVFP')
-MinitreeModuleConstr3J2T1_el_mc_UL2016postVFP = lambda : MinitreeProducer(3,2,True,'el',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr3J2T1_el_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(3,2,True,'el',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr3J2T1_el_data_UL2016postVFP = lambda : MinitreeProducer(3,2,True,'el',False,'UL2016postVFP')
 
-MinitreeModuleConstr3J2T0_mu_mc_UL2016postVFP = lambda : MinitreeProducer(3,2,False,'mu',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr3J2T0_mu_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(3,2,False,'mu',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr3J2T0_mu_data_UL2016postVFP = lambda : MinitreeProducer(3,2,False,'mu',False,'UL2016postVFP')
-MinitreeModuleConstr3J2T0_el_mc_UL2016postVFP = lambda : MinitreeProducer(3,2,False,'el',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr3J2T0_el_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(3,2,False,'el',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr3J2T0_el_data_UL2016postVFP = lambda : MinitreeProducer(3,2,False,'el',False,'UL2016postVFP')
 
-MinitreeModuleConstr3J2T1_mu_mc_UL2017 = lambda : MinitreeProducer(3,2,True,'mu',True,'UL2017',MCsample)
+MinitreeModuleConstr3J2T1_mu_mc_UL2017 = lambda MCsample : MinitreeProducer(3,2,True,'mu',True,'UL2017',MCsample)
 MinitreeModuleConstr3J2T1_mu_data_UL2017 = lambda : MinitreeProducer(3,2,True,'mu',False,'UL2017')
-MinitreeModuleConstr3J2T1_el_mc_UL2017 = lambda : MinitreeProducer(3,2,True,'el',True,'UL2017',MCsample)
+MinitreeModuleConstr3J2T1_el_mc_UL2017 = lambda MCsample : MinitreeProducer(3,2,True,'el',True,'UL2017',MCsample)
 MinitreeModuleConstr3J2T1_el_data_UL2017 = lambda : MinitreeProducer(3,2,True,'el',False,'UL2017')
 
-MinitreeModuleConstr3J2T0_mu_mc_UL2017 = lambda : MinitreeProducer(3,2,False,'mu',True,'UL2017',MCsample)
+MinitreeModuleConstr3J2T0_mu_mc_UL2017 = lambda MCsample : MinitreeProducer(3,2,False,'mu',True,'UL2017',MCsample)
 MinitreeModuleConstr3J2T0_mu_data_UL2017 = lambda : MinitreeProducer(3,2,False,'mu',False,'UL2017')
-MinitreeModuleConstr3J2T0_el_mc_UL2017 = lambda : MinitreeProducer(3,2,False,'el',True,'UL2017',MCsample)
+MinitreeModuleConstr3J2T0_el_mc_UL2017 = lambda MCsample : MinitreeProducer(3,2,False,'el',True,'UL2017',MCsample)
 MinitreeModuleConstr3J2T0_el_data_UL2017 = lambda : MinitreeProducer(3,2,False,'el',False,'UL2017')
 
-MinitreeModuleConstr3J2T1_mu_mc_UL2018 = lambda : MinitreeProducer(3,2,True,'mu',True,'UL2018',MCsample)
+MinitreeModuleConstr3J2T1_mu_mc_UL2018 = lambda MCsample : MinitreeProducer(3,2,True,'mu',True,'UL2018',MCsample)
 MinitreeModuleConstr3J2T1_mu_data_UL2018 = lambda : MinitreeProducer(3,2,True,'mu',False,'UL2018')
-MinitreeModuleConstr3J2T1_el_mc_UL2018 = lambda : MinitreeProducer(3,2,True,'el',True,'UL2018',MCsample)
+MinitreeModuleConstr3J2T1_el_mc_UL2018 = lambda MCsample : MinitreeProducer(3,2,True,'el',True,'UL2018',MCsample)
 MinitreeModuleConstr3J2T1_el_data_UL2018 = lambda : MinitreeProducer(3,2,True,'el',False,'UL2018')
 
-MinitreeModuleConstr3J2T0_mu_mc_UL2018 = lambda : MinitreeProducer(3,2,False,'mu',True,'UL2018',MCsample)
+MinitreeModuleConstr3J2T0_mu_mc_UL2018 = lambda MCsample : MinitreeProducer(3,2,False,'mu',True,'UL2018',MCsample)
 MinitreeModuleConstr3J2T0_mu_data_UL2018 = lambda : MinitreeProducer(3,2,False,'mu',False,'UL2018')
-MinitreeModuleConstr3J2T0_el_mc_UL2018 = lambda : MinitreeProducer(3,2,False,'el',True,'UL2018',MCsample)
+MinitreeModuleConstr3J2T0_el_mc_UL2018 = lambda MCsample : MinitreeProducer(3,2,False,'el',True,'UL2018',MCsample)
 MinitreeModuleConstr3J2T0_el_data_UL2018 = lambda : MinitreeProducer(3,2,False,'el',False,'UL2018')
 #------------------------------------------ 2J1L0T---------------------------------------------------------
-MinitreeModuleConstr2J1L0T1_mu_mc_2016 = lambda : MinitreeProducer(2,1,True,'mu',True,'2016')
-MinitreeModuleConstr2J1L0T1_mu_data_2016 = lambda : MinitreeProducer(2,1,True,'mu',False,'2016')
-MinitreeModuleConstr2J1L0T1_el_mc_2016 = lambda : MinitreeProducer(2,1,True,'el',True,'2016')
-MinitreeModuleConstr2J1L0T1_el_data_2016 = lambda : MinitreeProducer(2,1,True,'el',False,'2016')
 
-MinitreeModuleConstr2J1L0T0_mu_mc_2016 = lambda : MinitreeProducer(2,1,False,'mu',True,'2016')
-MinitreeModuleConstr2J1L0T0_mu_data_2016 = lambda : MinitreeProducer(2,1,False,'mu',False,'2016')
-MinitreeModuleConstr2J1L0T0_el_mc_2016 = lambda : MinitreeProducer(2,1,False,'el',True,'2016')
-MinitreeModuleConstr2J1L0T0_el_data_2016 = lambda : MinitreeProducer(2,1,False,'el',False,'2016')
-
-MinitreeModuleConstr2J1L0T1_mu_mc_2017 = lambda : MinitreeProducer(2,1,True,'mu',True,'2017')
-MinitreeModuleConstr2J1L0T1_mu_data_2017 = lambda : MinitreeProducer(2,1,True,'mu',False,'2017')
-MinitreeModuleConstr2J1L0T1_el_mc_2017 = lambda : MinitreeProducer(2,1,True,'el',True,'2017')
-MinitreeModuleConstr2J1L0T1_el_data_2017 = lambda : MinitreeProducer(2,1,True,'el',False,'2017')
-
-MinitreeModuleConstr2J1L0T1_mu_mc_2017 = lambda : MinitreeProducer(2,1,False,'mu',True,'2017')
-MinitreeModuleConstr2J1L0T1_mu_data_2017 = lambda : MinitreeProducer(2,1,False,'mu',False,'2017')
-MinitreeModuleConstr2J1L0T1_el_mc_2017 = lambda : MinitreeProducer(2,1,False,'el',True,'2017')
-MinitreeModuleConstr2J1L0T1_el_data_2017 = lambda : MinitreeProducer(2,1,False,'el',False,'2017')
-
-#------------------------------------------  UL -------------------------------------------------------------
-
-MinitreeModuleConstr2J1L0T1_mu_mc_UL2016preVFP = lambda : MinitreeProducer(2,1,True,'mu',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr2J1L0T1_mu_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(2,1,True,'mu',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr2J1L0T1_mu_data_UL2016preVFP = lambda : MinitreeProducer(2,1,True,'mu',False,'UL2016preVFP')
-MinitreeModuleConstr2J1L0T1_el_mc_UL2016preVFP = lambda : MinitreeProducer(2,1,True,'el',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr2J1L0T1_el_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(2,1,True,'el',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr2J1L0T1_el_data_UL2016preVFP = lambda : MinitreeProducer(2,1,True,'el',False,'UL2016preVFP')
 
-MinitreeModuleConstr2J1L0T0_mu_mc_UL2016preVFP = lambda : MinitreeProducer(2,1,False,'mu',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr2J1L0T0_mu_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(2,1,False,'mu',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr2J1L0T0_mu_data_UL2016preVFP = lambda : MinitreeProducer(2,1,False,'mu',False,'UL2016preVFP')
-MinitreeModuleConstr2J1L0T0_el_mc_UL2016preVFP = lambda : MinitreeProducer(2,1,False,'el',True,'UL2016preVFP',MCsample)
+MinitreeModuleConstr2J1L0T0_el_mc_UL2016preVFP = lambda MCsample : MinitreeProducer(2,1,False,'el',True,'UL2016preVFP',MCsample)
 MinitreeModuleConstr2J1L0T0_el_data_UL2016preVFP = lambda : MinitreeProducer(2,1,False,'el',False,'UL2016preVFP')
 
-MinitreeModuleConstr2J1L0T1_mu_mc_UL2016postVFP = lambda : MinitreeProducer(2,1,True,'mu',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr2J1L0T1_mu_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(2,1,True,'mu',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr2J1L0T1_mu_data_UL2016postVFP = lambda : MinitreeProducer(2,1,True,'mu',False,'UL2016postVFP')
-MinitreeModuleConstr2J1L0T1_el_mc_UL2016postVFP = lambda : MinitreeProducer(2,1,True,'el',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr2J1L0T1_el_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(2,1,True,'el',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr2J1L0T1_el_data_UL2016postVFP = lambda : MinitreeProducer(2,1,True,'el',False,'UL2016postVFP')
 
-MinitreeModuleConstr2J1L0T0_mu_mc_UL2016postVFP = lambda : MinitreeProducer(2,1,False,'mu',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr2J1L0T0_mu_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(2,1,False,'mu',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr2J1L0T0_mu_data_UL2016postVFP = lambda : MinitreeProducer(2,1,False,'mu',False,'UL2016postVFP')
-MinitreeModuleConstr2J1L0T0_el_mc_UL2016postVFP = lambda : MinitreeProducer(2,1,False,'el',True,'UL2016postVFP',MCsample)
+MinitreeModuleConstr2J1L0T0_el_mc_UL2016postVFP = lambda MCsample : MinitreeProducer(2,1,False,'el',True,'UL2016postVFP',MCsample)
 MinitreeModuleConstr2J1L0T0_el_data_UL2016postVFP = lambda : MinitreeProducer(2,1,False,'el',False,'UL2016postVFP')
 
-MinitreeModuleConstr2J1L0T1_mu_mc_UL2017 = lambda : MinitreeProducer(2,1,True,'mu',True,'UL2017',MCsample)
+MinitreeModuleConstr2J1L0T1_mu_mc_UL2017 = lambda MCsample : MinitreeProducer(2,1,True,'mu',True,'UL2017',MCsample)
 MinitreeModuleConstr2J1L0T1_mu_data_UL2017 = lambda : MinitreeProducer(2,1,True,'mu',False,'UL2017')
-MinitreeModuleConstr2J1L0T1_el_mc_UL2017 = lambda : MinitreeProducer(2,1,True,'el',True,'UL2017',MCsample)
+MinitreeModuleConstr2J1L0T1_el_mc_UL2017 = lambda MCsample : MinitreeProducer(2,1,True,'el',True,'UL2017',MCsample)
 MinitreeModuleConstr2J1L0T1_el_data_UL2017 = lambda : MinitreeProducer(2,1,True,'el',False,'UL2017')
 
-MinitreeModuleConstr2J1L0T0_mu_mc_UL2017 = lambda : MinitreeProducer(2,1,False,'mu',True,'UL2017',MCsample)
+MinitreeModuleConstr2J1L0T0_mu_mc_UL2017 = lambda MCsample : MinitreeProducer(2,1,False,'mu',True,'UL2017',MCsample)
 MinitreeModuleConstr2J1L0T0_mu_data_UL2017 = lambda : MinitreeProducer(2,1,False,'mu',False,'UL2017')
-MinitreeModuleConstr2J1L0T0_el_mc_UL2017 = lambda : MinitreeProducer(2,1,False,'el',True,'UL2017',MCsample)
+MinitreeModuleConstr2J1L0T0_el_mc_UL2017 = lambda MCsample : MinitreeProducer(2,1,False,'el',True,'UL2017',MCsample)
 MinitreeModuleConstr2J1L0T0_el_data_UL2017 = lambda : MinitreeProducer(2,1,False,'el',False,'UL2017')
 
-MinitreeModuleConstr2J1L0T1_mu_mc_UL2018 = lambda : MinitreeProducer(2,1,True,'mu',True,'UL2018',MCsample)
+MinitreeModuleConstr2J1L0T1_mu_mc_UL2018 = lambda MCsample : MinitreeProducer(2,1,True,'mu',True,'UL2018',MCsample)
 MinitreeModuleConstr2J1L0T1_mu_data_UL2018 = lambda : MinitreeProducer(2,1,True,'mu',False,'UL2018')
-MinitreeModuleConstr2J1L0T1_el_mc_UL2018 = lambda : MinitreeProducer(2,1,True,'el',True,'UL2018',MCsample)
+MinitreeModuleConstr2J1L0T1_el_mc_UL2018 = lambda MCsample : MinitreeProducer(2,1,True,'el',True,'UL2018',MCsample)
 MinitreeModuleConstr2J1L0T1_el_data_UL2018 = lambda : MinitreeProducer(2,1,True,'el',False,'UL2018')
 
-MinitreeModuleConstr2J1L0T0_mu_mc_UL2018 = lambda : MinitreeProducer(2,1,False,'mu',True,'UL2018',MCsample)
+MinitreeModuleConstr2J1L0T0_mu_mc_UL2018 = lambda MCsample : MinitreeProducer(2,1,False,'mu',True,'UL2018',MCsample)
 MinitreeModuleConstr2J1L0T0_mu_data_UL2018 = lambda : MinitreeProducer(2,1,False,'mu',False,'UL2018')
-MinitreeModuleConstr2J1L0T0_el_mc_UL2018 = lambda : MinitreeProducer(2,1,False,'el',True,'UL2018',MCsample)
+MinitreeModuleConstr2J1L0T0_el_mc_UL2018 = lambda MCsample : MinitreeProducer(2,1,False,'el',True,'UL2018',MCsample)
 MinitreeModuleConstr2J1L0T0_el_data_UL2018 = lambda : MinitreeProducer(2,1,False,'el',False,'UL2018')
