@@ -13,8 +13,12 @@ std.SetMaximum(100.0)
 std.SetMinimum(0.0)
 std.GetXaxis().SetLimits(0.0, 100.0)
 std.GetXaxis().SetTitle('#varepsilon_{Sig} (%)')
+std.GetXaxis().SetLabelSize(0.05)
+std.GetXaxis().SetTitleSize(0.055)
 std.GetYaxis().SetTitle('#varepsilon_{Bkg} (%)')
-std.GetYaxis().SetTitleOffset(1.3)
+std.GetYaxis().SetTitleOffset(1.0)
+std.GetYaxis().SetLabelSize(0.04)
+std.GetYaxis().SetTitleSize(0.05)
 std.SetTitle("")
 filedir = "ROC_TGraphs/"
 
@@ -38,6 +42,7 @@ legend_txt = ["UL2016preVFP #it{#mu^{#pm} + jets}","UL2016preVFP #it{e^{#pm} + j
 roc_array = []
 rocInt_array = []
 for i in range(len(files_to_read_roc)):
+        print(filedir+files_to_read_roc[i])
         inputfile = rt.TFile(filedir+files_to_read_roc[i],'read')
 
         rocInt_Grp = inputfile.Get("rocInt")
@@ -53,10 +58,20 @@ for i in range(len(files_to_read_roc)):
 	
 
 print(rocInt_array)        
-c1 = rt.TCanvas('c1', '', 800, 800, 800, 800)
+print("here----------------")
+c1 = rt.TCanvas('c1', '', 800, 700)#, 800, 800)
 c1.cd()
 #c1.SetLogy()
 #c1.SetLogx()
+pad1 = rt.TPad("pad1", "pad1",0.0,0.0,1.0,0.97)
+pad1.SetBottomMargin(0.12)
+pad1.SetTopMargin(0.12)
+pad1.SetLeftMargin(0.11)
+pad1.SetTicky()
+pad1.SetTickx()
+pad1.SetRightMargin(0.143)
+pad1.Draw()
+pad1.cd()
 
 std.Draw()
 roc_array[0].Draw("same")
@@ -64,15 +79,22 @@ for i in range(1,len(files_to_read_roc)):
      roc_array[i].Draw("P;same")
      x =np
 
-region_tag = getregion_tag("2J1T", 2, 0.91, 3, 205)
+getCMSIntrenal_tag = getCMSIntrenal_tag(0.20, 0.80, 0.40, 0.87)
+getCMSIntrenal_tag.Draw("same")
+
+leptonjet_tag = leptonjet_tag("mu",0.20, 0.75, 0.30, 0.83)
+#leptonjet_tag.Draw("same")
+
+region_tag = getregion_tag("2J1T", 0.20, 0.75, 0.30, 0.83)
 region_tag.Draw("same")
+
 c1.Update()
 
-legend = rt.TLegend(0.10193646, 0.518435, 0.3293552, 0.83026143)
+legend = rt.TLegend(0.15193646, 0.418435, 0.3793552, 0.73026143)
 legend.Clear()
 #legend.SetNColumns(2)
 legend.SetBorderSize(1)
-legend.SetTextSize(0.04)
+legend.SetTextSize(0.05)
 legend.SetLineColor(0)
 legend.SetLineStyle(1)
 legend.SetLineWidth(1)
