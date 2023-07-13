@@ -1,5 +1,5 @@
 import fileinput, string, sys, os, time, datetime,subprocess
-sys.path.insert(0,'/nfs/home/mintu/work/private/Nanoaod/CMSSW_12_1_1/src/PhysicsTools/NanoAODTools/crab/tree')
+sys.path.insert(0,'/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/tree')
 import argparse as arg
 sys.path.append('../tree')
 parser = arg.ArgumentParser(description='inputs discription')
@@ -56,6 +56,7 @@ elif(MC_Data=="data"):
         if(year=='UL2017'): Channels = [ 'Run2017B_'+Lep, 'Run2017C_'+Lep, 'Run2017D_'+Lep, 'Run2017E_'+Lep, 'Run2017F_'+Lep]
         if(year=='UL2018'): Channels = [ 'Run2018A_'+Lep,'Run2018B_'+Lep, 'Run2018C_'+Lep, 'Run2018D_'+Lep] 
 
+#Channels = ['tw_top']
 print Channels
 print "len(Datasets) = ",len(Datasets)
     
@@ -64,31 +65,20 @@ for i in range(0,5):#len(Channels)):
     RequestName = Channels[i]
     print "\n-------     ", RequestName ,"      --------------"
     if(not args.ISlocal):
-        print("Evaluating files from cmsdas")
         if(Datasets.has_key(RequestName)):
             Dataset = Datasets[RequestName]
         else:
             print( "RequestName '"+RequestName+"'does not find in the dataset")
             continue
-        print
-        #print "---------------------------------------     ", RequestName ,"      ---------------------------------"
-        #if(RequestName=="ttbar_SemiLeptonic_mtop1715"):proceed=False
-        #if(proceed==True):continue
-        cmd_count = 'dasgoclient --query="file, dataset='+Dataset+' | sum(file.nevents)"'
+        cmd_count = 'dasgoclient --query="file, dataset='+Dataset+'" | wc -l'
         #print cmd_count
         os.system(cmd_count)
         p = subprocess.Popen(cmd_count, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
         #p_status = p.wait()
 
-        print " Number of Events : ",output[19:] 
+        #print output 
 
-        if(not(RequestName.find("QCD")!=-1)): 
-            cmd_dasgoclint = 'dasgoclient -query="file dataset='+Dataset+'" > filename.txt'
-            #print cmd_dasgoclint
-            os.system(cmd_dasgoclint) 
-
-            R.LHEWeightSign() 
     else:
             year_folder = {'UL2016preVFP': 'SIXTEEN_preVFP', 'UL2016postVFP': 'SIXTEEN_postVFP', 'UL2017': 'SEVENTEEN', 'UL2018': 'EIGHTEEN'}
             cmd_command = 'ls /nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/**/'+RequestName+'/**/**/**/**/*.root | wc -l'
