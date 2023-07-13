@@ -35,7 +35,7 @@ if(year == 'UL2017'):
     Datasets = Datasets_MC_UL2017
 if(year == 'UL2018'):
     from dataset_UL2018 import *
-    Datasets = Datasets_MC_UL2018
+    Datasets = dict(Datasets_MC_UL2018, **Datasets_sys_MC_UL2018)
 
 MC_Data = "data" if args.ISDATA else "mc"
 
@@ -46,7 +46,7 @@ if(MC_Data=="mc"):
 
     Channel_QCD_el = ['QCD_Pt-15to20_EMEnriched', 'QCD_Pt-20to30_EMEnriched', 'QCD_Pt-30to50_EMEnriched', 'QCD_Pt-50to80_EMEnriched', 'QCD_Pt-80to120_EMEnriched', 'QCD_Pt-120to170_EMEnriched' , 'QCD_Pt-170to300_EMEnriched', 'QCD_Pt-300toInf_EMEnriched' ]
 
-    Channel_sys = ['Tchannel_QCDinspired', 'Tchannel_Gluonmove', 'Tchannel_TuneCP5up', 'Tchannel_TuneCP5down', 'Tchannel_erdON', 'Tchannel_PSweights', 'Tbachannel_QCDinspired', 'Tbachannel_Gluonmove', 'Tbachannel_TuneCP5up', 'Tbachannel_TuneCP5down', 'Tbachannel_erdON', 'Tbarchannel_PSweights', 'ttbar_FullyLeptonic_QCDinspired', 'ttbar_FullyLeptonic_Gluonmove', 'ttbar_FullyLeptonic_erdON', 'ttbar_FullyLeptonic_TuneCPup', 'ttbar_FullyLeptonic_TuneCPdown', 'ttbar_FullyLeptonic_PSweights', 'ttbar_SemiLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'ttbar_SemiLeptonic_erdON', 'ttbar_SemiLeptonic_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5down', 'ttbar_SemiLeptonic_PSweights']
+    Channel_sys = ['Tchannel_QCDinspired', 'Tchannel_Gluonmove', 'Tchannel_TuneCP5up', 'Tchannel_TuneCP5down', 'Tchannel_erdON', 'Tbachannel_QCDinspired', 'Tbachannel_Gluonmove', 'Tbachannel_TuneCP5up', 'Tbachannel_TuneCP5down', 'Tbarchannel_erdON', 'ttbar_FullyLeptonic_QCDinspired', 'ttbar_FullyLeptonic_Gluonmove', 'ttbar_FullyLeptonic_erdON', 'ttbar_FullyLeptonic_TuneCPup', 'ttbar_FullyLeptonic_TuneCPdown', 'ttbar_SemiLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'ttbar_SemiLeptonic_erdON', 'ttbar_SemiLeptonic_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5down',]
 
     Channels = Channels_commom + Channel_QCD_mu + Channel_QCD_el +Channel_sys 
 
@@ -61,7 +61,7 @@ print(Channels)
 print("len(Datasets) = ",len(Datasets))
     
 #proceed=True
-for i in range(0,5):#len(Channels)):
+for i in range(0,len(Channels)):
     RequestName = Channels[i]
     print("\n-------     ", RequestName ,"      --------------")
     if(not args.ISlocal):
