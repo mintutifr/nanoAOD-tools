@@ -65,7 +65,7 @@ for i in range(0,len(Channels)):
     RequestName = Channels[i]
     print("\n-------     ", RequestName ,"      --------------")
     if(not args.ISlocal):
-        if(Datasets.has_key(RequestName)):
+        if(RequestName in Datasets):
             Dataset = Datasets[RequestName]
         else:
             print( "RequestName '"+RequestName+"'does not find in the dataset")
