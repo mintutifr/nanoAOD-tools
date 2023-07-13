@@ -9,14 +9,14 @@ parser.add_argument('-local',"--ISlocal", action="store_true", help="enbale this
 args = parser.parse_args()
 
 if args.inputs == None:
-        print "USAGE: %s [-h] [-y <Data year>]"%(sys.argv [0])
+        print("USAGE: %s [-h] [-y <Data year>]"%(sys.argv [0]))
         sys.exit (1)
 
 if args.inputs[0] not in [ 'UL2016preVFP' , 'UL2016postVFP' , 'UL2017' , 'UL2018']:
     print('Error: Incorrect choice of year, use -h for help')
     exit()
 
-print "year = ",args.inputs[0]
+print("year = ",args.inputs[0])
 year   = args.inputs[0]
 date   = datetime.datetime.now()
 
@@ -57,13 +57,13 @@ elif(MC_Data=="data"):
         if(year=='UL2018'): Channels = [ 'Run2018A_'+Lep,'Run2018B_'+Lep, 'Run2018C_'+Lep, 'Run2018D_'+Lep] 
 
 #Channels = ['tw_top']
-print Channels
-print "len(Datasets) = ",len(Datasets)
+print(Channels)
+print("len(Datasets) = ",len(Datasets))
     
 #proceed=True
 for i in range(0,5):#len(Channels)):
     RequestName = Channels[i]
-    print "\n-------     ", RequestName ,"      --------------"
+    print("\n-------     ", RequestName ,"      --------------")
     if(not args.ISlocal):
         if(Datasets.has_key(RequestName)):
             Dataset = Datasets[RequestName]
