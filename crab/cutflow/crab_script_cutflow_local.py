@@ -45,7 +45,7 @@ else:
 
 
 #Minitree_module = getattr(mt , 'MinitreeModuleConstr' + args.tag)
-treecut = ""#nGenJet>0" #Entry$<500" nGenDressedLepton>0
+treecut = ""#event==118517315"#nGenJet>0" #Entry$<500" nGenDressedLepton>0
 btvmodule = getattr(btv,'btagSF'+year)
 
 if(args.ISDATA):

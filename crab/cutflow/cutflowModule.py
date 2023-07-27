@@ -154,7 +154,21 @@ class cutflow(Module):
                 return True
         elif(self.lepflavour=="el"):
             for value in self.trigger_selection[self.dataYear]: trigger=trigger+getattr(event,value)
+            if(self.dataYear=="UL2017"): #spacial emulated trigger
+                TrigObj_filterBits = getattr(event,'TrigObj_filterBits')
+                TrigObj_ids = getattr(event,'TrigObj_id')
+                list_TrigObj_filterBits = []
+                list_TrigObj_ids = []
+                for i in TrigObj_filterBits: list_TrigObj_filterBits.append(i)
+                for i in TrigObj_ids: list_TrigObj_ids.append(i)
+                updated_trigger = 0
+                if(trigger != 0): 
+                    for i in range(0,len(list_TrigObj_ids)):
+                         if((list_TrigObj_ids[i]==11) and (list_TrigObj_filterBits[i] & 1024)!=0): 
+                              updated_trigger = 1 ; break
+                trigger = trigger*updated_trigger
             if(trigger != 0):
+                #print(TrigObj_filterBits,TrigObj_ids)
                 if(self.isMC == True):
                     self.trig_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight) 
                 else:
@@ -399,19 +413,22 @@ class cutflow(Module):
         ##################################
         #b MET filter  --6--
         ##################################
-        if(self.isMC == False): # for now flaga are storein data only we must check this for the MC as well
+        if(True):#self.isMC == False): # for now flaga are storein data only we must check this for the MC as well
             MET_filetr_flag = 1
             Met_filter_UL16 = ['Flag_goodVertices', 'Flag_globalSuperTightHalo2016Filter', 'Flag_HBHENoiseFilter', 'Flag_HBHENoiseIsoFilter' , 'Flag_EcalDeadCellTriggerPrimitiveFilter', 'Flag_BadPFMuonFilter' , 'Flag_BadPFMuonDzFilter', 'Flag_eeBadScFilter']
             Met_filter_UL17_UL18 = ['Flag_goodVertices', 'Flag_globalSuperTightHalo2016Filter', 'Flag_HBHENoiseFilter' , 'Flag_HBHENoiseIsoFilter', 'Flag_EcalDeadCellTriggerPrimitiveFilter', 'Flag_BadPFMuonFilter', 'Flag_BadPFMuonDzFilter', 'Flag_eeBadScFilter', 'Flag_ecalBadCalibFilter']
             if(self.dataYear in ['UL2016preVFP', 'UL2016postVFP']):
                 for filter in Met_filter_UL16:
                     MET_filetr_flag = MET_filetr_flag*getattr(event,filter)
-            if(self.dataYear in ['UL2017', 'UL2018']):
+            elif(self.dataYear in ['UL2017', 'UL2018']):
                 for filter in Met_filter_UL17_UL18:
                     MET_filetr_flag = MET_filetr_flag*getattr(event,filter) 
-            if(MET_filetr_flag==1):
+            if(MET_filetr_flag==1 and self.isMC == False):
                 if(self.lepflavour=="mu"): self.MET_filter_npvs.Fill(PV_npvs)
                 if(self.lepflavour=="el"): self.MET_filter_npvs.Fill(PV_npvs)
+            elif(MET_filetr_flag==1 and self.isMC == True):
+                if(self.lepflavour=="mu"): self.MET_filter_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*JetPUJetID_SF*bweight)
+                if(self.lepflavour=="el"): self.MET_filter_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*JetPUJetID_SF*bweight)
             else:
                 return True
         elif(self.isMC == True):

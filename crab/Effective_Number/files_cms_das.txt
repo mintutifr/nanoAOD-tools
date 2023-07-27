@@ -1,0 +1,168 @@
+year =  UL2018
+['Tchannel', 'Tbarchannel', 'tw_antitop', 'tw_top', 'Schannel', 'ttbar_SemiLeptonic', 'ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2Q2L', 'DYJetsToLL', 'QCD_Pt-15To20_MuEnriched', 'QCD_Pt-20To30_MuEnriched', 'QCD_Pt-30To50_MuEnriched', 'QCD_Pt-50To80_MuEnriched', 'QCD_Pt-80To120_MuEnriched', 'QCD_Pt-120To170_MuEnriched', 'QCD_Pt-170To300_MuEnriched', 'QCD_Pt-300To470_MuEnriched', 'QCD_Pt-470To600_MuEnriched', 'QCD_Pt-600To800_MuEnriched', 'QCD_Pt-800To1000_MuEnriched', 'QCD_Pt-1000_MuEnriched', 'QCD_Pt-15to20_EMEnriched', 'QCD_Pt-20to30_EMEnriched', 'QCD_Pt-30to50_EMEnriched', 'QCD_Pt-50to80_EMEnriched', 'QCD_Pt-80to120_EMEnriched', 'QCD_Pt-120to170_EMEnriched', 'QCD_Pt-170to300_EMEnriched', 'QCD_Pt-300toInf_EMEnriched', 'Tchannel_QCDinspired', 'Tchannel_Gluonmove', 'Tchannel_TuneCP5up', 'Tchannel_TuneCP5down', 'Tchannel_erdON', 'Tbachannel_QCDinspired', 'Tbachannel_Gluonmove', 'Tbachannel_TuneCP5up', 'Tbachannel_TuneCP5down', 'Tbarchannel_erdON', 'ttbar_FullyLeptonic_QCDinspired', 'ttbar_FullyLeptonic_Gluonmove', 'ttbar_FullyLeptonic_erdON', 'ttbar_FullyLeptonic_TuneCPup', 'ttbar_FullyLeptonic_TuneCPdown', 'ttbar_SemiLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'ttbar_SemiLeptonic_erdON', 'ttbar_SemiLeptonic_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5down']
+len(Datasets) =  57
+
+-------      Tchannel       --------------
+149
+
+-------      Tbarchannel       --------------
+130
+
+-------      tw_antitop       --------------
+16
+
+-------      tw_top       --------------
+15
+
+-------      Schannel       --------------
+19
+
+-------      ttbar_SemiLeptonic       --------------
+391
+
+-------      ttbar_FullyLeptonic       --------------
+155
+
+-------      WJetsToLNu_0J       --------------
+102
+
+-------      WJetsToLNu_1J       --------------
+149
+
+-------      WJetsToLNu_2J       --------------
+63
+
+-------      WWTo2L2Nu       --------------
+37
+
+-------      WWTolnulnu       --------------
+24
+
+-------      WZTo2Q2L       --------------
+22
+
+-------      ZZTo2Q2L       --------------
+25
+
+-------      DYJetsToLL       --------------
+204
+
+-------      QCD_Pt-15To20_MuEnriched       --------------
+17
+
+-------      QCD_Pt-20To30_MuEnriched       --------------
+72
+
+-------      QCD_Pt-30To50_MuEnriched       --------------
+64
+
+-------      QCD_Pt-50To80_MuEnriched       --------------
+37
+
+-------      QCD_Pt-80To120_MuEnriched       --------------
+60
+
+-------      QCD_Pt-120To170_MuEnriched       --------------
+66
+
+-------      QCD_Pt-170To300_MuEnriched       --------------
+66
+
+-------      QCD_Pt-300To470_MuEnriched       --------------
+71
+
+-------      QCD_Pt-470To600_MuEnriched       --------------
+84
+
+-------      QCD_Pt-600To800_MuEnriched       --------------
+104
+
+-------      QCD_Pt-800To1000_MuEnriched       --------------
+94
+
+-------      QCD_Pt-1000_MuEnriched       --------------
+33
+
+-------      QCD_Pt-15to20_EMEnriched       --------------
+36
+
+-------      QCD_Pt-20to30_EMEnriched       --------------
+11
+
+-------      QCD_Pt-30to50_EMEnriched       --------------
+25
+
+-------      QCD_Pt-50to80_EMEnriched       --------------
+7
+
+-------      QCD_Pt-80to120_EMEnriched       --------------
+10
+
+-------      QCD_Pt-120to170_EMEnriched       --------------
+15
+
+-------      QCD_Pt-170to300_EMEnriched       --------------
+5
+
+-------      QCD_Pt-300toInf_EMEnriched       --------------
+5
+
+-------      Tchannel_QCDinspired       --------------
+57
+
+-------      Tchannel_Gluonmove       --------------
+100
+
+-------      Tchannel_TuneCP5up       --------------
+90
+
+-------      Tchannel_TuneCP5down       --------------
+57
+
+-------      Tchannel_erdON       --------------
+89
+
+-------      Tbachannel_QCDinspired       --------------
+38
+
+-------      Tbachannel_Gluonmove       --------------
+37
+
+-------      Tbachannel_TuneCP5up       --------------
+44
+
+-------      Tbachannel_TuneCP5down       --------------
+55
+
+-------      Tbarchannel_erdON       --------------
+61
+
+-------      ttbar_FullyLeptonic_QCDinspired       --------------
+130
+
+-------      ttbar_FullyLeptonic_Gluonmove       --------------
+51
+
+-------      ttbar_FullyLeptonic_erdON       --------------
+57
+
+-------      ttbar_FullyLeptonic_TuneCPup       --------------
+59
+
+-------      ttbar_FullyLeptonic_TuneCPdown       --------------
+59
+
+-------      ttbar_SemiLeptonic_QCDinspired       --------------
+294
+
+-------      ttbar_SemiLeptonic_Gluonmove       --------------
+217
+
+-------      ttbar_SemiLeptonic_erdON       --------------
+166
+
+-------      ttbar_SemiLeptonic_TuneCP5up       --------------
+165
+
+-------      ttbar_SemiLeptonic_TuneCP5down       --------------
+156

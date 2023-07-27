@@ -14,8 +14,8 @@ year_folder = {'UL2016preVFP': 'SIXTEEN_preVFP', 'UL2016postVFP': 'SIXTEEN_postV
 
 
 if(MC_Data=="mc"):
-    hist_names = ['Nocut_npvs', 'trig_sel_npvs', 'tight_lep_sel_npvs', 'losse_lep_veto_npvs', 'sec_lep_veto_npvs', 'jet_sel_npvs', 'b_tag_jet_sel_npvs']
-    Channels = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L','QCD'] 
+    hist_names = ['Nocut_npvs', 'trig_sel_npvs', 'tight_lep_sel_npvs', 'losse_lep_veto_npvs', 'sec_lep_veto_npvs', 'jet_sel_npvs', 'b_tag_jet_sel_npvs','MET_filter_npvs']
+    Channels = ['Tchannel','Tbarchannel','tw_top', 'tw_antitop','Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L','QCD'] 
 elif(MC_Data=="data"):
         hist_names = ['Nocut_npvs', 'trig_sel_npvs', 'tight_lep_sel_npvs', 'losse_lep_veto_npvs', 'sec_lep_veto_npvs', 'jet_sel_npvs', 'b_tag_jet_sel_npvs', 'MET_filter_npvs']
         if(year=='UL2016preVFP'): Channels = [ 'Run2016B-ver1_'+lep, 'Run2016B-ver2_'+lep, 'Run2016C-HIPM_'+lep, 'Run2016D-HIPM_'+lep, 'Run2016E-HIPM_'+lep, 'Run2016F-HIPM_'+lep]
@@ -30,9 +30,10 @@ for channel in Channels:
     # Open the ROOT file
     print("\n"+channel+"\t/nfs/home/common/RUN2_UL/Cutflow_crab/"+year_folder[year]+"/2J1T1/Cutflow_"+channel+"_2J1T1_"+lep+".root")
     file = ROOT.TFile("/nfs/home/common/RUN2_UL/Cutflow_crab/"+year_folder[year]+"/2J1T1/Cutflow_"+channel+"_2J1T1_"+lep+".root", "READ")
+    minitree_file = ROOT.TFile("/nfs/home/common/RUN2_UL/Minitree/"+year_folder[year]+"/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root", "READ")
+    tree = minitree_file.Get("Events")
     for hist_name in hist_names:
         hist = file.Get("histograms/"+hist_name)  # Replace "histogram_name" with the actual name of the histogram
         #if(hist.Integral()/1000000 > 0.1): print(round(hist.Integral()/1000000,2)," M \t:\t"+hist_name)
         print(round(hist.Integral(),2),";\t ",end = '')
-    print()
-
+    print("\n",round(hist.GetEntries(),2),"\t",round(tree.GetEntries(),2))

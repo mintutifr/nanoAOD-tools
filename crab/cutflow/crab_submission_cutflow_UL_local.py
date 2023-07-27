@@ -52,7 +52,8 @@ if __name__ == '__main__':
         if(year=='UL2016postVFP'): Channels = [ 'Run2016F_'+Lep, 'Run2016G_'+Lep, 'Run2016H_'+Lep]
         if(year=='UL2017'): Channels = [ 'Run2017B_'+Lep, 'Run2017C_'+Lep, 'Run2017D_'+Lep, 'Run2017E_'+Lep, 'Run2017F_'+Lep]
         if(year=='UL2018'): Channels = [ 'Run2018A_'+Lep,'Run2018B_'+Lep, 'Run2018C_'+Lep, 'Run2018D_'+Lep] 
-    #Channels = ['Tchannel'] #[]#, 'ttbar_SemiLeptonic']
+
+    #Channels = ['ttbar_SemiLeptonic','ttbar_FullyLeptonic','DYJetsToLL','QCD_Pt-800To1000_MuEnriched'] #[]#, 'ttbar_SemiLeptonic']
 
     print(Channels)
 
@@ -77,7 +78,7 @@ if __name__ == '__main__':
         i=0
        	if(MC_Data=="mc"): commom_run_cmd = 'pwd; cmsenv; python3 crab_script_cutflow_local.py  -d ' + Channel + ' -t ' + tag + ' -o ' + local_script_output_dir
         elif(MC_Data=="data"): commom_run_cmd = 'pwd; cmsenv; python3 crab_script_cutflow_local.py  -data -d ' + Channel + ' -t ' + tag + ' -o ' + local_script_output_dir
-       	total_file_in_set = 5
+       	total_file_in_set = 1
         fileSetcounter = 0
         infils = ''
        	for count,fil in enumerate(inputFiles):
@@ -96,7 +97,7 @@ if __name__ == '__main__':
     print(run_commands)
     #print(Hadd_N_createoutfile_cmd[Channel])
 
-    pool = mp.Pool(processes=10)
+    pool = mp.Pool(processes=15)
     pool.map(run_cmd, run_commands)
 
 

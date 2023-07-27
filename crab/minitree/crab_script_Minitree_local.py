@@ -14,6 +14,8 @@ import dummy_module as dummy
 import jme as JME
 import argparse
 
+#python3 crab_script_Minitree_local.py  -d Schannel -t 2J1T1_el_mc_UL2016postVFP -o /nfs/home/common/RUN2_UL/Minitree_trial/SIXTEEN_postVFP/2J1T1/el/Schannel/ -n 1 -p /nfs/home/common/RUN2_UL/Tree_crab/SIXTEEN_postVFP/MC/Schannel/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/Tree_04_Jul23_MCUL2016postVFP_Schannel/230704_145222/0000/tree_1.root   &> /nfs/home/common/RUN2_UL/Minitree_trial/SIXTEEN_postVFP/2J1T1/el/Schannel/log/log_1.txt
+
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('-p', '--path', dest='path',  nargs='+',type=str, default='', help="Path to input file")
 parser.add_argument('-d', '--dataset', dest='dataset', type=str, default='', help="Dataset")
@@ -40,8 +42,8 @@ for File in inputFiles: file_str +=File+" "
 
 if(args.ISDATA): print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ " -n "+ args.lognum +" -p "+ file_str +" -data  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
 else: print("\n python3 crab_script_Minitree_local.py  -d "+dataset+" -t "+args.tag +" -o "+args.out_dir+ " -n "+ args.lognum +" -p "+ file_str + "  &> "+args.out_dir+"log/log_"+args.lognum+".txt\n")
-if('2016preVFP' in year):
-	poststing = '_'+dataset.split("_")[1] # required to define the module of jme correction for data
+if(('2016preVFP' in year) and args.ISDATA):
+		poststing = '_'+dataset.split("_")[1] # required to define the module of jme correction for data
 else:
 	poststing = ""
 
@@ -54,14 +56,14 @@ jmeCorrection = getattr(JME,'jmeCorrections'+year+'_MC_AK4CHS')
 hdampmodule = getattr(hdamp,'hdamp_vari_mainModule')
 geninfomodule =  getattr(genInfo,'gen_info_Module')
 
+Met_filter_UL16 = " && (Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter)==1"
+Met_filter_UL17_UL18 = " && (Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilter)==1"
+if(year in ["UL2017", "UL2018"]): treecut = treecut+Met_filter_UL17_UL18	
+elif(year in ["UL2016_preVFP", "UL2016_postVFP"]): treecut = treecut+Met_filter_UL16
+
 if(args.ISDATA):
 	minitreemodule = getattr(minitree,'MinitreeModuleConstr'+region+'_'+lep+'_data_'+year)
 	jmeCorrection = getattr(JME, "jmeCorrectionsUL"+dataset.split('_')[0]+poststing+"_DATA_AK4CHS")
-
-	Met_filter_UL16 = " && (Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter)==1"
-	Met_filter_UL17_UL18 = " && (Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilter)==1"
-	if(year in ["UL2017", "UL2018"]): treecut = treecut+Met_filter_UL17_UL18	
-	elif(year in ["UL2016_preVFP", "UL2016_postVFP"]): treecut = treecut+Met_filter_UL16
 else:
 	minitreemodule = getattr(minitree,'MinitreeModuleConstr'+region+'_'+lep+'_mc_'+year)
 	jmeCorrection = getattr(JME,'jmeCorrections'+year+'_MC_AK4CHS')

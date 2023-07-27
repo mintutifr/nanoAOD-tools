@@ -20,6 +20,7 @@
 #python save_dataframe.py -y UL2017 -l mu -s Mc_Nomi -r 2J1L0T
 #python save_dataframe.py -y UL2017 -l el -s Mc_Nomi -r 2J1L0T
 
+python save_dataframe.py -y UL2018 -l mu -s Mc_Nomi -r 2J1T
 
 #cmssw needed
 #python save_dataframe.py -y UL2017 -l el -s Mc_Alt
@@ -47,7 +48,7 @@
 #python Train_NN_pytorch.py -y UL2017 -l mu
 #python Train_NN_pytorch.py -y UL2017 -l el
 
-source /cvmfs/sft.cern.ch/lcg/views/LCG_100cuda/x86_64-centos7-gcc8-opt/setup.sh
+#source /cvmfs/sft.cern.ch/lcg/views/LCG_100cuda/x86_64-centos7-gcc8-opt/setup.sh
 #python Test_NN_pytorch.py -y ULpreVFP2016 -l mu
 #python Test_NN_pytorch.py -y ULpreVFP2016 -l el
 #python Test_NN_pytorch.py -y ULpostVFP2016 -l mu
@@ -71,10 +72,10 @@ source /cvmfs/sft.cern.ch/lcg/views/LCG_100cuda/x86_64-centos7-gcc8-opt/setup.sh
 #python Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2017 -s Mc_Alt
 
 
-python Apply_NN_pytorch_FullMC_N_Data.py -l el -y ULpreVFP2016 -s Mc_Nomi -r 2J1L0T
-python Apply_NN_pytorch_FullMC_N_Data.py -l el -y ULpreVFP2016 -s Mc_Nomi -r 3J2T
-python Apply_NN_pytorch_FullMC_N_Data.py -l el -y ULpostVFP2016 -s Mc_Nomi -r 2J1L0T
-python Apply_NN_pytorch_FullMC_N_Data.py -l el -y ULpostVFP2016 -s Mc_Nomi -r 3J2T
+#python Apply_NN_pytorch_FullMC_N_Data.py -l el -y ULpreVFP2016 -s Mc_Nomi -r 2J1L0T
+#python Apply_NN_pytorch_FullMC_N_Data.py -l el -y ULpreVFP2016 -s Mc_Nomi -r 3J2T
+#python Apply_NN_pytorch_FullMC_N_Data.py -l el -y ULpostVFP2016 -s Mc_Nomi -r 2J1L0T
+#python Apply_NN_pytorch_FullMC_N_Data.py -l el -y ULpostVFP2016 -s Mc_Nomi -r 3J2T
 #python Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2017 -s Mc_Nomi -r 2J1L0T
 #python Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2017 -s Mc_Nomi -r 3J2T
 
