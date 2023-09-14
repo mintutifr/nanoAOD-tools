@@ -17,7 +17,7 @@ def Nomi_QCD_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "
     Variable,X_axies,Y_axies,lest_bin,max_bin,Num_bin = get_histogram_distciption(Variable)
     print(Variable, X_axies," ",Y_axies," ",lest_bin," ",max_bin," ",Num_bin)
     
-    channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
+    channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
     
     hist = {}
     WAssihist = {}
@@ -76,10 +76,10 @@ def Nomi_QCD_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "
                 WAssihist[channel] = rt.TH1F('temphist' + channel, '', Num_bin, lest_bin, max_bin)
     
         if(channel=='Tchannel' or channel=='Tbarchannel'):
-            Mccut_corr_assi = MCcut +"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)"
+            Mccut_corr_assi = MCcut +"*(bjet_partonFlavour*"+lepton+"Charge==5)"
             #print "Mccut_corr_assi : ",Mccut_corr_assi
             intree[channel].Project('hist' + channel, Variable, Mccut_corr_assi) 
-            Mccut_wron_assi = MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)"
+            Mccut_wron_assi = MCcut+"*(bjet_partonFlavour*"+lepton+"Charge!=5)"
             intree[channel].Project('temphist' + channel, Variable,Mccut_wron_assi)
             #print "Mccut_wron_assi : ",Mccut_wron_assi
             hist_tch_CAssig_temp.Add(hist[channel])
@@ -87,8 +87,8 @@ def Nomi_QCD_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "
             #hist[channel].Print()
             #WAssihist[channel].Print()
         elif(channel=='tw_top'  or channel=='tw_antitop' or channel=='Schannel' or channel=='ttbar_SemiLeptonic' or channel=='ttbar_FullyLeptonic'):
-            intree[channel].Project('hist' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)")
-            intree[channel].Project('temphist' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)")
+            intree[channel].Project('hist' + channel, Variable,MCcut+"*(bjet_partonFlavour*"+lepton+"Charge==5)")
+            intree[channel].Project('temphist' + channel, Variable,MCcut+"*(bjet_partonFlavour*"+lepton+"Charge!=5)")
             hist_ttbar_CAssig_temp.Add(hist[channel])
             hist_ttbar_WAssig_temp.Add(WAssihist[channel])
             #hist[channel].Print()

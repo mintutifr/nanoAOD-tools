@@ -2,7 +2,9 @@ import ROOT as rt
 import numpy as np
 import scipy.integrate as sp
 import argparse as arg
-import math
+import math, sys
+sys.path.insert(1, '/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/stack_plots_before_ML/')
+from QCD_Non_QCD_Normalization import *
 
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
@@ -13,7 +15,7 @@ if (args.year == None or args.lepton == None):
         print("USAGE: %s [-h] [-y <Data year> -l <lepton>]"%(sys.argv [0]))
         sys.exit (1)
 
-if args.year[0] not in ['ULpreVFP2016', 'ULpostVFP2016','UL2017','UL2018']:
+if args.year[0] not in ['UL2016preVFP', 'UL2016postVFP','UL2017','UL2018']:
     print('Error: Incorrect choice of year, use -h for help')
     exit()
 
@@ -56,11 +58,13 @@ if(year == "UL2017"):
                 QCDScale_mtwFit = 7509.0
                 NonQCDScale_mtwFit = 315426.0
 
+QCDScale_mtwFit = mtwFit_Scale[year][lep]['QCD'] 
+NonQCDScale_mtwFit = mtwFit_Scale[year][lep]['NonQCD']
 
 #applydir = 'DNN_output_with_mtwCut/Apply_all/' ;  output_fileName = "ROC_TGraphs/Efficiency_info_"+year+"_"+lep+"_with_weights.root"
-applydir = 'DNN_output_without_mtwCut/Apply_all/' ;  output_fileName = "ROC_TGraphs/Efficiency_info_"+year+"_"+lep+"_with_weights.root"
+applydir = 'DNN_output_without_mtwCut/2J1T1/Apply_all/' ;  output_fileName = "ROC_TGraphs/Efficiency_info_"+year+"_"+lep+"_with_weights.root"
 
-channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
+channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
 MCcut ="Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)"
 Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
 
@@ -68,18 +72,18 @@ Fpaths = {}
 EvtWeight_Fpaths = {} 
 for channel in channels:
         Fpaths[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
-        if(year=="ULpreVFP2016"): 
+        if(year=="UL2016preVFP"): 
             EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
             if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
-        elif(year=="ULpostVFP2016"):
+        elif(year=="UL2016postVFP"):
             EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
             if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
         elif(year=="UL2017"):
             EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
             if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
         elif(year=="UL2018"):
-            EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
+            EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
+            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
 
            
 print(Fpaths)
@@ -99,7 +103,8 @@ hs = {}
 hs_wrong_assignment = {}
 infiles = {}
 intree = {}
-DNN_sig_bins =  np.array([0.0 , 0.05 , 0.1 , 0.15 , 0.2 , 0.25 , 0.3 ,  0.35 , 0.4 , 0.45 , 0.5 , 0.55 , 0.6 , 0.65 , 0.7 , 0.75 ,  0.8 , 0.85 , 0.90, 0.95])
+
+DNN_sig_bins =  np.array([0.0 , 0.05 , 0.1 , 0.15 , 0.2 , 0.25 , 0.3 ,  0.35 , 0.4 , 0.45 , 0.5 , 0.55 , 0.6 , 0.65 , 0.7 , 0.75 ,  0.8 , 0.85 , 0.90, 0.95, 0.97,])
 len_DNN_sig_bins = len(DNN_sig_bins)
 n_sel_sig = np.zeros(len_DNN_sig_bins+1)
 n_sel_bkg = np.zeros(len_DNN_sig_bins+1)

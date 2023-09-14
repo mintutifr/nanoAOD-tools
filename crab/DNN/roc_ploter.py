@@ -1,6 +1,15 @@
 import ROOT as rt
 import numpy as np
 from Hist_style import *
+
+import argparse as arg
+
+parser = arg.ArgumentParser(description='inputs discription')
+parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
+
+args = parser.parse_args()
+
+lep = args.lepton[0]
  
 x2 = np.linspace(0, 1, 40)
 y2 = x2
@@ -25,20 +34,23 @@ filedir = "ROC_TGraphs/"
 with_or_withoutweights = 'with'
 
 files_to_read_roc = [
-                        'ROC_info_ULpreVFP2016_mu_'+with_or_withoutweights+'_weights.root',
-                        'ROC_info_ULpreVFP2016_el_'+with_or_withoutweights+'_weights.root',
-                        'ROC_info_ULpostVFP2016_mu_'+with_or_withoutweights+'_weights.root',
-                        'ROC_info_ULpostVFP2016_el_'+with_or_withoutweights+'_weights.root',
-                        'ROC_info_UL2017_mu_'+with_or_withoutweights+'_weights.root',
-                        'ROC_info_UL2017_el_'+with_or_withoutweights+'_weights.root'
+                        'ROC_info_ULpreVFP2016_'+lep+'_'+with_or_withoutweights+'_weights.root',
+                        #'ROC_info_ULpreVFP2016_el_'+with_or_withoutweights+'_weights.root',
+                        'ROC_info_ULpostVFP2016_'+lep+'_'+with_or_withoutweights+'_weights.root',
+                        #'ROC_info_ULpostVFP2016_el_'+with_or_withoutweights+'_weights.root',
+                        'ROC_info_UL2017_'+lep+'_'+with_or_withoutweights+'_weights.root',
+                        #'ROC_info_UL2017_el_'+with_or_withoutweights+'_weights.root',
+                        'ROC_info_UL2018_'+lep+'_'+with_or_withoutweights+'_weights.root',
+                        #'ROC_info_UL2018_el_'+with_or_withoutweights+'_weights.root'
 ]
 
 #files_to_read_roc = ['ROC_info_ULpreVFP2016_mu.root','ROC_info_ULpreVFP2016_el.root','ROC_info_ULpostVFP2016_mu.root','ROC_info_ULpostVFP2016_el.root','ROC_info_UL2017_mu.root','ROC_info_UL2017_el.root'] #These files are created using only test output files
-colors = [2,3,4,6,7,216]
-makerstyle = [87,20,21,22,23,34]
+colors = [2,3,4,6]#,7,8,209,216]
+makerstyle = [87,20,21,22]#,23,34,43,47]
 
-legend_txt = ["UL2016preVFP #it{#mu^{#pm} + jets}","UL2016preVFP #it{e^{#pm} + jets}","UL2016postVFP #it{#mu^{#pm} + jets}","UL2016postVFP #it{e^{#pm} + jets}","UL2017 #it{#mu^{#pm} + jets}","UL2017 #it{e^{#pm} + jets}"]
 
+legend_txt = ["UL2016preVFP","UL2016postVFP","UL2017","UL2018"]
+    
 roc_array = []
 rocInt_array = []
 for i in range(len(files_to_read_roc)):
@@ -82,15 +94,15 @@ for i in range(1,len(files_to_read_roc)):
 getCMSIntrenal_tag = getCMSIntrenal_tag(0.20, 0.80, 0.40, 0.87)
 getCMSIntrenal_tag.Draw("same")
 
-leptonjet_tag = leptonjet_tag("mu",0.20, 0.75, 0.30, 0.83)
-#leptonjet_tag.Draw("same")
+leptonjet_tag = leptonjet_tag(lep,0.20, 0.75, 0.38, 0.83)
+leptonjet_tag.Draw("same")
 
-region_tag = getregion_tag("2J1T", 0.20, 0.75, 0.30, 0.83)
-region_tag.Draw("same")
+#region_tag = getregion_tag("2J1T", 0.20, 0.75, 0.30, 0.83)
+#region_tag.Draw("same")
 
 c1.Update()
 
-legend = rt.TLegend(0.15193646, 0.418435, 0.3793552, 0.73026143)
+legend = rt.TLegend(0.15, 0.48, 0.38, 0.70)
 legend.Clear()
 #legend.SetNColumns(2)
 legend.SetBorderSize(1)
@@ -101,11 +113,11 @@ legend.SetLineWidth(1)
 legend.SetFillColor(0)
 legend.SetFillStyle(1001)
 
-legend.AddEntry(roc_array[0], legend_txt[0]+" ("+str(rocInt_array[0])+")", "l")
+legend.AddEntry(roc_array[0], legend_txt[0]+" (AUC = "+str(rocInt_array[0])+")", "l")
 for i in range(1,len(files_to_read_roc)):
-     legend.AddEntry(roc_array[i], legend_txt[i]+" ("+str(rocInt_array[i])+")", "p")
+     legend.AddEntry(roc_array[i], legend_txt[i]+" (AUC = "+str(rocInt_array[i])+")", "p")
 
 legend.Draw("same")
 c1.Update()
-c1.Print('Plots/ROC_'+with_or_withoutweights+'_weight.png')
-c1.Print('Plots/ROC_'+with_or_withoutweights+'_weight.pdf') 
+c1.Print('Plots/ROC_'+with_or_withoutweights+'_weight_'+lep+'.png')
+c1.Print('Plots/ROC_'+with_or_withoutweights+'_weight_'+lep+'.pdf') 

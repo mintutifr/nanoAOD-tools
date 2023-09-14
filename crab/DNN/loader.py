@@ -8,12 +8,12 @@ import sys
 import os
 import root_numpy
 
-sampleDir = {
+"""sampleDir = {
 	'ULpreVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/',
 	'ULpostVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/',
 	'UL2017' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/',
-	'UL2018' : ''
-}
+	'UL2018' : '/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/'
+}"""
 
 def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "ULpreVFP2016",region="2J1T" ,sample="Mc_Nomi" ):
     if(lep=="mu"):
@@ -25,7 +25,7 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
         	'ULpreVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/'+region,
         	'ULpostVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/'+region,
         	'UL2017' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/'+region,
-        	'UL2018' : ''
+        	'UL2018' : ' ~/t3store/UL_Run2/EIGHTEEN/'+region
     }
     elif(sample=="Mc_Alt"):
         sampleDir = {
@@ -98,7 +98,7 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
         _branches_lep.remove('LHEWeightSign')
         _branches_lep.remove('Jet_partonFlavour')
 
-        chain.Add(sampleDir[year]+'0/Minitree_Data'+year+'_'+region+'_'+lep+'.root')
+        chain.Add(sampleDir[year]+'0/Minitree_Data'+year+'_'+region+'0_'+lep+'.root')
         if(max_entries==-1):
             max_entries=chain.GetEntries()
         print( 'Entries '+channel+': ',chain.GetEntries(), "\tSelected : ",max_entries)
@@ -114,7 +114,7 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
         _branches_lep.remove('LHEWeightSign')
         _branches_lep.remove('Jet_partonFlavour')
 
-        chain.Add(sampleDir[year]+'1/Minitree_Data'+year+'_'+region+'_'+lep+'.root')
+        chain.Add(sampleDir[year]+'1/Minitree_Data'+year+'_'+region+'1_'+lep+'.root')
         if(max_entries==-1):
             max_entries=chain.GetEntries()
         print( 'Entries '+channel+': ',chain.GetEntries(), "\tSelected : ",max_entries)
@@ -127,7 +127,7 @@ def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "UL
         return { b : _dataset[b] for b in _branches_lep }
     else:
         if(sample=="Mc_Nomi"):
-            chain.Add(sampleDir[year]+'1/Minitree_'+channel+'_'+region+'_'+lep+'.root')
+            chain.Add(sampleDir[year]+'1/Minitree_'+channel+'_'+region+'1_'+lep+'.root')
         elif(sample=="Mc_Alt" or sample=="Mc_sys"):
             chain.Add(sampleDir[year]+'/Minitree_'+channel+'_'+region+'_'+lep+'.root')
 #

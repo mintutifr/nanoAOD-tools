@@ -54,17 +54,17 @@ def leptonjet_tag(lep="mu",x1=0.25, y1=0.82, x2=0.28, y2=0.84):
         cntrl.SetTextFont(42)
         cntrl.SetTextSize(0.05)
         cntrl.SetTextAlign(33)
-        if(lep=="mu"):cntrl.AddText("#it{#mu+jets},")
-        if(lep=="el"):cntrl.AddText("#it{e+jets},")
+        if(lep=="mu"):cntrl.AddText("#it{#mu+jets},2J1T")
+        if(lep=="el"):cntrl.AddText("#it{e+jets},2J1T")
         return cntrl
 
 def year_tag(dataYear="UL2016preVFP",x1=0.948, y1=0.8555, x2=0.95, y2=0.84):
-        cntrl = rt.TPaveText(x1,y1,x2,y2)#,"brNDC")
+        cntrl = rt.TPaveText(x1,y1,x2,y2,"brNDC")
         cntrl.SetFillStyle(0)
         cntrl.SetBorderSize(0)
         cntrl.SetMargin(0)
         cntrl.SetTextFont(42)
-        cntrl.SetTextSize(0.03)
+        cntrl.SetTextSize(0.035)
         cntrl.SetTextAlign(33)
         if(dataYear=="UL2016preVFP" or dataYear=="ULpreVFP2016"): cntrl.AddText("19.5 fb^{-1} (13 TeV, 2016preVFP)")
         if(dataYear=="UL2016postVFP" or dataYear=="ULpostVFP2016"): cntrl.AddText("16.8 fb^{-1} (13 TeV, 2016postVFP)")

@@ -167,7 +167,7 @@ y_val_ch = {}
 
 #n_tr = 50000
 #n_val = 10000
-dir='dataframe_saved/'
+dir='dataframe_saved_without_mtwCut/2J1T/'
 for count, channel in enumerate(train_ch):	
     print("Events",dir+year+'_' + channel + '_train_'+lep+'.root')
     df_train[channel] = rt.RDataFrame("Events",dir+year+'_' + channel + '_train_'+lep+'.root').AsNumpy()

@@ -8,61 +8,68 @@ import math
 from Histogram_discribtions import get_histogram_distciption
 from Overflow_N_Underflowbin import DrawOverflow_N_DrawUnderflow 
 
-def get_histogram_with_DNN_cut(lep="mu",year="UL2017",Variable="lntopMass",
-    channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L'],
-    MCcut = "Xsec_wgt*LHEWeightSign*puWeight*muSF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",
-    Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)",
-    DNNcut="0.7",Fpaths_DNN_score = {}, Fpaths_ori_with_weight = {}):
+def get_histogram_with_DNN_cut(
+                                lep="mu",
+                                year="UL2017",
+                                Variable="lntopMass",
+                                channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L'],
+                                MCcut = "Xsec_wgt*LHEWeightSign*puWeight*muSF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",
+                                QCDcut = "(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut",
+                                Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)",
+                                DNNcut="0.7",
+                                Fpaths_DNN_score = {}, 
+                                Fpaths_ori_with_weight = {}):
 
-        DNNcut="*(t_ch_CAsi>"+DNNcut+")"
-        if(lep=="mu"):
-                lepton = "Muon"
-        elif(lep=="el"):
-                lepton = "Electron"
+    print(type(DNNcut))
+    DNNcut="*(t_ch_CAsi>"+DNNcut+")"
+    if(lep=="mu"):
+            lepton = "Muon"
+    elif(lep=="el"):
+            lepton = "Electron"
 
-        Variable,X_axies,Y_axies,lest_bin,max_bin,Num_bin = get_histogram_distciption(Variable)
-        print(X_axies," ",Y_axies," ",lest_bin," ",max_bin," ",Num_bin)
+    Variable,X_axies,Y_axies,lest_bin,max_bin,Num_bin = get_histogram_distciption(Variable)
+    print(X_axies," ",Y_axies," ",lest_bin," ",max_bin," ",Num_bin)
 
-	print
-	print "############################   analising the event with the DNN cut applid ", DNNcut, "  ##################"
-	print "lepton = ",lep
-	print "Variable = ",Variable
-	print
-	# Initializing lists for histogram, TFile, TTree of Iso
-	histo_corr_Array = []
-        histo_wron_Array = []
-	#intree = []
-	rt.gROOT.cd()
+    print
+    print "############################   analising the event with the DNN cut applid ", DNNcut, "  ##################"
+    print "lepton = ",lep
+    print "Variable = ",Variable
+    print
+    # Initializing lists for histogram, TFile, TTree of Iso
+    histo_corr_Array = []
+    histo_wron_Array = []
+    #intree = []
+    rt.gROOT.cd()
 
-	print Variable
-	print "bining: ",Num_bin,", ",lest_bin,", ", max_bin
+    print Variable
+    print "bining: ",Num_bin,", ",lest_bin,", ", max_bin
 
-        if(Variable=="t_ch_CAsi"):
-                BINS = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,1.0]
-                print("redefine assymatic histogram bins ", BINS)
-                histo_corr = rt.TH1F('histo_corr', Variable, len(BINS)-1,np.array(BINS))
-                histo_wron = rt.TH1F('histo_wron', Variable, len(BINS)-1,np.array(BINS))
-        else:
-	        histo_corr = rt.TH1F('histo_corr', Variable, Num_bin,lest_bin,max_bin)
-                histo_wron = rt.TH1F('histo_wron', Variable, Num_bin,lest_bin,max_bin)
+    if(Variable=="t_ch_CAsi"):
+        BINS = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,1.0]
+        print("redefine assymatic histogram bins ", BINS)
+        histo_corr = rt.TH1F('histo_corr', Variable, len(BINS)-1,np.array(BINS))
+        histo_wron = rt.TH1F('histo_wron', Variable, len(BINS)-1,np.array(BINS))
+    else:
+        histo_corr = rt.TH1F('histo_corr', Variable, Num_bin,lest_bin,max_bin)
+        histo_wron = rt.TH1F('histo_wron', Variable, Num_bin,lest_bin,max_bin)
 
-	#histo_corr.Sumw2()
-        MCcut_corr_Assig = MCcut+DNNcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)"
-        MCcut_wron_Assig = MCcut+DNNcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)"
-	for channel in channels:
-    	    print channel, "  ", Fpaths_ori_with_weight[channel]
+#histo_corr.Sumw2()
+    MCcut_corr_Assig = MCcut+DNNcut+"*(bjet_partonFlavour*"+lepton+"Charge==5)"
+    MCcut_wron_Assig = MCcut+DNNcut+"*(bjet_partonFlavour*"+lepton+"Charge!=5)"
+    for channel in channels:
+            print channel, "  ", Fpaths_ori_with_weight[channel]
             print channel, "  ", Fpaths_DNN_score[channel]
-    	    histo_corr.Reset()
+            histo_corr.Reset()
             histo_wron.Reset()
             
             #print filenamei
             MCFile = rt.TFile.Open(Fpaths_ori_with_weight[channel],'Read')	
-    	    intree = MCFile.Get('Events')
+            intree = MCFile.Get('Events')
             intree.AddFriend ("Events",Fpaths_DNN_score[channel])
-	    #intree[-1].Print()
+        #intree[-1].Print()
             rt.gROOT.cd()
-            
-    	    intree.Project('histo_corr', Variable, MCcut_corr_Assig)
+            print(MCcut_corr_Assig)
+            intree.Project('histo_corr', Variable, MCcut_corr_Assig)
             intree.Project('histo_wron', Variable, MCcut_wron_Assig)
            
             #rt.gROOT.cd()
@@ -72,19 +79,19 @@ def get_histogram_with_DNN_cut(lep="mu",year="UL2017",Variable="lntopMass",
 
         
             rt.gROOT.cd()
-    	    histo_corr_Array.append(histo_corr.Clone())
+            histo_corr_Array.append(histo_corr.Clone())
             histo_wron_Array.append(histo_wron.Clone())
-	    histo_corr_Array[-1].SetName(channel)
+            histo_corr_Array[-1].SetName(channel)
             histo_wron_Array[-1].SetName(channel)
             histo_corr.Print()
             histo_wron.Print()
             
             del intree
 
-	histo_corr_Array[0].GetXaxis().SetTitle(X_axies)
-        histo_wron_Array[0].GetXaxis().SetTitle(X_axies)
+    histo_corr_Array[0].GetXaxis().SetTitle(X_axies)
+    histo_wron_Array[0].GetXaxis().SetTitle(X_axies)
 
-        return histo_corr_Array,histo_wron_Array
+    return histo_corr_Array,histo_wron_Array
 
 if __name__ == '__main__':
    
@@ -99,7 +106,7 @@ if __name__ == '__main__':
                 print("USAGE: %s [-h] [-y <Data year> -l <lepton>]"%(sys.argv [0]))
                 sys.exit (1)
 
-        if args.year[0] not in ['ULpreVFP2016', 'ULpostVFP2016','UL2017','UL2018']:
+        if args.year[0] not in ['UL2016preVFP', 'UL2016postVFP','UL2017','UL2018']:
                 print('Error: Incorrect choice of year, use -h for help')
                 exit()
 
@@ -118,9 +125,9 @@ if __name__ == '__main__':
         
         for channel in channels:
            Fpaths_DNN_score[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
-           if(year=="ULpreVFP2016"): 
+           if(year=="UL2016preVFP"): 
                Fpaths_ori_with_weight[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-           elif(year=="ULpostVFP2016"):
+           elif(year=="UL2016postVFP"):
                Fpaths_ori_with_weight[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
            elif(year=="UL2017"):
                Fpaths_ori_with_weight[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
