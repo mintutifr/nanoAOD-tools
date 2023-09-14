@@ -205,3 +205,53 @@ sum(file.nevents): 2.866484e+07
 sum(file.nevents): 1.855461e+06
  Number of Events :  1.855461e+06
 
+[mikumar@lxplus744 Effective_Number]$ python Event_counter.py -y UL2016preVFP
+
+year =  UL2016preVFP
+['ttbar_FullyLeptonic_erdON', 'Tchannel_erdON', 'ttbar_FullyLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'Tchannel_Gluonmove', 'Tchannel_TuneCP5up', 'ttbar_FullyLeptonic_TuneCPdown', 'ttbar_FullyLeptonic_TuneCPup', 'Tchannel_TuneCP5down', 'ttbar_SemiLeptonic_TuneCP5up', 'Tbarchannel_TuneCP5up', 'Tbarchannel_TuneCP5down', 'ttbar_SemiLeptonic_erdON', 'Tbarchannel_QCDinspired', 'ttbar_FullyLeptonic_Gluonmove', 'Tchannel_QCDinspired', 'ttbar_SemiLeptonic_QCDinspired', 'Tbarchannel_erdON', 'ttbar_SemiLeptonic_TuneCP5down', 'Tbarchannel_Gluonmove']
+len(Datasets) =  20
+
+---------------------------------------      ttbar_FullyLeptonic_erdON       ---------------------------------
+sum(file.nevents): 16229000
+ Number of Events :  16.23
+Unable to load sec.protocol plugin libXrdSecztn.so
+Unable to load sec.protocol plugin libXrdSecztn.so
+Effective No. Events = 16.09
+totle files Evaluated = 32
+
+
+---------------------------------------      ttbar_FullyLeptonic_QCDinspired       ---------------------------------
+sum(file.nevents): 15518000
+ Number of Events :  15.52
+Effective No. Events = 15.39
+totle files Evaluated = 20
+
+---------------------------------------      ttbar_SemiLeptonic_Gluonmove       ---------------------------------
+sum(file.nevents): 56324000
+ Number of Events :  56.32
+Effective No. Events = 55.86
+totle files Evaluated = 54
+
+
+
+---------------------------------------      ttbar_FullyLeptonic_TuneCPdown       ---------------------------------
+sum(file.nevents): 21583000
+ Number of Events :  21.58
+Effective No. Events = 21.4
+totle files Evaluated = 19
+
+---------------------------------------      ttbar_FullyLeptonic_TuneCPup       ---------------------------------
+sum(file.nevents): 10381000
+ Number of Events :  10.38
+Effective No. Events = 10.29
+totle files Evaluated = 22
+
+
+---------------------------------------      ttbar_FullyLeptonic_Gluonmove       ---------------------------------
+sum(file.nevents): 16776000
+ Number of Events :  16.78
+Effective No. Events = 16.64
+totle files Evaluated = 17
+
+
+

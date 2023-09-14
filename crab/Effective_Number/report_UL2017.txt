@@ -475,4 +475,110 @@ sum(file.nevents): 2.7196e+07
 
 Effective No. Events =25603878
 totle files Evaluated = 30
+[mikumar@lxplus744 Effective_Number]$ python Event_counter.py -y UL2017
+
+year =  UL2017
+['ttbar_SemiLeptonic_Gluonmove', 'Tchannel_Gluonmove', 'Tchannel_TuneCP5down', 'ttbar_SemiLeptonic_erdON', 'Tbarchannel_PSweights', 'ttbar_SemiLeptonic_PSweights', 'ttbar_FullyLeptonic_QCDinspired', 'Tchannel_TuneCP5up', 'ttbar_FullyLeptonic_TuneCPdown', 'ttbar_FullyLeptonic_PSweights', 'ttbar_SemiLeptonic_QCDinspired', 'Tbarchannel_erdON', 'ttbar_SemiLeptonic_TuneCP5down', 'ttbar_FullyLeptonic_Gluonmove', 'ttbar_FullyLeptonic_TuneCPup', 'ttbar_FullyLeptonic_erdON', 'Tbarchannel_TuneCP5down', 'Tbarchannel_QCDinspired', 'Tchannel_QCDinspired', 'Tchannel_PSweights', 'Tchannel_erdON', 'Tbarchannel_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5up', 'Tbarchannel_Gluonmove']
+len(Datasets) =  24
+
+---------------------------------------      ttbar_SemiLeptonic_Gluonmove       ---------------------------------
+sum(file.nevents): 141920000
+ Number of Events :  141.92
+# of files read = 100
+Effective No. Events = 140.77
+totle files Evaluated = 152
+
+
+
+---------------------------------------      ttbar_SemiLeptonic_erdON       ---------------------------------
+sum(file.nevents): 124882000
+ Number of Events :  124.88
+# of files read = 100
+Effective No. Events = 123.87
+totle files Evaluated = 111
+
+
+---------------------------------------      ttbar_SemiLeptonic_PSweights       ---------------------------------
+sum(file.nevents): 107604800
+ Number of Events :  107.6
+# of files read = 100
+Effective No. Events = 106.73
+totle files Evaluated = 178
+
+---------------------------------------      ttbar_FullyLeptonic_QCDinspired       ---------------------------------
+sum(file.nevents): 42817000
+ Number of Events :  42.82
+Unable to load sec.protocol plugin libXrdSecztn.so
+Unable to load sec.protocol plugin libXrdSecztn.so
+Effective No. Events = 42.47
+totle files Evaluated = 79
+
+
+---------------------------------------      ttbar_FullyLeptonic_TuneCPdown       ---------------------------------
+sum(file.nevents): 39285000
+ Number of Events :  39.28
+Effective No. Events = 38.96
+totle files Evaluated = 39
+
+---------------------------------------      ttbar_FullyLeptonic_PSweights       ---------------------------------
+sum(file.nevents): 67860400
+ Number of Events :  67.86
+# of files read = 100
+Effective No. Events = 67.31
+totle files Evaluated = 119
+
+---------------------------------------      ttbar_SemiLeptonic_QCDinspired       ---------------------------------
+sum(file.nevents): 136012000
+ Number of Events :  136.01
+# of files read = 100
+# of files read = 200
+Effective No. Events = 134.91
+totle files Evaluated = 200
+
+
+---------------------------------------      ttbar_SemiLeptonic_TuneCP5down       ---------------------------------
+sum(file.nevents): 134394000
+ Number of Events :  134.39
+Unable to load sec.protocol plugin libXrdSecztn.so
+Unable to load sec.protocol plugin libXrdSecztn.so
+Unable to load sec.protocol plugin libXrdSecztn.so
+Unable to load sec.protocol plugin libXrdSecztn.so
+# of files read = 100
+Effective No. Events = 133.3
+totle files Evaluated = 122
+
+---------------------------------------      ttbar_FullyLeptonic_Gluonmove       ---------------------------------
+sum(file.nevents): 42603000
+ Number of Events :  42.6
+Effective No. Events = 42.25
+totle files Evaluated = 80
+
+---------------------------------------      ttbar_FullyLeptonic_TuneCPup       ---------------------------------
+sum(file.nevents): 42388000
+ Number of Events :  42.39
+Effective No. Events = 42.04
+totle files Evaluated = 56
+
+---------------------------------------      ttbar_FullyLeptonic_erdON       ---------------------------------
+sum(file.nevents): 42432000
+ Number of Events :  42.43
+Unable to load sec.protocol plugin libXrdSecztn.so
+Unable to load sec.protocol plugin libXrdSecztn.so
+Effective No. Events = 42.08
+totle files Evaluated = 45
+
+
+
+
+
+
+
+---------------------------------------      ttbar_SemiLeptonic_TuneCP5up       ---------------------------------
+sum(file.nevents): 137062000
+ Number of Events :  137.06
+Unable to load sec.protocol plugin libXrdSecztn.so
+# of files read = 100
+Unable to load sec.protocol plugin libXrdSecztn.so
+Effective No. Events = 135.95
+totle files Evaluated = 142
 

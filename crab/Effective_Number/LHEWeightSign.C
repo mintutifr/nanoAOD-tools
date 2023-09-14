@@ -6,7 +6,7 @@ using namespace std;
 #include "TH1D.h"
 #include "TGaxis.h"
 #include "TH2D.h"
-
+#include "cmath"
 void LHEWeightSign(){
 
 
@@ -32,7 +32,7 @@ void LHEWeightSign(){
 	  if(count%100==0) std::cout<<"# of files read = "<<count<<std::endl;
      }
      UInt_t EffectiveNo = h->GetBinContent(2)-h->GetBinContent(1);
-     cout<<"Effective No. Events ="<<EffectiveNo<<endl;
+     cout<<"Effective No. Events = "<<round(EffectiveNo/10000)/100<<endl;
      cout<<"totle files Evaluated = "<<count<<endl;
      delete h; 
 	
