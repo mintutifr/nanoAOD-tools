@@ -50,7 +50,7 @@ else:
 
 
 #Minitree_module = getattr(mt , 'MinitreeModuleConstr' + args.tag)
-treecut = getattr(cs, 'cut_' + region + '_' + lep + '_' + year)  # + " && Entry$<500"
+treecut = getattr(cs, 'cut_' + region + '_' + lep + '_' + year) #+ " && event>=182500 && event <= 182721 " + " && Entry$<500"
 btvmodule = getattr(btv,'btagSF'+year)
 jmeCorrection = getattr(JME,'jmeCorrections'+year+'_MC_AK4CHS')
 hdampmodule = getattr(hdamp,'hdamp_vari_mainModule')
@@ -58,8 +58,8 @@ geninfomodule =  getattr(genInfo,'gen_info_Module')
 
 Met_filter_UL16 = " && (Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter)==1"
 Met_filter_UL17_UL18 = " && (Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilter)==1"
-if(year in ["UL2017", "UL2018"]): treecut = treecut+Met_filter_UL17_UL18	
-elif(year in ["UL2016_preVFP", "UL2016_postVFP"]): treecut = treecut+Met_filter_UL16
+#if(year in ["UL2017", "UL2018"]): treecut = treecut+Met_filter_UL17_UL18	
+#elif(year in ["UL2016_preVFP", "UL2016_postVFP"]): treecut = treecut+Met_filter_UL16
 
 if(args.ISDATA):
 	minitreemodule = getattr(minitree,'MinitreeModuleConstr'+region+'_'+lep+'_data_'+year)

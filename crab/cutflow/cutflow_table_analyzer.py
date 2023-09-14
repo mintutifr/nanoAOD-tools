@@ -24,16 +24,16 @@ elif(MC_Data=="data"):
         if(year=='UL2018'): Channels = [ 'Run2018A_'+lep,'Run2018B_'+lep, 'Run2018C_'+lep, 'Run2018D_'+lep] 
 # Access the histogram
 
-
+Channels = ['ttbar_SemiLeptonic']+
 print(" histogrma itegral are printted in million")
 for channel in Channels:
     # Open the ROOT file
     print("\n"+channel+"\t/nfs/home/common/RUN2_UL/Cutflow_crab/"+year_folder[year]+"/2J1T1/Cutflow_"+channel+"_2J1T1_"+lep+".root")
-    file = ROOT.TFile("/nfs/home/common/RUN2_UL/Cutflow_crab/"+year_folder[year]+"/2J1T1/Cutflow_"+channel+"_2J1T1_"+lep+".root", "READ")
+    file = ROOT.TFile("/nfs/home/common/RUN2_UL/Cutflow_crab_crosscheck/"+year_folder[year]+"/2J1T1/Cutflow_"+channel+"_2J1T1_"+lep+".root", "READ")
     minitree_file = ROOT.TFile("/nfs/home/common/RUN2_UL/Minitree/"+year_folder[year]+"/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root", "READ")
     tree = minitree_file.Get("Events")
     for hist_name in hist_names:
         hist = file.Get("histograms/"+hist_name)  # Replace "histogram_name" with the actual name of the histogram
         #if(hist.Integral()/1000000 > 0.1): print(round(hist.Integral()/1000000,2)," M \t:\t"+hist_name)
         print(round(hist.Integral(),2),";\t ",end = '')
-    print("\n",round(hist.GetEntries(),2),"\t",round(tree.GetEntries(),2))
+    print("\n","hist entry : ",round(hist.GetEntries(),2),"\t tree Entry : ",round(tree.GetEntries(),2))

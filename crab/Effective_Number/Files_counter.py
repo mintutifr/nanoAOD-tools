@@ -32,7 +32,7 @@ if(year == 'UL2016postVFP'):
 
 if(year == 'UL2017'):
     from dataset_UL2017 import *
-    Datasets = dict(Datasets_MC_UL2018, **Datasets_sys_MC_UL2018)
+    Datasets = dict(Datasets_MC_UL2017, **Datasets_sys_MC_UL2017)
 if(year == 'UL2018'):
     from dataset_UL2018 import *
     Datasets = dict(Datasets_MC_UL2018, **Datasets_sys_MC_UL2018)

@@ -413,7 +413,7 @@ class cutflow(Module):
         ##################################
         #b MET filter  --6--
         ##################################
-        if(True):#self.isMC == False): # for now flaga are storein data only we must check this for the MC as well
+        if(self.isMC == False): # for now flaga are storein data only we must check this for the MC as well
             MET_filetr_flag = 1
             Met_filter_UL16 = ['Flag_goodVertices', 'Flag_globalSuperTightHalo2016Filter', 'Flag_HBHENoiseFilter', 'Flag_HBHENoiseIsoFilter' , 'Flag_EcalDeadCellTriggerPrimitiveFilter', 'Flag_BadPFMuonFilter' , 'Flag_BadPFMuonDzFilter', 'Flag_eeBadScFilter']
             Met_filter_UL17_UL18 = ['Flag_goodVertices', 'Flag_globalSuperTightHalo2016Filter', 'Flag_HBHENoiseFilter' , 'Flag_HBHENoiseIsoFilter', 'Flag_EcalDeadCellTriggerPrimitiveFilter', 'Flag_BadPFMuonFilter', 'Flag_BadPFMuonDzFilter', 'Flag_eeBadScFilter', 'Flag_ecalBadCalibFilter']
