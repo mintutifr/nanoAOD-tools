@@ -36,8 +36,9 @@ if __name__ == '__main__':
     tag =   region+'_'+Lep + '_' + MC_Data + '_' + year
     Out_dir = args.out_dir
     print(args.ISDATA," ",MC_Data)
+    
     if(MC_Data=="mc"):
-	    Channels_commom = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2Q2L','DYJetsToLL'] 
+	    Channels_commom = ['Tchannel','Tbarchannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','tw_antitop', 'tw_top','Schannel','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2Q2L','DYJetsToLL'] 
 
 	    if(Lep=="mu"): Channel_QCD = ['QCD_Pt-15To20_MuEnriched', 'QCD_Pt-20To30_MuEnriched', 'QCD_Pt-30To50_MuEnriched', 'QCD_Pt-50To80_MuEnriched', 'QCD_Pt-80To120_MuEnriched', 'QCD_Pt-120To170_MuEnriched', 'QCD_Pt-170To300_MuEnriched', 'QCD_Pt-300To470_MuEnriched', 'QCD_Pt-470To600_MuEnriched', 'QCD_Pt-600To800_MuEnriched', 'QCD_Pt-800To1000_MuEnriched', 'QCD_Pt-1000_MuEnriched']
 
@@ -54,8 +55,7 @@ if __name__ == '__main__':
         if(year=='UL2018'): Channels = [ 'Run2018A_'+Lep,'Run2018B_'+Lep, 'Run2018C_'+Lep, 'Run2018D_'+Lep] 
 
 
-    #Channels = ['Run2016C_HIPM_'+Lep]#, 'WJetsToLNu_1J', 'WJetsToLNu_2J','DYJetsToLL'] #[./lo]#, 'ttbar_SemiLeptonic']
-
+    Channels = ['ttbar_SemiLeptonic']#, 'WJetsToLNu_1J', 'WJetsToLNu_2J','DYJetsToLL'] #[./lo]#, 'ttbar_SemiLeptonic']
     print(Channels)
 
     run_commands = []
@@ -76,10 +76,10 @@ if __name__ == '__main__':
         i=0
        	if(MC_Data=="mc"): 
             commom_run_cmd = 'pwd; cmsenv; python3 crab_script_Minitree_local.py  -d ' + Channel + ' -t ' + tag + ' -o ' + local_script_output_dir
-            total_file_in_set = 5
+            total_file_in_set = 1
         elif(MC_Data=="data"): 
             commom_run_cmd = 'pwd; cmsenv; python3 crab_script_Minitree_local.py  -data -d ' + Channel + ' -t ' + tag + ' -o ' + local_script_output_dir
-       	    total_file_in_set = 10
+       	    total_file_in_set = 5
         fileSetcounter = 0
         infils = ''
        	for count,fil in enumerate(inputFiles):
@@ -95,10 +95,11 @@ if __name__ == '__main__':
                 infils = ''
             i=i+1
             #if(i==total_file_in_set): break #switch of test perpose take only two file and the scripts
+    
     print(run_commands,"\n")
     #print(Hadd_N_createoutfile_cmd[Channel])
 
-    pool = mp.Pool(processes=15)
+    pool = mp.Pool(processes=10)
     pool.map(run_cmd, run_commands)
 
 

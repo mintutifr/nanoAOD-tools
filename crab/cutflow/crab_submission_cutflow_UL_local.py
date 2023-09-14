@@ -24,7 +24,7 @@ if __name__ == '__main__':
     parser.add_argument('-r', '--region', dest='region', type=str, default='2J1T1', help="region of caluation [ 2J1T1 , 2J1T0 ]")
     parser.add_argument('-y', '--year', dest='year', type=str, default='UL2017', help=" UL2017 UL2016preVFP UL2016postVFP UL2018 ")
     parser.add_argument('-data',"--ISDATA", action="store_true", help="enbale this feature to run on data")
-    parser.add_argument('-o', '--out_dir', dest='out_dir', type=str, default='/nfs/home/common/RUN2_UL/Cutflow_crab/', help="Set Dir for the output files")
+    parser.add_argument('-o', '--out_dir', dest='out_dir', type=str, default='/nfs/home/common/RUN2_UL/Cutflow_crab_crosscheck/', help="Set Dir for the output files")
 
     args = parser.parse_args()
 
@@ -52,7 +52,8 @@ if __name__ == '__main__':
         if(year=='UL2016postVFP'): Channels = [ 'Run2016F_'+Lep, 'Run2016G_'+Lep, 'Run2016H_'+Lep]
         if(year=='UL2017'): Channels = [ 'Run2017B_'+Lep, 'Run2017C_'+Lep, 'Run2017D_'+Lep, 'Run2017E_'+Lep, 'Run2017F_'+Lep]
         if(year=='UL2018'): Channels = [ 'Run2018A_'+Lep,'Run2018B_'+Lep, 'Run2018C_'+Lep, 'Run2018D_'+Lep] 
-    #Channels = ['Tchannel'] #[]#, 'ttbar_SemiLeptonic']
+
+    Channels = ['ttbar_SemiLeptonic'] + Channel_QCD #[]#, 'ttbar_SemiLeptonic']
 
     print(Channels)
 
@@ -75,9 +76,9 @@ if __name__ == '__main__':
        	inputFiles = [i for i in in_files if i != '']
        	Hadd_N_createoutfile_cmd[Channel] = 'hadd -f ' + Out_dir +year_folder[year]+'/'+region+'/'+Hadded_out_file_name
         i=0
-       	if(MC_Data=="mc"): commom_run_cmd = 'pwd; cmsenv; python3 crab_script_cutflow_local.py  -d ' + Channel + ' -t ' + tag + ' -o ' + local_script_output_dir
-        elif(MC_Data=="data"): commom_run_cmd = 'pwd; cmsenv; python3 crab_script_cutflow_local.py  -data -d ' + Channel + ' -t ' + tag + ' -o ' + local_script_output_dir
-       	total_file_in_set = 5
+       	if(MC_Data=="mc"): commom_run_cmd = ' cmsenv; python3 crab_script_cutflow_local.py  -d ' + Channel + ' -t ' + tag + ' -o ' + local_script_output_dir
+        elif(MC_Data=="data"): commom_run_cmd = ' cmsenv; python3 crab_script_cutflow_local.py  -data -d ' + Channel + ' -t ' + tag + ' -o ' + local_script_output_dir
+       	total_file_in_set = 1
         fileSetcounter = 0
         infils = ''
        	for count,fil in enumerate(inputFiles):
@@ -96,7 +97,7 @@ if __name__ == '__main__':
     print(run_commands)
     #print(Hadd_N_createoutfile_cmd[Channel])
 
-    pool = mp.Pool(processes=10)
+    pool = mp.Pool(processes=15)
     pool.map(run_cmd, run_commands)
 
 

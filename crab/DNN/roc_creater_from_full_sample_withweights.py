@@ -31,10 +31,10 @@ elif(lep=="el"):
         lepton = "Electron"
 print(lepton)
 
-applydir = 'DNN_output_without_mtwCut/Apply_all/' ; output_fileName = "ROC_TGraphs/ROC_info_"+year+"_"+lep+"_with_weights.root"
+applydir = 'DNN_output_without_mtwCut/2J1T1/Apply_all/' ; output_fileName = "ROC_TGraphs/ROC_info_"+year+"_"+lep+"_with_weights.root"
 
-channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
-MCcut = "(dR_bJet_lJet>0.4)*(mtwMass>50)" #"Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)"
+channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
+MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)" ## "(dR_bJet_lJet>0.4)*(mtwMass>50)" 
 DNN_cut = ""#*((t_ch_CAsi+ttbar_CAsi)>0.5)"
 Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
 
@@ -52,8 +52,8 @@ for channel in channels:
             EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
             if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
         elif(year=="UL2018"):
-            EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
+            EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
+            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
 
            
 print(Fpaths)

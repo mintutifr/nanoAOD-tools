@@ -69,8 +69,8 @@ if __name__ == '__main__':
 	rerun_list = []
 	cwd = os.getcwd()
 
-	Channels = ['ttbar_SemiLeptonic']
-	Error = "Skim"
+	Channels = Channel_QCD
+	Error = "Rate"
 	for channel in Channels:
 		print("----------------------\n"+channel+"\n-----------------------\n")
 		outputDir = LocalDir + '/' + lep + '/' + channel + '/log'
@@ -94,5 +94,5 @@ if __name__ == '__main__':
 				rerun_list.append(str(output2)[3:-3]) # remove /n and b' from and end of command
 		print(rerun_list)
 	print("runing "+str(len(rerun_list))+ " jobs .... .... ")
-	#pool = mp.Pool(processes=1)
-	#pool.map(run_cmd, rerun_list)
+	pool = mp.Pool(processes=1)
+	pool.map(run_cmd, rerun_list)

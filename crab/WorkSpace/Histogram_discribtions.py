@@ -4,7 +4,7 @@ def get_histogram_distciption(Variable="lntopMass"):
 
     if(Variable=="lntopMass"):
             Variable="TMath::Log(topMass)"
-            X_axies="ln(m_{t})"
+            X_axies="ln(m_{t} / 1 GeV)"
             Y_axies="Events/(0.092)"
             lest_bin=math.log(100.0)
             max_bin=math.log(300.0)
@@ -20,9 +20,9 @@ def get_histogram_distciption(Variable="lntopMass"):
     elif(Variable=="mtwMass"):
             X_axies="m_{T} (GeV)"
             Y_axies="Events/(10)"
-            lest_bin=0.0
+            lest_bin=50.0
             max_bin=150.0
-            Num_bin=15
+            Num_bin=10
     elif(Variable=="MuonCharge"):
             X_axies="#mu charge"
             Y_axies="Events/bin"

@@ -6,7 +6,7 @@ import math
 import sys 
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
-parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
+parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ UL2016preVFP  UL2016postVFP  UL2017  UL2018 ]")
 parser.add_argument('-v', '--var  ', dest='var', type=str, nargs=1, help="var [ lntopMass topMass t_ch_CAsi]")
 #parser.add_argument('-DS', '--DNNscale  ', dest='DNNscale', type=str, nargs=1, help="if need to apply DNNscale [ 0 , 1]")
 parser.add_argument('-DC', '--DNNCut  ', dest='DNNCut', type=str, nargs=1, help="if need to apply DNNCut [ 0.0 ,0.7]")
@@ -17,7 +17,7 @@ if (args.year == None or args.lepton == None):
         print("USAGE: %s [-h] [-y <Data year> -l <lepton>] -v <variable>"%(sys.argv [0]))
         sys.exit (1)
 
-if args.year[0] not in ['ULpreVFP2016', 'ULpostVFP2016','UL2017','UL2018']:
+if args.year[0] not in ['UL2016preVFP', 'UL2016postVFP','UL2017','UL2018']:
     print('Error: Incorrect choice of year, use -h for help')
     exit()
 
@@ -50,15 +50,6 @@ def propagate_rate_uncertainity(hist, uncert):
 
 ################################# DNN scale ################ get from the lepton chage ratio max diff of Data amd MC ###########
 
-DNN_bais_scale={
-        "mu" : {
-                "UL2017" : 0.0 ,
-                },
-        "el" :{
-                "UL2017" :  0.0,      
-               }
-}
-
 def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     if(lep=="mu"):
             lepton = "Muon"
@@ -67,19 +58,21 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     print(lepton)
     
     yearDir={
-                'ULpreVFP2016' :  "SIXTEEN_preVFP",
-                'ULpostVFP2016' : "SIXTEEN_postVFP",
+                'UL2016preVFP' :  "SIXTEEN_preVFP",
+                'UL2016postVFP' : "SIXTEEN_postVFP",
                 'UL2017' : "SEVENTEEN",
         } 
     Combine_year_tag={
-                'ULpreVFP2016' :  "_ULpre16",
-                'ULpostVFP2016' : "_ULpost16",
+                'UL2016preVFP' :  "_ULpre16",
+                'UL2016postVFP' : "_ULpost16",
                 'UL2017' : "_UL17",
                 'UL2018' : "_UL18"}
 
     hist_to_return = [] 
-    applydir = '/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/2J1T1/Apply_all/'
-    MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)" 
+    applydir = '/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/2J1T1/Apply_all/'
+    #applydir = '/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/stack_plots_before_ML/Minitree_with_mtw_weight/2J1T1'
+    MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut" 
+    QCDcut = "(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut"
     Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
     DNNcut_str = "*(t_ch_CAsi>="+DNNCut+")"
  
@@ -97,17 +90,11 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
 
     #####  Nominal MC samples #######
     print("\n #################   Nominal hist ############## \n")
-    hists_Nomi = Get_additive_sys_samples(lep=lep,year=year,Variable=Variable,MCcut = MCcut,DNNCut=DNNCut,hist_sys_name="")
+    hists_Nomi = Get_additive_sys_samples(lep=lep,year=year,Variable=Variable,MCcut = MCcut,QCDcut=QCDcut,DNNCut=DNNCut,hist_sys_name="")
     
-    #hists_3J2T_con[1].Scale(hists_Nomi[1].Integral()/hists_3J2T_con[1].Integral())    
-    #hists_2J1L0T_con[2].Scale(hists_Nomi[2].Integral()/hists_2J1L0T_con[2].Integral())
-    #hist_to_return.append(hists_3J2T_con[1].Clone())
-    #hist_to_return.append(hists_2J1L0T_con[2].Clone())
     hist_to_return.append(hists_Nomi[1].Clone())
     hist_to_return.append(hists_Nomi[2].Clone())
     hist_to_return.append(hists_Nomi[0].Clone())
-    #del hists_3J2T_con
-    #del hists_2J1L0T_con
     del hists_Nomi
 
     #################### Data and DD QCD  ######################################################## 
@@ -119,35 +106,37 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     Fpaths_DNN_apply = {}
     rt.gStyle.SetOptStat(0)
     
-    Data_AntiIso_Fpath = ""
-    Data_Iso_Fpath = "" 
+    #Data_AntiIso_Fpath = ""
+    #Data_Iso_Fpath = "" 
+    EvtWeight_Fpaths = {}
     for channel in ["QCD","Data"+year]:
-           Fpaths_DNN_apply[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
-    Data_AntiIso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/"+yearDir[year]+"/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
-    Data_Iso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/"+yearDir[year]+"/minitree/Mc/2J1T1/Minitree_Data"+year+"_2J1T1_"+lep+".root"
+        Fpaths_DNN_apply[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
+        EvtWeight_Fpaths[channel] = "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/stack_plots_before_ML/Minitree_with_mtw_weight/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
+    #Data_AntiIso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/"+yearDir[year]+"/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
+    #Data_Iso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/"+yearDir[year]+"/minitree/Mc/2J1T1/Minitree_Data"+year+"_2J1T1_"+lep+".root"
     
     print    
     print "Data and DDQCD with ", DNNcut_str, " .. .. .. .... ..... ..."
     print
-    QCD_Inte = Nomi_QCD_Integral(lep,year,Variable,Datacut,Data_AntiIso_Fpath,Fpaths_DNN_apply)
+    #QCD_Inte = Nomi_QCD_Integral(lep,year,Variable,Datacut,Data_AntiIso_Fpath,Fpaths_DNN_apply)
 
-    print "QCD_Inte : ",QCD_Inte
-    QCDSF = QCDScale_mtwFit[lep][year]/QCD_Inte
+    #print "QCD_Inte : ",QCD_Inte
+    #QCDSF = QCDScale_mtwFit[lep][year]/QCD_Inte
     print
     #print Fpaths_DNN_apply
 
     for channel_no,channel in enumerate(["QCD","Data"+year]):
-        if(channel=="QCD"):
-                print channel, " ", Data_AntiIso_Fpath
-                print channel, " ", Fpaths_DNN_apply[channel]
-                infiles[channel] = rt.TFile.Open(Data_AntiIso_Fpath, 'READ')
-        else:
-                print channel, " ", Data_Iso_Fpath
-                print channel, " ", Fpaths_DNN_apply[channel]
-                infiles[channel] = rt.TFile.Open(Data_Iso_Fpath, 'READ')
-
+        #if(channel=="QCD"):
+                #print channel, " ", Data_AntiIso_Fpath
+                #print channel, " ", Fpaths_DNN_apply[channel]
+                #infiles[channel] = rt.TFile.Open(Data_AntiIso_Fpath, 'READ')
+        #else:
+        #        print channel, " ", Data_Iso_Fpath
+        #        print channel, " ", Fpaths_DNN_apply[channel]
+        #        infiles[channel] = rt.TFile.Open(Data_Iso_Fpath, 'READ')
+        infiles[channel] = rt.TFile.Open(Fpaths_DNN_apply[channel], 'READ')
         intree[channel] = infiles[channel].Get('Events')
-        intree[channel].AddFriend ("Events",Fpaths_DNN_apply[channel])
+        intree[channel].AddFriend ("Events",EvtWeight_Fpaths[channel])
   
         if(Variable=="t_ch_CAsi"):
                 BINS = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,1.0]
@@ -158,15 +147,17 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
                 hs[channel] = rt.TH1F('hs' + channel, '', Num_bin, lest_bin, max_bin)
         #rt.gROOT.cd()
     
-        intree[channel].Project('hs' + channel, Variable,Datacut+DNNcut_str)
+        if('QCD' in channel):
+                intree[channel].Project('hs' + channel, Variable,QCDcut+DNNcut_str)
+        else:
+                intree[channel].Project('hs' + channel, Variable,Datacut+DNNcut_str)
         #hs[channel] = DrawOverflow_N_DrawUnderflow(hs[channel])
         #hs[channel].Print()
         
     rt.gROOT.cd()
     Data = hs['Data'+year].Clone()
     DDQCD = hs['QCD'].Clone()
-    DDQCD.Scale(QCDSF)
-    if(DNN_rescale=="1"): DDQCD.Scale(DNN_bais_scale[lep][year])
+    #DDQCD.Scale(QCDSF)
     DDQCD.SetName("QCD_DD"+Combine_year_tag[year])
     propagate_rate_uncertainity(DDQCD, 50.0)
     #for i in range(1,DDQCD.GetNbinsX()+1):
@@ -180,7 +171,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     DDQCD.SetLineColor(rt.kGray); DDQCD.SetLineWidth(2)
     
     del hs
-    del Data_Iso_Fpath,Data_AntiIso_Fpath
+    #del Data_Iso_Fpath,Data_AntiIso_Fpath
 
 
 
@@ -192,13 +183,13 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
 
    
     #####  lepton SF ####### 
-    sys_additive = {"el":["SF_Iso_IDUp", "SF_Iso_IDDown", "SF_Iso_TrigUp", "SF_Iso_TrigDown"], #"SF_Veto_IDUp", "SF_Veto_IDDown", "SF_Veto_TrigUp", "SF_Veto_TrigDown"],
+    sys_additive = {"el":["SF_Iso_IDUp", "SF_Iso_IDDown", "SF_Iso_TrigUp", "SF_Iso_TrigDown","SF_Veto_IDUp", "SF_Veto_IDDown", "SF_Veto_TrigUp", "SF_Veto_TrigDown"],
                     "mu":["SF_IsoUp", "SF_IsoDown", "SF_Iso_IDUp", "SF_Iso_IDDown", "SF_Iso_TrigUp", "SF_Iso_TrigDown"]
     }
     for sys in sys_additive[lep]:
         
         print("\n #################  ", sys, "############## \n")
-        hists_syst = Get_additive_sys_samples(lep=lep,year=year,Variable=Variable,MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lepton+"_"+sys+"*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",DNNCut=DNNCut,hist_sys_name="_"+lep+sys)
+        hists_syst = Get_additive_sys_samples(lep=lep,year=year,Variable=Variable,MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lepton+"_"+sys+"*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut",QCDcut=QCDcut,DNNCut=DNNCut,hist_sys_name="_"+lep+sys)
         for Hist in hists_syst:
             hist_to_return.append(Hist.Clone())
         del hists_syst
@@ -209,7 +200,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     sys_variation = ["Up","Down"]
     for variation_no,sys in enumerate(sys_pileup):
         print("\n #################  ", sys, "############## \n")
-        hists_syst = Get_additive_sys_samples(lep=lep,year=year,Variable=Variable,MCcut = "Xsec_wgt*LHEWeightSign*"+sys+"*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",DNNCut=DNNCut,hist_sys_name="_puWeight"+sys_variation[variation_no])
+        hists_syst = Get_additive_sys_samples(lep=lep,year=year,Variable=Variable,MCcut = "Xsec_wgt*LHEWeightSign*"+sys+"*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut",QCDcut=QCDcut,DNNCut=DNNCut,hist_sys_name="_puWeight"+sys_variation[variation_no])
         for Hist in hists_syst:
             hist_to_return.append(Hist.Clone())
         del hists_syst
@@ -219,13 +210,13 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     sys_variation = ["Up","Down"]
     for sys in sys_bWeight:
         for variation_no,variation in enumerate(sys_variation):
-            hists_syst = Get_additive_sys_samples(lep=lep,year=year,Variable=Variable,MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*"+sys+"["+str(variation_no)+"]*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",DNNCut=DNNCut,hist_sys_name="_"+sys+variation)
+            hists_syst = Get_additive_sys_samples(lep=lep,year=year,Variable=Variable,MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*"+sys+variation+"*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut",QCDcut=QCDcut,DNNCut=DNNCut,hist_sys_name="_"+sys+variation)
             for Hist in hists_syst:
                 hist_to_return.append(Hist.Clone())
             del hists_syst
 
 
-    """#################### ALternate mass and width  #################################################### 
+    #################### ALternate mass and width  #################################################### 
 
     
     print "creating histogram for the Alt mass and with samples ............."
@@ -393,7 +384,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
         hist_to_return.append(top_bkg_sys["top_bkg_"+syst])
     del top_sig_sys
     del top_bkg_sys
-    del systs
+    del systs"""
 
 
    #----------------- Add Altrenate mass and width samples ------------#"""
@@ -406,7 +397,9 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
 if __name__ == "__main__":
     
     hists = Create_Workspace_input_file(lep,year,Variable) 
+    
     output_file = "Hist_for_workspace/Combine_DNNFit_Input_"+Variable+"_histograms_"+year+"_"+lep+".root"
+  
     outfile = rt.TFile(output_file,"recreate")
     outfile.cd()
     Dir_mu = outfile.mkdir(lep+"jets")

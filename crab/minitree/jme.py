@@ -24,13 +24,14 @@ jmeCorrectionsULRun2016F_DATA_AK4CHS = createJMECorrector(False, "UL2016", "F", 
 jmeCorrectionsULRun2016G_DATA_AK4CHS = createJMECorrector(False, "UL2016", "G", "All", "AK4PFchs")
 jmeCorrectionsULRun2016H_DATA_AK4CHS = createJMECorrector(False, "UL2016", "H", "All", "AK4PFchs")
 
-
+#UL2017
 jmeCorrectionsULRun2017B_DATA_AK4CHS = createJMECorrector(False, "UL2017", "B", "All", "AK4PFchs")
 jmeCorrectionsULRun2017C_DATA_AK4CHS = createJMECorrector(False, "UL2017", "C", "All", "AK4PFchs")
 jmeCorrectionsULRun2017D_DATA_AK4CHS = createJMECorrector(False, "UL2017", "D", "All", "AK4PFchs")
 jmeCorrectionsULRun2017E_DATA_AK4CHS = createJMECorrector(False, "UL2017", "E", "All", "AK4PFchs")
 jmeCorrectionsULRun2017F_DATA_AK4CHS = createJMECorrector(False, "UL2017", "F", "All", "AK4PFchs")
 
+#UL2018
 jmeCorrectionsULRun2018A_DATA_AK4CHS = createJMECorrector(False, "UL2018", "A", "All", "AK4PFchs")
 jmeCorrectionsULRun2018B_DATA_AK4CHS = createJMECorrector(False, "UL2018", "B", "All", "AK4PFchs")
 jmeCorrectionsULRun2018C_DATA_AK4CHS = createJMECorrector(False, "UL2018", "C", "All", "AK4PFchs")

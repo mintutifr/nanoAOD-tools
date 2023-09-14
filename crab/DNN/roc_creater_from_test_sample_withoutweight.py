@@ -56,7 +56,7 @@ n_sel_sig = np.zeros(n_bins+1)
 n_sel_bkg = np.zeros(n_bins+1)
 
 
-applydir = 'DNN_output_without_mtwCut/' ; output_fileName = "ROC_TGraphs/ROC_info_"+year+"_"+lep+"_without_weights.root"
+applydir = 'DNN_output_without_mtwCut/2J1T1/' ; output_fileName = "ROC_TGraphs/ROC_info_"+year+"_"+lep+"_without_weights.root"
 
 for key in classes:
     infiles[key] = rt.TFile.Open(applydir +files[key], 'READ')

@@ -5,7 +5,7 @@ import argparse as arg
 
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
-parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
+parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ UL2016preVFP  UL2016postVFP  UL2017  UL2018 ]")
 parser.add_argument('-s', '--sample', dest='samples', type=str, nargs=1, help="sample [ Mc_Nomi , Mc_Alt , Mc_sys , Data ]")
 parser.add_argument('-r', '--region', dest='regions', type=str, nargs=1, help="sample [ 2J1T , 3J1T , 2J1L0T , 3J2T , 2J0T ]")
 
@@ -15,7 +15,7 @@ if (args.year == None or args.lepton == None):
         print("USAGE: %s [-h] [-y <Data year> -l <lepton>]"%(sys.argv [0]))
         sys.exit (1)
 
-if args.year[0] not in ['ULpreVFP2016', 'ULpostVFP2016','UL2017','UL2018']:
+if args.year[0] not in ['UL2016preVFP', 'UL2016postVFP','UL2017','UL2018']:
     print('Error: Incorrect choice of year, use -h for help')
     exit()
 
@@ -105,7 +105,7 @@ data_channels = {
         "UL2017" : "DataUL2017" 
 	}
 if(sample=="Mc_Nomi"):
-        channels = ['Tchannel', 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel', 'ttbar_SemiLeptonic', 'ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
+        channels = ['Tchannel', 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel', 'ttbar_SemiLeptonic', 'ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
         channels.append("Data"+year) 
 elif(sample=="Mc_Alt"):
         channels = ['Tbarchannel_mtop1695', 'ttbar_SemiLeptonic_mtop1695',   'ttbar_FullyLeptonic_mtop1695',   'Tbarchannel_mtop1735',   'ttbar_FullyLeptonic_widthx0p55',   'ttbar_FullyLeptonic_widthx0p7',   'ttbar_FullyLeptonic_mtop1735',   'Tbarchannel_mtop1715',   'ttbar_FullyLeptonic_widthx1p3',   'ttbar_FullyLeptonic_mtop1755',   'ttbar_FullyLeptonic_widthx1p45',   'ttbar_FullyLeptonic_mtop1715',   'Tchannel_mtop1715',   'ttbar_SemiLeptonic_mtop1755',   'ttbar_SemiLeptonic_mtop1735',   'ttbar_SemiLeptonic_mtop1715',   'ttbar_FullyLeptonic_widthx0p85',   'Tbarchannel_mtop1755',   'Tchannel_mtop1695',   'ttbar_FullyLeptonic_widthx1p15',   'Tchannel_mtop1735',   'Tchannel_mtop1755']
@@ -119,7 +119,7 @@ types = ['Apply_all']#,'train']
 files = []
 
 #ML_DIR='dataframe_saved_with_mtwCut/'+region+'1/' ; wightfolder = 'weight_with_mtwCut/' ; MainOutputDir = 'DNN_output_with_mtwCut/'
-ML_DIR='dataframe_saved_without_mtwCut/'+region+'1/' ; wightfolder = 'weight_without_mtwCut/' ; MainOutputDir = 'DNN_output_without_mtwCut/'+region+'1/'
+ML_DIR='dataframe_saved_without_mtwCut/'+region+'/' ; wightfolder = 'weight_without_mtwCut/' ; MainOutputDir = 'DNN_output_without_mtwCut/'+region+'1/'
 
 #if not os.path.exists(MainOutputDir): os.mkdir(MainOutputDir)
 #if not os.path.exists(MainOutputDir+'Apply_all/'): os.mkdir(MainOutputDir+'Apply_all/')
@@ -127,10 +127,14 @@ if not os.path.exists(MainOutputDir+'Apply_all/sys_N_Alt'): os.makedirs(MainOutp
 
 #if(sample=="Mc_Nomi"):
 OriginalFileDir = {
-        "ULpreVFP2016" : "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
-        "ULpostVFP2016" :  "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
-        "UL2017" : "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
-        "UL2018" : ""
+        "UL2016preVFP" :   "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/stack_plots_before_ML/Minitree_with_mtw_weight/2J1T1/",
+	#PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
+        "UL2016postVFP" :  "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/stack_plots_before_ML/Minitree_with_mtw_weight/2J1T1/",
+	##PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
+        "UL2017" :         "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/stack_plots_before_ML/Minitree_with_mtw_weight/2J1T1/",
+	#PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
+        "UL2018" :         "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/stack_plots_before_ML/Minitree_with_mtw_weight/2J1T1/",
+	#PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR
  }
 
 for channel in channels:
@@ -174,6 +178,7 @@ for fil in files:
 
 	model = NeuralNetwork().to(device)
 	wightpath = wightfolder+year+'/'+lep
+	print("looking "+wightpath+'/* for weigt files')
 	list_of_files = glob.glob(wightpath+'/*')
 	latest_weight_file = max(list_of_files, key=os.path.getctime)
 	print("using ",latest_weight_file, "file for the evaluation")
@@ -197,7 +202,7 @@ for fil in files:
 	y_arr = y_arr.ravel().view(dtype = np.dtype([('t_ch_WAsi', np.double), ('t_ch_CAsi', np.double), ('ttbar_CAsi', np.double), ('ttbar_WAsi', np.double), ('EWK', np.double), ('QCD', np.double)]))
 	fname, ext = os.path.splitext(fil)
 
-        if(sample == "Mc_Nomi"):outputfile = MainOutputDir+'Apply_all/'+ fname.rsplit('/')[-1] + '.root'
+	if(sample == "Mc_Nomi"):outputfile = MainOutputDir+'Apply_all/'+ fname.rsplit('/')[-1] + '.root'
 	else: outputfile =  MainOutputDir+'Apply_all/sys_N_Alt/'+ fname.rsplit('/')[-1] + '.root'
 	print("writing out put file : ", MainOutputDir+'Apply_all/sys_N_Alt/'+fname.rsplit('/')[-1],"_apply.root")
 

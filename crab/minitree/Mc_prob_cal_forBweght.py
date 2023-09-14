@@ -131,12 +131,15 @@ def Probability_2(syst,selected_jet):
                 shape_sf_product *= jet.btagSF_deepjet_shape_down_hf
         elif(syst=='lf_up'):
             for jet in selected_jet :
+                #print("jet.btagSF_deepjet_shape_up_lf : ",jet.btagSF_deepjet_shape_up_lf)
                 shape_sf_product *= jet.btagSF_deepjet_shape_up_lf
         elif(syst=='lf_down'):
             for jet in selected_jet :
+                #print("jet.btagSF_deepjet_shape_down_lf : ",jet.btagSF_deepjet_shape_down_lf)
                 shape_sf_product *= jet.btagSF_deepjet_shape_down_lf
         elif(syst=='Central'):
            for jet in selected_jet :
+                #print("jet.btagSF_deepjet_shape : ",jet.btagSF_deepjet_shape)
                 shape_sf_product *= jet.btagSF_deepjet_shape
 
         return shape_sf_product
