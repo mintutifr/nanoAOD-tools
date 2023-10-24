@@ -141,10 +141,62 @@ def Probability_2(syst,selected_jet):
            for jet in selected_jet :
                 #print("jet.btagSF_deepjet_shape : ",jet.btagSF_deepjet_shape)
                 shape_sf_product *= jet.btagSF_deepjet_shape
-
+                print(jet.hadronFlavour)
         return shape_sf_product
 
 #[b,c]=Probability_2(120,0.5,0.5,0,0,'M',1.5,5,'central','2016')
 #print b
 #print c
 #print "Weight = ",c/b
+
+def Probability_3(syst,selected_jet):
+    shape_sf_product = 1
+    if("cferr" in syst):
+        for jet in selected_jet :
+            if(abs(jet.hadronFlavour)!=4):
+                shape_sf_product *= jet.btagSF_deepjet_shape
+            else:
+                if(syst=='cferr2_up'):
+                    shape_sf_product *= jet.btagSF_deepjet_shape_up_cferr2
+                elif(syst=='cferr2_down'):
+                    shape_sf_product *= jet.btagSF_deepjet_shape_down_cferr2
+                elif(syst=='cferr1_up'):
+                    shape_sf_product *= jet.btagSF_deepjet_shape_up_cferr1
+                elif(syst=='cferr1_down'):
+                    shape_sf_product *= jet.btagSF_deepjet_shape_down_cferr1
+    else:
+        for jet in selected_jet :
+            if(abs(jet.hadronFlavour)==4):
+                shape_sf_product *= jet.btagSF_deepjet_shape
+            else:
+                if(syst=='Central'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape
+                elif(syst=='jes_up'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_up_jes
+                elif(syst=='jes_down'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_down_jes
+                elif(syst=='hfstats2_up'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_up_hfstats2
+                elif(syst=='hfstats2_down'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_down_hfstats2
+                elif(syst=='hfstats1_up'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_up_hfstats1
+                elif(syst=='hfstats1_down'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_down_hfstats1
+                elif(syst=='lfstats2_up'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_up_lfstats2
+                elif(syst=='lfstats2_down'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_down_lfstats2
+                elif(syst=='lfstats1_up'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_up_lfstats1
+                elif(syst=='lfstats1_down'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_down_lfstats1
+                elif(syst=='hf_up'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_up_hf
+                elif(syst=='hf_down'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_down_hf
+                elif(syst=='lf_up'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_up_lf
+                elif(syst=='lf_down'):
+                        shape_sf_product *= jet.btagSF_deepjet_shape_down_lf
+    return shape_sf_product
