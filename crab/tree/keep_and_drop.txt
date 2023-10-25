@@ -101,7 +101,6 @@ keep FatJet_btagCMVA
 keep FatJet_btagCSVV2
 keep FatJet_btagDeepB
 keep FatJet_btagDeepFlavB
-keep FatJet_qgl
 keep FatJet_genJetAK8Idx
 keep FatJet_jetId
 keep FatJet_nCHadrons
@@ -139,7 +138,6 @@ keep Jet_dR_Ljet_AntiIsoel
        
 keep Electron_EtaSC
 
-keep Jet_btagSF_*
 keep puWeight*
 keep LHEWeight*
 
