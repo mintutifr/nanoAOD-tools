@@ -89,7 +89,7 @@ types = ['train', 'test', 'valid']
 files = []
 
 #ML_DIR='dataframe_saved_with_mtwCut/' ; wightfolder = 'weight_with_mtwCut/' ; MainOutputDir = 'DNN_output_with_mtwCut/'
-ML_DIR='dataframe_saved_without_mtwCut/' ; wightfolder = 'weight_without_mtwCut/' ; MainOutputDir = 'DNN_output_without_mtwCut/'
+ML_DIR='dataframe_saved_without_mtwCut/2J1T/' ; wightfolder = 'weight_without_mtwCut/' ; MainOutputDir = 'DNN_output_without_mtwCut/'
 
 if not os.path.exists(MainOutputDir): os.mkdir(MainOutputDir)
 

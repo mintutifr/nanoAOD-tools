@@ -16,8 +16,8 @@ ROOT.gROOT.SetBatch(True)
 
 def Get_Norm_N_error(errors=False,InFile = "",year = "UL2017"):
         Combine_year_tag={
-                'ULpreVFP2016' :  "_ULpre16",
-                'ULpostVFP2016' : "_ULpost16",
+                'UL2016preVFP' :  "_ULpre16",
+                'UL2016postVFP' : "_ULpost16",
                 'UL2017' : "_UL17",
                 'UL2018' : "_UL18"}
 
@@ -185,7 +185,7 @@ if __name__ == "__main__":
 
         parser = arg.ArgumentParser(description='inputs discription')
         parser.add_argument('-u', '--uncertainties', dest='uncertainties', type=bool, nargs=1, help=" includes errors as well 0 or 1")
-        parser.add_argument('-y', '--years', dest='years', type=str, nargs=1, help=" ULpreVFP2016, ULpostVFP2016, UL2017, UL2018")
+        parser.add_argument('-y', '--years', dest='years', type=str, nargs=1, help=" UL2016preVFP, UL2016postVFP, UL2017, UL2018")
         parser.add_argument('-f', '--InFile ', dest='InFile', type=str, nargs=1, help="In put fitdiagnostic file  i.e /home/mikumar/t3store3/workarea/Higgs_Combine/CMSSW_11_3_4/src/Combine_Run2/fitDiagnostics_M1725_DNNfit_UL2017.root ")
         args = parser.parse_args()
 

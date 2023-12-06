@@ -12,8 +12,18 @@ def propagate_rate_uncertainity(hist, uncert):
             hist.SetBinError(i, hist.GetBinContent(i) * uncert * 0.01)
 
 
-def Get_additive_sys_samples(lep="mu",year="UL2017",Variable="lntopMass",MCcut = "Xsec_wgt*LHEWeightSign*puWeight*muSF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",DNNCut="0.0",hist_sys_name="muSF_up"):
+def Get_additive_sys_samples(
+                                lep="mu",
+                                year="UL2017",
+                                Variable="lntopMass",
+                                MCcut = "Xsec_wgt*LHEWeightSign*puWeight*muSF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut",
+                                QCDcut="(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut", 
+                                DNNCut="0.0",
+                                hist_sys_name="muSF_up"):
+
+    print('============================================')
     print("MCcut = ",MCcut)
+    print('============================================')
     if(lep=="mu"):
             lepton = "Muon"
     elif(lep=="el"):
@@ -24,26 +34,27 @@ def Get_additive_sys_samples(lep="mu",year="UL2017",Variable="lntopMass",MCcut =
     print(X_axies," ",Y_axies," ",lest_bin," ",max_bin," ",Num_bin)
                 
     yearDir={
-                'ULpreVFP2016' :  "SIXTEEN_preVFP",
-                'ULpostVFP2016' : "SIXTEEN_postVFP",
+                'UL2016preVFP' :  "SIXTEEN_preVFP",
+                'UL2016postVFP' : "SIXTEEN_postVFP",
                 'UL2017' : "SEVENTEEN",
                 'UL2018' : "EIGHTEEN"}
     Combine_year_tag={
-                'ULpreVFP2016' :  "_ULpre16",
-                'ULpostVFP2016' : "_ULpost16",
+                'UL2016preVFP' :  "_ULpre16",
+                'UL2016postVFP' : "_ULpost16",
                 'UL2017' : "_UL17",
                 'UL2018' : "_UL18"}
 
     ################### Genral Dir and selection ##################################################
 
-    applydir = '/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/2J1T1/Apply_all/'
+    #applydir = '/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/2J1T1/Apply_all/'
+    applydir = '/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/2J1T1/Apply_all/'
     Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
     DNNcut_str = "*(t_ch_CAsi>="+DNNCut+")" 
     hist_to_return = [] 
     #################### Nimonal Samples MC ########################################################
  
 
-    channels_Nomi = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L',"QCD"]
+    channels_Nomi = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L',"QCD"]
 
 
     Fpaths_DNN_apply = {}
@@ -51,7 +62,7 @@ def Get_additive_sys_samples(lep="mu",year="UL2017",Variable="lntopMass",MCcut =
     Data_AntiIso_Fpath = "" 
     for channel in channels_Nomi:
             Fpaths_DNN_apply[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
-            EvtWeight_Fpaths_Iso[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/"+yearDir[year]+"/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
+            EvtWeight_Fpaths_Iso[channel] = "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/stack_plots_before_ML/Minitree_with_mtw_weight/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
             #if(channel=="QCD"): Data_AntiIso_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/"+yearDir[year]+"/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
     
                
@@ -61,19 +72,19 @@ def Get_additive_sys_samples(lep="mu",year="UL2017",Variable="lntopMass",MCcut =
     # claculation of the scale QCD and NonQCD
     #NonQCD_Inte,QCD_Inte = Nomi_QCD_NoNQCD_Integral(lep,year,Variable,MCcut,Datacut,EvtWeight_Fpaths_Iso,Data_AntiIso_Fpath,Fpaths_DNN_apply)
     #QCD_Inte_v2 = Nomi_QCD_Integral(lep,year,Variable,Datacut,Data_AntiIso_Fpath,Fpaths_DNN_apply)
-    NonQCD_Inte = Nomi_NoNQCD_Integral(lep,year,Variable,MCcut,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
+    #NonQCD_Inte = Nomi_NoNQCD_Integral(lep,year,Variable,MCcut,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
     # get histogram with DNN cut
-    hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,channels_Nomi[:-1], MCcut , Datacut , DNNCut ,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
+    hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,channels_Nomi[:-1], MCcut , QCDcut, Datacut , DNNCut ,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
     if(Variable=="lntopMass"):   Variable="TMath::Log(topMass)" 
     del Fpaths_DNN_apply
     del EvtWeight_Fpaths_Iso
     del Data_AntiIso_Fpath
 
-    print "NonQCD_Inte : ",NonQCD_Inte
-    MCSF = NonQCDScale_mtwFit[lep][year]/NonQCD_Inte
+    #print "NonQCD_Inte : ",NonQCD_Inte
+    #MCSF = NonQCDScale_mtwFit[lep][year]/NonQCD_Inte
     #QCDSF = QCDScale_mtwFit[lep][year]/QCD_Inte
     print
-    print "MCSF: ",MCSF#," QCDSF: ",QCDSF
+    #print "MCSF: ",MCSF#," QCDSF: ",QCDSF
 
     hist_corr_assig = {}
     hist_wron_assig = {}
@@ -91,8 +102,8 @@ def Get_additive_sys_samples(lep="mu",year="UL2017",Variable="lntopMass",MCcut =
                 propagate_rate_uncertainity(hists_wron[channel_no], 10.0)
         hist_corr_assig[channel] = hists_corr[channel_no].Clone()
         hist_wron_assig[channel] = hists_wron[channel_no].Clone()
-        hist_corr_assig[channel].Scale(MCSF)
-        hist_wron_assig[channel].Scale(MCSF)        
+        #hist_corr_assig[channel].Scale(MCSF)
+        #hist_wron_assig[channel].Scale(MCSF)        
 
     del hists_corr
     del hists_wron
@@ -113,7 +124,7 @@ def Get_additive_sys_samples(lep="mu",year="UL2017",Variable="lntopMass",MCcut =
     
 
     hist_EWK = hist_corr_assig["WJetsToLNu_0J"]; hist_EWK.Add(hist_wron_assig["WJetsToLNu_0J"])
-    for channel in ['WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L']:
+    for channel in ['WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L']:
         hist_EWK.Add(hist_corr_assig[channel]); hist_EWK.Add(hist_wron_assig[channel])
     hist_EWK.SetLineColor(rt.kMagenta); hist_EWK.SetLineWidth(2)
     hist_EWK.SetName("EWK_bkg"+Combine_year_tag[year]+hist_sys_name)
@@ -145,13 +156,13 @@ def Get_samples_hist_wo_NonQCD_Norm(lep="mu",year="UL2017",Variable="lntopMass",
     print(X_axies," ",Y_axies," ",lest_bin," ",max_bin," ",Num_bin)
                 
     yearDir={
-                'ULpreVFP2016' :  "SIXTEEN_preVFP",
-                'ULpostVFP2016' : "SIXTEEN_postVFP",
+                'UL2016preVFP' :  "SIXTEEN_preVFP",
+                'UL2016postVFP' : "SIXTEEN_postVFP",
                 'UL2017' : "SEVENTEEN",
                 'UL2018' : "EIGHTEEN"}
     Combine_year_tag={
-                'ULpreVFP2016' :  "ULpre16",
-                'ULpostVFP2016' : "ULpost16",
+                'UL2016preVFP' :  "ULpre16",
+                'UL2016postVFP' : "ULpost16",
                 'UL2017' : "UL17",
                 'UL2018' : "UL18"}
     
@@ -166,7 +177,7 @@ def Get_samples_hist_wo_NonQCD_Norm(lep="mu",year="UL2017",Variable="lntopMass",
     #################### Nimonal Samples MC ########################################################
  
 
-    channels_Nomi = Channels #['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L',"QCD"]
+    channels_Nomi = Channels #['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L',"QCD"]
 
 
     Fpaths_DNN_apply = {}
@@ -229,7 +240,7 @@ def Get_samples_hist_wo_NonQCD_Norm(lep="mu",year="UL2017",Variable="lntopMass",
     
     if("WJetsToLNu_0J" in hist_corr_assig):
         hist_EWK = hist_corr_assig["WJetsToLNu_0J"].Clone(); hist_EWK.Add(hist_wron_assig["WJetsToLNu_0J"])
-        for channel in ['WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L']:
+        for channel in ['WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L']:
             hist_EWK.Add(hist_corr_assig[channel]); hist_EWK.Add(hist_wron_assig[channel])
             
         if(not("tw_top" in hist_corr_assig)): top_bkg_Nomi = hist_corr_assig["WJetsToLNu_0J"].Clone();  top_bkg_Nomi.Reset()

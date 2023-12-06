@@ -56,7 +56,7 @@ if(year == 'UL2018'):
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/EIGHTEEN/Data_"+lep+"/"
     from dataset_UL2018 import *
     if(lep=="mu"):
-        Datasets = Datasets_SingleMuon_data_UL2018
+        Datasets = Datasets_SingleMuon_data_UL2018_GT36
     if(lep=="el"):
         Datasets = Datasets_SingleElectron_data_UL2018
 
@@ -75,7 +75,7 @@ def replacemachine(fileName, sourceText, replaceText):
     print "All went well, the modifications are done"
     ##################################################################
 
-for i in range(0,1):#len(RequestNames)):
+for i in range(0,len(RequestNames)):
     RequestName = RequestNames[i]
     Dataset = Datasets[RequestName]
     print Dataset

@@ -67,7 +67,7 @@ for i in range(len(files_to_read)):
         del purity_temp
 	
 
-c2 = rt.TCanvas('c2', '', 800, 800, 800, 800)
+c2 = rt.TCanvas('c2', '', 800, 700)
 c2.cd()
 
 pad = rt.TPad("grid","",0,0,1,1)
@@ -104,8 +104,10 @@ c2.Update()
 
 region_tag = getregion_tag("2J1T", 2, 0.91, 3, 205)
 region_tag.Draw("same")
-CMSpreliminary = getCMSpre_tag()
-CMSpreliminary.Draw("same")
+#CMSpreliminary = getCMSpre_tag()
+#CMSpreliminary.Draw("same")
+getCMSIntrenal_tag = getCMSIntrenal_tag(0.30, 0.86, 0.40, 0.88)
+getCMSIntrenal_tag.Draw("same")
 lepjet_tag = leptonjet_tag(lep,0.29, 0.82, 0.32, 0.84)
 lepjet_tag.Draw("same")
 yearNlumitag = year_tag(year,0.948, 118, 0.99,128)

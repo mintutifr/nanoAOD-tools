@@ -26,7 +26,7 @@ config.Data.unitsPerJob = 150
 
 config.Data.outLFNDirBase = '/store/user/mikumar/RUN2_UL/Tree_crab/SEVENTEEN/Data_mu/Run2017B_mu'
 
-#config.Data.publication = True
+config.Data.publication = True
 
 config.Data.outputDatasetTag = 'Tree_09_Apr23_Run2017B_mu'
 

@@ -5,6 +5,8 @@ keep event
 keep run
 keep luminosityBlock
 
+keep Flag_*
+
 keep HLT_Ele27_WPTight_Gsf*
 keep HLT_Ele28_WPTight_Gsf*
 keep HLT_Ele32_WPTight_Gsf*
@@ -86,6 +88,43 @@ keep Jet_nMuons
 keep Jet_area
 keep Jet_bRegCorr
 keep Jet_bRegRes
+
+
+keep nFatJet
+keep FatJet_pt
+keep FatJet_eta
+keep FatJet_phi
+keep FatJet_mass
+keep FatJet_msoftdrop
+keep FatJet_hadronFlavour
+keep FatJet_btagCMVA
+keep FatJet_btagCSVV2
+keep FatJet_btagDeepB
+keep FatJet_btagDeepFlavB
+keep FatJet_genJetAK8Idx
+keep FatJet_jetId
+keep FatJet_nCHadrons
+keep FatJet_nBHadrons 
+keep FatJet_nConstituents
+keep FatJet_area
+keep FatJet_deepTagMD_TvsQCD	
+keep FatJet_deepTagMD_WvsQCD
+keep FatJet_deepTagMD_ZvsQCD
+keep FatJet_deepTag_TvsQCD
+keep FatJet_deepTag_WvsQCD
+keep FatJet_deepTag_ZvsQCD
+keep FatJet_electronIdx3SJ
+keep FatJet_muonIdx3SJ
+
+keep FatJet_particleNet_TvsQCD
+keep FatJet_particleNet_WvsQCD 
+keep FatJet_particleNet_ZvsQCD	
+keep FatJet_particleNet_mass
+
+keep FatJet_rawFactor	
+keep FatJet_subJetIdx1	
+keep FatJet_subJetIdx2
+
  
 keep MET*
 keep PuppiMET*
@@ -99,7 +138,6 @@ keep Jet_dR_Ljet_AntiIsoel
        
 keep Electron_EtaSC
 
-keep Jet_btagSF_*
 keep puWeight*
 keep LHEWeight*
 

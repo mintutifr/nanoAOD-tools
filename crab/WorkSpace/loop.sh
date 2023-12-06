@@ -1,12 +1,42 @@
 # cmseenv needed
-#python Create_Workspace_input_file.py -y ULpostVFP2016 -l mu -D 0 -v  mtwMass 
-#python Create_Workspace_input_file.py -y ULpostVFP2016 -l el -D 0 -v  mtwMass 
 
-#python Create_DNNFit_Workspace_input_file.py -y UL2017 -l mu -DS 0 -v t_ch_CAsi -DC 0.0
-#python Create_DNNFit_Workspace_input_file.py -y UL2017 -l el -DS 0 -v t_ch_CAsi -DC 0.0
+#python Create_DNNFit_Workspace_input_file.py -y UL2016postVFP -l mu -v t_ch_CAsi -DC 0.0
+#python Create_DNNFit_Workspace_input_file.py -y UL2016postVFP -l el -v t_ch_CAsi -DC 0.0
 
-python Create_DNNFit_Workspace_input_file.py -y ULpostVFP2016 -l mu -DS 0 -v t_ch_CAsi -DC 0.0
-python Create_DNNFit_Workspace_input_file.py -y ULpostVFP2016 -l el -DS 0 -v t_ch_CAsi -DC 0.0
+#python Create_DNNFit_Workspace_input_file.py -y UL2016preVFP -l mu  -v t_ch_CAsi -DC 0.0
+#python Create_DNNFit_Workspace_input_file.py -y UL2016preVFP -l el  -v t_ch_CAsi -DC 0.0
 
-python Create_DNNFit_Workspace_input_file.py -y ULpreVFP2016 -l mu -DS 0 -v t_ch_CAsi -DC 0.0
-python Create_DNNFit_Workspace_input_file.py -y ULpreVFP2016 -l el -DS 0 -v t_ch_CAsi -DC 0.0
+#python Create_DNNFit_Workspace_input_file.py -y UL2017 -l mu  -v t_ch_CAsi -DC 0.0
+#python Create_DNNFit_Workspace_input_file.py -y UL2017 -l el  -v t_ch_CAsi -DC 0.0
+
+#python Create_DNNFit_Workspace_input_file.py -y UL2018 -l mu -v t_ch_CAsi -DC 0.0
+#python Create_DNNFit_Workspace_input_file.py -y UL2018 -l el -v t_ch_CAsi -DC 0.0
+
+
+
+
+
+
+#python Create_mtopFit_Workspace_input_file.py -y UL2018 -l mu -DC 0.7 -v  lntopMass -f /home/mikumar/t3store/workarea/Higgs_Combine/CMSSW_11_3_4/src/Combine_Run2/ROOT/fitDiagnostics_M1725_DNNfit_Run2.root
+#python validation_stackplot_fromhistfiles.py -y UL2018 -l mu -v  lntopMass -f1 /home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_lntopMass_histograms_UL2018_mu.root 
+
+#python Create_mtopFit_Workspace_input_file.py -y UL2018 -l el -DC 0.7 -v  lntopMass -f /home/mikumar/t3store/workarea/Higgs_Combine/CMSSW_11_3_4/src/Combine_Run2/ROOT/fitDiagnostics_M1725_DNNfit_Run2.root
+#python validation_stackplot_fromhistfiles.py -y UL2018 -l el -v  lntopMass -f1 /home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_lntopMass_histograms_UL2018_el.root 
+
+#python Create_mtopFit_Workspace_input_file.py -y UL2017 -l mu  -DC 0.7 -v  lntopMass -f /home/mikumar/t3store/workarea/Higgs_Combine/CMSSW_11_3_4/src/Combine_Run2/ROOT/fitDiagnostics_M1725_DNNfit_Run2.root
+#python validation_stackplot_fromhistfiles.py -y UL2017 -l mu -v  lntopMass -f1 /home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_lntopMass_histograms_UL2017_mu.root 
+
+#python Create_mtopFit_Workspace_input_file.py -y UL2017 -l el  -DC 0.7 -v  lntopMass -f /home/mikumar/t3store/workarea/Higgs_Combine/CMSSW_11_3_4/src/Combine_Run2/ROOT/fitDiagnostics_M1725_DNNfit_Run2.root
+#python validation_stackplot_fromhistfiles.py -y UL2017 -l el  -v  lntopMass -f1 /home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_lntopMass_histograms_UL2017_el.root 
+
+python Create_mtopFit_Workspace_input_file.py -y UL2016preVFP -l mu  -DC 0.7 -v  lntopMass -f /home/mikumar/t3store/workarea/Higgs_Combine/CMSSW_11_3_4/src/Combine_Run2/ROOT/fitDiagnostics_M1725_DNNfit_Run2.root
+python validation_stackplot_fromhistfiles.py -y UL2016preVFP -l mu -v  lntopMass -f1 /home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_lntopMass_histograms_UL2016preVFP_mu.root
+
+python Create_mtopFit_Workspace_input_file.py -y UL2016preVFP -l el  -DC 0.7 -v  lntopMass -f /home/mikumar/t3store/workarea/Higgs_Combine/CMSSW_11_3_4/src/Combine_Run2/ROOT/fitDiagnostics_M1725_DNNfit_Run2.root
+python validation_stackplot_fromhistfiles.py -y UL2016preVFP -l el -v  lntopMass -f1 /home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_lntopMass_histograms_UL2016preVFP_el.root
+
+python Create_mtopFit_Workspace_input_file.py -y UL2016postVFP -l mu  -DC 0.7 -v  lntopMass -f /home/mikumar/t3store/workarea/Higgs_Combine/CMSSW_11_3_4/src/Combine_Run2/ROOT/fitDiagnostics_M1725_DNNfit_Run2.root
+python validation_stackplot_fromhistfiles.py -y UL2016postVFP -l mu -v  lntopMass -f1 /home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_lntopMass_histograms_UL2016postVFP_mu.root
+
+python Create_mtopFit_Workspace_input_file.py -y UL2016postVFP -l el  -DC 0.7 -v  lntopMass -f /home/mikumar/t3store/workarea/Higgs_Combine/CMSSW_11_3_4/src/Combine_Run2/ROOT/fitDiagnostics_M1725_DNNfit_Run2.root
+python validation_stackplot_fromhistfiles.py -y UL2016postVFP -l el -v  lntopMass -f1 /home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_lntopMass_histograms_UL2016postVFP_el.root

@@ -21,7 +21,7 @@ from correctionlib import _core
 
 class cutflow:
     def __init__(self,Total_Njets,BTag_Njets,Isolation,lepflavour,isMC,dataYear):
-	self.writeHistFile=True
+		self.writeHistFile=True
         self.Total_Njets = Total_Njets
         self.BTag_Njets = BTag_Njets
         self.Isolation = Isolation

@@ -55,7 +55,7 @@ import glob
 from time import time
 
 if(sample=="Mc_Nomi"):
-      channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJets', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']#,'Data'] #WWTolnulnu
+      channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']#,'Data'] #WWTolnulnu
       channels.append("Data"+year)
 
 elif(sample=="Mc_Alt"):
@@ -103,7 +103,7 @@ VARS = [lepton+'Eta', lepton+'Pt', lepton+'Phi', lepton+'E',   lepton+'Charge',
         'jetpTSum',
         'diJetMass',
         'cosThetaStar',
-        'FW1',
+        'FW1','Jet_partonFlavour',
         'bJetdeepJet',
         'lJetdeepJet',
         'Xsec_wgt',
@@ -248,7 +248,7 @@ if(df_TopBKG_train_valid_test_wrong_assign[1].shape[0] <final_Events_for_validat
 
 df_EWKBKG_train_valid_test = []  #define a new list for train test and validation
 for i,df in enumerate([df_train,df_valid,df_test]):
-    df_temp = pd.concat([df['WJetsToLNu_0J'],df['WJetsToLNu_1J'],df['WJetsToLNu_2J'],df['DYJets'],df['WWTo2L2Nu'],df['WZTo2Q2L'],df['ZZTo2Q2L']]) # adding all EWK bkg and push to a temp df
+    df_temp = pd.concat([df['WJetsToLNu_0J'],df['WJetsToLNu_1J'],df['WJetsToLNu_2J'],df['DYJetsToLL'],df['WWTo2L2Nu'],df['WZTo2Q2L'],df['ZZTo2Q2L']]) # adding all EWK bkg and push to a temp df
     
     df_temp = df_temp.sample(frac = 1) #randamize the sample
     df_EWKBKG_train_valid_test.append(df_temp)
