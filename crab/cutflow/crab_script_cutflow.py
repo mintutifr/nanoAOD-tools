@@ -22,5 +22,5 @@ p=PostProcessor(".",
 		histDirName="histograms")
 p.run()
 
-print "DONE"
+print("DONE")
 
