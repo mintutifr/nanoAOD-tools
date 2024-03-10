@@ -260,9 +260,12 @@ class MinitreeProducer(Module):
             self.out.branch("Event_wgt","F")
             self.out.branch("LHEWeightSign","F")
             self.shape_systs = ["Central","lf","hf","cferr1","cferr2","lfstats1","lfstats2","hfstats1","hfstats2","jes"]
+            self.B_tag_jes_variation = ['jesAbsoluteStat', 'jesAbsoluteMPFBias', 'jesFragmentation', 'jesSinglePionECAL', 'jesSinglePionHCAL', 'jesTimePtEta', 'jesRelativeJEREC1', 'jesRelativeJEREC2', 'jesRelativeJERHF', 'jesRelativePtBB', 'jesRelativePtEC1', 'jesRelativePtEC2', 'jesRelativePtHF', 'jesRelativeBal', 'jesRelativeSample' , 'jesRelativeFSR' , 'jesRelativeStatEC', 'jesRelativeStatHF' , 'jesPileUpDataMC', 'jesPileUpPtRef', 'jesPileUpPtBB', 'jesPileUpPtEC1' , 'jesPileUpPtEC2', 'jesPileUpPtHF']
             for syst in self.shape_systs:
                 if(syst == "Central"):self.out.branch("bWeight","F")
                 else: self.out.branch("bWeight_"+syst,  "F",lenVar="2")
+            self.out.branch("bWeight_jes_variation_up",  "F",lenVar=str(len(self.B_tag_jes_variation)))
+            self.out.branch("bWeight_jes_variation_down",  "F",lenVar=str(len(self.B_tag_jes_variation)))
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
     def analyze(self, event):
@@ -749,13 +752,15 @@ class MinitreeProducer(Module):
                 else:
                         oJetPUJetID_SF,oJetPUJetID_SF_up,oJetPUJetID_SF_down = 1.0,1.0,1.0
                 
-            bWeight = Probability_2("Central",jet_id)
+            bWeight = Get_B_tagging_sys_sf("Central",jet_id)
             for syst in self.shape_systs:
                 if(syst=="Central"): 
                         self.out.fillBranch("bWeight", bWeight)
                 else:
-                        self.out.fillBranch("bWeight_"+syst,[Probability_2(syst+"_up",jet_id),Probability_2(syst+"_down",jet_id)])
-                        
+                        self.out.fillBranch("bWeight_"+syst,[Get_B_tagging_sys_sf(syst+"_up",jet_id),Get_B_tagging_sys_sf(syst+"_down",jet_id)])
+            sf_jesup,sf_jesdown = Get_B_tagging_jes_sf(jet_id)
+            self.out.fillBranch("bWeight_jes_variation_up",sf_jesup)
+            self.out.fillBranch("bWeight_jes_variation_down",sf_jesdown)            
         top4v_kin = lepton4v_kin + bJet4v + Nu4v_kin 
         top4v = lepton4v + bJet4v + neutrino4v
         topMass=top4v.M()

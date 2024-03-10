@@ -12,6 +12,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collect
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import gzip
 from correctionlib import _core
+#import itertools
 
 class cutflow(Module):
     def __init__(self,Total_Njets,BTag_Njets,Isolation,lepflavour,isMC,dataYear,MCsample=None):
@@ -103,6 +104,7 @@ class cutflow(Module):
         self.tight_lep_sel_npvs=ROOT.TH1F('tight_lep_sel_npvs','tight_lep_sel_npvs', 100, 0, 1000)
         self.losse_lep_veto_npvs=ROOT.TH1F('losse_lep_veto_npvs','losse_lep_veto_npvs', 100, 0, 1000)
         self.sec_lep_veto_npvs=ROOT.TH1F('sec_lep_veto_npvs','sec_lep_veto_npvs',100,0,1000)
+        #self.ttbar_barrel_4jet_npvs=ROOT.TH1F('ttbar_barrel_4jet_npvs','ttbar_barrel_4jet_npvs',100,0,1000)
         self.jet_sel_npvs=ROOT.TH1F('jet_sel_npvs','jet_sel_npvs',100,0,1000)
         self.b_tag_jet_sel_npvs=ROOT.TH1F('b_tag_jet_sel_npvs','b_tag_jet_sel_npvs',100,0,1000)
         self.MET_filter_npvs=ROOT.TH1F('MET_filter_npvs','MET_filter_npvs',100,0,1000)
@@ -115,6 +117,7 @@ class cutflow(Module):
         self.addObject(self.tight_lep_sel_npvs)
         self.addObject(self.losse_lep_veto_npvs)
         self.addObject(self.sec_lep_veto_npvs)
+        #self.addObject(self.ttbar_barrel_4jet_npvs)
         self.addObject(self.jet_sel_npvs)
         self.addObject(self.b_tag_jet_sel_npvs)
         self.addObject(self.MET_filter_npvs)
@@ -128,7 +131,7 @@ class cutflow(Module):
         try:
             LHEWeightSign = getattr(event,'LHEWeight_originalXWGTUP')/abs(getattr(event,'LHEWeight_originalXWGTUP'))
         except:
-                LHEWeightSign = 1
+                LHEWeightSign = 1  
         if(self.isMC == True):
             PuWeight = getattr(event,'puWeight') 
         PreFireWeight = getattr(event,'L1PreFiringWeight_Nom')
@@ -138,35 +141,38 @@ class cutflow(Module):
         #print "Xsec_wgt = ", self.Xsec_wgt
         #print "PuWeight = ", PuWeight
         #print "PreFireWeight = ",PreFireWeight
-
 ##################################
 #trigger selection	--0--
 ###################################
 
-        trigger=0;
+        trigger=0
         if(self.lepflavour=="mu"):
             #print(self.trigger_selection[self.dataYear])
             for value in self.trigger_selection[self.dataYear]: trigger=trigger+getattr(event,value)
             if(trigger != 0):
                 if(self.isMC == True):self.trig_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight) 
                 else:self.trig_sel_npvs.Fill(PV_npvs*PreFireWeight)
+                del trigger
             else:
                 return True
+             
         elif(self.lepflavour=="el"):
             for value in self.trigger_selection[self.dataYear]: trigger=trigger+getattr(event,value)
             if(self.dataYear=="UL2017"): #spacial emulated trigger
+                updated_trigger = 0
                 TrigObj_filterBits = getattr(event,'TrigObj_filterBits')
                 TrigObj_ids = getattr(event,'TrigObj_id')
-                list_TrigObj_filterBits = []
-                list_TrigObj_ids = []
-                for i in TrigObj_filterBits: list_TrigObj_filterBits.append(i)
-                for i in TrigObj_ids: list_TrigObj_ids.append(i)
-                updated_trigger = 0
-                if(trigger != 0): 
-                    for i in range(0,len(list_TrigObj_ids)):
-                         if((list_TrigObj_ids[i]==11) and (list_TrigObj_filterBits[i] & 1024)!=0): 
-                              updated_trigger = 1 ; break
+                if(trigger != 0):
+                    for filterBits, ids in zip(TrigObj_filterBits,TrigObj_ids):
+                        #print((getattr(event,'event'),filterBits),ids)
+                        if((filterBits & 1024)!=0 and (ids==11)):
+                            updated_trigger = 1
+                            #print(updated_trigger)
+                            break
+
                 trigger = trigger*updated_trigger
+                del updated_trigger
+                #del TrigObj_filterBits, TrigObj_ids,list_TrigObj_filterBits, list_TrigObj_ids, updated_trigger
             if(trigger != 0):
                 #print(TrigObj_filterBits,TrigObj_ids)
                 if(self.isMC == True):
@@ -175,7 +181,7 @@ class cutflow(Module):
                     self.trig_sel_npvs.Fill(PV_npvs*PreFireWeight)
             else:
                 return True
-	#print "---------------------------------trigger selection      --0------------"
+        #print("---------------------------------trigger selection      --0------------")
         ##################################
         #one tight lepon selection-1-      
         ###################################
@@ -304,10 +310,10 @@ class cutflow(Module):
         ##################################
         #jet selection  --4--
         ##################################  
-        
 
-        jet_id = []
-        jetid_for_N_jets = []
+
+        
+        jets = Collection(event, "Jet")
         muon4v = ROOT.TLorentzVector(0.,0.,0.,0.)
         electron4v = ROOT.TLorentzVector(0.,0.,0.,0.)
         if(self.lepflavour=="mu"):
@@ -316,7 +322,51 @@ class cutflow(Module):
         if(self.lepflavour=="el"):
             for electron in electron_id:
                 electron4v = electron.p4()
-        jets = Collection(event, "Jet")
+
+        """#######################
+        #ttbar check
+        #######################
+        jet_id_ttbar = []
+        jetid_for_N_jets_ttbar = []
+
+        for jet in jets:
+            #print jet.jetId
+            islossepF_ttbar=False
+            if(jet.pt>40 and abs(jet.eta)<2.4 and jet.jetId!=0 and jet.puId!=0):
+                islossepF_ttbar = True
+                jetid_for_N_jets_ttbar.append(jet)
+                #print "jet.pt = ",jet.pt," jet.eta = ",abs(jet.eta), " jet.jetId = ",jet.jetId, "lossepF = ", lossepF
+            else: continue
+            njet4v_ttbar = ROOT.TLorentzVector(0.,0.,0.,0.)    
+            njet4v_ttbar = jet.p4()
+            if(self.lepflavour=="mu" and islossepF_ttbar==True and muon4v.DeltaR(njet4v_ttbar)>0.4):
+                jet_id_ttbar.append(jet)#and muon4v.DeltaR(njet4v)>0.4):jet_id.append(jet)
+                #print "deltaR =",muon4v.DeltaR(njet4v)," jetdeltaRiso = ",jet.dR_Ljet_Isomu," jetdeltaRantiiso = ",jet.dR_Ljet_AntiIsomu
+                #print "Jet Pt =%s ; Jet eta =%s ; jet ID =%s ;DeltaR =%s" % (jet.pt,jet.eta,jet.jetId,muon4v.DeltaR(njet4v)) 
+            elif(self.lepflavour=="el" and islossepF_ttbar==True and electron4v.DeltaR(njet4v_ttbar)>0.4): 
+                jet_id_ttbar.append(jet)
+            else: continue
+
+        JetPUJetID_SF_ttbar = 1.0
+        if(len(jet_id_ttbar)==4):
+            if(self.isMC==True):
+                for jet in jet_id_ttbar:
+                    if(jet.pt<50):
+                        JetPUJetID_SF_ttbar = JetPUJetID_SF_ttbar*self.evaluator["PUJetID_eff"].evaluate(abs(jet.eta), jet.pt, "nom","L")
+
+            if(self.lepflavour=="mu" and self.isMC == True): self.ttbar_barrel_4jet_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*JetPUJetID_SF_ttbar)
+            elif(self.lepflavour=="el" and self.isMC == True): self.ttbar_barrel_4jet_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*JetPUJetID_SF_ttbar)
+            elif(self.lepflavour=="mu" and self.isMC == False): self.ttbar_barrel_4jet_npvs.Fill(PV_npvs)
+            elif(self.lepflavour=="el" and self.isMC == False): self.ttbar_barrel_4jet_npvs.Fill(PV_npvs)"""
+
+        ########################
+        ## Analysis requirement
+        ########################
+
+        jet_id = []
+        jetid_for_N_jets = []
+        
+        
         N_b_jets=0
         for jet in jets:
             #print jet.jetId
