@@ -9,7 +9,7 @@ parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="le
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ UL2016preVFP  UL2016postVFP  UL2017  UL2018 ]")
 parser.add_argument('-v', '--var  ', dest='var', type=str, nargs=1, help="var [ lntopMass topMass t_ch_CAsi]")
 #parser.add_argument('-DS', '--DNNscale  ', dest='DNNscale', type=str, nargs=1, help="if need to apply DNNscale [ 0 , 1]")
-parser.add_argument('-DC', '--DNNCut  ', dest='DNNCut', type=str, nargs=1, help="if need to apply DNNCut [ 0.0 ,0.7]")
+parser.add_argument('-DC', '--DNNCut  ', dest='DNNCut', type=str, nargs=1, help="if need to apply DNNCut [ >=0.0 ,>=0.7]")
 
 args = parser.parse_args()
 
@@ -74,7 +74,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut" 
     QCDcut = "(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut"
     Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
-    DNNcut_str = "*(t_ch_CAsi>="+DNNCut+")"
+    DNNcut_str = "*(t_ch_CAsi"+DNNCut+")"
  
     """##### shapes from control region ############
   
@@ -219,7 +219,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     #################### ALternate mass and width  #################################################### 
 
     
-    print "creating histogram for the Alt mass and with samples ............."
+    """print "creating histogram for the Alt mass and with samples ............."
     print 
     Alt_mass = ["1695","1715","1735","1755"]
     Alt_width = ["0p55","0p7","1p3","1p45"]
@@ -254,7 +254,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     #print EvtWeight_Fpaths_Iso   
     if(Variable=="TMath::Log(topMass)"): Variable="lntopMass"
     # get histogram with DNN cut
-    hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,channels_Alt, MCcut , Datacut , DNNCut ,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
+    hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,channels_Alt, MCcut , QCDcut,Datacut , DNNCut ,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
     if(Variable=="lntopMass"):   Variable="TMath::Log(topMass)" 
     del Fpaths_DNN_apply
     del EvtWeight_Fpaths_Iso
@@ -338,7 +338,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     #print EvtWeight_Fpaths_Iso   
     if(Variable=="TMath::Log(topMass)"): Variable="lntopMass"
     # get histogram with DNN cut
-    hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,Channels_systs, MCcut , Datacut , DNNCut ,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
+    hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,Channels_systs, MCcut , QCDcut, Datacut , DNNCut ,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply)
     if(Variable=="lntopMass"):   Variable="TMath::Log(topMass)"
     del Fpaths_DNN_apply
     del EvtWeight_Fpaths_Iso
@@ -387,7 +387,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     del systs"""
 
 
-   #----------------- Add Altrenate mass and width samples ------------#"""
+   #----------------- Add Altrenate mass and width samples ------------#
 
        
 

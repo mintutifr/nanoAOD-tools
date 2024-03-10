@@ -152,4 +152,4 @@ for fil in files:
 	#print(np.shape(y_arr))
 	y_arr = y_arr.ravel().view(dtype = np.dtype([('t_ch_WAsi', np.double), ('t_ch_CAsi', np.double), ('ttbar_CAsi', np.double), ('ttbar_WAsi', np.double), ('EWK', np.double), ('QCD', np.double)]))
 	fname, ext = os.path.splitext(fil)
-	root_numpy.array2root(y_arr, MainOutputDir + fname.rsplit('/')[1] + '_apply.root', mode='recreate')
+	root_numpy.array2root(y_arr, MainOutputDir + fname.rsplit('/')[-1] + '_apply.root', mode='recreate')

@@ -384,29 +384,30 @@ class MinitreeProducer(Module):
                     if(   ((self.Isolation==True)  and lep.pt>pt_Thes_mu[self.dataYear] and abs(lep.eta)<2.4 and lep.pfRelIso04_all<0.06 and lep.tightId==1)   or
                           ((self.Isolation==False) and lep.pt>pt_Thes_mu[self.dataYear] and abs(lep.eta)<2.4 and lep.pfRelIso04_all>0.2  and lep.tightId==1)    ):
 
-                          Muon_RelIso = lep.pfRelIso04_all
-                          Muon_SF_Iso = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"noSyst")
-                          Muon_SF_IsoUp = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"IsoUp")
-                          Muon_SF_IsoDown = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"IsoDown")
-                          Muon_SF_Iso_IDUp = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"IDUp") 
-                          Muon_SF_Iso_IDDown = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"IDDown")
-                          Muon_SF_Iso_TrigUp = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"TrigUp")
-                          Muon_SF_Iso_TrigDown = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"TrigDown")
+                        Muon_RelIso = lep.pfRelIso04_all
 
-                          lepton4v=lep.p4()
-                          leptonCharge = lep.charge
-                          leptonSF = Muon_SF_Iso
-                          #print 'muSF_Iso = ',Muon_SF_Iso
+                        Muon_SF_Iso = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"noSyst")
+                        Muon_SF_IsoUp = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"IsoUp")
+                        Muon_SF_IsoDown = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"IsoDown")
+                        Muon_SF_Iso_IDUp = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"IDUp") 
+                        Muon_SF_Iso_IDDown = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"IDDown")
+                        Muon_SF_Iso_TrigUp = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"TrigUp")
+                        Muon_SF_Iso_TrigDown = create_muSF(self.dataYear,lep.pt,lep.eta,lep.pfRelIso04_all,TotalLumi[self.dataYear],"TrigDown")
 
-                          self.out.fillBranch("nMuon_sel",nMuon_sel)
-                          self.out.fillBranch("Muon_RelIso", Muon_RelIso)
-                          self.out.fillBranch("Muon_SF_Iso", Muon_SF_Iso)
-                          self.out.fillBranch("Muon_SF_IsoUp", Muon_SF_IsoUp)
-                          self.out.fillBranch("Muon_SF_IsoDown", Muon_SF_IsoDown)
-                          self.out.fillBranch("Muon_SF_Iso_IDUp",Muon_SF_Iso_IDUp)
-                          self.out.fillBranch("Muon_SF_Iso_IDDown",Muon_SF_Iso_IDDown)
-                          self.out.fillBranch("Muon_SF_Iso_TrigUp",Muon_SF_Iso_TrigUp)
-                          self.out.fillBranch("Muon_SF_Iso_TrigDown",Muon_SF_Iso_TrigDown)
+                        lepton4v=lep.p4()
+                        leptonCharge = lep.charge
+                        leptonSF = Muon_SF_Iso
+                        #print 'muSF_Iso = ',Muon_SF_Iso
+
+                        self.out.fillBranch("nMuon_sel",nMuon_sel)
+                        self.out.fillBranch("Muon_RelIso", Muon_RelIso)
+                        self.out.fillBranch("Muon_SF_Iso", Muon_SF_Iso)
+                        self.out.fillBranch("Muon_SF_IsoUp", Muon_SF_IsoUp)
+                        self.out.fillBranch("Muon_SF_IsoDown", Muon_SF_IsoDown)
+                        self.out.fillBranch("Muon_SF_Iso_IDUp",Muon_SF_Iso_IDUp)
+                        self.out.fillBranch("Muon_SF_Iso_IDDown",Muon_SF_Iso_IDDown)
+                        self.out.fillBranch("Muon_SF_Iso_TrigUp",Muon_SF_Iso_TrigUp)
+                        self.out.fillBranch("Muon_SF_Iso_TrigDown",Muon_SF_Iso_TrigDown)
                  
             #print "----------------------------------------------------------------->"
 

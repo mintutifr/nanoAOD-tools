@@ -16,12 +16,13 @@ def get_histogram_with_DNN_cut(
                                 MCcut = "Xsec_wgt*LHEWeightSign*puWeight*muSF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",
                                 QCDcut = "(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut",
                                 Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)",
-                                DNNcut="0.7",
+                                DNNcut=">=0.7",
                                 Fpaths_DNN_score = {}, 
                                 Fpaths_ori_with_weight = {}):
 
     print(type(DNNcut))
-    DNNcut="*(t_ch_CAsi>"+DNNcut+")"
+    #DNNcut="*(t_ch_CAsi>=0.3)*(t_ch_CAsi"+DNNcut+")"
+    DNNcut="*(t_ch_CAsi"+DNNcut+")"
     if(lep=="mu"):
             lepton = "Muon"
     elif(lep=="el"):

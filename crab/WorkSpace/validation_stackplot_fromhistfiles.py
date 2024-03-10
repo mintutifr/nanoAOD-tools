@@ -42,7 +42,9 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016',Combine_InFile="Hist_for_w
                 'UL2016preVFP' :  "_ULpre16",
                 'UL2016postVFP' : "_ULpost16",
                 'UL2017' : "_UL17",
-                'UL2018' : "_UL18"} 	
+                'UL2018' : "_UL18"} 
+        if('gt' in Combine_InFile):gt_or_lt_tag = '_gt'
+        if('lt' in Combine_InFile):gt_or_lt_tag = '_lt'
         tag = Combine_year_tag[year] 
 
         #Filename = "/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_histograms_"+year+"_"+lep+".root" 
@@ -54,22 +56,22 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016',Combine_InFile="Hist_for_w
         #File = rt.TFile("Histogram_input_2016_Run2_controlRegionF0p2T0p82_stat_full.root","Read")
         Dir = File.GetDirectory(lep+'jets')
 
-        top_sig = Dir.Get("top_sig_1725"+tag)
+        top_sig = Dir.Get("top_sig_1725"+tag+gt_or_lt_tag)
         top_sig.SetFillColor(rt.kRed)
         top_sig.SetLineColor(rt.kRed)
 
 
-        top_bkg = Dir.Get("top_bkg_1725"+tag)
+        top_bkg = Dir.Get("top_bkg_1725"+tag+gt_or_lt_tag)
         top_bkg.SetFillColor(rt.kOrange-1)
         top_bkg.SetLineColor(rt.kOrange-1)
 
 
-        EWK_bkg = Dir.Get("EWK_bkg"+tag)
+        EWK_bkg = Dir.Get("EWK_bkg"+tag+gt_or_lt_tag)
         EWK_bkg.SetFillColor(rt.kGreen-2)
         EWK_bkg.SetLineColor(rt.kGreen-2)
 
 
-        QCD_bkg = Dir.Get("QCD_DD"+tag)
+        QCD_bkg = Dir.Get("QCD_DD"+tag+gt_or_lt_tag)
         QCD_bkg.SetFillColor(rt.kGray)
         QCD_bkg.SetLineColor(rt.kGray)
         #for Bin in range(0,EWK_bkg.GetNbinsX()+1):

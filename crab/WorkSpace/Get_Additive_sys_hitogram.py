@@ -18,7 +18,7 @@ def Get_additive_sys_samples(
                                 Variable="lntopMass",
                                 MCcut = "Xsec_wgt*LHEWeightSign*puWeight*muSF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut",
                                 QCDcut="(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut", 
-                                DNNCut="0.0",
+                                DNNCut=">=0.0",
                                 hist_sys_name="muSF_up"):
 
     print('============================================')
@@ -49,7 +49,7 @@ def Get_additive_sys_samples(
     #applydir = '/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/2J1T1/Apply_all/'
     applydir = '/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/2J1T1/Apply_all/'
     Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
-    DNNcut_str = "*(t_ch_CAsi>="+DNNCut+")" 
+    DNNcut_str = "*(t_ch_CAsi"+DNNCut+")" 
     hist_to_return = [] 
     #################### Nimonal Samples MC ########################################################
  
@@ -144,7 +144,7 @@ def Get_additive_sys_samples(
    #########################  Additive systematic ###########################
 
 
-def Get_samples_hist_wo_NonQCD_Norm(lep="mu",year="UL2017",Variable="lntopMass",MCcut = "Xsec_wgt*LHEWeightSign*puWeight*muSF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",Channels = [], region = "2J1T",DNNCut="0.0",hist_sys_name="muSF_up"):
+def Get_samples_hist_wo_NonQCD_Norm(lep="mu",year="UL2017",Variable="lntopMass",MCcut = "Xsec_wgt*LHEWeightSign*puWeight*muSF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",Channels = [], region = "2J1T",DNNCut=">=0.0",hist_sys_name="muSF_up"):
     print("MCcut = ",MCcut)
     if(lep=="mu"):
             lepton = "Muon"
@@ -172,7 +172,7 @@ def Get_samples_hist_wo_NonQCD_Norm(lep="mu",year="UL2017",Variable="lntopMass",
     
     applydir = '/home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/'+region+'1/Apply_all/'
     Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
-    DNNcut_str = "*(t_ch_CAsi>="+DNNCut+")" 
+    DNNcut_str = "*(t_ch_CAsi"+DNNCut+")" 
     hist_to_return = [] 
     #################### Nimonal Samples MC ########################################################
  
@@ -269,6 +269,6 @@ def Get_samples_hist_wo_NonQCD_Norm(lep="mu",year="UL2017",Variable="lntopMass",
 
        
 if __name__ == "__main__":
-    hists=Get_additive_sys_samples(lep="mu",year="UL2017",Variable="lntopMass",MCcut = "Xsec_wgt*LHEWeightSign*puWeight*Muon_SF_IsoUp*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",DNNCut="0.0",hist_sys_name="muSF_up")
+    hists=Get_additive_sys_samples(lep="mu",year="UL2017",Variable="lntopMass",MCcut = "Xsec_wgt*LHEWeightSign*puWeight*Muon_SF_IsoUp*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",DNNCut=">=0.0",hist_sys_name="muSF_up")
     for Hist in hists: 
        Hist.Print()
