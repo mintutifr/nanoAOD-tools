@@ -16,13 +16,13 @@ def get_histogram_with_DNN_cut(
                                 MCcut = "Xsec_wgt*LHEWeightSign*puWeight*muSF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)",
                                 QCDcut = "(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut",
                                 Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)",
-                                DNNcut="(t_ch_CAsi>=0.7)",
+                                DNNcut=">=0.7",
                                 Fpaths_DNN_score = {}, 
                                 Fpaths_ori_with_weight = {}):
 
     print(type(DNNcut))
     #DNNcut="*(t_ch_CAsi>=0.3)*(t_ch_CAsi"+DNNcut+")"
-    DNNcut="*"+DNNcut
+    DNNcut="*(t_ch_CAsi"+DNNcut+")"
     if(lep=="mu"):
             lepton = "Muon"
     elif(lep=="el"):
@@ -32,9 +32,9 @@ def get_histogram_with_DNN_cut(
     print(X_axies," ",Y_axies," ",lest_bin," ",max_bin," ",Num_bin)
 
     print
-    print "############################   analising the event with the DNN cut applid ", DNNcut, "  ##################"
-    print "lepton = ",lep
-    print "Variable = ",Variable
+    print("############################   analising the event with the DNN cut applid ", DNNcut, "  ##################")
+    print("lepton = ",lep)
+    print("Variable = ",Variable)
     print
     # Initializing lists for histogram, TFile, TTree of Iso
     histo_corr_Array = []
@@ -42,8 +42,8 @@ def get_histogram_with_DNN_cut(
     #intree = []
     rt.gROOT.cd()
 
-    print Variable
-    print "bining: ",Num_bin,", ",lest_bin,", ", max_bin
+    print(Variable)
+    print("bining: ",Num_bin,", ",lest_bin,", ", max_bin)
 
     if(Variable=="t_ch_CAsi"):
         BINS = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,1.0]
@@ -58,8 +58,8 @@ def get_histogram_with_DNN_cut(
     MCcut_corr_Assig = MCcut+DNNcut+"*(bjet_partonFlavour*"+lepton+"Charge==5)"
     MCcut_wron_Assig = MCcut+DNNcut+"*(bjet_partonFlavour*"+lepton+"Charge!=5)"
     for channel in channels:
-            print channel, "  ", Fpaths_ori_with_weight[channel]
-            print channel, "  ", Fpaths_DNN_score[channel]
+            print(channel, "  ", Fpaths_ori_with_weight[channel])
+            print(channel, "  ", Fpaths_DNN_score[channel])
             histo_corr.Reset()
             histo_wron.Reset()
             

@@ -53,15 +53,15 @@ def Nomi_QCD_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "
     hist_EWK_temp.SetLineColor(rt.kMagenta); hist_EWK_temp.SetLineWidth(2)
     hist_QCD_temp.SetLineColor(rt.kGray); hist_QCD_temp.SetLineWidth(2)
     print
-    print EvtWeight_Fpaths_Iso 
+    print(EvtWeight_Fpaths_Iso )
     for channel in channels:
         if(channel=="QCD"): 
-                print channel, " ", Data_AntiIso_Fpath
-                print channel, " ", Fpaths_DNN_score[channel]
+                print(channel, " ", Data_AntiIso_Fpath)
+                print(channel, " ", Fpaths_DNN_score[channel])
                 infiles[channel] = rt.TFile(Data_AntiIso_Fpath, 'READ')
         else:
-                print channel, " ", EvtWeight_Fpaths_Iso[channel]
-                print channel, " ", Fpaths_DNN_score[channel]
+                print(channel, " ", EvtWeight_Fpaths_Iso[channel])
+                print(channel, " ", Fpaths_DNN_score[channel])
                 infiles[channel] = rt.TFile(EvtWeight_Fpaths_Iso[channel], 'READ')
     
         intree[channel] = infiles[channel].Get('Events')
@@ -106,7 +106,7 @@ def Nomi_QCD_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "
     NonQCD_Inte = (hist_tch_CAssig_temp.Integral(0,Num_bin+1)+hist_tch_WAssig_temp.Integral(0,Num_bin+1)+hist_ttbar_CAssig_temp.Integral(0,Num_bin+1)+hist_ttbar_WAssig_temp.Integral(0,Num_bin+1)+hist_EWK_temp.Integral(0,Num_bin+1))
     QCD_Inte = (hist_QCD_temp.Integral(0,Num_bin+1))
     print 
-    print "NonQCD_Inte: ",NonQCD_Inte," QCD_Inte: ",QCD_Inte
+    print("NonQCD_Inte: ",NonQCD_Inte," QCD_Inte: ",QCD_Inte)
     
     return NonQCD_Inte,QCD_Inte
 
@@ -139,24 +139,24 @@ def Nomi_QCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",Datacut = "(dR_b
     
 
     hist_QCD_temp.SetLineColor(rt.kGray); hist_QCD_temp.SetLineWidth(2)
-    if(channel=="QCD"): 
-                print channel, " ", Data_AntiIso_Fpath
-                print channel, " ", Fpaths_DNN_score[channel]
-                infiles[channel] = rt.TFile(Data_AntiIso_Fpath, 'READ')
+    if(channel=="QCD"):
+        print(channel, " ", Data_AntiIso_Fpath)
+        print(channel, " ", Fpaths_DNN_score[channel])
+        infiles[channel] = rt.TFile(Data_AntiIso_Fpath, 'READ')
     
     intree[channel] = infiles[channel].Get('Events')
     intree[channel].AddFriend("Events",Fpaths_DNN_score[channel])
     if(Variable=="t_ch_CAsi"):
-                BINS = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,1.0]
-                print("redefine assymatic histogram bins ", BINS)
-                hist[channel] = rt.TH1F('hist' + channel, '',len(BINS)-1,np.array(BINS))
+         BINS = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,1.0]
+         print("redefine assymatic histogram bins ", BINS)
+         hist[channel] = rt.TH1F('hist' + channel, '',len(BINS)-1,np.array(BINS))
     else:
-                hist[channel] = rt.TH1F('hist' + channel, '', Num_bin, lest_bin, max_bin)
+         hist[channel] = rt.TH1F('hist' + channel, '', Num_bin, lest_bin, max_bin)
 
     if(channel=='QCD'):
-            intree[channel].Project('hist' + channel, Variable,Datacut)
-            hist_QCD_temp.Add(hist[channel])
-            #hist_QCD_temp.Print()
+         intree[channel].Project('hist' + channel, Variable,Datacut)
+         hist_QCD_temp.Add(hist[channel])
+         #hist_QCD_temp.Print()
         
     QCD_Inte = (hist_QCD_temp.Integral(0,Num_bin+1))
     print 
@@ -210,8 +210,8 @@ def Nomi_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "Xsec
     hist_EWK_temp.SetLineColor(rt.kMagenta); hist_EWK_temp.SetLineWidth(2)
     print
     for channel in channels:
-        print channel, " ", EvtWeight_Fpaths_Iso[channel]
-        print channel, " ", Fpaths_DNN_score[channel]
+        print(channel, " ", EvtWeight_Fpaths_Iso[channel])
+        print(channel, " ", Fpaths_DNN_score[channel])
         infiles[channel] = rt.TFile(EvtWeight_Fpaths_Iso[channel], 'READ')
     
         intree[channel] = infiles[channel].Get('Events')
@@ -251,7 +251,7 @@ def Nomi_NoNQCD_Integral(lep="mu",year="UL2017",Variable="mtwMass",MCcut = "Xsec
     
     NonQCD_Inte = (hist_tch_CAssig_temp.Integral(0,Num_bin+1)+hist_tch_WAssig_temp.Integral(0,Num_bin+1)+hist_ttbar_CAssig_temp.Integral(0,Num_bin+1)+hist_ttbar_WAssig_temp.Integral(0,Num_bin+1)+hist_EWK_temp.Integral(0,Num_bin+1))
     print 
-    print "NonQCD_Inte: ",NonQCD_Inte
+    print("NonQCD_Inte: ",NonQCD_Inte)
     
     return NonQCD_Inte
 
@@ -286,10 +286,10 @@ if __name__ == "__main__":
 
 
         NonQCD_Inte,QCD_Inte =  Nomi_QCD_NoNQCD_Integral(lep,year,Variable)
-        print "NonQCD_Inte: ",NonQCD_Inte," QCD_Inte: ",QCD_Inte
+        print("NonQCD_Inte: ",NonQCD_Inte," QCD_Inte: ",QCD_Inte)
 
         NonQCD_Inte,QCD_Inte =  Nomi_QCD_Integral(lep,year,Variable)
-        print  "QCD_Inte: ",QCD_Inte    
+        print("QCD_Inte: ",QCD_Inte)    
         #c1.Print('Plots/'+year+'_'+lep+'_'+Variable+'.png')#'_cut_tch_CAssig_p_ttbar_CAssigGT0p4.png')
         #c1.Print('Plots/'+year+'_'+lep+'_'+Variable+'.pdf')#'_cut_tch_CAssig_p_ttbar_CAssigGT0p4.pdf')
 

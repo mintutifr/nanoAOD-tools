@@ -65,7 +65,7 @@ elif(sample=="Mc_sys"):
         channels =['Tchannel_TuneCP5CR2',  'Tchannel_TuneCP5CR1',   'Tchannel_hdampdown',   'Tbarchannel_hdampdown',  'Tchannel_TuneCP5down',   'Tbarchannel_hdampup',   'Tchannel_hdampup',   'Tbarchannel_TuneCP5down',   'Tchannel_erdON',   'Tchannel_TuneCP5up',   'Tbarchannel_TuneCP5up',  'Tbarchannel_erdON',   'Tbarchannel_TuneCP5CR1',   'Tbarchannel_TuneCP5CR2']
 
 
-print channels
+print(channels)
 datasets = []                                            # this object will be a list of list
 for channel in channels:
         datasets.append(load_dataset(-1,channel, lep, year,region,sample)) #apped all data frames in datasets
