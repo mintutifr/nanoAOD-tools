@@ -6,9 +6,9 @@ def get_histogram_distciption(Variable="lntopMass"):
             Variable="TMath::Log(topMass)"
             X_axies="ln(m_{t} / 1 GeV)"
             Y_axies="Events/(0.0265)"
-            lest_bin=math.log(100.0)
-            max_bin=math.log(300.0)
-            Num_bin=18
+            lest_bin=math.log(110.0)
+            max_bin=math.log(240.0)
+            Num_bin=15
     
     elif(Variable=="topMass"):
             X_axies="m_{t} GeV"

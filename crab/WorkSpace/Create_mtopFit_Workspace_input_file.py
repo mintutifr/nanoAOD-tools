@@ -45,6 +45,7 @@ gt_or_lt_tag = ''
 if('>' in DNNCut):gt_or_lt_tag = gt_or_lt_tag+'_gt'
 if('<' in DNNCut):gt_or_lt_tag = gt_or_lt_tag+'_lt'
 
+
 from Histogram_discribtions import get_histogram_distciption 
 from Get_Histogram_after_DNN_cuts import get_histogram_with_DNN_cut
 from Get_Nomi_histogram_Integral import Nomi_QCD_NoNQCD_Integral 
@@ -88,7 +89,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut" 
     Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
     QCDcut = "(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut"
-    DNNcut_str = "*(t_ch_CAsi>=0.3)*(t_ch_CAsi"+DNNCut+")" 
+    DNNcut_str = "*"+DNNCut 
     hist_to_return = [] 
     #################### Nimonal Samples MC ########################################################
  
@@ -603,11 +604,11 @@ if __name__ == "__main__":
     
     
     if(">=0.7" in DNNCut):
-            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p7_withoutDNNfit.root"
-    elif(">=0.3" in DNNCut):
-            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p3_withoutDNNfit.root"
+            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p7_withDNNfit_rebin.root"
     elif("<0.7" in DNNCut): 
-        output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_lt0p7gteq0p3.root"
+            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_lt0p7gteq0p5_withoutDNNfit_rebin.root"
+    elif(">=0.3" in DNNCut ):
+            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p3_withDNNfit_rebin.root"
     else:
         print("something wrong with DNNcut")
         exit(0)
