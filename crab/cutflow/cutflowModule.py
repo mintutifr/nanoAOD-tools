@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os, sys
 import ROOT
+import numpy as np
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 from importlib import import_module
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
@@ -11,6 +12,7 @@ from scaleFactor import *
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import gzip
+#import itertools as IT
 from correctionlib import _core
 #import itertools
 
@@ -84,7 +86,7 @@ class cutflow(Module):
                 '2018' : None,
                 'UL2016preVFP' : ['HLT_Ele32_eta2p1_WPTight_Gsf'],
                 'UL2016postVFP' : ['HLT_Ele32_eta2p1_WPTight_Gsf'],
-                'UL2017' : ['HLT_Ele32_WPTight_Gsf_L1DoubleEG'],#'TrigObj_filterBits','TrigObj_id' ] inbded in the code  
+                'UL2017' : ['HLT_Ele32_WPTight_Gsf_L1DoubleEG'],#'TrigObj_filterBits','TrigObj_id' ] imbded in the code  
                 'UL2018' : ['HLT_Ele32_WPTight_Gsf']}
             self.pt_Thes={
                 '2016' : 35,
@@ -144,8 +146,8 @@ class cutflow(Module):
 ##################################
 #trigger selection	--0--
 ###################################
-
         trigger=0
+        TrigObjs = Collection(event, "TrigObj")
         if(self.lepflavour=="mu"):
             #print(self.trigger_selection[self.dataYear])
             for value in self.trigger_selection[self.dataYear]: trigger=trigger+getattr(event,value)
@@ -155,30 +157,25 @@ class cutflow(Module):
                 del trigger
             else:
                 return True
-             
         elif(self.lepflavour=="el"):
             for value in self.trigger_selection[self.dataYear]: trigger=trigger+getattr(event,value)
             if(self.dataYear=="UL2017"): #spacial emulated trigger
-                updated_trigger = 0
-                TrigObj_filterBits = getattr(event,'TrigObj_filterBits')
-                TrigObj_ids = getattr(event,'TrigObj_id')
+                emulated_trigger = 0
                 if(trigger != 0):
-                    for filterBits, ids in zip(TrigObj_filterBits,TrigObj_ids):
-                        #print((getattr(event,'event'),filterBits),ids)
-                        if((filterBits & 1024)!=0 and (ids==11)):
-                            updated_trigger = 1
-                            #print(updated_trigger)
-                            break
-
-                trigger = trigger*updated_trigger
-                del updated_trigger
+                    for TrigObj in TrigObjs:
+                         #print(TrigObj.filterBits,TrigObj.id)
+                         if((TrigObj.filterBits & 1024)!=0 and (TrigObj.id==11)):
+                             emulated_trigger=emulated_trigger+1
+                #print("emulated_trigger",emulated_trigger)
+                trigger = trigger*emulated_trigger
+                del emulated_trigger
                 #del TrigObj_filterBits, TrigObj_ids,list_TrigObj_filterBits, list_TrigObj_ids, updated_trigger
             if(trigger != 0):
                 #print(TrigObj_filterBits,TrigObj_ids)
                 if(self.isMC == True):
                     self.trig_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight) 
                 else:
-                    self.trig_sel_npvs.Fill(PV_npvs*PreFireWeight)
+                    self.trig_sel_npvs.Fill(PV_npvs)
             else:
                 return True
         #print("---------------------------------trigger selection      --0------------")
@@ -447,7 +444,7 @@ class cutflow(Module):
                 btagjet_id.append(jet)
         if(len(btagjet_id)==self.BTag_Njets):
             if(self.isMC == True):
-            #print getattr(event,'event')
+                #print(getattr(event,'event'))
                 bweight = Probability_2("Central",jet_id)	
                 if(self.lepflavour=="mu"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*JetPUJetID_SF*bweight)
                 if(self.lepflavour=="el"): self.b_tag_jet_sel_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*JetPUJetID_SF*bweight)
