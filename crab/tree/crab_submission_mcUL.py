@@ -8,14 +8,14 @@ args = parser.parse_args()
 
 
 if args.inputs == None:
-        print "USAGE: %s [-h] [-y <Data year>]"%(sys.argv [0])
+        print("USAGE: %s [-h] [-y <Data year>]"%(sys.argv [0]))
         sys.exit (1)
 
 if args.inputs[0] not in ['UL2016preVFP', 'UL2016postVFP','UL2017','UL2018']:
     print('Error: Incorrect choice of year, use -h for help')
     exit()
 
-print "year = ",args.inputs[0]
+print("year = ",args.inputs[0])
 year   = args.inputs[0]
 date   = datetime.datetime.now()
 
@@ -39,8 +39,8 @@ if(year == 'UL2018'):
     Datasets = Datasets_MC_UL2018
 
 RequestNames = Datasets.keys()
-print RequestNames
-print "len(Datasets) = ",len(Datasets)
+print(RequestNames)
+print("len(Datasets) = ",len(Datasets))
 
 cfgfile = "crab_cfg_skimTree.py"
 scriptfile = "crab_script_skimTree.py"
@@ -50,16 +50,15 @@ def replacemachine(fileName, sourceText, replaceText):
     for line in fileinput.input(fileName, inplace=True):
         if line.strip().startswith(sourceText):
         	line = replaceText
-    	sys.stdout.write(line)
-    print "All went well, the modifications are done"
+        sys.stdout.write(line)
+    print("All went well, the modifications are done")
     ##################################################################
 
 #print RequestName
-for i in tqdm(range(0,len(RequestNames))):
-#for RequestName in ["Tbarchannel","Tchannel"]:
-    RequestName = RequestNames[i]
+for RequestName in tqdm(RequestNames):
+#for RequestName in ["DYJetsToLL"]:
     Dataset = Datasets[RequestName]
-    print RequestName, " : ",Dataset
+    print(RequestName, " : ",Dataset)
     update_RequestName = "config.General.requestName = '"+RequestName+"_Tree_"+year+"'\n" 
     update_Dataset = "config.Data.inputDataset = '"+Dataset+"'\n"
     update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+RequestName+"'\n"
@@ -72,10 +71,10 @@ for i in tqdm(range(0,len(RequestNames))):
     update_Golgonjsonfile = '"""config.Data.lumiMask ="""\n'
     update_publication = "config.Data.publication = False\n"
 
-    print "RequestName = ",update_RequestName ,"\tDatasets = ",update_Dataset,"\tDirBase = ",update_DirBase,"\tDatasetTag = ",update_DatasetTag 
-    print "InputFiles = ",update_InputFiles
-    print  update_site
-    print  update_module
+    print("RequestName = ",update_RequestName ,"\tDatasets = ",update_Dataset,"\tDirBase = ",update_DirBase,"\tDatasetTag = ",update_DatasetTag) 
+    print("InputFiles = ",update_InputFiles)
+    print(update_site)
+    print(update_module)
 
     replacemachine(cfgfile,'config.General.requestName =', update_RequestName)
     replacemachine(cfgfile,'config.Data.inputDataset =', update_Dataset )
@@ -90,14 +89,14 @@ for i in tqdm(range(0,len(RequestNames))):
     replacemachine(scriptfile,'modules=', update_module ) 
 
     cmd_crab_submit = "crab submit -c "+cfgfile
-    os.system(cmd_crab_submit)  
+    os.system(cmd_crab_submit)
  
-    #cmd_crab_kill = "crab kill -d crab_"+RequestName[i]
+    #cmd_crab_kill = "crab kill -d crab_"+RequestName
     #os.system(cmd_crab_kill)
 
-    #cmd_rm_dir = "rm -rf crab_"+RequestName[i]
+    #cmd_rm_dir = "rm -rf crab_"+RequestName
     #os.system(cmd_rm_dir)
 
 
-    print "DONE -----",RequestName,"--------------------------------------------------------------------------------------------"
+    print("DONE -----",RequestName,"--------------------------------------------------------------------------------------------")
     time.sleep(10)
