@@ -5,7 +5,7 @@ config = Configuration()
 
 config.section_("General")
 
-config.General.requestName = 'Tbarchannel_wtop1p45_Tree_UL2016'
+config.General.requestName = 'Tchannel_mtop1695_Tree_UL2016'
 
 config.General.transferLogs=True
 config.section_("JobType")
@@ -14,23 +14,23 @@ config.JobType.psetName = 'PSet.py'
 config.JobType.scriptExe = 'crab_script_NanoGen_skimtree.sh'
 #config.JobType.maxMemoryMB = 4000
 config.JobType.inputFiles = ['crab_script_NanoGen_skimtree.py','../../scripts/haddnano.py','clean_All_keep_GenPart.txt','Gen_mass_reconstract_SingleTop.py','Gen_mass_functions.py']
-config.JobType.sendPythonFolder=True
+#config.JobType.sendPythonFolder=True # this configration line has been deprecated
 config.section_("Data")
 
-config.Data.inputDataset = '/ST_t-channel_antitop_4f_InclusiveDecays_wtop1p45_TuneCP5_fixWidth_13TeV-powheg-madspin-pythia8/RunIISummer20UL16wmLHENanoGEN-106X_mcRun2_asymptotic_v13-v1/NANOAODSIM'
+config.Data.inputDataset = '/ST_t-channel_top_4f_InclusiveDecays_mtop1695_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM'
 
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1
 
-config.Data.outLFNDirBase = '/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN_v8/Tbarchannel_wtop1p45'
+config.Data.outLFNDirBase = '/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN_v9/Tchannel_mtop1695'
 
-config.Data.publication = True
+config.Data.publication = False
 
-config.Data.outputDatasetTag = 'Tree_22_Nov22_MCUL2016_Tbarchannel_wtop1p45_v7'
+config.Data.outputDatasetTag = 'Tree_14_Jul24_MCUL2016_Tchannel_mtop1695_v9'
 
 config.section_("Site")
-config.Site.storageSite = 'T2_IN_TIFR'
+config.Site.storageSite = 'T3_CH_CERNBOX'
 
 #config.Site.storageSite = "T2_CH_CERN"
 #config.section_("User")

@@ -9,7 +9,7 @@ echo "ENV..................................."
 env 
 echo "VOMS"
 voms-proxy-info -all
-echo "CMSSW BASE, python path, pwd"
+echo "CMSSW BASE, python3 path, pwd"
 echo $CMSSW_BASE 
 echo $PYTHON_PATH
 echo $PWD 
@@ -25,5 +25,5 @@ mv python $CMSSW_BASE/python
 #export X509_USER_PROXY=/afs/cern.ch/user/m/mikumar/x509up_u106474
 
 echo Found Proxy in: $X509_USER_PROXY
-python crab_script_NanoGen_skimtree.py $1
+python3 crab_script_NanoGen_skimtree.py $1
 fi
