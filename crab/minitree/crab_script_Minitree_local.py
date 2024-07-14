@@ -58,8 +58,8 @@ geninfomodule =  getattr(genInfo,'gen_info_Module')
 
 Met_filter_UL16 = " && (Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter)==1"
 Met_filter_UL17_UL18 = " && (Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilter)==1"
-#if(year in ["UL2017", "UL2018"]): treecut = treecut+Met_filter_UL17_UL18	
-#elif(year in ["UL2016_preVFP", "UL2016_postVFP"]): treecut = treecut+Met_filter_UL16
+if(year in ["UL2017", "UL2018"]): treecut = treecut+Met_filter_UL17_UL18	
+elif(year in ["UL2016preVFP", "UL2016postVFP"]): treecut = treecut+Met_filter_UL16
 
 if(args.ISDATA):
 	minitreemodule = getattr(minitree,'MinitreeModuleConstr'+region+'_'+lep+'_data_'+year)
@@ -73,11 +73,11 @@ if( (dataset in ['ttbar_SemiLeptonic','ttbar_FullyLeptonic']) and region == "2J1
 elif((dataset in ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel']) and region == "2J1T1"):
 	runmodules = [btvmodule(),minitreemodule(dataset),jmeCorrection(),geninfomodule()]
 elif('Run' in dataset):
-	 runmodules =[minitreemodule(),jmeCorrection()]
+	runmodules =[minitreemodule(),jmeCorrection()]
 else:
 	runmodules = [btvmodule(),minitreemodule(dataset),jmeCorrection()]
 
-
+print('\n year : ',year)
 print('\n treecut : ',treecut)
 print('\n inputFiles : ',inputFiles)
 #@print('file number : ',num)
@@ -96,4 +96,3 @@ p=PostProcessor(args.out_dir,
 		jsonInput=runsAndLumis())
 p.run()
 print("DONE")
-

@@ -39,7 +39,7 @@ class btagSFProducer(Module):
 
     def __init__(
             self, era, algo='csvv2', selectedWPs=['M', 'shape_corr'],
-            sfFileName=None, verbose=0, jesSystsForShape=["jes"]
+            sfFileName=None, verbose=0, jesSystsForShape=["jes","jesAbsoluteStat",'jesAbsoluteMPFBias','jesFragmentation','jesSinglePionECAL','jesSinglePionHCAL','jesTimePtEta','jesRelativeJEREC1','jesRelativeJEREC2','jesRelativeJERHF','jesRelativePtBB','jesRelativePtEC1','jesRelativePtEC2','jesRelativePtHF','jesRelativeBal','jesRelativeSample','jesRelativeFSR','jesRelativeStatEC','jesRelativeStatHF','jesPileUpDataMC','jesPileUpPtRef','jesPileUpPtBB','jesPileUpPtEC1','jesPileUpPtEC2','jesPileUpPtHF']
     ):
         self.era = era
         self.algo = algo
@@ -295,18 +295,20 @@ class btagSFProducer(Module):
             isShape = (wp == 'shape_corr')
             central_and_systs = (
                 self.central_and_systs_shape_corr if isShape else self.central_and_systs)
+            #print(jets_flav, jets_eta, jets_pt, jets_disc)
             for central_or_syst in central_and_systs:
-                #print(central_or_syst, jets_flav, jets_eta, jets_pt, jets_disc)
+                #print(central_or_syst)
+                scale_factors_eta_corrected = []
                 if isShape: 
                     if 'cferr' in central_or_syst:
                         scale_factors = []
                         for i in range(len(jets_flav)):
-                            if jets_flav[i] in [0, 5]: scale_factors.append(0)
-                            else: scale_factors.append(reader(central_or_syst, 4, jets_eta[i], jets_pt[i], jets_disc[i]))
-                    elif ('lf' in central_or_syst) or ('hf' in central_or_syst) or ('jes' in central_or_syst):
+                            if jets_flav[i] in [4]:scale_factors.append(reader(central_or_syst, 4, jets_eta[i], jets_pt[i], jets_disc[i]))
+                            else: scale_factors.append(reader("central", jets_flav[i], jets_eta[i], jets_pt[i], jets_disc[i]))
+                    elif ('lf' in central_or_syst or ('hf' in central_or_syst) or ('jes' in central_or_syst)):
                         scale_factors = []
                         for i in range(len(jets_flav)):
-                            if jets_flav[i] in [4]: scale_factors.append(0)
+                            if jets_flav[i] in [4]: scale_factors.append(reader("central", jets_flav[i], jets_eta[i], jets_pt[i], jets_disc[i]))
                             else: scale_factors.append(reader(central_or_syst, jets_flav[i], jets_eta[i], jets_pt[i], jets_disc[i]))
                     else:
                         scale_factors = []
@@ -314,8 +316,16 @@ class btagSFProducer(Module):
                             scale_factors.append(reader(central_or_syst, jets_flav[i], jets_eta[i], jets_pt[i], jets_disc[i]))
                         #if jets_flav[i] == 4: print(scale_factors[i], jets_flav[i], jets_eta[i], jets_pt[i], jets_disc[i])
                 else: scale_factors = reader(central_or_syst, jets_flav, jets_eta, jets_pt)
+                for i,eta_1 in enumerate(jets_eta_1):
+                     if(eta_1 >= 2.5): 
+                          scale_factors_eta_corrected.append(1)
+                     else: 
+                          scale_factors_eta_corrected.append(scale_factors[i])
+                #print(f'{jets_eta_1 = }')
+                #print(f'{scale_factors = }')
+                #print(f'{scale_factors_eta_corrected = }')
                 self.out.fillBranch(
-                    self.branchNames_central_and_systs[wp][central_or_syst], scale_factors)
+                    self.branchNames_central_and_systs[wp][central_or_syst], scale_factors_eta_corrected)
         return True
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
