@@ -33,6 +33,7 @@ if __name__ == '__main__':
     year_folder = {'UL2016preVFP': 'SIXTEEN_preVFP', 'UL2016postVFP': 'SIXTEEN_postVFP', 'UL2017': 'SEVENTEEN', 'UL2018': 'EIGHTEEN'}
     tag =   region+'_'+Lep + '_' + MC_Data + '_' + year
     Out_dir = args.out_dir
+    print(f'{Out_dir = }')
     print(args.ISDATA," ",MC_Data)
     if(MC_Data=="mc"):
         #'ttbar_SemiLeptonic','ttbar_FullyLeptonic'
@@ -51,7 +52,7 @@ if __name__ == '__main__':
 
 
     #
-    #Channels = ['Tchannel']
+    Channels = ['DYJetsToLL']
     print(Channels)
 
     run_commands = []
@@ -60,10 +61,17 @@ if __name__ == '__main__':
     for Channel in Channels:
         print(Channel)
        	local_script_output_dir = Out_dir + year_folder[year]+'/'+region+'/'+Lep+'/'+Channel + '/' 
-       	os.makedirs(local_script_output_dir+'log/', exist_ok = True)
-       	print(' files beeing read from /nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/'+MC_Data+'/' + Channel + '/**/**/**/**/*.root')
-       	if(MC_Data=="mc"): in_files = glob.glob('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root')
-        elif(MC_Data=="data"):  in_files = glob.glob('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/Data_' + Lep + '/' + Channel + '/**/**/**/**/*.root')
+       	print(f'{local_script_output_dir = }')
+        os.makedirs(local_script_output_dir+'log/', exist_ok = True)
+
+        if(MC_Data=="mc"):
+            #in_files_path = '/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root'
+            in_files_path = '/eos/home-m/mikumar/RUN2_UL/' + Channel + '/**/**/**/**/*.root'
+        elif(MC_Data=="data"):
+            in_files_path = '/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/Data_' + Lep + '/' + Channel + '/**/**/**/**/*.root'
+
+       	print(' files beeing read from '+in_files_path)
+        in_files = glob.glob(in_files_path)
        	print("total file selected : ",len(in_files))
        	Hadded_out_file_name = 'Minitree_'+ Channel+'_'+region+'_'+Lep+ '.root '
        	print(in_files)
@@ -95,7 +103,7 @@ if __name__ == '__main__':
     print(run_commands,"\n")
     #print(Hadd_N_createoutfile_cmd[Channel])
 
-    pool = mp.Pool(processes=15)
+    pool = mp.Pool(processes=8)
     pool.map(run_cmd, run_commands)
     del run_commands
     pool.close()
