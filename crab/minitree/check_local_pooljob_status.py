@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
 	if(MC_Data=="mc"):
 		Channels_commom = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L','DYJetsToLL']
-
+		if(year=='UL2017'): Channels_commom = Channels_commom + ['WJetsToLNu_0J_lagecy','WJetsToLNu_2J_lagecy','WJetsToLNu_2J_ext_lagecy']
 		if(lep=="mu"): Channel_QCD = ['QCD_Pt-15To20_MuEnriched', 'QCD_Pt-20To30_MuEnriched', 'QCD_Pt-30To50_MuEnriched', 'QCD_Pt-50To80_MuEnriched', 'QCD_Pt-80To120_MuEnriched', 'QCD_Pt-120To170_MuEnriched', 'QCD_Pt-170To300_MuEnriched', 'QCD_Pt-300To470_MuEnriched', 'QCD_Pt-470To600_MuEnriched', 'QCD_Pt-600To800_MuEnriched', 'QCD_Pt-800To1000_MuEnriched', 'QCD_Pt-1000_MuEnriched']
 
 		elif(lep=="el"): Channel_QCD = ['QCD_Pt-15to20_EMEnriched', 'QCD_Pt-20to30_EMEnriched', 'QCD_Pt-30to50_EMEnriched', 'QCD_Pt-50to80_EMEnriched', 'QCD_Pt-80to120_EMEnriched', 'QCD_Pt-120to170_EMEnriched' , 'QCD_Pt-170to300_EMEnriched', 'QCD_Pt-300toInf_EMEnriched' ]
@@ -61,7 +61,6 @@ if __name__ == '__main__':
 		if(year=='UL2018'): Channels = [ 'Run2018A_'+lep,'Run2018B_'+lep, 'Run2018C_'+lep, 'Run2018D_'+lep]
 
 	
-
 	print()
 	print("-----------------------------------------    chacking     --------------------------------")
 	print()
@@ -69,8 +68,10 @@ if __name__ == '__main__':
 	rerun_list = []
 	cwd = os.getcwd()
 
-	Channels = ['ttbar_SemiLeptonic']
+	#Channels = ['ttbar_FullyLeptonic']
 	Error = "Skim"
+	if(MC_Data=="mc"): No_of_file_per_job = 1
+	elif(MC_Data=="data"): No_of_file_per_job = 1 # though the number of file per job are 5 but still when number of file are not desial of 5 then file less 5 are submitted 
 	for channel in Channels:
 		print("----------------------\n"+channel+"\n-----------------------\n")
 		outputDir = LocalDir + '/' + lep + '/' + channel + '/log'
@@ -85,14 +86,15 @@ if __name__ == '__main__':
 			p_status = p.wait()
 			skip_tranfer_check = False
 			output = str(output)
-			if(output.count(Error)<1):
+			if(output.count(Error)<No_of_file_per_job):
 				#print(output.count(Error))
 				print(log_file)
 				cmd_grep2 = 'grep "python3 crab_script_Minitree_local.py" '+log_file
 				p2 = subprocess.Popen(cmd_grep2, stdout=subprocess.PIPE, shell=True)
 				(output2, err2) = p2.communicate()
 				rerun_list.append(str(output2)[3:-3]) # remove /n and b' from and end of command
-		print(rerun_list)
+				#rerun_list.append(str(output2)[1:-1])
+	print(rerun_list)
 	print("runing "+str(len(rerun_list))+ " jobs .... .... ")
-	#pool = mp.Pool(processes=1)
+	#pool = mp.Pool(processes=2)
 	#pool.map(run_cmd, rerun_list)

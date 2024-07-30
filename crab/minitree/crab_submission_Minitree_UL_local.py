@@ -1,5 +1,3 @@
-
-
 import os
 import glob
 import multiprocessing as mp
@@ -36,9 +34,9 @@ if __name__ == '__main__':
     tag =   region+'_'+Lep + '_' + MC_Data + '_' + year
     Out_dir = args.out_dir
     print(args.ISDATA," ",MC_Data)
-    #if(year=='UL2017'): Channels_commom = Channels_commom + ['WJetsToLNu_0J_lagecy','WJetsToLNu_2J_lagecy','WJetsToLNu_2J_ext_lagecy']
     if(MC_Data=="mc"):
-        Channels_commom = ['Tchannel','Tbarchannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','tw_antitop', 'tw_top','Schannel','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2Q2L','DYJetsToLL']
+        #'ttbar_SemiLeptonic','ttbar_FullyLeptonic'
+        Channels_commom = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WWTolnulnu', 'WZTo2Q2L', 'ZZTo2Q2L','DYJetsToLL']
         if(year=='UL2017'): Channels_commom = Channels_commom + ['WJetsToLNu_0J_lagecy','WJetsToLNu_2J_lagecy','WJetsToLNu_2J_ext_lagecy']
         if(Lep=="mu"): Channel_QCD = ['QCD_Pt-15To20_MuEnriched', 'QCD_Pt-20To30_MuEnriched', 'QCD_Pt-30To50_MuEnriched', 'QCD_Pt-50To80_MuEnriched', 'QCD_Pt-80To120_MuEnriched', 'QCD_Pt-120To170_MuEnriched', 'QCD_Pt-170To300_MuEnriched', 'QCD_Pt-300To470_MuEnriched', 'QCD_Pt-470To600_MuEnriched', 'QCD_Pt-600To800_MuEnriched', 'QCD_Pt-800To1000_MuEnriched', 'QCD_Pt-1000_MuEnriched']
         elif(Lep=="el"): Channel_QCD = ['QCD_Pt-15to20_EMEnriched', 'QCD_Pt-20to30_EMEnriched', 'QCD_Pt-30to50_EMEnriched', 'QCD_Pt-50to80_EMEnriched', 'QCD_Pt-80to120_EMEnriched', 'QCD_Pt-120to170_EMEnriched' , 'QCD_Pt-170to300_EMEnriched', 'QCD_Pt-300toInf_EMEnriched' ]
@@ -52,7 +50,8 @@ if __name__ == '__main__':
         if(year=='UL2018'): Channels = [ 'Run2018A_'+Lep,'Run2018B_'+Lep, 'Run2018C_'+Lep, 'Run2018D_'+Lep] 
 
 
-    #Channels = ['Tchannel']#, 'WJetsToLNu_1J', 'WJetsToLNu_2J','DYJetsToLL'] #[./lo]#, 'ttbar_SemiLeptonic']
+    #
+    #Channels = ['Tchannel']
     print(Channels)
 
     run_commands = []
@@ -63,7 +62,7 @@ if __name__ == '__main__':
        	local_script_output_dir = Out_dir + year_folder[year]+'/'+region+'/'+Lep+'/'+Channel + '/' 
        	os.makedirs(local_script_output_dir+'log/', exist_ok = True)
        	print(' files beeing read from /nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/'+MC_Data+'/' + Channel + '/**/**/**/**/*.root')
-       	if(MC_Data=="mc"): in_files = glob.glob('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'_new_Mintu/MC/' + Channel + '/**/**/**/**/*.root')
+       	if(MC_Data=="mc"): in_files = glob.glob('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root')
         elif(MC_Data=="data"):  in_files = glob.glob('/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/Data_' + Lep + '/' + Channel + '/**/**/**/**/*.root')
        	print("total file selected : ",len(in_files))
        	Hadded_out_file_name = 'Minitree_'+ Channel+'_'+region+'_'+Lep+ '.root '
@@ -96,7 +95,7 @@ if __name__ == '__main__':
     print(run_commands,"\n")
     #print(Hadd_N_createoutfile_cmd[Channel])
 
-    pool = mp.Pool(processes=12)
+    pool = mp.Pool(processes=15)
     pool.map(run_cmd, run_commands)
     del run_commands
     pool.close()
