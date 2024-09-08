@@ -8,12 +8,6 @@ import sys
 import os
 import root_numpy
 
-"""sampleDir = {
-	'ULpreVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/',
-	'ULpostVFP2016' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/',
-	'UL2017' : '/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/',
-	'UL2018' : '/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/'
-}"""
 
 def load_dataset ( max_entries = -1, channel = "Tchannel", lep = "mu",year = "ULpreVFP2016",region="2J1T" ,sample="Mc_Nomi" ):
     if(lep=="mu"):

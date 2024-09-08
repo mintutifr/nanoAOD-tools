@@ -45,9 +45,11 @@ import glob
 import torch
 import pandas as pd
 import numpy as np
-import ROOT as rt
-import root_numpy
-from IPython.display import display
+import awkward as ak
+import uproot
+#import ROOT as rt
+#import root_numpy
+#from IPython.display import display
 from torch.utils.data import TensorDataset, DataLoader
 from torch import nn
 from torch.utils.tensorboard import SummaryWriter
@@ -113,7 +115,6 @@ elif(sample=="Mc_sys"):
         channels =['Tchannel_TuneCP5CR2',  'Tchannel_TuneCP5CR1',   'Tchannel_hdampdown',   'Tbarchannel_hdampdown',  'Tchannel_TuneCP5down',   'Tbarchannel_hdampup',   'Tchannel_hdampup',   'Tbarchannel_TuneCP5down',   'Tchannel_erdON',   'Tchannel_TuneCP5up',   'Tbarchannel_TuneCP5up',  'Tbarchannel_erdON',   'Tbarchannel_TuneCP5CR1',   'Tbarchannel_TuneCP5CR2']
 
 print(channels)
-#channels.append(data_channels[year])
 
 types = ['Apply_all']#,'train']
 files = []
@@ -126,17 +127,15 @@ ML_DIR='dataframe_saved_without_mtwCut/'+region+'/' ; wightfolder = 'weight_with
 if not os.path.exists(MainOutputDir+'Apply_all/sys_N_Alt'): os.makedirs(MainOutputDir+'Apply_all/sys_N_Alt')
 
 #if(sample=="Mc_Nomi"):
+common_path = "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"
 OriginalFileDir = {
-        "UL2016preVFP" :   "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/stack_plots_before_ML/Minitree_with_mtw_weight/2J1T1/",
-	#PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
-        "UL2016postVFP" :  "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/stack_plots_before_ML/Minitree_with_mtw_weight/2J1T1/",
-	##PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
-        "UL2017" :         "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/stack_plots_before_ML/Minitree_with_mtw_weight/2J1T1/",
-	#PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR,
-        "UL2018" :         "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/stack_plots_before_ML/Minitree_with_mtw_weight/2J1T1/",
-	#PhysicsTools/NanoAODTools/crab/DNN/"+ML_DIR
+        "UL2016preVFP" :   common_path+"/SIXTEEN_preVFP/2J1T1/",
+        "UL2016postVFP" :  common_path+"/SIXTEEN_postVFP/2J1T1/",
+        "UL2017" :         common_path+"/SEVENTEEN/2J1T1/",
+        "UL2018" :         common_path+"/EIGHTEEN/2J1T1/",
  }
 
+#channels = ['Tchannel']
 for channel in channels:
     if(sample=="Mc_Nomi"):
         for typ in types:
@@ -149,10 +148,16 @@ print(files)
 m = nn.LogSoftmax(dim=1)
 for fil in files:
 	print(fil)
-	#df_test = rt.RDataFrame("Events",fil).AsNumpy()
-	df_test = rt.RDataFrame("Events",fil,VARS_list).AsNumpy()
-	print(type(df_test))		
-	#display(df_tr_top_signal_new)
+
+	#df_test = rt.RDataFrame("Events",fil,VARS_list).AsNumpy()
+	#print(type(df_test))		
+	
+	with uproot.open(fil) as file:
+            tree = file["Events"]
+            df_test = ak.to_dataframe(tree.arrays(VARS_list, library="ak"))	
+
+
+	print(type(df_test))
 
 	x_te = np.vstack([df_test[var] for var in VARS]).T
 	print("shape of x for application" ,x_te.shape)
@@ -164,12 +169,12 @@ for fil in files:
 	tensor_x_te = torch.Tensor(x_te) # transform to torch tensor
 	tensor_y_te = torch.Tensor(y_te)
 
-	device = "cuda:1" if torch.cuda.is_available() else "cpu"
+	device = "cuda:0" if torch.cuda.is_available() else "cpu"
 	print("Using {device} device")
 
 	if torch.cuda.is_available():
-		tensor_x_te = tensor_x_te.to(device)
-		tensor_y_te = tensor_y_te.to(device)
+	     tensor_x_te = tensor_x_te.to(device)
+	     tensor_y_te = tensor_y_te.to(device)
 
 
 	batch = 200
@@ -178,11 +183,12 @@ for fil in files:
 
 	model = NeuralNetwork().to(device)
 	wightpath = wightfolder+year+'/'+lep
-	print("looking "+wightpath+'/* for weigt files')
-	list_of_files = glob.glob(wightpath+'/*')
+	print("looking "+wightpath+'/Best* for weigt files')
+	list_of_files = glob.glob(wightpath+'/Best*')
+	print(list_of_files)
 	latest_weight_file = max(list_of_files, key=os.path.getctime)
 	print("using ",latest_weight_file, "file for the evaluation")
-	model.load_state_dict(torch.load(latest_weight_file))
+	model.load_state_dict(torch.load(latest_weight_file, map_location='cuda:0'))
 	y_arr = np.zeros((x_te.shape[0], 6))
 
 	for i, tdata in enumerate(testing_loader):
@@ -206,6 +212,6 @@ for fil in files:
 	else: outputfile =  MainOutputDir+'Apply_all/sys_N_Alt/'+ fname.rsplit('/')[-1] + '.root'
 	print("writing out put file : ", MainOutputDir+'Apply_all/sys_N_Alt/'+fname.rsplit('/')[-1],"_apply.root")
 
-	root_numpy.array2root(y_arr, outputfile, treename='Events',mode='recreate')
-	
-	
+	#root_numpy.array2root(y_arr, outputfile, treename='Events',mode='recreate')
+	file_out = uproot.recreate(outputfile)
+	file_out['Events'] = y_arr

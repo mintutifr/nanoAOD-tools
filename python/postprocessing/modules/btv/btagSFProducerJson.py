@@ -279,11 +279,11 @@ class btagSFProducer(Module):
             raise ValueError("ERROR: Invalid algorithm '%s'!" % self.algo)
         
         jets_flav = np.array([int(jet.hadronFlavour) for jet in jets])
-        jets_eta_1 = [np.abs(jet.eta) for jet in jets]
+        jets_abseta_dummy = [np.abs(jet.eta) for jet in jets]
         jets_eta = []
-        for eta_1 in jets_eta_1:
-            if eta_1 >= 2.5: jets_eta.append(2.5-0.001)
-            else: jets_eta.append(eta_1)
+        for AbsEta in jets_abseta_dummy:
+            if AbsEta >= 2.5: jets_eta.append(2.5-0.001)
+            else: jets_eta.append(AbsEta)
         jets_eta = np.array(jets_eta)
         jets_pt = np.array([jet.pt for jet in jets])
         jets_disc = np.array([getattr(jet, discr) for jet in jets])
@@ -316,12 +316,12 @@ class btagSFProducer(Module):
                             scale_factors.append(reader(central_or_syst, jets_flav[i], jets_eta[i], jets_pt[i], jets_disc[i]))
                         #if jets_flav[i] == 4: print(scale_factors[i], jets_flav[i], jets_eta[i], jets_pt[i], jets_disc[i])
                 else: scale_factors = reader(central_or_syst, jets_flav, jets_eta, jets_pt)
-                for i,eta_1 in enumerate(jets_eta_1):
-                     if(eta_1 >= 2.5): 
+                for i,AbsEta in enumerate(jets_abseta_dummy):
+                     if(AbsEta >= 2.5): 
                           scale_factors_eta_corrected.append(1)
                      else: 
                           scale_factors_eta_corrected.append(scale_factors[i])
-                #print(f'{jets_eta_1 = }')
+                #print(f'{jets_abseta_dummy = }')
                 #print(f'{scale_factors = }')
                 #print(f'{scale_factors_eta_corrected = }')
                 self.out.fillBranch(

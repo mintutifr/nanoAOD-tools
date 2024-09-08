@@ -91,6 +91,7 @@ p=PostProcessor(args.out_dir,
     	inputFiles,
 		treecut,
 		modules=runmodules,
+                outputbranchsel="keep_and_drop_"+lep+"_Minitree.txt",
 		provenance=True,
 		fwkJobReport=False,
 		jsonInput=runsAndLumis())

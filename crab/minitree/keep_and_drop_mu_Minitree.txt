@@ -19,3 +19,4 @@ drop    102
 drop    103
 
 keep Jet_btagSF_deepjet*
+drop FatJet*

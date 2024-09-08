@@ -68,7 +68,7 @@ if __name__ == '__main__':
 	rerun_list = []
 	cwd = os.getcwd()
 
-	#Channels = ['ttbar_FullyLeptonic']
+	Channels = ['ttbar_SemiLeptonic','ttbar_FullyLeptonic']
 	Error = "Skim"
 	if(MC_Data=="mc"): No_of_file_per_job = 1
 	elif(MC_Data=="data"): No_of_file_per_job = 1 # though the number of file per job are 5 but still when number of file are not desial of 5 then file less 5 are submitted 
@@ -92,9 +92,10 @@ if __name__ == '__main__':
 				cmd_grep2 = 'grep "python3 crab_script_Minitree_local.py" '+log_file
 				p2 = subprocess.Popen(cmd_grep2, stdout=subprocess.PIPE, shell=True)
 				(output2, err2) = p2.communicate()
-				rerun_list.append(str(output2)[3:-3]) # remove /n and b' from and end of command
-				#rerun_list.append(str(output2)[1:-1])
+				rerun_list.append(str(output2)[3:-3]) # remove /n and b' using python3
+				#rerun_list.append(str(output2)[1:-1]) # remove /n and b' using python2
 	print(rerun_list)
 	print("runing "+str(len(rerun_list))+ " jobs .... .... ")
-	#pool = mp.Pool(processes=2)
+	#pool = mp.Pool(processes=4)
 	#pool.map(run_cmd, rerun_list)
+	print("DONE")
