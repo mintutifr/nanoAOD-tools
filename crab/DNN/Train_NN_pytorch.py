@@ -31,17 +31,19 @@ elif(lep=="el"):
         lepton = "Electron"
 print(lepton)
 
-
+import uproot
 import torch
 import pandas as pd
 import numpy as np
-import ROOT as rt
-from IPython.display import display
+import awkward as ak
+#import ROOT as rt
+#from IPython.display import display
 from torch.utils.data import TensorDataset, DataLoader
 from torch.optim.lr_scheduler import MultiStepLR
 from torch import nn
 from torch.utils.tensorboard import SummaryWriter
 from datetime import datetime
+
 
 def distance_corr(var_1,var_2,normedweight,power=2):
     """var_1: First variable to decorrelate (eg mass)
@@ -167,11 +169,17 @@ y_val_ch = {}
 
 #n_tr = 50000
 #n_val = 10000
-dir='dataframe_saved_without_mtwCut/2J1T/'
+dir='/nfs/home/mintu/work/private/Nanoaod/CMSSW_12_1_1/src/Run2UL_Analysis/QCD_SFs/DNN_test_train_dataset/2J1T1/'
 for count, channel in enumerate(train_ch):	
     print("Events",dir+year+'_' + channel + '_train_'+lep+'.root')
-    df_train[channel] = rt.RDataFrame("Events",dir+year+'_' + channel + '_train_'+lep+'.root').AsNumpy()
-    df_val[channel] = rt.RDataFrame("Events",dir+year+'_' + channel + '_valid_'+lep+'.root').AsNumpy()
+    with uproot.open(dir+year+'_' + channel + '_train_'+lep+'.root') as file:
+            tree = file["Events"]
+            df_train[channel] = ak.to_numpy(tree.arrays(library="ak"))
+    with uproot.open(dir+year+'_' + channel + '_valid_'+lep+'.root') as file:
+            tree = file["Events"]
+            df_val[channel] = ak.to_numpy(tree.arrays(library="ak"))
+    #df_train[channel] = rt.RDataFrame("Events",dir+year+'_' + channel + '_train_'+lep+'.root').AsNumpy()
+    #df_val[channel] = rt.RDataFrame("Events",dir+year+'_' + channel + '_valid_'+lep+'.root').AsNumpy()
     x_tr_ch[channel] = np.vstack([df_train[channel][var] for var in VARS]).T
     x_val_ch[channel] = np.vstack([df_val[channel][var] for var in VARS]).T
     print("shape of x for training " + channel + " " , np.shape(x_tr_ch[channel]))
@@ -204,7 +212,7 @@ tensor_y_tr = torch.Tensor(y_tr)
 tensor_x_val = torch.Tensor(x_val) # transform to torch tensor
 tensor_y_val = torch.Tensor(y_val)
 
-device = "cuda:3" if torch.cuda.is_available() else "cpu"
+device = "cpu" #"cuda:3" if torch.cuda.is_available() else "cpu"
 print(f"Using {device} device")
 
 if torch.cuda.is_available():
