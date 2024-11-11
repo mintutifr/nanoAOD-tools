@@ -40,20 +40,33 @@ MCsample_Nevent_Xsec = {
 		'QCD_Pt-170to300_EMEnriched': ['3714642', '21349.8'], 
 		'QCD_Pt-300toInf_EMEnriched': ['2215994', '1350'],
 
-		'Tchannel_TuneCP5CR2': ['50028326', '134.2'],
-		'Tchannel_TuneCP5CR1': ['50554878', '134.2'],
-		'Tchannel_TuneCP5up': ['49562044', '134.2'],
-		'Tchannel_TuneCP5down': ['50263415', '134.2'],
-		#'Tchannel_hdampup': ['51297219', '134.2'],
-		#'Tchannel_hdampdown': ['50524842', '134.2'],
-		'Tchannel_erdON': ['51895306', '134.2'],
+		'Tchannel_Gluonmove': ['65243704', '134.2'],
+		'Tchannel_QCDinspired': ['69871492', '134.2'],
+		'Tchannel_TuneCP5up': ['70814127', '134.2'],
+		'Tchannel_TuneCP5down': ['70272007', '134.2'],
+		'Tchannel_erdON': ['70197587', '134.2'],
 
-		'Tbarchannel_TuneCP5CR2': ['25907341', '80.0'],
-		'Tbarchannel_TuneCP5CR1': ['26027022', '80.0'],
-		'Tbarchannel_TuneCP5up': ['24935048', '80.0'],
-		#'Tbarchannel_hdampup': ['25244204', '80.0'],
-		#'Tbarchannel_hdampdown': ['24856816', '80.0'],
-		'Tbarchannel_erdON': ['25397830', '80.0']
+		'Tbarchannel_Gluonmove': ['34418833', '80.0'],
+		'Tbarchannel_QCDinspired': ['34931492', '80.0'],
+		'Tbarchannel_TuneCP5up': ['34293556', '80.0'],
+                'Tbarchannel_TuneCP5down': ['34023984', '80.0'],
+		'Tbarchannel_erdON': ['35350256', '80.0'],
+                 
+                'ttbar_SemiLeptonic_Gluonmove': ['193525462', '366.3'],
+		'ttbar_SemiLeptonic_QCDinspired': ['197712081', '366.3'],
+		'ttbar_SemiLeptonic_TuneCP5up': ['197781669', '366.3'],
+		'ttbar_SemiLeptonic_TuneCP5down': ['188354185', '366.3'],
+		'ttbar_SemiLeptonic_erdON': ['196585657', '366.3'],
+
+                'ttbar_FullyLeptonic_Gluonmove': ['56727495', '88.5'],
+		'ttbar_FullyLeptonic_QCDinspired': ['59138116', '88.5'],
+		'ttbar_FullyLeptonic_TuneCP5up': ['56603362', '88.5'],
+		'ttbar_FullyLeptonic_TuneCP5down': ['59369410', '88.5'],
+		'ttbar_FullyLeptonic_erdON': ['59490022', '88.5']
+
+
+
+
 	},
 
 	'UL2017' : {
@@ -98,20 +111,31 @@ MCsample_Nevent_Xsec = {
 		'QCD_Pt-170to300_EMEnriched': ['3678200', '21349.8'],
 		'QCD_Pt-300toInf_EMEnriched': ['2214934', '1350'],
 
-		'Tchannel_TuneCP5CR2': ['50028326', '134.2'],
-		'Tchannel_TuneCP5CR1': ['50554878', '134.2'],
+		'Tchannel_Gluonmove': ['50028326', '134.2'],
+		'Tchannel_QCDinspired': ['50554878', '134.2'],
 		'Tchannel_TuneCP5up': ['49562044', '134.2'],
 		'Tchannel_TuneCP5down': ['50263415', '134.2'],
-		#'Tchannel_hdampup': ['51297219', '134.2'],
-		#'Tchannel_hdampdown': ['50524842', '134.2'],
 		'Tchannel_erdON': ['51895306', '134.2'],
-		'Tbarchannel_TuneCP5CR2': ['25907341', '80.0'],
-		'Tbarchannel_TuneCP5CR1': ['26027022', '80.0'],
+
+		'Tbarchannel_Gluonmove': ['25907341', '80.0'],
+		'Tbarchannel_QCDinspired': ['26027022', '80.0'],
 		'Tbarchannel_TuneCP5up': ['24935048', '80.0'],
 		'Tbarchannel_TuneCP5down': ['25603878', '80.0'],
-		#'Tbarchannel_hdampup': ['25244204', '80.0'],
-		#'Tbarchannel_hdampdown': ['24856816', '80.0'],
-		'Tbarchannel_erdON': ['25397830', '80.0']
+		'Tbarchannel_erdON': ['25397830', '80.0'],
+
+		'ttbar_SemiLeptonic_Gluonmove': ['140774971', '366.3'],
+		'ttbar_SemiLeptonic_QCDinspired': ['134912591', '366.3'],
+		'ttbar_SemiLeptonic_TuneCP5up': ['135955274', '366.3'],
+		'ttbar_SemiLeptonic_TuneCP5down': ['133309153', '366.3'],
+		'ttbar_SemiLeptonic_erdON': ['123872594', '366.3'],
+
+                'ttbar_FullyLeptonic_Gluonmove': ['42259855', '88.5'],
+		'ttbar_FullyLeptonic_QCDinspired': ['42470111', '88.5'],
+		'ttbar_FullyLeptonic_TuneCP5up': ['42044781', '88.5'],
+		'ttbar_FullyLeptonic_TuneCP5down': ['38967613', '88.5'],
+		'ttbar_FullyLeptonic_erdON': ['42089935', '88.5']
+
+
 	},
 	"UL2016preVFP" : {
 		'Tchannel'      : ['52437432','134.2'],
@@ -149,20 +173,31 @@ MCsample_Nevent_Xsec = {
 		'QCD_Pt-170to300_EMEnriched' : ['1850000','21349.8'],
 		'QCD_Pt-300toInf_EMEnriched' : ['1142775','1350'],
 
-		'Tchannel_TuneCP5CR2' : ['20230062','134.2'],
-		'Tchannel_TuneCP5CR1' : ['18671220','134.2'],
+		'Tchannel_Gluonmove' : ['20230062','134.2'],
+		'Tchannel_QCDinspired' : ['18671220','134.2'],
 		'Tchannel_TuneCP5up' : ['20545577','134.2'],
 		'Tchannel_TuneCP5down' : ['20681075','134.2'],
-		#'Tchannel_hdampup' : ['20779593','134.2'],
-		#'Tchannel_hdampdown' : ['20784203','134.2'],
 		'Tchannel_erdON' : ['21487232','134.2'],
-		'Tbarchannel_TuneCP5CR2' : ['10300876','80.0'],
-		'Tbarchannel_TuneCP5CR1' : ['9739578','80.0'],
+
+		'Tbarchannel_Gluonmove' : ['10300876','80.0'],
+		'Tbarchannel_QCDinspired' : ['9739578','80.0'],
 		'Tbarchannel_TuneCP5up' : ['10086078','80.0'],
 		'Tbarchannel_TuneCP5down' : ['10216908','80.0'],
-		#'Tbarchannel_hdampup' : ['9947894','80.0'],
-		#'Tbarchannel_hdampdown' : ['10124656','80.0'],
-		'Tbarchannel_erdON' : ['10410358','80.0']
+		'Tbarchannel_erdON' : ['10410358','80.0'],
+
+                 'ttbar_SemiLeptonic_Gluonmove': ['55869179', '366.3'],
+		'ttbar_SemiLeptonic_QCDinspired': ['55712233', '366.3'],
+		'ttbar_SemiLeptonic_TuneCP5up': ['45889214', '366.3'],
+		'ttbar_SemiLeptonic_TuneCP5down': ['55064026', '366.3'],
+		'ttbar_SemiLeptonic_erdON': ['55254188', '366.3'],
+
+                'ttbar_FullyLeptonic_Gluonmove': ['16641080', '88.5'],
+		'ttbar_FullyLeptonic_QCDinspired': ['15393170', '88.5'],
+		'ttbar_FullyLeptonic_TuneCP5up': ['10296740', '88.5'],
+		'ttbar_FullyLeptonic_TuneCP5down': ['21408999', '88.5'],
+		'ttbar_FullyLeptonic_erdON': ['16097656', '88.5']
+
+
 	},
 	"UL2016postVFP" : {
 		'Tchannel'      : ['63073000','134.2'],
@@ -200,20 +235,29 @@ MCsample_Nevent_Xsec = {
 		'QCD_Pt-170to300_EMEnriched' : ['1861129','21349.8'],
 		'QCD_Pt-300toInf_EMEnriched' : ['1138742','1350'],
 
-		'Tchannel_TuneCP5CR2' : ['23728000','134.2'],
-		'Tchannel_TuneCP5CR1' : ['25457000','134.2'],
-		'Tchannel_TuneCP5up' : ['25025000','134.2'],
-		'Tchannel_TuneCP5down' : ['23751000','134.2'],
-		#'Tchannel_hdampup' : ['24584000','134.2'],
-		#'Tchannel_hdampdown' : ['25401000','134.2'],
-		'Tchannel_erdON' : ['24527000','134.2'],
+		'Tchannel_Gluonmove' : ['22234323','134.2'],
+		'Tchannel_QCDinspired' : ['23852795','134.2'],
+		'Tchannel_TuneCP5up' : ['23447476','134.2'],
+		'Tchannel_TuneCP5down' : ['22257046','134.2'],
+		'Tchannel_erdON' : ['22981814','134.2'],
 
-		'Tbarchannel_TuneCP5CR2' : ['12213000','80.0'],
-		'Tbarchannel_TuneCP5CR1' : ['12557000','80.0'],
-		'Tbarchannel_TuneCP5up' : ['12591000','80.0'],
-		'Tbarchannel_TuneCP5down' : ['12042000','80.0'],
-		#'Tbarchannel_hdampup' : ['12506000','80.0'],
-		#'Tbarchannel_hdampdown' : ['11902000','80.0'],
-		'Tbarchannel_erdON' : ['12632000','80.0']
+		'Tbarchannel_Gluonmove' : ['11495338','80.0'],
+		'Tbarchannel_QCDinspired' : ['11822002','80.0'],
+		'Tbarchannel_TuneCP5up' : ['11852208','80.0'],
+		'Tbarchannel_TuneCP5down' : ['11334246','80.0'],
+		'Tbarchannel_erdON' : ['11892638','80.0'],
+
+                'ttbar_SemiLeptonic_Gluonmove': ['62185688', '366.3'],
+		'ttbar_SemiLeptonic_QCDinspired': ['60536335', '366.3'],
+		'ttbar_SemiLeptonic_TuneCP5up': ['57440947', '366.3'],
+		'ttbar_SemiLeptonic_TuneCP5down': ['19270256', '366.3'],
+		'ttbar_SemiLeptonic_erdON': ['54132575', '366.3'],
+
+                'ttbar_FullyLeptonic_Gluonmove': ['17870007', '88.5'],
+		'ttbar_FullyLeptonic_QCDinspired': ['17974921', '88.5'],
+		'ttbar_FullyLeptonic_TuneCP5up': ['17919866', '88.5'],
+		'ttbar_FullyLeptonic_TuneCP5down': ['18157240', '88.5'],
+		'ttbar_FullyLeptonic_erdON': ['17364880', '88.5']
+
 	},
 }

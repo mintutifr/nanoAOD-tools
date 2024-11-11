@@ -42,8 +42,15 @@ if __name__ == '__main__':
         if(year=='UL2017'): Channels_commom = Channels_commom + ['WJetsToLNu_0J_v2']
         if(Lep=="mu"): Channel_QCD = ['QCD_Pt-15To20_MuEnriched', 'QCD_Pt-20To30_MuEnriched', 'QCD_Pt-30To50_MuEnriched', 'QCD_Pt-50To80_MuEnriched', 'QCD_Pt-80To120_MuEnriched', 'QCD_Pt-120To170_MuEnriched', 'QCD_Pt-170To300_MuEnriched', 'QCD_Pt-300To470_MuEnriched', 'QCD_Pt-470To600_MuEnriched', 'QCD_Pt-600To800_MuEnriched', 'QCD_Pt-800To1000_MuEnriched', 'QCD_Pt-1000_MuEnriched']
         elif(Lep=="el"): Channel_QCD = ['QCD_Pt-15to20_EMEnriched', 'QCD_Pt-20to30_EMEnriched', 'QCD_Pt-30to50_EMEnriched', 'QCD_Pt-50to80_EMEnriched', 'QCD_Pt-80to120_EMEnriched', 'QCD_Pt-120to170_EMEnriched' , 'QCD_Pt-170to300_EMEnriched', 'QCD_Pt-300toInf_EMEnriched' ]
-        Channel_sys = ['Tchannel_QCDinspired', 'Tchannel_Gluonmove', 'Tchannel_TuneCP5up', 'Tchannel_TuneCP5down', 'Tchannel_erdON', 'Tchannel_PSweights', 'Tbachannel_QCDinspired', 'Tbachannel_Gluonmove', 'Tbachannel_TuneCP5up', 'Tbachannel_TuneCP5down', 'Tbachannel_erdON', 'Tbarchannel_PSweights', 'ttbar_FullyLeptonic_QCDinspired', 'ttbar_FullyLeptonic_Gluonmove', 'ttbar_FullyLeptonic_erdON', 'ttbar_FullyLeptonic_TuneCPup', 'ttbar_FullyLeptonic_TuneCPdown', 'ttbar_FullyLeptonic_PSweights', 'ttbar_SemiLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'ttbar_SemiLeptonic_erdON', 'ttbar_SemiLeptonic_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5down', 'ttbar_SemiLeptonic_PSweights']
-        Channels = Channels_commom + Channel_QCD #+Channel_sys 
+        Channel_sys = [
+                       #'Tchannel_QCDinspired', 'Tchannel_Gluonmove', 'Tchannel_TuneCP5up', 'Tchannel_TuneCP5down', 'Tchannel_erdON',  
+                       #'Tbarchannel_QCDinspired', 'Tbarchannel_Gluonmove', 'Tbarchannel_TuneCP5up', 'Tbarchannel_TuneCP5down', 'Tbarchannel_erdON',  
+                       #'ttbar_FullyLeptonic_QCDinspired', 'ttbar_FullyLeptonic_Gluonmove', 'ttbar_FullyLeptonic_erdON', 
+                        'ttbar_FullyLeptonic_TuneCP5up', 'ttbar_FullyLeptonic_TuneCP5down',
+                        #'ttbar_SemiLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'ttbar_SemiLeptonic_erdON', 'ttbar_SemiLeptonic_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5down'
+        ]
+        Channels = Channels_commom + Channel_QCD #+Channel_sys
+        Channels = Channel_sys 
 
     elif(MC_Data=="data"):
         if(year=='UL2016preVFP'): Channels = [ 'Run2016B_ver1_'+Lep, 'Run2016B_ver2_'+Lep, 'Run2016C_HIPM_'+Lep, 'Run2016D_HIPM_'+Lep, 'Run2016E_HIPM_'+Lep, 'Run2016F_HIPM_'+Lep]
@@ -53,7 +60,7 @@ if __name__ == '__main__':
 
 
     #
-    Channels = ['DYJetsToLL']
+    #Channels = ['DYJetsToLL']
     print(Channels)
 
     run_commands = []
@@ -66,8 +73,8 @@ if __name__ == '__main__':
         os.makedirs(local_script_output_dir+'log/', exist_ok = True)
 
         if(MC_Data=="mc"):
-            #in_files_path = '/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root'
-            in_files_path = '/eos/home-m/mikumar/RUN2_UL/' + Channel + '/**/**/**/**/*.root'
+            in_files_path = '/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root'
+            #in_files_path = '/eos/home-m/mikumar/RUN2_UL/' + Channel + '/**/**/**/**/*.root'
         elif(MC_Data=="data"):
             in_files_path = '/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/Data_' + Lep + '/' + Channel + '/**/**/**/**/*.root'
 
@@ -104,7 +111,7 @@ if __name__ == '__main__':
     print(run_commands,"\n")
     #print(Hadd_N_createoutfile_cmd[Channel])
 
-    pool = mp.Pool(processes=8)
+    pool = mp.Pool(processes=2)
     pool.map(run_cmd, run_commands)
     del run_commands
     pool.close()
