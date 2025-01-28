@@ -4,11 +4,12 @@ def get_histogram_distciption(Variable="lntopMass"):
 
     if(Variable=="lntopMass"):
             Variable="TMath::Log(topMass)"
-            X_axies="ln(m_{t} / 1 GeV)"
+            X_axies="#zeta"#ln(m_{t} / 1 GeV)"
             Y_axies="Events/(0.0265)"
             lest_bin=math.log(110.0)
-            max_bin=math.log(240.0)
-            Num_bin=15
+            max_bin=math.log(260.0)
+            Num_bin = 30
+            #Num_bin=35
     
     elif(Variable=="topMass"):
             X_axies="m_{t} GeV"
@@ -93,7 +94,7 @@ def get_histogram_distciption(Variable="lntopMass"):
                 max_bin=1.0
                 Num_bin=10
     else:
-        print "variable ", Variable," in not define in Create_Workspace_input_file.py" 
+        print("variable ", Variable," in not define in Create_Workspace_input_file.py" )
         exit()
 
     return Variable,X_axies,Y_axies, lest_bin, max_bin, Num_bin
