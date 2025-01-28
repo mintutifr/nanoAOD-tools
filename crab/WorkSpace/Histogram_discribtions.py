@@ -10,7 +10,16 @@ def get_histogram_distciption(Variable="lntopMass"):
             max_bin=math.log(260.0)
             Num_bin = 30
             #Num_bin=35
-    
+    elif("lntopMass_" in Variable ):
+            Variable = Variable.rsplit("_")[1]
+            Variable="TMath::Log(topMass_"+Variable+")"
+            print(f"{Variable = }")
+            X_axies="#zeta"#ln(m_{t} / 1 GeV)"
+            Y_axies="Events/(0.0265)"
+            lest_bin=math.log(110.0)
+            max_bin=math.log(260.0)
+            Num_bin = 30
+            #Num_bin=35
     elif(Variable=="topMass"):
             X_axies="m_{t} GeV"
             Y_axies="Events/(10)"

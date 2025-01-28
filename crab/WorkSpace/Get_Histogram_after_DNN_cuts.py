@@ -19,7 +19,7 @@ def get_histogram_with_DNN_cut(
                                 DNNcut="(t_ch_CAsi>=0.7)",
                                 Fpaths_DNN_score = {},
                                 Filepaths_with_QCDWeight = {},
-                                Fpaths_ori_with_weight = {}):
+                                Fpaths_sys_samples = {}):
 
     print(type(DNNcut))
     #DNNcut="*(t_ch_CAsi>=0.3)*(t_ch_CAsi"+DNNcut+")"
@@ -61,6 +61,8 @@ def get_histogram_with_DNN_cut(
     for channel in channels:
             print(channel, "  ", Filepaths_with_QCDWeight[channel])
             print(channel, "  ", Fpaths_DNN_score[channel])
+            if Fpaths_sys_samples is not None and channel in Fpaths_sys_samples: 
+                 print(channel, "  ", Fpaths_sys_samples[channel])
             histo_corr.Reset()
             histo_wron.Reset()
             
@@ -68,9 +70,11 @@ def get_histogram_with_DNN_cut(
             MCFile = rt.TFile.Open(Filepaths_with_QCDWeight[channel],'Read')
             intree = MCFile.Get('Events')
             intree.AddFriend ("Events",Fpaths_DNN_score[channel])
+            if Fpaths_sys_samples is not None and channel in Fpaths_sys_samples: 
+                 intree.AddFriend ("Events",Fpaths_sys_samples[channel])
         #intree[-1].Print()
             rt.gROOT.cd()
-            print(MCcut_corr_Assig)
+            print("Projecting :",Variable," with cut : ",MCcut_corr_Assig)
             intree.Project('histo_corr', Variable, MCcut_corr_Assig)
             intree.Project('histo_wron', Variable, MCcut_wron_Assig)
             # Define the dataset

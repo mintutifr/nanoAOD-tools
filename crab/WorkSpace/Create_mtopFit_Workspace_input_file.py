@@ -14,6 +14,7 @@ parser.add_argument('-Alt', '--is_Alt_samp_add ', dest='is_Alt_samp_add',  actio
 parser.add_argument('-weight_sys', '--is_weight_sys ', dest='is_weight_sys_add',  action="store_true", help="Enable this feature if weights depent sys will be added like lepSF, Bweight,puWeightUp")
 parser.add_argument('-samesys', '--is_same_sys_add ', dest='is_same_sys_add',  action="store_true", help="Enable this feature if sys samples from minitree weights will be added")
 parser.add_argument('-colorRecinnect_sys', '--is_color_reconection_sys_add ', dest='is_color_reconection_sys_add',  action="store_true", help="Enable this feature if sys samples for color reconnection need to be added")
+parser.add_argument('-JES_JER_sys', '--is_JES_JER_sys_add', dest='is_JES_JER_sys_add',  action="store_true", help="Enable this feature if sys samples for JES and JER")
 parser.add_argument('-allsys', '--is_all_sys_add ', dest='is_all_sys_add',  action="store_true", help="Enable this feature if sys samples from minitree weights will be added")
 args = parser.parse_args()
 
@@ -46,7 +47,8 @@ isAltSample=args.is_Alt_samp_add
 isSameSys = args.is_same_sys_add
 allsys = args.is_all_sys_add
 weightSys = args.is_weight_sys_add
-colorReconect = args.is_color_reconection_sys_add 
+colorReconect = args.is_color_reconection_sys_add
+JES_JERSys = args.is_JES_JER_sys_add 
 
 if(DNNFit_rescale_file!=None):
     if(os.path.isfile(DNNFit_rescale_file)): print("Reading the Normalization form the "+DNNFit_rescale_file)
@@ -172,7 +174,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
  
 
     channels_Nomi = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L','QCD']
-
+    channels_top_only = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic']
 
     Fpaths_DNN_apply = {}
     File_with_mtwMassFit_weight_Iso = {}
@@ -600,7 +602,6 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
         print()
         print("  ================    weight sys   ==============")
         print()
-        channels_top_only = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic']
         sys_lep_SF = {"el":["SF_Iso_IDUp" "SF_Iso_IDDown", "SF_Iso_TrigUp", "SF_Iso_TrigDown","SF_Veto_IDUp", "SF_Veto_IDDown", "SF_Veto_TrigUp", "SF_Veto_TrigDown"],
                       "mu":["SF_IsoUp", "SF_IsoDown", "SF_Iso_IDUp", "SF_Iso_IDDown", "SF_Iso_TrigUp", "SF_Iso_TrigDown"]
         }
@@ -663,6 +664,36 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
                 hist_to_return.append(EWK_hists_syst.Clone())
                 del EWK_hists_syst
         del sys_bWeight,sys_variation
+    if(allsys or JES_JERSys):
+        sys_JES = ["jesAbsoluteStat"]
+        sys_variation = ["Up","Down"]
+        channel_JES = ["Tchannel"]
+        Fpaths_sys_samples = {}
+        for channel in channel_JES:
+            Fpaths_sys_samples[channel] = "/feynman/home/dphp/mk277705/work/RUN2_UL/Minitree_corr_bweight/JER_JES_Trees/JERJEStree_"+year+"_"+channel+"_2J1T1_"+lep+".root"
+            
+        for sys in sys_JES:
+            for variation_no,variation in enumerate(sys_variation):
+                print("\n #################  ", sys+variation, "############## \n")
+                print(f"{MCcut = }")
+                if(Variable=="TMath::Log(topMass)"): Variable="lntopMass_"+sys+variation
+                hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,channel_JES, MCcut ,QCDcut, Datacut , DNNCut ,File_with_mtwMassFit_weight_Iso,Fpaths_DNN_apply,Fpaths_sys_samples = Fpaths_sys_samples)
+                if("lntopMass_" in Variable): Variable="TMath::Log(topMass)"
+
+                #topSig_hists_syst,topBkg_hists_syst = get_histogram_with_DNN_cut(lep=lep,year=year,Variable=Variable,channels_weight_sys=channel_JES,MCcut = MCcut,DNNCut = DNNCut,hist_sys_name="_"+lep+sys,File_with_mtwMassFit_weight_Iso=File_with_mtwMassFit_weight_Iso,Fpaths_DNN_apply=Fpaths_DNN_apply,top_sig_cons=top_sig_cons,top_bkg_cons=top_bkg_cons)
+                # topSig_hists_syst.SetName("top_sig_1725"+tag+gt_or_lt_tag+sys+variation)
+                # topBkg_hists_syst.SetName("top_bkg_1725"+tag+gt_or_lt_tag+sys+variation)
+                # hist_to_return.append(topSig_hists_syst.Clone())
+                # hist_to_return.append(topBkg_hists_syst.Clone())
+                # del topSig_hists_syst,topBkg_hists_syst
+                # EWK_hists_syst = get_Weight_sys_EWK(lep=lep,year=year,Variable=Variable,channels_weight_sys=channels_EWK_only,MCcut = MCcut_sys_bWeight,DNNCut = DNNCut, hist_sys_name="_"+lep+sys,File_with_mtwMassFit_weight_Iso=File_with_mtwMassFit_weight_Iso,Fpaths_DNN_apply=Fpaths_DNN_apply,EWK_cons=EWK_bkg_cons)
+                # sys_EWK_Integral = EWK_hists_syst.Integral()
+                # EWK_hists_syst = Control_EWK_hist.Clone()
+                # EWK_hists_syst.Scale(sys_EWK_Integral/control_region_EWK_Integral)
+                # EWK_hists_syst.SetName("EWK_bkg"+tag+gt_or_lt_tag+sys)
+                # hist_to_return.append(EWK_hists_syst.Clone())
+                # del EWK_hists_syst
+        del sys_JES,sys_variation
 
     if(allsys or colorReconect):
         print()
