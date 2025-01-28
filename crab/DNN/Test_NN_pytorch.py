@@ -31,13 +31,15 @@ elif(lep=="el"):
         lepton = "Electron"
 print(lepton)
 
+import uproot
 import glob
 import torch
 import pandas as pd
 import numpy as np
-import ROOT as rt
-import root_numpy
-from IPython.display import display
+import awkward as ak
+#import ROOT as rt
+#import root_numpy
+#from IPython.display import display
 from torch.utils.data import TensorDataset, DataLoader
 from torch import nn
 from torch.utils.tensorboard import SummaryWriter
@@ -89,7 +91,7 @@ types = ['train', 'test', 'valid']
 files = []
 
 #ML_DIR='dataframe_saved_with_mtwCut/' ; wightfolder = 'weight_with_mtwCut/' ; MainOutputDir = 'DNN_output_with_mtwCut/'
-ML_DIR='dataframe_saved_without_mtwCut/2J1T/' ; wightfolder = 'weight_without_mtwCut/' ; MainOutputDir = 'DNN_output_without_mtwCut/'
+ML_DIR='/nfs/home/mintu/work/private/Nanoaod/CMSSW_12_1_1/src/Run2UL_Analysis/QCD_SFs/DNN_test_train_dataset/2J1T1/' ; wightfolder = 'weight_without_mtwCut/' ; MainOutputDir = 'DNN_output_without_mtwCut/'
 
 if not os.path.exists(MainOutputDir): os.mkdir(MainOutputDir)
 
@@ -102,7 +104,9 @@ print(files)
 m = nn.LogSoftmax(dim=1)
 for fil in files:
 	print(fil)
-	df_test = rt.RDataFrame("Events",fil).AsNumpy()
+	with uproot.open(fil) as file:
+		tree = file["Events"]
+		df_test = ak.to_numpy(tree.arrays(library="ak"))
 		
 	#display(df_tr_top_signal_new)
 
@@ -116,7 +120,7 @@ for fil in files:
 	tensor_x_te = torch.Tensor(x_te) # transform to torch tensor
 	tensor_y_te = torch.Tensor(y_te)
 
-	device = "cuda:1" if torch.cuda.is_available() else "cpu"
+	device = "cpu"#"cuda:1" if torch.cuda.is_available() else "cpu"
 	print("Using {device} device")
 
 	if torch.cuda.is_available():

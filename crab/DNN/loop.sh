@@ -52,7 +52,7 @@
 #python Train_NN_pytorch_check_droplJetdeepJet.py -y UL2018 -l el
 
 
-source /cvmfs/sft.cern.ch/lcg/views/LCG_100cuda/x86_64-centos7-gcc8-opt/setup.sh
+#source /cvmfs/sft.cern.ch/lcg/views/LCG_100cuda/x86_64-centos7-gcc8-opt/setup.sh
 #python Test_NN_pytorch.py -y ULpreVFP2016 -l mu
 #python Test_NN_pytorch.py -y ULpreVFP2016 -l el
 #python Test_NN_pytorch.py -y ULpostVFP2016 -l mu
@@ -64,14 +64,14 @@ source /cvmfs/sft.cern.ch/lcg/views/LCG_100cuda/x86_64-centos7-gcc8-opt/setup.sh
 
 
 #torch needed
-python Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2016preVFP -s Mc_Nomi -r 2J1T
-python Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2016preVFP -s Mc_Nomi -r 2J1T
-python Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2016postVFP -s Mc_Nomi -r 2J1T
-python Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2016postVFP -s Mc_Nomi -r 2J1T
-python Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2017 -s Mc_Nomi -r 2J1T
-python Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2017 -s Mc_Nomi -r 2J1T
-python Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2018 -s Mc_Nomi -r 2J1T
-python Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2018 -s Mc_Nomi -r 2J1T
+python3 Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2016preVFP -s Mc_Nomi -r 2J1T
+python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2016preVFP -s Mc_Nomi -r 2J1T
+python3 Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2016postVFP -s Mc_Nomi -r 2J1T
+python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2016postVFP -s Mc_Nomi -r 2J1T
+python3 Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2017 -s Mc_Nomi -r 2J1T
+python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2017 -s Mc_Nomi -r 2J1T
+python3 Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2018 -s Mc_Nomi -r 2J1T
+python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2018 -s Mc_Nomi -r 2J1T
 
 #python Apply_NN_pytorch_FullMC_N_Data_droplJetdeepjet.py -l mu -y UL2018 -s Mc_Nomi -r 2J1T
 #python Apply_NN_pytorch_FullMC_N_Data_droplJetdeepjet.py -l el -y UL2018 -s Mc_Nomi -r 2J1T

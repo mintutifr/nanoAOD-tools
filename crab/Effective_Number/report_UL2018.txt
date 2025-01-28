@@ -92,6 +92,14 @@ Unable to load sec.protocol plugin libXrdSecztn.so
 Effective No. Events = 34.02
 totle files Evaluated = 55
 
+---------------------------------------      ttbar_FullyLeptonic_TuneCP5up       ---------------------------------
+sum(file.nevents): 57064000
+ Number of Events :  57.06
+# of files read = 50
+Effective No. Events = 56.6
+Effective No. Events = 56603362
+totle files Evaluated = 59
+
 ---------------------------------------      ttbar_SemiLeptonic_erdON       ---------------------------------
 sum(file.nevents): 198188000
  Number of Events :  198.19
@@ -106,6 +114,15 @@ Unable to load sec.protocol plugin libXrdSecztn.so
 Unable to load sec.protocol plugin libXrdSecztn.so
 Effective No. Events = 34.93
 totle files Evaluated = 38
+
+---------------------------------------      ttbar_FullyLeptonic_TuneCP5down       ---------------------------------
+sum(file.nevents): 59853000
+ Number of Events :  59.85
+# of files read = 50
+
+Effective No. Events = 59.36
+Effective No. Events = 59369410
+totle files Evaluated = 59
 
 ---------------------------------------      ttbar_FullyLeptonic_Gluonmove       ---------------------------------
 sum(file.nevents): 57189000

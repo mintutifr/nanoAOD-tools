@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *
 
 btagSFUL2016preVFP = lambda: btagSFProducer("UL2016preVFP",'deepjet', ['shape_corr'])

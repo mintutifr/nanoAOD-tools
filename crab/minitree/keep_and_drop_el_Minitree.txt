@@ -19,3 +19,5 @@ drop Electron_pfRelIso03_chg
 drop Electron_r9
 drop Electron_cutBased
 keep Jet_btagSF_deepjet*
+
+drop FatJet*

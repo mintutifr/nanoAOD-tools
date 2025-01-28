@@ -3,7 +3,7 @@ import numpy as np
 import scipy.integrate as sp
 import argparse as arg
 import math, sys
-sys.path.insert(1, '/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/stack_plots_before_ML/')
+sys.path.insert(1, '/nfs/home/mintu/work/private/Nanoaod/CMSSW_12_1_1/src/Run2UL_Analysis/QCD_SFs/')
 from QCD_Non_QCD_Normalization import *
 
 parser = arg.ArgumentParser(description='inputs discription')
@@ -79,8 +79,8 @@ for channel in channels:
             EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
             if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
         elif(year=="UL2017"):
-            EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SEVENTEEN/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
+            EvtWeight_Fpaths[channel] = "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/SEVENTEEN/2J1T1/UL2017_"+channel+"_Apply_all_"+lep+".root" 
+            if(channel=="QCD"): QCDAntiISO_Fpath = "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/SEVENTEEN/2J1T1/UL2017_"+channel+"_Apply_all_"+lep+".root"
         elif(year=="UL2018"):
             EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
             if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
@@ -129,8 +129,8 @@ DNNcut_sig = 0.0
 for channel in channels:
         #print( channel," integral_bin ", int(hs[channel].GetNbinsX()))
         if(channel=='Tchannel' or channel=='Tbarchannel'):
-                final_cut_corr_assg =  MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)*(t_ch_CAsi>="+str(DNNcut_sig)+")"
-                final_cut_wrong_assg = MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)*(t_ch_CAsi>="+str(DNNcut_sig)+")"
+                final_cut_corr_assg =  MCcut+"*(bJetpartonFlavour*"+lepton+"Charge==5)*(t_ch_CAsi>="+str(DNNcut_sig)+")"
+                final_cut_wrong_assg = MCcut+"*(bJetpartonFlavour*"+lepton+"Charge!=5)*(t_ch_CAsi>="+str(DNNcut_sig)+")"
                 print(final_cut_corr_assg)
                 print(final_cut_wrong_assg)
                 intree[channel].Project('hs' + channel, Variable, final_cut_corr_assg)
@@ -195,8 +195,8 @@ for DNNcut_bin_num,DNNcut_sig in enumerate(DNN_sig_bins):
         DNNcut_sig_str = "*(t_ch_CAsi>"+str(DNNcut_sig)+")"
         for channel in channels:
                 if(channel=='Tchannel' or channel=='Tbarchannel'):
-                        final_cut_corr_assg =  MCcut+DNN_cut_topbkg+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)"+DNNcut_sig_str
-                        final_cut_wrong_assg = MCcut+DNN_cut_topbkg+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)"+DNNcut_sig_str
+                        final_cut_corr_assg =  MCcut+DNN_cut_topbkg+"*(bJetpartonFlavour*"+lepton+"Charge==5)"+DNNcut_sig_str
+                        final_cut_wrong_assg = MCcut+DNN_cut_topbkg+"*(bJetpartonFlavour*"+lepton+"Charge!=5)"+DNNcut_sig_str
                         print(final_cut_corr_assg)
                         print(final_cut_wrong_assg)
                         intree[channel].Project('hs' + channel, Variable, final_cut_corr_assg)
@@ -291,12 +291,12 @@ Bkg_effi_gr.GetXaxis().SetTitle('DNN responce')
 Bkg_effi_gr.GetYaxis().SetTitle('Bkg Efficiency (%)')
 Bkg_effi_gr.SetLineWidth(4)
 if(eff_cutoff==None):
-        print len(purity)," ",purity
-        print len(DNN_sig_bins)," ",DNN_sig_bins
+        print(len(purity)," ",purity)
+        print(len(DNN_sig_bins)," ",DNN_sig_bins)
         purity_gr = rt.TGraph(len(purity), DNN_sig_bins, purity)
 else:
-        print len(purity), " ",purity[:eff_cutoff]
-        print len(DNN_sig_bins)," ",DNN_sig_bins[:eff_cutoff]
+        print(len(purity), " ",purity[:eff_cutoff])
+        print(len(DNN_sig_bins)," ",DNN_sig_bins[:eff_cutoff])
         purity_gr = rt.TGraph(len(purity[:eff_cutoff]), DNN_sig_bins[:eff_cutoff], purity[:eff_cutoff])
 purity_gr.SetMaximum(100.0)
 purity_gr.SetMinimum(0.0)
