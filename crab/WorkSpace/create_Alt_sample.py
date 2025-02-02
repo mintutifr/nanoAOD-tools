@@ -25,7 +25,7 @@ def alt_hypotheis_sample(lepton,Variable,MCcut,DNNcut_str,weight,weight_file,Evt
     histo_corr = rt.TH1F('histo_corr', Variable, Num_bin,lest_bin,max_bin)
     histo_corr_with_genweight = rt.TH1F('histo_corr_with_genweight', Variable, Num_bin,lest_bin,max_bin)
         
-    Alt_sample_cut = MCcut+DNNcut_str+"*(bjet_partonFlavour*"+lepton+"Charge==5)"
+    Alt_sample_cut = MCcut+DNNcut_str+"*(bJetpartonFlavour*"+lepton+"Charge==5)"
     
     print(Alt_sample_cut)
     for Channel_alt in channels_alt:
