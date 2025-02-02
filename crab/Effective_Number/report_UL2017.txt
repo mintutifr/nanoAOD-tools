@@ -10,13 +10,6 @@ sum(file.nevents): 3.932194e+07
  Number of Events :  3.932194e+07
 
 
----------------------------------------      WJetsToLNu_2J       ---------------------------------
-sum(file.nevents): 9.6032711e+07
- Number of Events :  9.6032711e+07
-
-Effective No. Events =29987312
-totle files Evaluated = 71
-
 ---------------------------------------      QCD_Pt-300To470_MuEnriched       ---------------------------------
 sum(file.nevents): 5.869291e+07
  Number of Events :  5.869291e+07
@@ -582,3 +575,16 @@ Unable to load sec.protocol plugin libXrdSecztn.so
 Effective No. Events = 135.95
 totle files Evaluated = 142
 
+
+---------------------------------------      WJetsToLNu_0J_v2       ---------------------------------
+sum(file.nevents): 160150804
+ Number of Events :  160.15
+Effective No. Events = 128.47
+Effective No. Events = 128470024
+totle files Evaluated = 80
+---------------------------------------      WJetsToLNu_2J       ---------------------------------
+sum(file.nevents): 96032711
+ Number of Events :  96.03
+Effective No. Events = 29.98
+Effective No. Events = 29987306
+totle files Evaluated = 68
