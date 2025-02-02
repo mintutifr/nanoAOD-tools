@@ -5,7 +5,7 @@ config = Configuration()
 
 config.section_("General")
 
-config.General.requestName = 'Tchannel_mtop1695_Tree_UL2016'
+config.General.requestName = 'Tchannel_Nomi_Tree_UL2016'
 
 config.General.transferLogs=True
 config.section_("JobType")
@@ -17,17 +17,17 @@ config.JobType.inputFiles = ['crab_script_NanoGen_skimtree.py','../../scripts/ha
 #config.JobType.sendPythonFolder=True # this configration line has been deprecated
 config.section_("Data")
 
-config.Data.inputDataset = '/ST_t-channel_top_4f_InclusiveDecays_mtop1695_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM'
+config.Data.inputDataset = '/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM'
 
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1
 
-config.Data.outLFNDirBase = '/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN_v9/Tchannel_mtop1695'
+config.Data.outLFNDirBase = '/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN_v9/Tchannel_Nomi'
 
 config.Data.publication = False
 
-config.Data.outputDatasetTag = 'Tree_14_Jul24_MCUL2016_Tchannel_mtop1695_v9'
+config.Data.outputDatasetTag = 'Tree_04_Aug24_MCUL2016_Tchannel_Nomi_v9'
 
 config.section_("Site")
 config.Site.storageSite = 'T3_CH_CERNBOX'
