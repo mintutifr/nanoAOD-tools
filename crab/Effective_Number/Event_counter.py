@@ -26,7 +26,7 @@ if(year == 'UL2016preVFP'):
     Datasets = Datasets_sys_MC_UL2016APV
 if(year == 'UL2016postVFP'):
     from dataset_UL2016postVFP import *
-    Datasets = Datasets_MC_UL2016
+    Datasets = Datasets_sys_MC_UL2016
 if(year == 'UL2017'):
     from dataset_UL2017 import *
     Datasets = Datasets_sys_MC_UL2017
@@ -36,12 +36,12 @@ if(year == 'UL2018'):
 
 #RequestNames = ["QCD_Pt-15To20_MuEnriched", "QCD_Pt-20To30_MuEnriched", "QCD_Pt-30To50_MuEnriched", "QCD_Pt-50To80_MuEnriched", "QCD_Pt-80To120_MuEnriched", "QCD_Pt-120To170_MuEnriched", "QCD_Pt-170To300_MuEnriched", "QCD_Pt-300To470_MuEnriched", "QCD_Pt-470To600_MuEnriched", "QCD_Pt-600To800_MuEnriched", "QCD_Pt-800To1000_MuEnriched", "QCD_Pt-1000_MuEnriched", "QCD_Pt-15to20_EMEnriched", "QCD_Pt-20to30_EMEnriched", "QCD_Pt-30to50_EMEnriched", "QCD_Pt-50to80_EMEnriched", "QCD_Pt-80to120_EMEnriched", "QCD_Pt-120to170_EMEnriched", "QCD_Pt-170to300_EMEnriched", "QCD_Pt-300toInf_EMEnriched", "Tchannel", "Tbarchannel", "tw_top", "tw_antitop", "Schannel", "ttbar_SemiLeptonic", "ttbar_FullyLeptonic", "WJetsToLNu_0J", "WJetsToLNu_1J", "WJetsToLNu_2J", "DYJets", "WWTolnulnu", "WZTo2Q2L", "ZZTo2Q2L"] 
 RequestNames_dataset = Datasets.keys()
-RequestNames = ["DYJetsToLL"]
-print(RequestNames)
+RequestNames = ["ttbar_FullyLeptonic_TuneCP5down"]#["WJetsToLNu_0J_v2","WJetsToLNu_2J"] #["DYJetsToLL"]
+print(RequestNames_dataset)
 print("len(Datasets) = ",len(Datasets))
     
 #proceed=True
-for RequestName in RequestNames:
+for RequestName in RequestNames_dataset:
     #RequestName = RequestNames[i]
     #if("channel" in RequestName): continue
     #print(Datasets.keys())

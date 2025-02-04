@@ -116,7 +116,6 @@ MCsample_Nevent_Xsec = {
 		'Tchannel_TuneCP5up': ['49562044', '134.2'],
 		'Tchannel_TuneCP5down': ['50263415', '134.2'],
 		'Tchannel_erdON': ['51895306', '134.2'],
-
 		'Tbarchannel_Gluonmove': ['25907341', '80.0'],
 		'Tbarchannel_QCDinspired': ['26027022', '80.0'],
 		'Tbarchannel_TuneCP5up': ['24935048', '80.0'],
@@ -178,7 +177,6 @@ MCsample_Nevent_Xsec = {
 		'Tchannel_TuneCP5up' : ['20545577','134.2'],
 		'Tchannel_TuneCP5down' : ['20681075','134.2'],
 		'Tchannel_erdON' : ['21487232','134.2'],
-
 		'Tbarchannel_Gluonmove' : ['10300876','80.0'],
 		'Tbarchannel_QCDinspired' : ['9739578','80.0'],
 		'Tbarchannel_TuneCP5up' : ['10086078','80.0'],
@@ -247,13 +245,13 @@ MCsample_Nevent_Xsec = {
 		'Tbarchannel_TuneCP5down' : ['11334246','80.0'],
 		'Tbarchannel_erdON' : ['11892638','80.0'],
 
-                'ttbar_SemiLeptonic_Gluonmove': ['62185688', '366.3'],
+        'ttbar_SemiLeptonic_Gluonmove': ['62185688', '366.3'],
 		'ttbar_SemiLeptonic_QCDinspired': ['60536335', '366.3'],
 		'ttbar_SemiLeptonic_TuneCP5up': ['57440947', '366.3'],
 		'ttbar_SemiLeptonic_TuneCP5down': ['19270256', '366.3'],
 		'ttbar_SemiLeptonic_erdON': ['54132575', '366.3'],
 
-                'ttbar_FullyLeptonic_Gluonmove': ['17870007', '88.5'],
+        'ttbar_FullyLeptonic_Gluonmove': ['17870007', '88.5'],
 		'ttbar_FullyLeptonic_QCDinspired': ['17974921', '88.5'],
 		'ttbar_FullyLeptonic_TuneCP5up': ['17919866', '88.5'],
 		'ttbar_FullyLeptonic_TuneCP5down': ['18157240', '88.5'],

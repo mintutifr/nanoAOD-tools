@@ -8,7 +8,14 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 
-
+def Check_rediation(Genparts,genpart_ori,ID_ori):
+    radiation = False
+    dauther_id = 999
+    for ID,genpart in enumerate(Genparts):
+        if(genpart.genPartIdxMother == ID_ori and genpart_ori.pdgId==genpart.pdgId):
+            radiation = True
+            dauther_id = ID
+    return radiation, dauther_id
 def mk_safe(fct, *args):
     try:
         return fct(*args)
@@ -20,13 +27,10 @@ def mk_safe(fct, *args):
             raise e
 
 
-class gen_info(Module):
-    def __init__(self):
-        pass
-    def beginJob(self):
-        pass
-    def endJob(self):
-        pass
+class NanoGenModule(Module):
+    def __init__(self,datayear):
+        self.writeHistFile=True
+        self.datayear = datayear
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
         self.out.branch("top_ID","I")
@@ -95,11 +99,13 @@ class gen_info(Module):
         pass
     ##Def of rapidity
     
+
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         # Get the desired arrays from the data
+        print(getattr(event,'event'))
         Genparts = Collection(event,"GenPart")
-        GenPart_pdgId,GenPart_statusFlags,GenPart_pt,GenPart_phi,GenPart_eta,GenPart_mass = ([] for i in range(6))
+        GenPart_pdgId,GenPart_statusFlags,GenPart_pt,GenPart_phi,GenPart_eta,GenPart_mass,GenPart_genPartIdxMother = ([] for i in range(7))
         for genpart in Genparts:
             GenPart_statusFlags.append(genpart.statusFlags)
             GenPart_pt.append(genpart.pt)
@@ -107,28 +113,47 @@ class gen_info(Module):
             GenPart_eta.append(genpart.eta)
             GenPart_mass.append(genpart.mass)
             GenPart_pdgId.append(genpart.pdgId)
+            GenPart_genPartIdxMother.append(genpart.genPartIdxMother)
 
         #print(GenPart_pdgId)
         countTop = 0
         ptop = ROOT.TLorentzVector()
         patop = ROOT.TLorentzVector()
+        pBQuark = ROOT.TLorentzVector()
+        paBQuark = ROOT.TLorentzVector()
+        pWBoson = ROOT.TLorentzVector()
+        paWBoson = ROOT.TLorentzVector()
         ptop_Ngenpart = -99
         patop_Ngenpart = -99
-        for i in range(0, len(GenPart_pdgId)):
-            if GenPart_pdgId[i] == 6:
-                if (((GenPart_statusFlags[i] >> 12) & 0x1) > 0):
+        
+        for topID, genpart in enumerate(Genparts):
+            if(genpart.pdgId == 6 and ((genpart.statusFlags >> 12) & 0x1) > 0):
                     countTop += 1
-                    ptop.SetPtEtaPhiM(GenPart_pt[i], GenPart_eta[i], GenPart_phi[i], GenPart_mass[i])
-                    ptop_Ngenpart = i  
-            if GenPart_pdgId[i] == -6:
-                if (((GenPart_statusFlags[i] >> 12) & 0x1) > 0):
+                    rediation,new_ID = Check_rediation(Genparts,genpart,topID)
+                    print(rediation,new_ID)
+                    ptop.SetPtEtaPhiM(genpart.pt, genpart.eta, genpart.phi, genpart.mass)
+                    print(f'{topID = }', f' {countTop}')
+                    for ID, genpart2 in enumerate(Genparts):
+                        if( topID == genpart2.genPartIdxMother and genpart2.pdgId==6):
+                            topID = ID
+                        
+                            print(ID, genpart2.pdgId, topID )
+                    #for BQuarkID, genpart in enumerate(Genparts):
+                    #    if(genpart.pdgId == 5):
+                    #        print(BQuarkID,genpart.genPartIdxMother)
+                           
+            ID = 0
+            if GenPart_pdgId[ID] == -6:
+                if (((GenPart_statusFlags[ID] >> 12) & 0x1) > 0):
                     countTop += 1
-                    patop.SetPtEtaPhiM(GenPart_pt[i], GenPart_eta[i], GenPart_phi[i], GenPart_mass[i])
-                    patop_Ngenpart = i
+                    patop.SetPtEtaPhiM(GenPart_pt[ID], GenPart_eta[ID], GenPart_phi[ID], GenPart_mass[ID])
+                    patop_Ngenpart = ID
+                    #print(f'{patop_Ngenpart = }',f' {countTop}')
+
         
             # Creating the array with all info needed to pass to the NN model, already normalised
         #print(ptop.M())
-
+        print("-----------------")
         return True
 
-gen_info_Module = lambda : gen_info()    
+NanoGenConstr_ttbar_UL2016 = lambda : NanoGenModule('UL2016')

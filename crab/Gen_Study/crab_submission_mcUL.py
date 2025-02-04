@@ -20,9 +20,9 @@ year   = args.inputs[0]
 date   = datetime.datetime.now()
 
 if(year == 'UL2016'):
-    from dataset_UL2016 import *
+    from dataset_UL2016_v2 import *
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN_v9/"
-    Datasets = Datasets_AltMass_MC_UL2016
+    Datasets = Datasets_AltWidth_MC_UL2016
 
 RequestNames = Datasets.keys()
 print(RequestNames)
@@ -42,7 +42,9 @@ def replacemachine(fileName, sourceText, replaceText):
 
 #print RequestName
 #for i in tqdm(range(0,len(RequestNames))):
-for RequestName in ['Tchannel_mtop1695']:
+RequestNames = ["Tchannel_Nomi"]
+    #"Tbarchannel_wtop1p3","Tbarchannel_Nomi","Tchannel_wtop1p3","Tchannel_Nomi","ttbar_SemiLeptonic_wtop1p3","ttbar_SemiLeptonic_Nomi","ttbar_FullyLeptonic_widthx1p3","ttbar_FullyLeptonic_Nomi"]
+for RequestName in RequestNames:
     #RequestName = RequestNames[i]
     Dataset = Datasets[RequestName]
     print(RequestName, " : ",Dataset)
