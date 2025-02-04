@@ -59,7 +59,7 @@ def get_histogram_with_DNN_cut(
     MCcut_corr_Assig = MCcut+DNNcut+"*(bJetpartonFlavour*"+lepton+"Charge==5)"
     MCcut_wron_Assig = MCcut+DNNcut+"*(bJetpartonFlavour*"+lepton+"Charge!=5)"
     for channel in channels:
-            print(channel, "  ", Filepaths_with_QCDWeight[channel])
+            print("\n",channel, "  ", Filepaths_with_QCDWeight[channel])
             print(channel, "  ", Fpaths_DNN_score[channel])
             if Fpaths_sys_samples is not None and channel in Fpaths_sys_samples: 
                  print(channel, "  ", Fpaths_sys_samples[channel])
@@ -74,7 +74,7 @@ def get_histogram_with_DNN_cut(
                  intree.AddFriend ("Events",Fpaths_sys_samples[channel])
         #intree[-1].Print()
             rt.gROOT.cd()
-            print("Projecting :",Variable," with cut : ",MCcut_corr_Assig)
+            print("\nProjecting :",Variable," with cut : ",MCcut_corr_Assig)
             intree.Project('histo_corr', Variable, MCcut_corr_Assig)
             intree.Project('histo_wron', Variable, MCcut_wron_Assig)
             # Define the dataset
