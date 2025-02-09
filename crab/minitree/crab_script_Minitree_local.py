@@ -74,6 +74,8 @@ elif((dataset in ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel']
 	runmodules = [btvmodule(),minitreemodule(dataset),jmeCorrection(),geninfomodule()]
 elif('Run' in dataset):
 	runmodules =[minitreemodule(),jmeCorrection()]
+elif(('QCDinspired' in dataset) or ('Gluonmove' in dataset) or ('TuneCP5' in dataset) or ('TuneCP5down' in dataset) or ('erdON' in dataset)):
+	runmodules = [btvmodule(),minitreemodule(dataset)]
 else:
 	runmodules = [btvmodule(),minitreemodule(dataset),jmeCorrection()]
 
