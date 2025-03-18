@@ -33,10 +33,10 @@ def process_JER_JES_systematics(
     Fpaths_sys_samples_top, Fpaths_sys_samples_EWK = {}, {}
 
     for channel in channels_top_only:
-        Fpaths_sys_samples_top[channel] = f"/feynman/home/dphp/mk277705/work/RUN2_UL/Minitree_corr_bweight/JER_JES_Trees/JERJEStree_{year}_{channel}_2J1T1_{lep}.root"
+        Fpaths_sys_samples_top[channel] = f"/feynman/home/dphp/mk277705/work/RUN2_UL/Minitree_corr_bweight/JER_JES_Trees/JERtree_{year}_{channel}_2J1T1_{lep}.root"
     
     for channel in channels_EWK_only:
-        Fpaths_sys_samples_EWK[channel] = f"/feynman/home/dphp/mk277705/work/RUN2_UL/Minitree_corr_bweight/JER_JES_Trees/JERJEStree_{year}_{channel}_2J1T1_{lep}.root"
+        Fpaths_sys_samples_EWK[channel] = f"/feynman/home/dphp/mk277705/work/RUN2_UL/Minitree_corr_bweight/JER_JES_Trees/JERtree_{year}_{channel}_2J1T1_{lep}.root"
     
     for sys in sys_JES:
         for variation in sys_variation:
@@ -67,21 +67,21 @@ def process_JER_JES_systematics(
 
             del topSig_hists_JES_syst, topBkg_hists_JES_syst
 
-            # EWK_hists_syst_JES = get_Weight_sys_EWK(
-            #     lep=lep,
-            #     year=year,
-            #     Variable=Variable,
-            #     channels_weight_sys=channels_EWK_only,
-            #     MCcut=MCcut,
-            #     DNNcut=DNNCut,
-            #     hist_sys_name=f"_{lep}{sys}",
-            #     File_with_mtwMassFit_weight_Iso=File_with_mtwMassFit_weight_Iso, 
-            #     Fpaths_DNN_apply=Fpaths_DNN_apply,
-            #     EWK_cons=EWK_bkg_cons,
-            #     Fpaths_sys_samples=Fpaths_sys_samples_EWK
-            # )
-            # sys_EWK_jes_Integral = EWK_hists_syst_JES.Integral()
-            # del EWK_hists_syst_JES
+            signal_EWK_hists_syst_JES = get_Weight_sys_EWK(
+                lep=lep,
+                year=year,
+                Variable=Variable,
+                channels_weight_sys=channels_EWK_only,
+                MCcut = MCcut,
+                DNNcut = "(t_ch_CAsi>=0.7) ", 
+                hist_sys_name=f"_{lep}{sys}",
+                File_with_mtwMassFit_weight_Iso=File_with_mtwMassFit_weight_Iso,
+                Fpaths_DNN_apply=Fpaths_DNN_apply,
+                EWK_cons=EWK_bkg_cons,
+                Fpaths_sys_samples=Fpaths_sys_samples_EWK
+            )
+
+            signal_region_EWK_Integral = signal_EWK_hists_syst_JES.Integral()
 
             Control_EWK_hists_syst_JES = get_Weight_sys_EWK(
                 lep=lep,
@@ -147,21 +147,20 @@ def process_JER_JES_systematics(
 
             del topSig_hists_JER_syst, topBkg_hists_JER_syst
 
-            # EWK_hists_syst_JER = get_Weight_sys_EWK(
-            #     lep=lep,
-            #     year=year,
-            #     Variable=Variable,
-            #     channels_weight_sys=channels_EWK_only,
-            #     MCcut=MCcut,
-            #     DNNcut=DNNCut,
-            #     hist_sys_name=f"_{lep}{sys}",
-            #     File_with_mtwMassFit_weight_Iso=File_with_mtwMassFit_weight_Iso,
-            #     Fpaths_DNN_apply=Fpaths_DNN_apply,
-            #     EWK_cons=EWK_bkg_cons,
-            #     Fpaths_sys_samples=Fpaths_sys_samples_EWK
-            # )
-            # sys_EWK_Integral = EWK_hists_syst_JER.Integral()
-            # del EWK_hists_syst_JER
+            signal_EWK_hists_syst_JER = get_Weight_sys_EWK(
+                lep=lep,
+                year=year,
+                Variable=Variable,
+                channels_weight_sys=channels_EWK_only,
+                MCcut = MCcut,
+                DNNcut = "(t_ch_CAsi>=0.7) ", 
+                hist_sys_name=f"_{lep}{sys}",
+                File_with_mtwMassFit_weight_Iso=File_with_mtwMassFit_weight_Iso,
+                Fpaths_DNN_apply=Fpaths_DNN_apply,
+                EWK_cons=EWK_bkg_cons,
+                Fpaths_sys_samples=Fpaths_sys_samples_EWK
+            )
+            signal_region_EWK_Integral = signal_EWK_hists_syst_JER.Integral()
 
             Control_EWK_hists_syst_JER = get_Weight_sys_EWK(
                 lep=lep,

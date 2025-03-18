@@ -1,5 +1,3 @@
-#from Get_Weighted_Hist_only_sys_EWK import get_Weight_sys_EWK
-#from Get_Weighted_Hist_only_sys_top import get_Weight_sys_top
 from Get_Histogram_after_DNN_cuts import get_histogram_with_DNN_cut
 from Propagate_rate_Uncertainity import propagate_rate_uncertainity
 import ROOT as rt
@@ -11,9 +9,8 @@ def process_hdamp_ISR_FSR_systematics(lep,
                                  DNNCut,
                                  File_with_mtwMassFit_weight_Iso,
                                  Fpaths_DNN_apply,
+                                 Fpaths_orignal_minitree, # these original files are requied since PSweights are not stored while saveing the mtwfit weights
                                  hist_corr_assig,      # dictionary already filled elsewhere (used for adding histograms)
-                                 top_sig_DNNfitrescale,  # scale factor for top signal from DNN fit
-                                 top_bkg_DNNfitrescale,  # scale factor for top background from DNN fit
                                  X_axies,              # x-axis title for the histogram
                                  tag,
                                  gt_or_lt_tag,
@@ -34,7 +31,7 @@ def process_hdamp_ISR_FSR_systematics(lep,
     Alt_same_sys_Name = ["ISRUp", "ISRDown", "FSRUp", "FSRDown"]
 
     channels_same_sys = ['Tchannel', 'Tbarchannel', 'tw_antitop', 'tw_top', 'Schannel', 'ttbar_SemiLeptonic', 'ttbar_FullyLeptonic']
-    
+
     # These cuts are not used here; set as empty strings.
     QCDcut_same_sys = ""
     Datacut_same_sys = ""
@@ -53,9 +50,17 @@ def process_hdamp_ISR_FSR_systematics(lep,
         MCcut_same_sys = MCcut + "*" + sys
         # Get histograms with DNN cut applied for all channels in channels_same_sys
         hists_corr_same_sys, hists_wron_same_sys = get_histogram_with_DNN_cut(
-            lep, year, Variable, channels_same_sys,
-            MCcut_same_sys, QCDcut_same_sys, Datacut_same_sys,
-            DNNCut, File_with_mtwMassFit_weight_Iso, Fpaths_DNN_apply
+            lep = lep, 
+            year = year, 
+            Variable=Variable, 
+            channels = channels_same_sys  ,
+            MCcut=MCcut_same_sys, 
+            QCDcut = QCDcut_same_sys, 
+            Datacut = Datacut_same_sys,
+            DNNcut = DNNCut, 
+            Filepaths_with_QCDWeight = File_with_mtwMassFit_weight_Iso, 
+            Fpaths_DNN_score = Fpaths_DNN_apply,
+            Fpaths_sys_samples = Fpaths_orignal_minitree
         )
 
         for channel_no, channel in enumerate(channels_same_sys):
@@ -71,7 +76,6 @@ def process_hdamp_ISR_FSR_systematics(lep,
         top_sig_same_sys = hist_corr_assig_same_sys["Tchannel"].Clone()
         top_sig_same_sys.Add(hist_corr_assig["Tbarchannel"])
         top_sig_same_sys.Print()
-        top_sig_same_sys.Scale(top_sig_DNNfitrescale)
         top_sig_same_sys.SetLineColor(rt.kRed)
         top_sig_same_sys.SetLineWidth(2)
         top_sig_same_sys.GetXaxis().SetTitle(X_axies)
@@ -84,7 +88,6 @@ def process_hdamp_ISR_FSR_systematics(lep,
         # Process the mis-assigned (wrong) top background for single-top:
         missreco_single_top_bkg_same_sys = hist_wron_assig_same_sys["Tchannel"].Clone()
         missreco_single_top_bkg_same_sys.Add(hist_wron_assig_same_sys["Tbarchannel"])
-        missreco_single_top_bkg_same_sys.Scale(top_sig_DNNfitrescale)
         propagate_rate_uncertainity(missreco_single_top_bkg_same_sys, top_sig_cons)
 
         # Process the top background: start with the "tw_top" channel
@@ -98,10 +101,7 @@ def process_hdamp_ISR_FSR_systematics(lep,
         missrecotop_bkg_same_sys.SetLineColor(rt.kOrange-1)
         missrecotop_bkg_same_sys.SetLineWidth(2)
 
-        top_bkg_same_sys.Scale(top_bkg_DNNfitrescale)
         propagate_rate_uncertainity(top_bkg_same_sys, top_bkg_cons)
-
-        missrecotop_bkg_same_sys.Scale(top_bkg_DNNfitrescale)
         propagate_rate_uncertainity(missrecotop_bkg_same_sys, top_bkg_cons)
 
         # Add the background contribution to the top signal histogram and combine the mis-assigned parts
@@ -114,16 +114,22 @@ def process_hdamp_ISR_FSR_systematics(lep,
     # Clean up the temporary dictionaries
     del hist_corr_assig_same_sys, hist_wron_assig_same_sys
 
+
+
     # ==========================
     # Part 2: hdamp systematics
     # ==========================
+
+
+
     print("\ncreating histogram for the ==hdamp== sys samples from same minitree .............\n")
     
     Alt_same_sys = ["hdamp_Up", "hdamp_Down"]
     Alt_same_sys_Name = ["hdampUp", "hdampDown"]
 
     # For hdamp systematics, the channels are split into two groups:
-    channels = ['Tchannel', 'Tbarchannel', 'tw_antitop', 'tw_top', 'Schannel']
+
+    channels_singale_top = ['Tchannel', 'Tbarchannel', 'tw_antitop', 'tw_top', 'Schannel']
     channels_hdamp_sys = ['ttbar_SemiLeptonic', 'ttbar_FullyLeptonic']
     
     QCDcut_same_sys = ""
@@ -132,8 +138,6 @@ def process_hdamp_ISR_FSR_systematics(lep,
     hist_corr_assig_same_sys = {}
     hist_wron_assig_same_sys = {}
 
-    if Variable == "TMath::Log(topMass)":
-        Variable = "lntopMass"
 
     #for sys in Alt_same_sys:
     for sys, sys_name in zip(Alt_same_sys, Alt_same_sys_Name):
@@ -142,9 +146,16 @@ def process_hdamp_ISR_FSR_systematics(lep,
 
         # First, get histograms for the hdamp channels
         hists_corr_same_sys, hists_wron_same_sys = get_histogram_with_DNN_cut(
-            lep, year, Variable, channels_hdamp_sys,
-            MCcut_same_sys, QCDcut_same_sys, Datacut_same_sys,
-            DNNCut, File_with_mtwMassFit_weight_Iso, Fpaths_DNN_apply
+            lep=lep, 
+            year=year, 
+            Variable=Variable, 
+            channels=channels_hdamp_sys,
+            MCcut=MCcut_same_sys, 
+            QCDcut=QCDcut_same_sys, 
+            Datacut=Datacut_same_sys,
+            DNNcut=DNNCut, 
+            Filepaths_with_QCDWeight=File_with_mtwMassFit_weight_Iso, 
+            Fpaths_DNN_score=Fpaths_DNN_apply
         )
         for channel_no, channel in enumerate(channels_hdamp_sys):
             print(channel, " same sys")
@@ -154,11 +165,18 @@ def process_hdamp_ISR_FSR_systematics(lep,
 
         # Next, get histograms for the remaining channels
         hists_corr_same_sys, hists_wron_same_sys = get_histogram_with_DNN_cut(
-            lep, year, Variable, channels,
-            MCcut, QCDcut_same_sys, Datacut_same_sys,
-            DNNCut, File_with_mtwMassFit_weight_Iso, Fpaths_DNN_apply
+            lep=lep, 
+            year=year, 
+            Variable=Variable, 
+            channels=channels_singale_top,
+            MCcut=MCcut, 
+            QCDcut=QCDcut_same_sys, 
+            Datacut=Datacut_same_sys,
+            DNNcut=DNNCut, 
+            Filepaths_with_QCDWeight=File_with_mtwMassFit_weight_Iso, 
+            Fpaths_DNN_score=Fpaths_DNN_apply
         )
-        for channel_no, channel in enumerate(channels):
+        for channel_no, channel in enumerate(channels_singale_top):
             print(channel, " same sys")
             hist_corr_assig_same_sys[channel] = hists_corr_same_sys[channel_no].Clone()
             hist_wron_assig_same_sys[channel] = hists_wron_same_sys[channel_no].Clone()
@@ -168,7 +186,6 @@ def process_hdamp_ISR_FSR_systematics(lep,
         top_sig_same_sys = hist_corr_assig_same_sys["Tchannel"].Clone()
         top_sig_same_sys.Add(hist_corr_assig["Tbarchannel"])
         top_sig_same_sys.Print()
-        top_sig_same_sys.Scale(top_sig_DNNfitrescale)
         top_sig_same_sys.SetLineColor(rt.kRed)
         top_sig_same_sys.SetLineWidth(2)
         top_sig_same_sys.GetXaxis().SetTitle(X_axies)
@@ -176,12 +193,11 @@ def process_hdamp_ISR_FSR_systematics(lep,
         propagate_rate_uncertainity(top_sig_same_sys, top_sig_cons)
         print("print after uncertinty propagation 3")
         top_sig_same_sys.Print()
-        hist_to_return.append(top_sig_same_sys)
+        
         
         # Process the mis-assigned part for the hdamp systematic
         missreco_single_top_bkg_same_sys = hist_wron_assig_same_sys["Tchannel"].Clone()
         missreco_single_top_bkg_same_sys.Add(hist_wron_assig_same_sys["Tbarchannel"])
-        missreco_single_top_bkg_same_sys.Scale(top_sig_DNNfitrescale)
         propagate_rate_uncertainity(missreco_single_top_bkg_same_sys, top_sig_cons)
 
         # Process the top background for hdamp systematic
@@ -194,13 +210,13 @@ def process_hdamp_ISR_FSR_systematics(lep,
         missrecotop_bkg_same_sys.SetLineColor(rt.kOrange-1)
         missrecotop_bkg_same_sys.SetLineWidth(2)
 
-        top_bkg_same_sys.Scale(top_bkg_DNNfitrescale)
         propagate_rate_uncertainity(top_bkg_same_sys, top_bkg_cons)
 
-        missrecotop_bkg_same_sys.Scale(top_bkg_DNNfitrescale)
         propagate_rate_uncertainity(missrecotop_bkg_same_sys, top_bkg_cons)
 
         top_sig_same_sys.Add(top_bkg_same_sys)
+        hist_to_return.append(top_sig_same_sys)
+
         missrecotop_bkg_same_sys.Add(missreco_single_top_bkg_same_sys)
 
         missrecotop_bkg_same_sys.SetName("top_bkg_1725" + tag + gt_or_lt_tag + sys_name)

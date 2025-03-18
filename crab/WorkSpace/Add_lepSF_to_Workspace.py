@@ -28,8 +28,8 @@ def process_lep_SF_systematics(lep,
 
     print("\n  ================    lepton SF weight systemtics   ==============\n")
     sys_lep_SF = {
-        "el": ["SF_Iso_IDUp", "SF_Iso_IDDown", "SF_Iso_TrigUp", "SF_Iso_TrigDown",
-            "SF_Veto_IDUp", "SF_Veto_IDDown", "SF_Veto_TrigUp", "SF_Veto_TrigDown"],
+        "el": ["SF_Iso_IDUp", "SF_Iso_IDDown", "SF_Iso_TrigUp", "SF_Iso_TrigDown"],
+            #"SF_Veto_IDUp", "SF_Veto_IDDown", "SF_Veto_TrigUp", "SF_Veto_TrigDown"],
         "mu": ["SF_IsoUp", "SF_IsoDown", "SF_Iso_IDUp", "SF_Iso_IDDown", "SF_Iso_TrigUp", "SF_Iso_TrigDown"]
     }
     for sys in sys_lep_SF[lep]:
@@ -58,20 +58,19 @@ def process_lep_SF_systematics(lep,
         hist_to_return.append(topBkg_hists_syst.Clone())
         del topSig_hists_syst, topBkg_hists_syst
 
-        # EWK_hists_syst = get_Weight_sys_EWK(
-        #     lep=lep,
-        #     year=year,
-        #     Variable=Variable,
-        #     channels_weight_sys=channels_EWK_only,
-        #     MCcut=MCcut_sys_lep_SF,
-        #     DNNcut=DNNCut,
-        #     hist_sys_name=f"_{lep}{sys}",
-        #     File_with_mtwMassFit_weight_Iso=File_with_mtwMassFit_weight_Iso,
-        #     Fpaths_DNN_apply=Fpaths_DNN_apply,
-        #     EWK_cons=EWK_bkg_cons
-        # )
-        # sys_EWK_Integral = EWK_hists_syst.Integral()
-        # del EWK_hists_syst
+        signal_EWK_hists_syst = get_Weight_sys_EWK(
+                lep=lep,
+                year=year,
+                Variable=Variable,
+                channels_weight_sys=channels_EWK_only,
+                MCcut = MCcut_sys_lep_SF,
+                DNNcut = "(t_ch_CAsi>=0.7) ", 
+                hist_sys_name=f"_{lep}{sys}",
+                File_with_mtwMassFit_weight_Iso=File_with_mtwMassFit_weight_Iso,
+                Fpaths_DNN_apply=Fpaths_DNN_apply,
+                EWK_cons=EWK_bkg_cons
+        )
+        signal_region_EWK_Integral = signal_EWK_hists_syst.Integral()
 
         Control_EWK_hists_syst = get_Weight_sys_EWK(
                 lep=lep,

@@ -3,6 +3,7 @@ import ROOT as rt
 import numpy as np
 import argparse as arg
 import math
+import numpy as np
 
 #print(args)
 from Histogram_discribtions import get_histogram_distciption
@@ -51,6 +52,12 @@ def get_histogram_with_DNN_cut(
         print("redefine assymatic histogram bins ", BINS)
         histo_corr = rt.TH1F('histo_corr', Variable, len(BINS)-1,np.array(BINS))
         histo_wron = rt.TH1F('histo_wron', Variable, len(BINS)-1,np.array(BINS))
+    if("Log" in Variable and "topMass" in Variable):
+        symatic_BINS = np.linspace(lest_bin,max_bin,Num_bin)
+        Assymatic_BINS = symatic_BINS #np.concatenate(([symatic_BINS[0]], symatic_BINS[3:-3], [symatic_BINS[-1]]))
+        print("redefine assymatic histogram bins ", Assymatic_BINS)
+        histo_corr = rt.TH1F('histo_corr', Variable, len(Assymatic_BINS)-1,Assymatic_BINS)
+        histo_wron = rt.TH1F('histo_wron', Variable, len(Assymatic_BINS)-1,Assymatic_BINS)
     else:
         histo_corr = rt.TH1F('histo_corr', Variable, Num_bin,lest_bin,max_bin)
         histo_wron = rt.TH1F('histo_wron', Variable, Num_bin,lest_bin,max_bin)

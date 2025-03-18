@@ -65,6 +65,20 @@ def process_pileupweight_systematics(lep,
         # sys_EWK_Integral = EWK_hists_syst.Integral()
         # del EWK_hists_syst
 
+        signal_EWK_hist_sys = get_Weight_sys_EWK(
+            lep=lep,
+            year=year,
+            Variable=Variable,
+            channels_weight_sys=channels_EWK_only,
+            MCcut = MCcut_sys_pileup,
+            DNNcut = "(t_ch_CAsi>=0.7) ", 
+            hist_sys_name=f"_{lep}{sys}",
+            File_with_mtwMassFit_weight_Iso=File_with_mtwMassFit_weight_Iso,
+            Fpaths_DNN_apply=Fpaths_DNN_apply,
+            EWK_cons=EWK_bkg_cons
+        )
+        signal_region_EWK_Integral = signal_EWK_hist_sys.Integral()
+
         Control_EWK_hist_sys = get_Weight_sys_EWK(
             lep=lep,
             year=year,
