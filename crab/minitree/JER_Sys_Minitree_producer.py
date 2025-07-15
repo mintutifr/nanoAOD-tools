@@ -38,7 +38,14 @@ def process_channel(args):
 
     tree = root_file.Get("Events")
 
-    sys_names = ['jer']
+    sys_names = ['jesAbsoluteScale','jesFlavorQCD','jesRelativeStatFSR',
+                'jer','jesAbsoluteStat', 'jesAbsoluteMPFBias', 'jesFragmentation', 'jesSinglePionECAL', 'jesSinglePionHCAL',
+                'jesTimePtEta', 'jesRelativeJEREC1', 'jesRelativeJEREC2', 'jesRelativeJERHF', 'jesRelativePtBB',
+                'jesRelativePtEC1', 'jesRelativePtEC2', 'jesRelativePtHF', 'jesRelativeBal', 'jesRelativeSample',
+                'jesRelativeFSR', 'jesRelativeStatEC', 'jesRelativeStatHF', 'jesPileUpDataMC', 'jesPileUpPtRef',
+                'jesPileUpPtBB', 'jesPileUpPtEC1', 'jesPileUpPtEC2', 'jesPileUpPtHF',"jesAbsoluteScale", "jesFlavorQCD", 
+                "jesRelativeStatFSR" ]
+
 
     # Disable all branches initially
     tree.SetBranchStatus("*", 0)
@@ -56,13 +63,11 @@ def process_channel(args):
             required_branches.append(f"Jet_mass_{sys}{direction}")
             required_branches.append(f"MET_T1_pt_{sys}{direction}")
             required_branches.append(f"MET_T1_phi_{sys}{direction}")
-            required_branches.append(f"bWeight_jes_variation_up")
-            required_branches.append(f"bWeight_jes_variation_down")
 
     # Enable the required branches
     for branch in required_branches:
         tree.SetBranchStatus(branch, 1)
-    output_file_name = f"{out_dir}/JERtree_{year}_{channel}_2J1T1_{lep}.root"
+    output_file_name = f"{out_dir}/JERtree_{year}_{channel}_2J1T1_{lep}_v2.root"
     output_file = ROOT.TFile(output_file_name, "RECREATE")
     output_tree = ROOT.TTree("Events", "JER systematics")
 
@@ -77,20 +82,16 @@ def process_channel(args):
             branches[f"topMass{suffix}"] = np.zeros(1, dtype=float)
             branches[f"topEnergy{suffix}"] = np.zeros(1, dtype=float)
 
-            branches[f"bWeight{suffix}"] = np.zeros(1, dtype=float)
-
             output_tree.Branch(f"topPt{suffix}", branches[f"topPt{suffix}"], f"topPt{suffix}/D")
             output_tree.Branch(f"topPhi{suffix}", branches[f"topPhi{suffix}"], f"topPhi{suffix}/D")
             output_tree.Branch(f"topEta{suffix}", branches[f"topEta{suffix}"], f"topEta{suffix}/D")
             output_tree.Branch(f"topMass{suffix}", branches[f"topMass{suffix}"], f"topMass{suffix}/D")
             output_tree.Branch(f"topEnergy{suffix}", branches[f"topEnergy{suffix}"], f"topEnergy{suffix}/D")
-
-            output_tree.Branch(f"bWeight{suffix}", branches[f"bWeight{suffix}"], f"bWeight{suffix}/D")
     
 
     for i, event in enumerate(tree):
         # if i >= 10:  # Process only the first 10 entries
-        #     break
+        #      break
         lepton_pt = event.ElectronPt if "el" in lep else event.MuonPt
         lepton_eta = event.ElectronEta if "el" in lep else event.MuonEta
         lepton_phi = event.ElectronPhi if "el" in lep else event.MuonPhi
@@ -100,11 +101,8 @@ def process_channel(args):
         bJet_eta = getattr(event, f"Jet_eta")[b_jet_idx]
         bJet_phi = getattr(event, f"Jet_phi")[b_jet_idx]
         for isys,sys in enumerate(sys_names):
-            bweight_Up = getattr(event,f"bWeight")
-            bweight_Down = getattr(event,f"bWeight")
             for direction in ['Up', 'Down']:
                 suffix = f"_{sys}{direction}"
-
                 bJet_pt = getattr(event, f"Jet_pt_{sys}{direction}")[b_jet_idx]
                 bJet_mass = getattr(event, f"Jet_mass_{sys}{direction}")[b_jet_idx]
 
@@ -118,8 +116,6 @@ def process_channel(args):
                 branches[f"topEta{suffix}"][0] = top4v.Eta()
                 branches[f"topMass{suffix}"][0] = top4v.M()
                 branches[f"topEnergy{suffix}"][0] = top4v.E()
-
-                branches[f"bWeight{suffix}"][0] = bweight_Up if direction == "Up" else bweight_Down
 
 
         output_tree.Fill()

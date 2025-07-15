@@ -5,7 +5,7 @@ import argparse as arg
 import math, sys
 sys.path.insert(1, '/nfs/home/mintu/work/private/Nanoaod/CMSSW_12_1_1/src/Run2UL_Analysis/QCD_SFs/')
 from QCD_Non_QCD_Normalization import *
-
+from fix_dic import DirYear
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
@@ -36,54 +36,19 @@ print(lepton)
 
 
 
-if(year == "ULpreVFP2016"):
-        if(lep=="mu"):
-                QCDScale_mtwFit = 10991.0
-                NonQCDScale_mtwFit = 231378.0
-        if(lep=="el"):
-                QCDScale_mtwFit = 6892.0
-                NonQCDScale_mtwFit = 146947.0
-if(year == "ULpostVFP2016"):
-        if(lep=="mu"):
-                QCDScale_mtwFit = 11457.0
-                NonQCDScale_mtwFit = 209030.0
-        if(lep=="el"):
-                QCDScale_mtwFit = 12848.0
-                NonQCDScale_mtwFit = 122089.0
-if(year == "UL2017"):
-        if(lep=="mu"):
-                QCDScale_mtwFit = 30145.0
-                NonQCDScale_mtwFit = 472746.0
-        if(lep=="el"):
-                QCDScale_mtwFit = 7509.0
-                NonQCDScale_mtwFit = 315426.0
-
-QCDScale_mtwFit = mtwFit_Scale[year][lep]['QCD'] 
-NonQCDScale_mtwFit = mtwFit_Scale[year][lep]['NonQCD']
-
 #applydir = 'DNN_output_with_mtwCut/Apply_all/' ;  output_fileName = "ROC_TGraphs/Efficiency_info_"+year+"_"+lep+"_with_weights.root"
-applydir = 'DNN_output_without_mtwCut/2J1T1/Apply_all/' ;  output_fileName = "ROC_TGraphs/Efficiency_info_"+year+"_"+lep+"_with_weights.root"
+applydir = ' /nfs/home/common/RUN2_UL/DNN_outputs_without_mtwCut_corr_bweight/'+DirYear[year]+'/2J1T1/Apply_all/' ;  output_fileName = "ROC_TGraphs/Efficiency_info_"+year+"_"+lep+"_with_weights_new_withoutmtwMassCut.root"
 
 channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
-MCcut ="Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)"
-Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
+MCcut ="Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*mtw_weight" #*(mtwMass>50)*mtw_weight_50GeVCut"
+Datacut = "(dR_bJet_lJet>0.4)" #*(mtwMass>50)"
 
 Fpaths = {}
 EvtWeight_Fpaths = {} 
 for channel in channels:
         Fpaths[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
-        if(year=="UL2016preVFP"): 
-            EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_preVFP/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
-        elif(year=="UL2016postVFP"):
-            EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/SIXTEEN_postVFP/minitree/Mc/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
-        elif(year=="UL2017"):
-            EvtWeight_Fpaths[channel] = "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/SEVENTEEN/2J1T1/UL2017_"+channel+"_Apply_all_"+lep+".root" 
-            if(channel=="QCD"): QCDAntiISO_Fpath = "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/SEVENTEEN/2J1T1/UL2017_"+channel+"_Apply_all_"+lep+".root"
-        elif(year=="UL2018"):
-            EvtWeight_Fpaths[channel] = "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/2J1T1/Minitree_"+channel+"_2J1T1_"+lep+".root"
-            if(channel=="QCD"): QCDAntiISO_Fpath =  "/grid_mnt/t3storage3/mikumar/UL_Run2/EIGHTEEN/2J1T0/Minitree_Data"+year+"_2J1T0_"+lep+".root"
+        EvtWeight_Fpaths[channel] = "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"+DirYear[year]+"/2J1T1/"+year+"_"+channel+"_Apply_all_"+lep+".root" 
+        if(channel=="QCD"): QCDAntiISO_Fpath = "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"+DirYear[year]+"/2J1T1/"+year+"_"+channel+"_Apply_all_"+lep+".root"
 
            
 print(Fpaths)
@@ -104,7 +69,7 @@ hs_wrong_assignment = {}
 infiles = {}
 intree = {}
 
-DNN_sig_bins =  np.array([0.0 , 0.05 , 0.1 , 0.15 , 0.2 , 0.25 , 0.3 ,  0.35 , 0.4 , 0.45 , 0.5 , 0.55 , 0.6 , 0.65 , 0.7 , 0.75 ,  0.8 , 0.85 , 0.90, 0.95, 0.97,])
+DNN_sig_bins =  np.array([0.0 , 0.05 , 0.1 , 0.15 , 0.2 , 0.25 , 0.3 ,  0.35 , 0.4 , 0.45 , 0.5 , 0.55 , 0.6 , 0.65 , 0.7 , 0.75 ,  0.8 , 0.85 , 0.90])
 len_DNN_sig_bins = len(DNN_sig_bins)
 n_sel_sig = np.zeros(len_DNN_sig_bins+1)
 n_sel_bkg = np.zeros(len_DNN_sig_bins+1)
@@ -155,26 +120,23 @@ for channel in channels:
 
 print("QCD EVents = ",N_QCD," NonQCD Events = ",N_NonQCD)
 MCSF=0.0 ; QCDSF=0.0;
-MCSF=(NonQCDScale_mtwFit/N_NonQCD)
-QCDSF=(QCDScale_mtwFit/N_QCD) 
-print("QCDSF = ",QCDSF," MCSF = ",MCSF)
 
 Totle_sig = 0
 Totle_bkg = 0
 for channel in channels:
         if(channel == "Tchannel" or channel == "Tbarchannel"):
-            hs[channel].Scale(MCSF)
+            #hs[channel].Scale(MCSF)
             Totle_sig += round(hs[channel].Integral(1, Num_bin),4)
             hs[channel].Reset()
-            hs_wrong_assignment[channel].Scale(MCSF)
+            #hs_wrong_assignment[channel].Scale(MCSF)
             Totle_bkg += round(hs_wrong_assignment[channel].Integral(1, Num_bin),4)
             hs_wrong_assignment[channel].Reset()
         elif(channel == "QCD"):
-            hs[channel].Scale(QCDSF)
+            #hs[channel].Scale(QCDSF)
             Totle_bkg += round(hs[channel].Integral(1, Num_bin),4)
             hs[channel].Reset()
         else:
-            hs[channel].Scale(MCSF)
+            #hs[channel].Scale(MCSF)
             Totle_bkg += round(hs[channel].Integral(1, Num_bin),4)
             hs[channel].Reset()
 
@@ -212,15 +174,15 @@ for DNNcut_bin_num,DNNcut_sig in enumerate(DNN_sig_bins):
                         intree[channel].Project('hs' + channel, Variable, final_cut_data)
                         hs[channel].Print()
                 if(channel == "Tchannel" or channel == "Tbarchannel"):
-                    hs[channel].Scale(MCSF)
+                    #hs[channel].Scale(MCSF)
                     n_sel_sig[DNNcut_bin_num] += round(hs[channel].Integral(1, Num_bin),4)
-                    hs_wrong_assignment[channel].Scale(MCSF)
+                    #hs_wrong_assignment[channel].Scale(MCSF)
                     n_sel_bkg[DNNcut_bin_num] += round(hs_wrong_assignment[channel].Integral(1, Num_bin),4)
                 elif(channel == "QCD"):
-                    hs[channel].Scale(QCDSF)
+                    #hs[channel].Scale(QCDSF)
                     n_sel_bkg[DNNcut_bin_num] += round(hs[channel].Integral(1, Num_bin),4)
                 else:
-                    hs[channel].Scale(MCSF)
+                    #hs[channel].Scale(MCSF)
                     n_sel_bkg[DNNcut_bin_num] += round(hs[channel].Integral(1, Num_bin),4)
                     
         

@@ -38,11 +38,14 @@ def process_channel(args):
 
     tree = root_file.Get("Events")
 
-    sys_names = ['jesAbsoluteStat', 'jesAbsoluteMPFBias', 'jesFragmentation', 'jesSinglePionECAL', 'jesSinglePionHCAL',
-                  'jesTimePtEta', 'jesRelativeJEREC1', 'jesRelativeJEREC2', 'jesRelativeJERHF', 'jesRelativePtBB',
-                  'jesRelativePtEC1', 'jesRelativePtEC2', 'jesRelativePtHF', 'jesRelativeBal', 'jesRelativeSample',
-                  'jesRelativeFSR', 'jesRelativeStatEC', 'jesRelativeStatHF', 'jesPileUpDataMC', 'jesPileUpPtRef',
-                  'jesPileUpPtBB', 'jesPileUpPtEC1', 'jesPileUpPtEC2', 'jesPileUpPtHF']
+    sys_names = ['AbsoluteStat', 'AbsoluteMPFBias', 'Fragmentation', 'SinglePionECAL', 'SinglePionHCAL',
+                  'TimePtEta', 'RelativeJEREC1', 'RelativeJEREC2', 'RelativeJERHF', 'RelativePtBB',
+                  'RelativePtEC1', 'RelativePtEC2', 'RelativePtHF', 'RelativeBal', 'RelativeSample',
+                  'RelativeFSR', 'RelativeStatEC', 'RelativeStatHF', 'PileUpDataMC', 'PileUpPtRef',
+                  'PileUpPtBB', 'PileUpPtEC1', 'PileUpPtEC2', 'PileUpPtHF']
+
+    sys_name2 = ["AbsoluteScale", "FlavorQCD", "RelativeStatFSR" ]
+
 
     # Disable all branches initially
     tree.SetBranchStatus("*", 0)
@@ -56,10 +59,10 @@ def process_channel(args):
     # Add systematic-specific branches
     for sys in sys_names:
         for direction in ['Up', 'Down']:
-            required_branches.append(f"Jet_pt_{sys}{direction}")
-            required_branches.append(f"Jet_mass_{sys}{direction}")
-            required_branches.append(f"MET_T1_pt_{sys}{direction}")
-            required_branches.append(f"MET_T1_phi_{sys}{direction}")
+            required_branches.append(f"Jet_pt_jes{sys}{direction}")
+            required_branches.append(f"Jet_mass_jes{sys}{direction}")
+            required_branches.append(f"MET_T1_pt_jes{sys}{direction}")
+            required_branches.append(f"MET_T1_phi_jes{sys}{direction}")
             required_branches.append(f"bWeight_jes_variation_up")
             required_branches.append(f"bWeight_jes_variation_down")
 
@@ -74,7 +77,7 @@ def process_channel(args):
     branches = {}
     for sys in sys_names:
         for direction in ['Up', 'Down']:
-            suffix = f"_{sys}{direction}"
+            suffix = f"_jes{sys}{direction}"
             branches[f"topPt{suffix}"] = np.zeros(1, dtype=float)
             branches[f"topPhi{suffix}"] = np.zeros(1, dtype=float)
             branches[f"topEta{suffix}"] = np.zeros(1, dtype=float)
@@ -93,8 +96,8 @@ def process_channel(args):
     
 
     for i, event in enumerate(tree):
-        # if i >= 10:  # Process only the first 10 entries
-        #    break
+        if i >= 10:  # Process only the first 10 entries
+           break
         lepton_pt = event.ElectronPt if "el" in lep else event.MuonPt
         lepton_eta = event.ElectronEta if "el" in lep else event.MuonEta
         lepton_phi = event.ElectronPhi if "el" in lep else event.MuonPhi
@@ -107,18 +110,19 @@ def process_channel(args):
             bweight_Up = getattr(event,f"bWeight_jes_variation_up")[isys]
             bweight_Down = getattr(event,f"bWeight_jes_variation_down")[isys]
             for direction in ['Up', 'Down']:
-                suffix = f"_{sys}{direction}"
-
-                bJet_pt = getattr(event, f"Jet_pt_{sys}{direction}")[b_jet_idx]
-                bJet_mass = getattr(event, f"Jet_mass_{sys}{direction}")[b_jet_idx]
+                suffix = f"_jes{sys}{direction}"
+                print(f"{suffix = }")
+                bJet_pt = getattr(event, f"Jet_pt_jes{sys}{direction}")[b_jet_idx]
+                bJet_mass = getattr(event, f"Jet_mass_jes{sys}{direction}")[b_jet_idx]
                 
                 
 
-                met = getattr(event, f"MET_T1_pt_{sys}{direction}")
-                metphi = getattr(event, f"MET_T1_phi_{sys}{direction}")
+                met = getattr(event, f"MET_T1_pt_jes{sys}{direction}")
+                metphi = getattr(event, f"MET_T1_phi_jes{sys}{direction}")
+                
 
                 top4v = calculate_top_quark_momentum(lepton_pt, lepton_eta, lepton_phi, lepton_mass, met, metphi, bJet_mass, bJet_pt, bJet_eta, bJet_phi)
-
+                print(f"{top4v.Pt() = }",f"{top4v.M() = }")
                 branches[f"topPt{suffix}"][0] = top4v.Pt()
                 branches[f"topPhi{suffix}"][0] = top4v.Phi()
                 branches[f"topEta{suffix}"][0] = top4v.Eta()
@@ -150,9 +154,9 @@ if __name__ == "__main__":
     out_dir = args.out_dir
     lep = args.lepton
 
-    channels = ['Tchannel','Tbarchannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','tw_antitop', 
-                'tw_top','Schannel','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WZTo2Q2L', 
-                'ZZTo2Q2L','DYJetsToLL','QCD'] # 'WWTolnulnu',
+    channels = ['Tchannel']#,'Tbarchannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','tw_antitop', 
+                #'tw_top','Schannel','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WZTo2Q2L', 
+                #'ZZTo2Q2L','DYJetsToLL','QCD'] # 'WWTolnulnu',
 
     tasks = [(year, channel, out_dir, lep) for channel in channels]
     with mp.Pool(processes=len(channels)) as pool:

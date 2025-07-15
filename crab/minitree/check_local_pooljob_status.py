@@ -2,6 +2,7 @@ import fileinput, string, sys, os, time, subprocess
 import argparse as arg
 import multiprocessing as mp
 import glob
+import ROOT
 
 def run_cmd(run_command):
     os.system(run_command)
@@ -102,5 +103,13 @@ if __name__ == '__main__':
 	print("runing "+str(len(rerun_list))+ " jobs .... .... ")
 	#pool = mp.Pool(processes=4) 
 	#pool.map(run_cmd, rerun_list)
-	for file in root_file: print(file)
+	for file in root_file: 
+		try:
+			print(f"\nTring to read the file : {file}")
+			root_file = ROOT.TFile.Open(file)
+			tree = root_file.Get("Events")
+			print("Valid file ")
+			#tree.Print()
+		except:
+			print("File can't be read")
 	print("DONE")
