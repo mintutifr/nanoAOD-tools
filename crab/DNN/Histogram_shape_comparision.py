@@ -103,29 +103,6 @@ else:
         exit(0)
 
 
-"""if(year == "ULpreVFP2016"):
-        if(lep=="mu"):
-               QCDScale_mtwFit = 10991.0
-               NonQCDScale_mtwFit = 231378.0
-        if(lep=="el"):
-               QCDScale_mtwFit = 6892.0
-               NonQCDScale_mtwFit = 146947.0
-if(year == "ULpostVFP2016"):
-        if(lep=="mu"):
-               QCDScale_mtwFit = 11457.0
-               NonQCDScale_mtwFit = 209030.0
-        if(lep=="el"):
-               QCDScale_mtwFit = 12848.0
-               NonQCDScale_mtwFit = 122089.0
-if(year == "UL2017"):
-        if(lep=="mu"):
-               QCDScale_mtwFit = 30145.0
-               NonQCDScale_mtwFit = 472746.0
-        if(lep=="el"):
-               QCDScale_mtwFit = 7509.0
-               NonQCDScale_mtwFit = 315426.0"""
-
-
 applydir = '~/work/RUN2_UL/RUN2_UL_DNN_outputs/DNN_output_without_mtwCut/2J1T1/Apply_all/'
 channels = ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
 MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut" 
@@ -174,61 +151,6 @@ hist_ttbar_WAssig.SetLineColor(rt.kCyan+1); hist_ttbar_WAssig.SetLineWidth(2)
 hist_EWK.SetLineColor(rt.kMagenta); hist_EWK.SetLineWidth(2)
 hist_QCD.SetLineColor(rt.kGray); hist_QCD.SetLineWidth(2)
 print
-
-
-# this for loop was for the mtw scale factor but now the weights are stored in tree as "mtw_weight_50GeVCut"
-""""for channel in channels:
-    print(channel)
-    infiles[channel] = rt.TFile.Open(Fpaths[channel], 'READ')
-    intree[channel] = infiles[channel].Get('Events')
-    #if(channel!="QCD"):
-    intree[channel].AddFriend ("Events",EvtWeight_Fpaths[channel])
-    #else: intree[channel].AddFriend ("Events",QCDAntiISO_Fpath)
-
-    rt.gROOT.cd()
-
-
-    hs[channel] = rt.TH1F('hs' + channel, '', Num_bin, lest_bin, max_bin)
-    WAssihs[channel] = rt.TH1F('temphs' + channel, '', Num_bin, lest_bin, max_bin)
-
-    if(channel=='Tchannel' or channel=='Tbarchannel'):
-        # if you need to read from original file
-        # intree[channel].Project('hs' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5#)")
-        # intree[channel].Project('temphs' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)")
-        
-        intree[channel].Project('hs' + channel, Variable,MCcut+"* (bjet_partonFlavour * "+lepton+"Charge == 5)")
-        intree[channel].Project('temphs' + channel, Variable,MCcut+"* (bjet_partonFlavour * "+lepton+"Charge != 5)")
-        hist_tch_CAssig.Add(hs[channel])
-        hist_tch_WAssig.Add(WAssihs[channel])
-    elif(channel=='tw_top'  or channel=='tw_antitop' or channel=='Schannel' or channel=='ttbar_SemiLeptonic' or channel=='ttbar_FullyLeptonic'):
-        #intree[channel].Project('hs' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge==5)")
-        #intree[channel].Project('temphs' + channel, Variable,MCcut+"*(Jet_partonFlavour[nbjet_sel]*"+lepton+"Charge!=5)") 
-
-        
-        intree[channel].Project('hs' + channel, Variable,MCcut+"* (bjet_partonFlavour * "+lepton+"Charge == 5)")
-        intree[channel].Project('temphs' + channel, Variable,MCcut+"* (bjet_partonFlavour * "+lepton+"Charge != 5)")
-        hist_ttbar_CAssig.Add(hs[channel])
-        hist_ttbar_WAssig.Add(WAssihs[channel])
-    elif(channel=='QCD'):
-        intree[channel].Project('hs' + channel, Variable,Datacut)
-        hist_QCD.Add(hs[channel])
-        hist_QCD.Print()
-    else:
-        intree[channel].Project('hs' + channel, Variable,MCcut)
-        hist_EWK.Add(hs[channel])
-
-# this calculation is already included as weights
-#MCSF = NonQCDScale_mtwFit/(hist_tch_CAssig.Integral()+hist_tch_WAssig.Integral()+hist_ttbar_CAssig.Integral()+hist_ttbar_WAssig.Integral()+hist_EWK.Integral())
-#QCDSF = QCDScale_mtwFit/(hist_QCD.Integral())
-#print
-#print("MCSF: ",MCSF," QCDSF: ",QCDSF)
-
-hist_tch_CAssig.Reset()
-hist_tch_WAssig.Reset()
-hist_ttbar_CAssig.Reset()
-hist_ttbar_WAssig.Reset()
-hist_EWK.Reset()
-hist_QCD.Reset()"""
 
 
 for channel in channels:

@@ -17,6 +17,8 @@ def process_systematics_from_diffrent_samples(
                                  gt_or_lt_tag,
                                  top_sig_cons,         # constraint for top signal uncertainty propagation
                                  top_bkg_cons,         # constraint for top background uncertainty propagation
+                                 Nominal_sig_Normalization,
+                                 Nominal_topbkg_Normalization,
                                  hist_to_return        # list to which the resulting histograms will be appended
                                  ):
     """
@@ -113,9 +115,14 @@ def process_systematics_from_diffrent_samples(
         propagate_rate_uncertainity(wron_assig_top_bkg_sys, top_bkg_cons)
 
         corr_assig_sig_sys.Add(corr_assig_top_bkg_sys)
+        corr_assig_sig_sys.Scale(Nominal_sig_Normalization/corr_assig_sig_sys.Integral())
         hist_to_return.append(corr_assig_sig_sys)
 
         wron_assig_top_bkg_sys.Add(wron_assig_top_bkg_sys)
+        print(f'{Nominal_topbkg_Normalization  = }')
+        print(f'sys {wron_assig_top_bkg_sys.Integral()  = }')
+        wron_assig_top_bkg_sys.Scale(Nominal_topbkg_Normalization/wron_assig_top_bkg_sys.Integral())
+        print(f'sys {wron_assig_top_bkg_sys.Integral()  = }')
 
         wron_assig_top_bkg_sys.SetName("top_bkg_1725" + tag + gt_or_lt_tag + sys_name)
         hist_to_return.append(wron_assig_top_bkg_sys)

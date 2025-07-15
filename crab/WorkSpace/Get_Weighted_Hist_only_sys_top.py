@@ -1,3 +1,4 @@
+import ROOT as rt
 from Get_Histogram_after_DNN_cuts import get_histogram_with_DNN_cut
 from Propagate_rate_Uncertainity import propagate_rate_uncertainity
 def get_Weight_sys_top(lep,year,Variable,channels_weight_sys,MCcut,DNNcut,hist_sys_name,File_with_mtwMassFit_weight_Iso,Fpaths_DNN_apply,top_sig_cons,top_bkg_cons,Fpaths_sys_samples=None):
@@ -62,5 +63,53 @@ def get_Weight_sys_top(lep,year,Variable,channels_weight_sys,MCcut,DNNcut,hist_s
 
     top_sig_weight_sys.Print()
     top_bkg_weight_sys.Print()
+
+    #hist_ST_Sig.GetYaxis().SetTitle("Fraction of events")
+    can_ST = rt.TCanvas("can_ST","can_ST",600,600)
+    rt.gStyle.SetOptStat(0)
+    can_ST.cd()
+
+    #pad1 = rt.TPad('pad1', 'pad1', 0.0, 0.18, 1.0, 0.990683)
+    pad1 = rt.TPad('pad1', 'pad1', 0.0, 0.0, 1.0, 1.0)
+    pad1.SetBottomMargin(0.089)
+    pad1.SetTicky()
+    pad1.SetTickx()
+    pad1.Draw()
+    pad1.cd()
+    #hist_ST_Sig.GetYaxis().CenterTitle(1)
+    top_sig_weight_sys.GetYaxis().SetTitleOffset(1.4)
+    top_sig_weight_sys.GetYaxis().SetTitleSize(0.035)
+    top_sig_weight_sys.GetYaxis().SetLabelSize(0.030)
+
+    top_sig_weight_sys.SetLineColor(rt.kRed)
+    top_bkg_weight_sys.SetLineColor(rt.kCyan+1)
+
+    top_sig_weight_sys.Draw("hist")
+    top_bkg_weight_sys.Draw("hist;same")
+
+    can_ST.Update()
+    fix_range = pad1.GetUymax()+0.15
+    top_sig_weight_sys.SetMaximum(fix_range)
+    top_sig_weight_sys.SetMinimum(0.001)
+
+    legend_ST = rt.TLegend(0.60193646, 0.4548435, 0.7593552, 0.79026143)
+    legend_ST.SetBorderSize(1)
+    legend_ST.SetTextSize(0.045)
+    legend_ST.SetLineColor(0)
+    legend_ST.SetLineStyle(1)
+    legend_ST.SetLineWidth(1)
+    legend_ST.SetFillColor(0)
+    legend_ST.SetFillStyle(1001)
+    legend_ST.AddEntry(top_sig_weight_sys, "sig", "l")
+    legend_ST.AddEntry(top_bkg_weight_sys, "bkg", "l")
+    legend_ST.Draw()
+    can_ST.Update()
+
+
+    png = f"./Plots/{Variable}_{lep}_{year}.png"
+    pdf = f"./Plots/{Variable}_{lep}_{year}.pdf"
+    cpp = f"./Plots/{Variable}_{lep}_{year}.C"
+    can_ST.SaveAs(png)
+    can_ST.SaveAs(pdf)
 
     return top_sig_weight_sys,top_bkg_weight_sys

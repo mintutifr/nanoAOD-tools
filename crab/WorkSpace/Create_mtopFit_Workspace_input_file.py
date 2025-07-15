@@ -12,9 +12,11 @@ parser.add_argument('-f', '--fitdignostic_outFile ', dest='fitdignostic_outFile'
 parser.add_argument('-DC', '--DNNCut  ', dest='DNNCut', type=str, nargs=1, help="if need to apply DNNCut [ >=0.0 ,>=0.7]")
 parser.add_argument('-Alt', '--is_Alt_samp_add ', dest='is_Alt_samp_add',  action="store_true", help="Enable this feature if alternate mass and width variation from gen weights will be added")
 parser.add_argument('-lepSF_sys', '--is_lepSF_sys ', dest='is_lepSF_sys_add',  action="store_true", help="Enable this feature if weights depent lepSF sys will be added lepSF")
-parser.add_argument('-puWeight_sys', '--is_puWeight_sys ', dest='is_puWeight_sys_add',  action="store_true", help="Enable this feature if weights depent puWeightUp sys will be added lepSF")
+parser.add_argument('-puWeight_sys', '--is_puWeight_sys ', dest='is_puWeight_sys_add',  action="store_true", help="Enable this feature if weights depent puWeightUp ")
+parser.add_argument('-muR_muF_sys', '--is_muR_muF_sys ', dest='is_muR_muF_sys_add',  action="store_true", help="Enable this feature if weights depent muR muF")
+parser.add_argument('-pdf_sys', '--is_pdf_sys ', dest='is_pdf_sys_add',  action="store_true", help="Enable this feature if weights depent pdf sys")
 parser.add_argument('-Bweight_sys', '--is_Bweight_sys ', dest='is_Bweight_sys_add',  action="store_true", help="Enable this feature if weights depent Bweight sys will be added lepSF")
-parser.add_argument('-colorRecinnect_sys', '--is_color_reconection_sys_add ', dest='is_color_reconection_sys_add',  action="store_true", help="Enable this feature if sys samples for color reconnection need to be added")
+parser.add_argument('-colorReconnect_sys', '--is_color_reconection_sys_add ', dest='is_color_reconection_sys_add',  action="store_true", help="Enable this feature if sys samples for color reconnection need to be added")
 parser.add_argument('-JES_JER_sys', '--is_JES_JER_sys_add', dest='is_JES_JER_sys_add',  action="store_true", help="Enable this feature if sys samples for JES and JER")
 parser.add_argument('-ISR_FSR_sys', '--is_ISR_FSR_sys_add ', dest='is_ISR_FSR_sys_add',  action="store_true", help="Enable this feature if weights depent iSR FSR and hdamp will be added")
 parser.add_argument('-allsys', '--is_all_sys_add ', dest='is_all_sys_add',  action="store_true", help="Enable this feature if sys samples from minitree weights will be added")
@@ -52,6 +54,8 @@ JES_JERSys = args.is_JES_JER_sys_add
 lepSF_sys = args.is_lepSF_sys_add
 Bweight_sys = args.is_Bweight_sys_add
 puWeight_sys = args.is_puWeight_sys_add
+muR_muF_sys = args.is_muR_muF_sys_add
+pdf_sys = args.is_pdf_sys_add
 isr_fsr_sys = args.is_ISR_FSR_sys_add
 
 if(DNNFit_rescale_file!=None):
@@ -122,7 +126,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
             Fpaths_DNN_apply[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
             #File_with_mtwMassFit_weight_Iso[channel] = "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
             #if(channel=="QCD"): Data_AntiIso_Fpath =  "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
-            File_with_mtwMassFit_weight_Iso[channel] = "/feynman/home/dphp/mk277705/work/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
+            File_with_mtwMassFit_weight_Iso[channel] = "/feynman/home/dphp/mk277705/work/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale_new/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
             if(channel=="QCD"): Data_AntiIso_Fpath =  "/feynman/home/dphp/mk277705/work/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
 
     #print File_with_mtwMassFit_weight_Iso
@@ -148,9 +152,9 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     del hists_corr
     del hists_wron
 
-    top_sig_cons = 15.0 ; top_sig_DNNfitrescale = 1.0
-    top_bkg_cons = 6.0  ; top_bkg_DNNfitrescale = 1.0
-    EWK_bkg_cons = 10.0 ; EWK_bkg_DNNfitrescale = 1.0
+    top_sig_cons = 6.0 ; top_sig_DNNfitrescale = 1.0
+    top_bkg_cons = 5.0  ; top_bkg_DNNfitrescale = 1.0
+    EWK_bkg_cons = 6.0 ; EWK_bkg_DNNfitrescale = 1.0
     QCD_bkg_cons = 50.0 ; QCD_bkg_DNNfitrescale = 1.0
 
     if(DNNFit_rescale_file!=None):
@@ -191,6 +195,25 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
 
     missrecotop_bkg_Nomi.Scale(top_bkg_DNNfitrescale)
     propagate_rate_uncertainity(missrecotop_bkg_Nomi, top_bkg_cons)
+
+    # =========== for new constrained defined histograms ==========================#
+    top_sig_cons_hist = top_sig_Nomi
+    top_bkg_cons_hist = top_bkg_Nomi
+
+    missreco_top_sig_cons_hist = missreco_single_top_bkg
+    missreco_top_bkg_cons_hist = missrecotop_bkg_Nomi
+
+    top_sig_total_cons_hist = top_sig_cons_hist.Clone()
+    top_sig_total_cons_hist.Add(top_bkg_cons_hist)
+    missrecotop_bkg_total_cons_hist = missreco_top_sig_cons_hist.Clone()
+    missrecotop_bkg_total_cons_hist.Add(missreco_top_bkg_cons_hist)
+
+    print("\n===================  "+year+"    ========================")
+    print("cons_top_sig            lnN     %.3f     -        - "%((1+(top_sig_cons/100))*(top_sig_cons_hist.Integral()/top_sig_total_cons_hist.Integral())+(1+(top_bkg_cons/100))*(top_bkg_cons_hist.Integral()/top_sig_total_cons_hist.Integral())))
+    print("cons_top_bkg            lnN     -        -        %.3f "%((1+(top_sig_cons/100))*(missreco_top_sig_cons_hist.Integral()/missrecotop_bkg_total_cons_hist.Integral())+(1+(top_bkg_cons/100))*(missreco_top_bkg_cons_hist.Integral()/missrecotop_bkg_total_cons_hist.Integral())))
+    print("===========================================\n")
+
+     # =====================================#
 
     top_sig_Nomi.Add(top_bkg_Nomi)    
     missrecotop_bkg_Nomi.Add(missreco_single_top_bkg)
@@ -428,6 +451,45 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
             channels_EWK_only=channels_EWK_only,
             hist_to_return=hist_to_return
         )
+    if(allsys or muR_muF_sys):
+        from Add_muR_muF_to_Workspace import process_muR_muF_systematics
+        process_muR_muF_systematics(
+            lep=lep,
+            year=year,
+            Variable=Variable,
+            DNNCut=DNNCut,
+            tag=tag,
+            gt_or_lt_tag=gt_or_lt_tag,
+            File_with_mtwMassFit_weight_Iso=File_with_mtwMassFit_weight_Iso,
+            Fpaths_DNN_apply=Fpaths_DNN_apply,
+            signal_region_EWK_Integral=signal_region_EWK_Integral,
+            top_sig_cons=top_sig_cons,
+            top_bkg_cons=top_bkg_cons,
+            EWK_bkg_cons=EWK_bkg_cons,
+            channels_top_only=channels_top_only,
+            channels_EWK_only=channels_EWK_only,
+            hist_to_return=hist_to_return
+        )
+    
+    if(allsys or pdf_sys):
+        from Add_pdf_to_Workspace import process_pdf_systematics
+        process_pdf_systematics(
+            lep=lep,
+            year=year,
+            Variable=Variable,
+            DNNCut=DNNCut,
+            tag=tag,
+            gt_or_lt_tag=gt_or_lt_tag,
+            File_with_mtwMassFit_weight_Iso=File_with_mtwMassFit_weight_Iso,
+            Fpaths_DNN_apply=Fpaths_DNN_apply,
+            signal_region_EWK_Integral=signal_region_EWK_Integral,
+            top_sig_cons=top_sig_cons,
+            top_bkg_cons=top_bkg_cons,
+            EWK_bkg_cons=EWK_bkg_cons,
+            channels_top_only=channels_top_only,
+            channels_EWK_only=channels_EWK_only,
+            hist_to_return=hist_to_return
+        )
 
     #####   bWeight  ######
     if(allsys or Bweight_sys ):
@@ -494,6 +556,8 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
             gt_or_lt_tag=gt_or_lt_tag,
             top_sig_cons=top_sig_cons,
             top_bkg_cons=top_bkg_cons,
+            Nominal_sig_Normalization=top_sig_Nomi.Integral(),
+            Nominal_topbkg_Normalization= missrecotop_bkg_Nomi.Integral(),
             hist_to_return=hist_to_return
         )
 
@@ -505,27 +569,29 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
 if __name__ == "__main__":
     
     
-    if(">=0.7" in DNNCut and DNNFit_rescale_file!=None):
-            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p7_withDNNfit_rebin.root"
-    elif("<0.7" in DNNCut and "0.5" in DNNCut and DNNFit_rescale_file!=None): 
-            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_lt0p7gteq0p5_withDNNfit_rebin.root"
-    elif(">=0.3" in DNNCut and "<0.7" in DNNCut and DNNFit_rescale_file!=None):
-            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_lt0p7gteq0p3_withDNNfit_rebin.root"
-    elif(">=0.3" in DNNCut and DNNFit_rescale_file!=None):
-            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p3_withDNNfit_rebin.root"        
-    elif(">=0.7" in DNNCut and DNNFit_rescale_file==None):
-            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p7_withoutDNNfit_rebin.root"
-    elif("<0.7" in DNNCut and "0.5" in DNNCut and DNNFit_rescale_file==None):
-            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_lt0p7gteq0p5_withoutDNNfit_rebin.root"
-    elif(">=0.3" in DNNCut and "<0.7" in DNNCut and DNNFit_rescale_file==None):
-            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_lt0p7gteq0p3_withoutDNNfit_rebin.root"
-    elif(">=0.3" in DNNCut and DNNFit_rescale_file==None):
-            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p3_withoutDNNfit_rebin.root"
-    elif(">=0.1" in DNNCut and DNNFit_rescale_file==None):
-            output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p1_withoutDNNfit_rebin.root"
-    else:
-        print("something wrong with DNNcut")
-        exit(0)
+   #  if(">=0.7" in DNNCut and DNNFit_rescale_file!=None):
+   #          output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p7_withDNNfit_rebin.root"
+   #  elif("<0.7" in DNNCut and "0.5" in DNNCut and DNNFit_rescale_file!=None): 
+   #          output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_lt0p7gteq0p5_withDNNfit_rebin.root"
+   #  elif(">=0.3" in DNNCut and "<0.7" in DNNCut and DNNFit_rescale_file!=None):
+   #          output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_lt0p7gteq0p3_withDNNfit_rebin.root"
+   #  elif(">=0.3" in DNNCut and DNNFit_rescale_file!=None):
+   #          output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p3_withDNNfit_rebin.root"        
+   #  elif(">=0.7" in DNNCut and DNNFit_rescale_file==None):
+   #          output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p7_withoutDNNfit_rebin.root"
+   #  elif("<0.7" in DNNCut and "0.5" in DNNCut and DNNFit_rescale_file==None):
+   #          output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_lt0p7gteq0p5_withoutDNNfit_rebin.root"
+   #  elif(">=0.3" in DNNCut and "<0.7" in DNNCut and DNNFit_rescale_file==None):
+   #          output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_lt0p7gteq0p3_withoutDNNfit_rebin.root"
+   #  elif(">=0.3" in DNNCut and DNNFit_rescale_file==None):
+   #          output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p3_withoutDNNfit_rebin.root"
+   #  elif(">=0.1" in DNNCut and DNNFit_rescale_file==None):
+   #          output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq0p1_withoutDNNfit_rebin.root"
+   #  else:
+   #      print("something wrong with DNNcut")
+   #      exit(0)
+    DNNCut_vlaue = "0p"+DNNCut.split('.')[1].split(')')[0]
+    output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq"+DNNCut_vlaue+"_withoutDNNfit_rebin.root"
     print(output_file)
     hists = Create_Workspace_input_file(lep,year,Variable) 
     outfile = rt.TFile(output_file,"recreate")

@@ -53,7 +53,7 @@ def get_histogram_with_DNN_cut(
         histo_corr = rt.TH1F('histo_corr', Variable, len(BINS)-1,np.array(BINS))
         histo_wron = rt.TH1F('histo_wron', Variable, len(BINS)-1,np.array(BINS))
     if("Log" in Variable and "topMass" in Variable):
-        symatic_BINS = np.linspace(lest_bin,max_bin,Num_bin)
+        symatic_BINS = np.linspace(lest_bin,max_bin,Num_bin+1)
         Assymatic_BINS = symatic_BINS #np.concatenate(([symatic_BINS[0]], symatic_BINS[3:-3], [symatic_BINS[-1]]))
         print("redefine assymatic histogram bins ", Assymatic_BINS)
         histo_corr = rt.TH1F('histo_corr', Variable, len(Assymatic_BINS)-1,Assymatic_BINS)
@@ -78,7 +78,7 @@ def get_histogram_with_DNN_cut(
             intree = MCFile.Get('Events')
             intree.AddFriend ("Events",Fpaths_DNN_score[channel])
             if Fpaths_sys_samples is not None and channel in Fpaths_sys_samples: 
-                 intree.AddFriend ("Events",Fpaths_sys_samples[channel])
+                intree.AddFriend ("Events",Fpaths_sys_samples[channel])
         #intree[-1].Print()
             rt.gROOT.cd()
             print("\nProjecting :",Variable," with cut : ",MCcut_corr_Assig)
