@@ -335,7 +335,8 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     hist_to_return.append(DDQCD)
     #hist_to_return.append(DDQCD_subs_data) #since analysis is blind
     hist_to_return.append(Total_MC_for_fit)
-    sys_only_for_signal_names = ["ISRUp", "ISRDown", "FSRUp", "FSRDown", "hdampUp", "hdampDown","erdON","Gluonmove","QCDinspired","TuneCP5up","TuneCP5down",'AlphaSUp', 'AlphaSDown','pdfUp', 'pdfDown']
+    sys_only_for_signal_names = ["ISRUp", "ISRDown", "FSRUp", "FSRDown", "hdampUp", "hdampDown","erdON","Gluonmove","QCDinspired","TuneCP5up","TuneCP5down",'AlphaSUp', 'AlphaSDown']
+    sys_only_for_signal_names += [f"pdf{i}" for i in range(1, 101)]
     for sys_for_signal_name in sys_only_for_signal_names:
         hist_copy_EWK = hist_EWK.Clone()
         hist_copy_EWK.SetName("EWK_bkg"+tag+gt_or_lt_tag+sys_for_signal_name)
