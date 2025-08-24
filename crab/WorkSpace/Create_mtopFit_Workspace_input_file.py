@@ -3,7 +3,10 @@ import numpy as np
 #import scipy.integrate as sp
 import argparse as arg
 import math
-import sys, os 
+import sys, os
+from rich.console import Console
+console = Console()
+
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ UL2016preVFP  UL2016postVFP  UL2017  UL2018 ]")
@@ -175,6 +178,7 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     top_sig_Nomi.SetLineColor(rt.kRed);top_sig_Nomi.SetLineWidth(2)
     top_sig_Nomi.GetXaxis().SetTitle(X_axies)
     top_sig_Nomi.SetName("top_sig_1725"+tag+gt_or_lt_tag)
+    console.log(f"Signal corr. recons. hist  {top_sig_Nomi.Integral() = }", style="green")
     propagate_rate_uncertainity(top_sig_Nomi, top_sig_cons)
     print("print after uncertinty propagation 1")
     top_sig_Nomi.Print()
@@ -204,6 +208,8 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     missreco_top_bkg_cons_hist = missrecotop_bkg_Nomi
 
     top_sig_total_cons_hist = top_sig_cons_hist.Clone()
+    top_bkg_cons_hist.Print()
+    console.log(f"top bkg corr. recons. hist  {top_bkg_cons_hist.Integral() = }", style="green")
     top_sig_total_cons_hist.Add(top_bkg_cons_hist)
     missrecotop_bkg_total_cons_hist = missreco_top_sig_cons_hist.Clone()
     missrecotop_bkg_total_cons_hist.Add(missreco_top_bkg_cons_hist)
@@ -591,7 +597,12 @@ if __name__ == "__main__":
    #  else:
    #      print("something wrong with DNNcut")
    #      exit(0)
-    DNNCut_vlaue = "0p"+DNNCut.split('.')[1].split(')')[0]
+
+    if(">=" in DNNCut and "<" in DNNCut):
+        DNNCut_vlaue = "0p"+DNNCut.split('.')[1].split(' ')[0]+"to0p"+DNNCut.split('<0.')[1].split(')')[0]
+    elif(">=" in DNNCut):
+        DNNCut_vlaue = "0p"+DNNCut.split('.')[1].split(')')[0]
+    
     output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq"+DNNCut_vlaue+"_withoutDNNfit_rebin.root"
     print(output_file)
     hists = Create_Workspace_input_file(lep,year,Variable) 
