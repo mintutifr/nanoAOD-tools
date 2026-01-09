@@ -17,13 +17,16 @@ def alt_hypotheis_sample(lepton,Variable,MCcut,DNNcut_str,weight,weight_file,Evt
     Variable,X_axies,Y_axies,lest_bin,max_bin,Num_bin = get_histogram_distciption(Variable)
     if(Variable=="lntopMass"): Variable= "TMath::Log(topMass)"
     channels_alt = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic']
-    
-    
-    
+
     Arr_Hist_Alt_with_genweight = []
     rt.gROOT.cd()
-    histo_corr = rt.TH1F('histo_corr', Variable, Num_bin,lest_bin,max_bin)
-    histo_corr_with_genweight = rt.TH1F('histo_corr_with_genweight', Variable, Num_bin,lest_bin,max_bin)
+
+    if("Log" in Variable and "topMass" in Variable):
+        symatic_BINS = np.linspace(lest_bin,max_bin,Num_bin+1)
+        Assymatic_BINS = symatic_BINS #np.concatenate(([symatic_BINS[0]], symatic_BINS[3:-3], [symatic_BINS[-1]]))
+        print("redefine assymatic histogram bins ", Assymatic_BINS)
+        histo_corr = rt.TH1F('histo_corr', Variable, len(Assymatic_BINS)-1,Assymatic_BINS)
+        histo_corr_with_genweight = rt.TH1F('histo_corr_with_genweight', Variable, len(Assymatic_BINS)-1,Assymatic_BINS)
         
     Alt_sample_cut = MCcut+DNNcut_str+"*(bJetpartonFlavour*"+lepton+"Charge==5)"
     
@@ -76,6 +79,6 @@ def alt_hypotheis_sample(lepton,Variable,MCcut,DNNcut_str,weight,weight_file,Evt
     histo_corr_with_genweight.SetName("hist_"+weight)
     
     del  Arr_Hist_Alt_with_genweight
-    
+
     return histo_corr_with_genweight
     

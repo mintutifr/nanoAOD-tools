@@ -6,8 +6,7 @@ from mlfitNormsToText import *
 parser = arg.ArgumentParser(description='inputs discription')
 parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
 parser.add_argument('-y', '--year  ', dest='year', type=str, nargs=1, help="Year [ ULpreVFP2016  ULpostVFP2016  UL2017  UL2018 ]")
-parser.add_argument('-f1', '--combine_InFile ', dest='combine_InFile', type=str, nargs=1, help="combine Input file which has histogram files i.e /home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_t_ch_CAsi_histograms_UL2017_mu.root")
-parser.add_argument('-f2', '--fitdignostic_outFile ', dest='fitdignostic_outFile', type=str, default=[ None ],nargs=1, help="Fit dignostic output file which has histogram files i.e /home/mikumar/t3store3/workarea/Higgs_Combine/CMSSW_11_3_4/src/Combine_Run2/fitDiagnostics_M1725_DNNfit_UL2017.root")
+#parser.add_argument('-f1', '--combine_InFile ', dest='combine_InFile', type=str, nargs=1, help="combine Input file which has histogram files i.e /home/mikumar/t3store3/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/WorkSpace/Hist_for_workspace/Combine_Input_t_ch_CAsi_histograms_UL2017_mu.root")
 parser.add_argument('-v', '--var  ', dest='var', type=str, nargs=1, help="var [ mtwMass lntopMass topMass t_ch_CAsi]")
 args = parser.parse_args()
 
@@ -117,13 +116,13 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016',Combine_InFile="Hist_for_w
         legend1.SetFillStyle(1001)
         #legend.SetHeader("beNDC", "C")
         
-        legend1.AddEntry(top_sig, "sing. corr. reco. top","f")#"Corr. top ", "f")
-        legend1.AddEntry(top_bkg, "sing. wron. reco. top", "f")#"InCorr. top ", "f")
+        legend1.AddEntry(top_sig, "corr. top","f")#"Corr. top ", "f")
+        legend1.AddEntry(top_bkg, "incorr. top", "f")#"InCorr. top ", "f")
         
         
 
         if(Variable!="lntopMass"):legend2 = rt.TLegend(0.51, 0.70, 0.85, 0.79)
-        else:legend2 = rt.TLegend(0.49, 0.70, 0.83, 0.79)
+        else:legend2 = rt.TLegend(0.49, 0.74, 0.83, 0.79)
         legend2.SetNColumns(2)
         legend2.SetBorderSize(1)
         legend2.SetTextSize(0.045)
@@ -135,7 +134,7 @@ def stack_plot_from_histfile(lep='mu',dataYear='2016',Combine_InFile="Hist_for_w
         #legend.SetHeader("beNDC", "C")
         legend2.AddEntry(QCD_bkg, "QCD", "f")
         legend2.AddEntry(EWK_bkg, "V+Jets, VV", "f")
-        legend2.AddEntry(Data, "Data", "ple1")
+        #legend2.AddEntry(Data, "Data", "ple1")
 
         #legend.AddEntry(hMC,"Total Unc.","f")
 
@@ -283,7 +282,7 @@ if __name__ == "__main__":
 
         lep = args.lepton[0]
         year= args.year[0]
-        Combine_InFile = args.combine_InFile[0]
+        Combine_InFile = f"Hist_for_workspace/Combine_Input_lntopMass_histograms_{year}_{lep}_gteq0p70_withoutDNNfit_rebin.root"
         Variable = args.var[0]
         stack_plot_from_histfile(lep,year,Combine_InFile,Variable)
 
