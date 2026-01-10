@@ -15,6 +15,7 @@ if args.inputs[0] not in ['UL2016_Alt_width', 'UL2016_Alt_mass']:
     print('Error: Incorrect choice of year, use -h for help')
     exit()
 
+print("hi")
 print("year = ",args.inputs[0])
 year   = args.inputs[0]
 date   = datetime.datetime.now()
