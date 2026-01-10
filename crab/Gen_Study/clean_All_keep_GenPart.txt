@@ -74,3 +74,9 @@ keep    top_eta_gen_lastcopy
 keep    top_ID_lastcopy
 keep    top_phi_gen_lastcopy
 keep    top_PDG_lastcopy
+
+keep    atop_mass_gen_lastcopy
+keep    atop_pt_gen_lastcopy
+keep    atop_eta_gen_lastcopy
+keep    atop_ID_lastcopy
+keep    atop_phi_gen_lastcopy
