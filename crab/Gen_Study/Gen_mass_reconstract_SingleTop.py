@@ -492,3 +492,4 @@ class NanoGenModule(Module):
         return True
 
 NanoGenConstr_UL2016_Alt_mass = lambda : NanoGenModule('UL2016')
+NanoGenConstr_UL2016_Alt_width = lambda : NanoGenModule('UL2016')

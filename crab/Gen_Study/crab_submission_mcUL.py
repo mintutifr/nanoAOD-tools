@@ -3,7 +3,7 @@ import argparse as arg
 from tqdm import tqdm
 
 parser = arg.ArgumentParser(description='inputs discription')
-parser.add_argument('-y', '--year', dest='inputs', type=str, nargs=1, help="Year [ UL2016 ]")
+parser.add_argument('-y', '--year', dest='inputs', type=str, nargs=1, help="Year [ UL2016_Alt_width, UL2016_Alt_mass  ]")
 args = parser.parse_args()
 
 
@@ -11,7 +11,7 @@ if args.inputs == None:
         print("USAGE: %s [-h] [-y <Data year>]"%(sys.argv [0]))
         sys.exit (1)
 
-if args.inputs[0] not in ['UL2016']:
+if args.inputs[0] not in ['UL2016_Alt_width', 'UL2016_Alt_mass']:
     print('Error: Incorrect choice of year, use -h for help')
     exit()
 
@@ -19,13 +19,18 @@ print("year = ",args.inputs[0])
 year   = args.inputs[0]
 date   = datetime.datetime.now()
 
-if(year == 'UL2016'):
+if(year == 'UL2016_Alt_width'):
     from dataset_UL2016_v2 import *
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN_v9/"
     Datasets = Datasets_AltWidth_MC_UL2016
 
-RequestNames = Datasets.keys()
-print(RequestNames)
+if(year == 'UL2016_Alt_mass'):
+    from dataset_UL2016_v2 import *
+    outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Mc_NANOGEN_v9/"
+    Datasets = Datasets_AltMass_MC_UL2016
+
+RequestNames = list(Datasets.keys())
+print(f'{RequestNames = }')
 print("len(Datasets) = ",len(Datasets))
 
 cfgfile = "crab_cfg_NanoGen_skimTree.py"
@@ -41,11 +46,11 @@ def replacemachine(fileName, sourceText, replaceText):
     ##################################################################
 
 #print RequestName
-#for i in tqdm(range(0,len(RequestNames))):
-RequestNames = ["Tchannel_Nomi"]
+for i in tqdm(range(0,1)):#len(RequestNames))):
+#RequestNames = ["Tchannel_Nomi"]
     #"Tbarchannel_wtop1p3","Tbarchannel_Nomi","Tchannel_wtop1p3","Tchannel_Nomi","ttbar_SemiLeptonic_wtop1p3","ttbar_SemiLeptonic_Nomi","ttbar_FullyLeptonic_widthx1p3","ttbar_FullyLeptonic_Nomi"]
-for RequestName in RequestNames:
-    #RequestName = RequestNames[i]
+#for RequestName in RequestNames:
+    RequestName = RequestNames[i]
     Dataset = Datasets[RequestName]
     print(RequestName, " : ",Dataset)
     update_RequestName = "config.General.requestName = '"+RequestName+"_Tree_"+year+"'\n" 
@@ -81,5 +86,5 @@ for RequestName in RequestNames:
 
 
     print("DONE -----",RequestName,"--------------------------------------------------------------------------------------------")
-    time.sleep(10) 
+    #time.sleep(10) 
     
