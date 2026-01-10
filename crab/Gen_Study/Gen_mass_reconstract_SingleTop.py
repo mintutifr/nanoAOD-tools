@@ -26,28 +26,25 @@ class NanoGenModule(Module):
         self.out = wrappedOutputTree
         self.out.branch("top_ID","I")
         self.out.branch("top_ID_lastcopy","I")
-        self.out.branch("atop_ID_lastcopy","I")
+
 
         self.out.branch("top_is_lastcopy","F")
 
+        self.out.branch("top_PDG_lastcopy","F")
         self.out.branch("top_mass_gen_lastcopy", "F")
-        self.out.branch("atop_mass_gen_lastcopy", "F")
         self.out.branch("top_mass_gen", "F")
         self.out.branch("top_mass_gen_reco", "F")
 
         self.out.branch("top_pt_gen", "F")
         self.out.branch("top_pt_gen_lastcopy", "F")
-        self.out.branch("atop_pt_gen_lastcopy", "F")
         self.out.branch("top_pt_gen_reco", "F")
 
         self.out.branch("top_eta_gen", "F")
         self.out.branch("top_eta_gen_lastcopy", "F")
-        self.out.branch("atop_eta_gen_lastcopy", "F")
         self.out.branch("top_eta_gen_reco", "F")
 
         self.out.branch("top_phi_gen", "F")
         self.out.branch("top_phi_gen_lastcopy", "F")
-        self.out.branch("atop_phi_gen_lastcopy", "F")
         self.out.branch("top_phi_gen_reco", "F")
 
         self.out.branch("tau_to_el_flag", "F")
@@ -131,23 +128,6 @@ class NanoGenModule(Module):
         genpartID = -1
         for genpart in Genparts:
             genpartID = genpartID+1
-
-            if genpart.pdgId == 6:
-                if (((GenPart_statusFlags[i] >> 13) & 0x1) > 0): # is last copy
-                    top_ID_lastcopy = genpartID
-                    top_pt_gen_lastcopy = genpart.pt
-                    top_eta_gen_lastcopy = genpart.eta
-                    top_phi_gen_lastcopy = genpart.phi
-                    top_mass_gen_lastcopy = genpart.mass
-
-            if genpart.pdgId == -6:
-                if (((GenPart_statusFlags[i] >> 13) & 0x1) > 0):
-                    atop_ID_lastcopy = genpartID
-                    atop_pt_gen_lastcopy = genpart.pt
-                    atop_eta_gen_lastcopy = genpart.eta
-                    atop_phi_gen_lastcopy = genpart.phi
-                    atop_mass_gen_lastcopy = genpart.mass
-
             if((abs(genpart.pdgId)==11 or abs(genpart.pdgId)==13) or abs(genpart.pdgId)==5 or (abs(genpart.pdgId)==12 or abs(genpart.pdgId)==14)):
                 motheridx =  genpart.genPartIdxMother
                 PDG = genpart.pdgId
@@ -285,16 +265,14 @@ class NanoGenModule(Module):
                         if(abs(GmotherPDG)==6): #we dont want to add the top quarks which give lepton in final state which leptons mother is not W boson
                              top_from_nuetrino.append(Gmotheridx)
 
-        self.out.fillBranch("top_mass_gen_lastcopy", top_mass_gen_lastcopy)
-        self.out.fillBranch("atop_mass_gen_lastcopy", atop_mass_gen_lastcopy)
-        self.out.fillBranch("top_pt_gen_lastcopy", top_pt_gen_lastcopy)
-        self.out.fillBranch("atop_pt_gen_lastcopy", atop_pt_gen_lastcopy)
-        self.out.fillBranch("top_eta_gen_lastcopy", top_eta_gen_lastcopy)
-        self.out.fillBranch("atop_eta_gen_lastcopy", atop_eta_gen_lastcopy)
-        self.out.fillBranch("top_phi_gen_lastcopy", top_phi_gen_lastcopy)
-        self.out.fillBranch("atop_phi_gen_lastcopy", atop_phi_gen_lastcopy)
-        self.out.fillBranch("top_ID_lastcopy", top_ID_lastcopy)
-        self.out.fillBranch("atop_ID_lastcopy", atop_ID_lastcopy)
+            if abs(genpart.pdgId) == 6:
+                if (((genpart.statusFlags >> 13) & 0x1) > 0): # is last copy
+                    self.out.fillBranch("top_PDG_lastcopy",genpart.pdgId)
+                    self.out.fillBranch("top_mass_gen_lastcopy", genpart.mass)
+                    self.out.fillBranch("top_pt_gen_lastcopy", genpart.pt)
+                    self.out.fillBranch("top_eta_gen_lastcopy", genpart.eta)
+                    self.out.fillBranch("top_ID_lastcopy", genpartID)
+                    self.out.fillBranch("top_phi_gen_lastcopy", genpart.phi)
 
         if(len(top_from_lepton)==1 and len(top_from_bquark)==1):
             if(top_from_lepton[0]==top_from_bquark[0] and top_from_lepton[0]==top_from_nuetrino[0]):

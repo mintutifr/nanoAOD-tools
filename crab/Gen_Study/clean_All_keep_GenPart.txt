@@ -67,3 +67,10 @@ keep    bpart_pt_gen
 keep    bpart_eta_gen
 keep    bpart_phi_gen
 keep    minDR_bpart_bjet
+
+keep    top_mass_gen_lastcopy
+keep    top_pt_gen_lastcopy
+keep    top_eta_gen_lastcopy
+keep    top_ID_lastcopy
+keep    top_phi_gen_lastcopy
+keep    top_PDG_lastcopy
