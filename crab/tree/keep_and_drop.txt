@@ -18,6 +18,8 @@ keep HLT_Ele32_eta2p1_WPTight_Gsf*
 keep HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*
 keep nTrigObj*
 keep TrigObj_*
+keep HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ
+keep HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL
 
 keep HLT_IsoMu20*
 keep HLT_IsoTkMu20*
@@ -27,6 +29,12 @@ keep HLT_IsoMu24_eta2p1*
 keep HLT_IsoMu27*
 keep HLT_IsoTkMu27*
 keep HLT_IsoMu30*
+
+#keep HLT_IsoMu24_v*
+#keep HLT_Ele32_WPTight_Gsf_v*
+keep HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ
+keep HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL
+keep HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ
 
 keep SV*
 
@@ -89,6 +97,19 @@ keep Jet_area
 keep Jet_bRegCorr
 keep Jet_bRegRes
 
+# Run 3 b-tagging branches to keep
+keep Jet_btagRobustParTAK4B
+keep Jet_btagRobustParTAK4CvL
+keep Jet_btagRobustParTAK4CvB
+keep Jet_btagRobustParTAK4QG
+
+# Optional: ParticleNet branches (alternative Run 3 tagger)
+keep Jet_btagPNetB
+keep Jet_btagPNetCvL
+keep Jet_btagPNetCvB
+keep Jet_btagPNetQvG
+keep Jet_btagPNetTauVJet
+
 
 keep nFatJet
 keep FatJet_pt
@@ -140,6 +161,16 @@ keep Electron_EtaSC
 
 keep puWeight*
 keep LHEWeight*
+
+keep HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8
+keep genWeight
+keep Rho_fixedGridRhoFastjetAll
+keep Rho_fixedGridRhoFastjetCentral
+keep Rho_fixedGridRhoAll
+keep Rho_fixedGridRhoFastjetCentralCalo
+keep Rho_fixedGridRhoFastjetCentralChargedPileUp
+keep Rho_fixedGridRhoFastjetCentralNeutral
+
 
 #------------------related to jme calculation--------------#
 keep RawMET*

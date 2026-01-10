@@ -15,7 +15,7 @@ if args.inputs == None:
         print "USAGE: %s [-h] [-y <Data year>]"%(sys.argv [0])
         sys.exit (1)
 
-if args.inputs[0] not in ['UL2016preVFP', 'UL2016postVFP','UL2017','UL2018']:
+if args.inputs[0] not in ['UL2016preVFP', 'UL2016postVFP','UL2017','UL2018',,'UL2022EEpre']:
     print('Error: Incorrect choice of year, use -h for help')
     exit()
 if args.samples[0] not in ['Mc', 'Data']:
@@ -48,6 +48,12 @@ if(year == 'UL2017'):
     if sample=="Mc" : Datasets = Datasets_MC_UL2017
     elif sample=="Data" and lep=="mu" : Datasets = Datasets_SingleMuon_data_UL2017
     elif sample=="Data" and lep=="el" : Datasets = Datasets_SingleElectron_data_UL2017
+
+if(year == 'UL2022EEpre'):
+    outputDir = "/store/user/lbhatt/crab/Data_"+lep+"/"
+    from dataset_UL2022EEpre import *
+    if(lep=="mu"):
+        Datasets = Datasets_Muon_data_2022
 
 RequestNames = Datasets.keys()
 print "len(Datasets) = ",len(Datasets)

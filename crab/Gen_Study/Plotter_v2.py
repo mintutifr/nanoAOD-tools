@@ -27,11 +27,11 @@ def get_hitogram_from_tree(DIR,input_file,treename,h1,Var,cut):
         Filename = R.TFile(DIR+input_file+".root","Read")
 	#Get the tree from the file 
         tree = Filename.Get(treename)
-	R.gROOT.cd()
-	#project histogram
-	tree.Project(h1.GetName(),Var,cut)
-	#h1.Draw()
-	return h1
+        R.gROOT.cd()
+    	#project histogram
+        tree.Project(h1.GetName(),Var,cut)
+    	#h1.Draw()
+        return h1
 def Breitwignerfit(h,input_file):
 	#define canvas
 	can_Breitwigner = R.TCanvas("can_bw","can_bw") 
@@ -45,26 +45,26 @@ def Breitwignerfit(h,input_file):
 	#define roodata hist
 	data = R.RooDataHist("data","data",R.RooArgList(mtop),h)
 	#define fame to plot
-        frame = mtop.frame(R.RooFit.Bins(nbins),R.RooFit.Title("mtop"))
+    frame = mtop.frame(R.RooFit.Bins(nbins),R.RooFit.Title("mtop"))
 	#plot data on fame
-        data.plotOn(frame,R.RooFit.MarkerSize(0.9) )
+    data.plotOn(frame,R.RooFit.MarkerSize(0.9) )
 	#deine papameter to  dfinet the breit wigner shape
 	mean = R.RooRealVar("mean","mean",172.5,lowBin,maxBin)
-        width = R.RooRealVar("width","width",1.31,0.1,5)
+    width = R.RooRealVar("width","width",1.31,0.1,5)
 	#deine pdf
-        BW = R.RooBreitWigner ("BW","BW",mtop,mean,width)
+    BW = R.RooBreitWigner ("BW","BW",mtop,mean,width)
 	#model = BW.asTF(R.RooArgList(mtop))
 	#define Normalization
-        Norm = R.RooRealVar("Norm","Norm",2000,1,100000000)
+    Norm = R.RooRealVar("Norm","Norm",2000,1,100000000)
         #define model
-        model = R.RooAddPdf("model","Total Model",R.RooArgList(BW),R.RooArgList(Norm))
+    model = R.RooAddPdf("model","Total Model",R.RooArgList(BW),R.RooArgList(Norm))
 
         #RooFitResult* res;
-        res = model.fitTo(data, R.RooFit.SumW2Error(R.kTRUE),R.RooFit.Save())
+    res = model.fitTo(data, R.RooFit.SumW2Error(R.kTRUE),R.RooFit.Save())
 	#res = hist.Fit(model.GetName(), 'ILS', '')
         #draw fit on frame
-        model.plotOn(frame, R.RooFit.Name("BW"))
-        model.paramOn(frame,R.RooFit.Layout(0.55, 0.85, 0.85))
+    model.plotOn(frame, R.RooFit.Name("BW"))
+    model.paramOn(frame,R.RooFit.Layout(0.55, 0.85, 0.85))
 
 	#norm = BW.createIntegral(R.RooArgSet(mtop))#,R.RooFit.Range("signal"))
 	#norm = h.Integral()/BW.createIntegral(R.RooArgSet(mtop)).getValV()
@@ -74,13 +74,13 @@ def Breitwignerfit(h,input_file):
 	#print norm.getVal() ," ---------------------------------------------------"
 	#print Norm.getVal() ," ---------------------------------------------------"
 	pad1 = R.TPad('pad1', 'pad1', 0.0, 0.195259, 1.0, 0.990683)
-        pad1.SetBottomMargin(0.089)
-        pad1.SetTicky()
-        pad1.SetTickx()
+    pad1.SetBottomMargin(0.089)
+    pad1.SetTicky()
+    pad1.SetTickx()
 	pad1.Draw()
 	pad1.cd()
 
-        frame.Draw()
+    frame.Draw()
 	can_Breitwigner.Update()
 	#convert fit pdf into histogram
 	#fitModel_hist= BW.createHistogram("fitModel",mtop, R.RooFit.Binning(25))
@@ -126,26 +126,26 @@ def Breitwignerfit(h,input_file):
 	#ratio.SetStats(R.kFALSE)
 	gr_mu.SetMarkerStyle(20)
 	gr_mu.GetYaxis().SetTitle("Fit/MC")
-        gr_mu.GetXaxis().SetTitle("m_{t}")
-        gr_mu.GetYaxis().CenterTitle(1)
-        gr_mu.GetYaxis().SetTitleOffset(0.3)
-        gr_mu.GetYaxis().SetTitleSize(0.15)
-        gr_mu.GetXaxis().SetTitleSize(0.15)
-        gr_mu.GetYaxis().SetLabelSize(0.1)
-        gr_mu.GetXaxis().SetLabelSize(0.15)
+    gr_mu.GetXaxis().SetTitle("m_{t}")
+    gr_mu.GetYaxis().CenterTitle(1)
+    gr_mu.GetYaxis().SetTitleOffset(0.3)
+    gr_mu.GetYaxis().SetTitleSize(0.15)
+    gr_mu.GetXaxis().SetTitleSize(0.15)
+    gr_mu.GetYaxis().SetLabelSize(0.1)
+    gr_mu.GetXaxis().SetLabelSize(0.15)
 	gr_mu.GetXaxis().SetRangeUser(lowBin,maxBin)
 	gr_mu.SetMaximum(1.35)
-        gr_mu.SetMinimum(0.65)
-        c = gr_mu.GetYaxis()
-        c.SetNdivisions(4)
-        c.SetTickSize(0.01)
-        d = gr_mu.GetXaxis()
-        d.SetNdivisions(20)
-        d.SetTickSize(0.03)
+    gr_mu.SetMinimum(0.65)
+    c = gr_mu.GetYaxis()
+    c.SetNdivisions(4)
+    c.SetTickSize(0.01)
+    d = gr_mu.GetXaxis()
+    d.SetNdivisions(20)
+    d.SetTickSize(0.03)
 	
 	gr_mu.Draw("APE1")
 	can_Breitwigner.Update()
-        can_Breitwigner.Draw()
+    an_Breitwigner.Draw()
 	can_Breitwigner.Print("Plots/BW_fit_"+input_file+".png")
 	raw_input()
         #return res; 

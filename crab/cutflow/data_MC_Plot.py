@@ -176,7 +176,7 @@ legend.AddEntry(hists["QCD"], "QCD", "f")
 legend.AddEntry(hists["DYJets"], "Z+Jets", "f")
 legend.Draw()
 
-CMSpreliminary = getCMSInt_tag(0.30, 0.815, 0.365, 0.855)
+CMSpreliminary = getCMSPre_tag(0.40, 0.815, 0.365, 0.855)
 CMSpreliminary.Draw("same")
 lepjet_tag = leptonjet_tag(Lep,0.24, 0.765, 0.35, 0.795)
 lepjet_tag.Draw("same")
@@ -270,5 +270,5 @@ band.Draw("E2")
 Ratio_hist.Draw("PE1SAME")
 
 
-canvas.SaveAs("Plots/stack_plot_cutflow_"+year+"_"+Lep+".png")
+#canvas.SaveAs("Plots/stack_plot_cutflow_"+year+"_"+Lep+".png")
 canvas.SaveAs("Plots/stack_plot_cutflow_"+year+"_"+Lep+".pdf")
