@@ -46,7 +46,7 @@ def replacemachine(fileName, sourceText, replaceText):
     ##################################################################
 
 #print RequestName
-for i in tqdm(range(0,1)):#len(RequestNames))):
+for i in tqdm(range(0,len(RequestNames))):
 #RequestNames = ["Tchannel_Nomi"]
     #"Tbarchannel_wtop1p3","Tbarchannel_Nomi","Tchannel_wtop1p3","Tchannel_Nomi","ttbar_SemiLeptonic_wtop1p3","ttbar_SemiLeptonic_Nomi","ttbar_FullyLeptonic_widthx1p3","ttbar_FullyLeptonic_Nomi"]
 #for RequestName in RequestNames:
@@ -57,10 +57,12 @@ for i in tqdm(range(0,1)):#len(RequestNames))):
     update_Dataset = "config.Data.inputDataset = '"+Dataset+"'\n"
     update_DirBase = "config.Data.outLFNDirBase = '"+outputDir+RequestName+"'\n"
     update_DatasetTag = "config.Data.outputDatasetTag = 'Tree_"+date.strftime("%d")+"_"+date.strftime("%b")+date.strftime("%y")+"_MC"+year+"_"+RequestName+"_v9'\n"
-    update_InputFiles = "config.JobType.inputFiles = ['crab_script_NanoGen_skimtree.py','../../scripts/haddnano.py','clean_All_keep_GenPart.txt','Gen_mass_reconstract_SingleTop.py','Gen_mass_functions.py']\n"
+    update_InputFiles = "config.JobType.inputFiles = ['crab_script_NanoGen_skimtree.py', 'Gen_mass_reconstract_ttbar.py', '../../scripts/haddnano.py','clean_All_keep_GenPart.txt','Gen_mass_reconstract_SingleTop.py','Gen_mass_functions.py']\n"
     update_site = "config.Site.storageSite = 'T3_CH_CERNBOX'\n"
     #update_site = "config.Site.storageSite = 'T2_IN_TIFR'\n"
     update_module = "\tmodules=[NanoGenConstr_"+year+"()],\n"
+    if("ttbar" in RequestName):
+        update_module = "\tmodules=[NanoGenConstr_"+year+"_ttbar()],\n"
 
     print("RequestName = ",update_RequestName ,"\tDatasets = ",update_Dataset,"\tDirBase = ",update_DirBase,"\tDatasetTag = ",update_DatasetTag) 
     print("InputFiles = ",update_InputFiles)
@@ -86,5 +88,5 @@ for i in tqdm(range(0,1)):#len(RequestNames))):
 
 
     print("DONE -----",RequestName,"--------------------------------------------------------------------------------------------")
-    #time.sleep(10) 
+    time.sleep(10) 
     
