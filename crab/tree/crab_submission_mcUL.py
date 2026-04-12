@@ -40,8 +40,8 @@ if(year == 'UL2018'):
 
 if(year == 'UL2022EEpre'):
     from dataset_UL2022EEpre import *
-    outputDir = "/store/user/lbhatt/crab/ee_lok_old/RUN2_UL/Tree_crab/2022EEpre/MC/"
-    Datasets = Datasets_MC_UL2022EEpre    
+    outputDir = "/store/user/lbhatt/crab/model_unc/RUN3_UL/Tree_crab/2022EEpre/MC/"
+    Datasets = Datasets_MC_var_UL2022EEpre    
 
 #if(year == 'UL2022EEpost'):
 #    from dataset_UL2022EEpost import *
