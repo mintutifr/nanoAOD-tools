@@ -33,68 +33,22 @@ class NanoGenModule(Module):
         self.datayear = datayear
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        self.out.branch("top_ID","I")
-        self.out.branch("top_is_lastcopy","F")
-        self.out.branch("top_mass_gen", "F")
-        self.out.branch("top_mass_gen_reco", "F")
-        self.out.branch("top_pt_gen", "F")
-        self.out.branch("top_pt_gen_reco", "F")
-        self.out.branch("top_eta_gen", "F")
-        self.out.branch("top_eta_gen_reco", "F")
-        self.out.branch("top_phi_gen", "F")
-        self.out.branch("top_phi_gen_reco", "F")
+        self.out.branch("top_ID_lastcopy","I")
+        self.out.branch("atop_ID_lastcopy","I")
 
-        self.out.branch("tau_to_el_flag", "F")
-        self.out.branch("tau_to_mu_flag", "F")
-        self.out.branch("el_flag", "F")
-        self.out.branch("mu_flag", "F")
+        self.out.branch("top_mass_gen_lastcopy", "F")
+        self.out.branch("atop_mass_gen_lastcopy", "F")
 
-        self.out.branch("lepton_ID","I")
-        self.out.branch("lepton_pt_gen", "F")
-        self.out.branch("lepton_eta_gen", "F")
-        self.out.branch("lepton_phi_gen", "F")
 
-        self.out.branch("minidR_dresslep","F")
-        self.out.branch("DressLep_pt_gen", "F")
-        self.out.branch("DressLep_eta_gen", "F")
-        self.out.branch("DressLep_phi_gen", "F")
-        self.out.branch("DressLep_mass_gen", "F")
-        self.out.branch("DressLep_ID", "I")
+        self.out.branch("top_pt_gen_lastcopy", "F")
+        self.out.branch("atop_pt_gen_lastcopy", "F")
 
-        self.out.branch("neutrino_ID","I")
-        self.out.branch("neutrino_pt_gen", "F")
-        self.out.branch("neutrino_eta_gen", "F")
-        self.out.branch("neutrino_phi_gen", "F")
-        self.out.branch("neutrino_el_flag", "F")
-        self.out.branch("neutrino_mu_flag", "F")
+        self.out.branch("top_eta_gen_lastcopy", "F")
+        self.out.branch("atop_eta_gen_lastcopy", "F")
 
-        self.out.branch("W_ID","I")
-        self.out.branch("W_mass_gen", "F")
-        self.out.branch("W_mass_gen_reco", "F")
-        self.out.branch("W_pt_gen", "F")
-        self.out.branch("W_pt_gen_reco", "F")
-        self.out.branch("W_eta_gen", "F")
-        self.out.branch("W_eta_gen_reco", "F")
-        self.out.branch("W_phi_gen", "F")
-        self.out.branch("W_phi_gen_reco", "F")
-        self.out.branch("W_to_el_flag", "F")
-        self.out.branch("W_to_mu_flag", "F")
+        self.out.branch("top_phi_gen_lastcopy", "F")
+        self.out.branch("atop_phi_gen_lastcopy", "F")
 
-        self.out.branch("bjet_ID","I")
-        self.out.branch("bjet_pt_gen", "F")
-        self.out.branch("bjet_eta_gen", "F")
-        self.out.branch("bjet_phi_gen", "F")
-        self.out.branch("bjet_mass_gen", "F")
-
-        self.out.branch("bpart_ID","I")
-        self.out.branch("bpart_pt_gen", "F")
-        self.out.branch("bpart_eta_gen", "F")
-        self.out.branch("bpart_phi_gen", "F")
-        self.out.branch("minDR_bpart_bjet","F")
-        self.out.branch("DR_dresslepton_bjet","F")
-        ## create inference session using ort.InferenceSession from a given model
-        
-       
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
     ##Def of rapidity
@@ -103,57 +57,27 @@ class NanoGenModule(Module):
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         # Get the desired arrays from the data
-        print(getattr(event,'event'))
+        #print(getattr(event,'event'))
         Genparts = Collection(event,"GenPart")
-        GenPart_pdgId,GenPart_statusFlags,GenPart_pt,GenPart_phi,GenPart_eta,GenPart_mass,GenPart_genPartIdxMother = ([] for i in range(7))
+        genpartID = -1
         for genpart in Genparts:
-            GenPart_statusFlags.append(genpart.statusFlags)
-            GenPart_pt.append(genpart.pt)
-            GenPart_phi.append(genpart.phi)
-            GenPart_eta.append(genpart.eta)
-            GenPart_mass.append(genpart.mass)
-            GenPart_pdgId.append(genpart.pdgId)
-            GenPart_genPartIdxMother.append(genpart.genPartIdxMother)
+            genpartID = genpartID+1
+            if genpart.pdgId == 6:
+                if (((genpart.statusFlags >> 13) & 0x1) > 0): # is last copy
+                    self.out.fillBranch("top_mass_gen_lastcopy", genpart.mass)
+                    self.out.fillBranch("top_pt_gen_lastcopy", genpart.pt)
+                    self.out.fillBranch("top_eta_gen_lastcopy", genpart.eta)
+                    self.out.fillBranch("top_ID_lastcopy", genpartID)
+                    self.out.fillBranch("top_phi_gen_lastcopy", genpart.phi)
+                   
+            if genpart.pdgId == -6:
+                if (((genpart.statusFlags >> 13) & 0x1) > 0):
+                    self.out.fillBranch("atop_mass_gen_lastcopy", genpart.mass)
+                    self.out.fillBranch("atop_pt_gen_lastcopy", genpart.pt)
+                    self.out.fillBranch("atop_eta_gen_lastcopy", genpart.eta)
+                    self.out.fillBranch("atop_ID_lastcopy", genpartID)
+                    self.out.fillBranch("atop_phi_gen_lastcopy", genpart.phi)
 
-        #print(GenPart_pdgId)
-        countTop = 0
-        ptop = ROOT.TLorentzVector()
-        patop = ROOT.TLorentzVector()
-        pBQuark = ROOT.TLorentzVector()
-        paBQuark = ROOT.TLorentzVector()
-        pWBoson = ROOT.TLorentzVector()
-        paWBoson = ROOT.TLorentzVector()
-        ptop_Ngenpart = -99
-        patop_Ngenpart = -99
-        
-        for topID, genpart in enumerate(Genparts):
-            if(genpart.pdgId == 6 and ((genpart.statusFlags >> 12) & 0x1) > 0):
-                    countTop += 1
-                    rediation,new_ID = Check_rediation(Genparts,genpart,topID)
-                    print(rediation,new_ID)
-                    ptop.SetPtEtaPhiM(genpart.pt, genpart.eta, genpart.phi, genpart.mass)
-                    print(f'{topID = }', f' {countTop}')
-                    for ID, genpart2 in enumerate(Genparts):
-                        if( topID == genpart2.genPartIdxMother and genpart2.pdgId==6):
-                            topID = ID
-                        
-                            print(ID, genpart2.pdgId, topID )
-                    #for BQuarkID, genpart in enumerate(Genparts):
-                    #    if(genpart.pdgId == 5):
-                    #        print(BQuarkID,genpart.genPartIdxMother)
-                           
-            ID = 0
-            if GenPart_pdgId[ID] == -6:
-                if (((GenPart_statusFlags[ID] >> 12) & 0x1) > 0):
-                    countTop += 1
-                    patop.SetPtEtaPhiM(GenPart_pt[ID], GenPart_eta[ID], GenPart_phi[ID], GenPart_mass[ID])
-                    patop_Ngenpart = ID
-                    #print(f'{patop_Ngenpart = }',f' {countTop}')
-
-        
-            # Creating the array with all info needed to pass to the NN model, already normalised
-        #print(ptop.M())
-        print("-----------------")
         return True
 
-NanoGenConstr_ttbar_UL2016 = lambda : NanoGenModule('UL2016')
+NanoGenConstr_UL2016_Alt_mass_ttbar = lambda : NanoGenModule('UL2016')
