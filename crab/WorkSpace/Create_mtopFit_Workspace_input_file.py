@@ -14,6 +14,7 @@ parser.add_argument('-v', '--var  ', dest='var', type=str, nargs=1, help="var [ 
 parser.add_argument('-f', '--fitdignostic_outFile ', dest='fitdignostic_outFile', type=str, default=[ None ],nargs=1, help="DNNFit dignostic output file which has histogram files i.e /home/mikumar/t3store3/workarea/Higgs_Combine/CMSSW_11_3_4/src/Combine_Run2/fitDiagnostics_M1725_DNNfit_UL2017.root")
 parser.add_argument('-DC', '--DNNCut  ', dest='DNNCut', type=str, nargs=1, help="if need to apply DNNCut [ >=0.0 ,>=0.7]")
 parser.add_argument('-Alt', '--is_Alt_samp_add ', dest='is_Alt_samp_add',  action="store_true", help="Enable this feature if alternate mass and width variation from gen weights will be added")
+parser.add_argument('-Alt_center_mass', '--is_Alt_center_ttbar_mass_samp_add ', dest='is_Alt_center_ttbar_mass_samp_add',  action="store_true", help="Enable this feature if alternate mass variation from cerntarlly produced ttbar samples will be added")
 parser.add_argument('-lepSF_sys', '--is_lepSF_sys ', dest='is_lepSF_sys_add',  action="store_true", help="Enable this feature if weights depent lepSF sys will be added lepSF")
 parser.add_argument('-puWeight_sys', '--is_puWeight_sys ', dest='is_puWeight_sys_add',  action="store_true", help="Enable this feature if weights depent puWeightUp ")
 parser.add_argument('-muR_muF_sys', '--is_muR_muF_sys ', dest='is_muR_muF_sys_add',  action="store_true", help="Enable this feature if weights depent muR muF")
@@ -51,6 +52,7 @@ Variable = args.var[0]
 DNNFit_rescale_file = args.fitdignostic_outFile[0]
 DNNCut = args.DNNCut[0]
 isAltSample=args.is_Alt_samp_add
+isAltCentrallyMassSample = args.is_Alt_center_ttbar_mass_samp_add
 allsys = args.is_all_sys_add
 colorReconect = args.is_color_reconection_sys_add
 JES_JERSys = args.is_JES_JER_sys_add 
@@ -110,7 +112,8 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     #################### Genral Dir and selection ##################################################
     
     #applydir = '/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/DNN_output_without_mtwCut/2J1T1/Apply_all/'
-    applydir = '/feynman/home/dphp/mk277705/work/RUN2_UL/DNN_outputs_without_mtwCut_corr_bweight/'+yearDir[year]+'/2J1T1/Apply_all/'
+    #applydir = '/feynman/home/dphp/mk277705/work/RUN2_UL/DNN_outputs_without_mtwCut_corr_bweight/'+yearDir[year]+'/2J1T1/Apply_all/'
+    applydir = f'/nfs/home/common/RUN2_UL/DNN_outputs_without_mtwCut_corr_bweight/{yearDir[year]}/2J1T1/Apply_all/'
     MCcut = "Xsec_wgt*LHEWeightSign*puWeight*"+lep+"SF*L1PreFiringWeight_Nom*bWeight*bJetPUJetID_SF*lJetPUJetID_SF*(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut" 
     Datacut = "(dR_bJet_lJet>0.4)*(mtwMass>50)"
     QCDcut = "(dR_bJet_lJet>0.4)*(mtwMass>50)*mtw_weight_50GeVCut"
@@ -127,16 +130,16 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
     Data_AntiIso_Fpath = "" 
     for channel in channels_Nomi:
             Fpaths_DNN_apply[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
-            #File_with_mtwMassFit_weight_Iso[channel] = "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
+            File_with_mtwMassFit_weight_Iso[channel] = "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
             #if(channel=="QCD"): Data_AntiIso_Fpath =  "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
-            File_with_mtwMassFit_weight_Iso[channel] = "/feynman/home/dphp/mk277705/work/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale_new/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
-            if(channel=="QCD"): Data_AntiIso_Fpath =  "/feynman/home/dphp/mk277705/work/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
-
+            #File_with_mtwMassFit_weight_Iso[channel] = "/feynman/home/dphp/mk277705/work/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale_new/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
+            if(channel=="QCD"): 
+                    #Data_AntiIso_Fpath =  "/feynman/home/dphp/mk277705/work/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
+                    Data_AntiIso_Fpath =  "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
     #print File_with_mtwMassFit_weight_Iso
 
     if(Variable=="TMath::Log(topMass)"): Variable="lntopMass"
     # get histogram with DNN cut
-    print(type(QCDcut),"=======================")
     hists_corr,hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable,channels_Nomi[:-1], MCcut ,QCDcut, Datacut , DNNCut ,File_with_mtwMassFit_weight_Iso,Fpaths_DNN_apply)
     if(Variable=="lntopMass"):   Variable="TMath::Log(topMass)" 
     del Data_AntiIso_Fpath
@@ -269,19 +272,25 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
 
     Data_AntiIso_Fpath = ""
     Data_Iso_Fpath = "" 
-    for channel in ["QCD","Data"+year]:
-           Fpaths_DNN_apply_data[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
-    Data_AntiIso_Fpath =  "~/work/RUN2_UL/Minitree_with_mtw_weight/2J1T1/"+year+'_QCD_Apply_all_'+lep+'.root'
-    Data_Iso_Fpath =  "~/work/RUN2_UL/Minitree_with_mtw_weight/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
+    #for channel in ["QCD","Data"+year]:
+    #       Fpaths_DNN_apply_data[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' # prepare dict for the in put files
+    #Data_AntiIso_Fpath =  "~/work/RUN2_UL/Minitree_with_mtw_weight/2J1T1/"+year+'_QCD_Apply_all_'+lep+'.root'
+    #Data_Iso_Fpath =  "~/work/RUN2_UL/Minitree_with_mtw_weight/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'
+    #Data_AntiIso_Fpath =  "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/2J1T1/"+year+'_QCD_Apply_all_'+lep+'.root'
+    #Data_Iso_Fpath =  "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'  
+    
 
     #print Fpaths_DNN_apply
 
     for channel_no,channel in enumerate(["QCD","Data"+year]):
+        Fpaths_DNN_apply_data[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root'
         if(channel=="QCD"):
+                Data_AntiIso_Fpath =  f"/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/{yearDir[year]}/2J1T1/{year}_QCD_Apply_all_{lep}.root"
                 print(channel, " ", Data_AntiIso_Fpath)
                 print(channel, " ", Fpaths_DNN_apply_data[channel])
                 infiles[channel] = rt.TFile.Open(Data_AntiIso_Fpath, 'READ')
         else:
+                Data_Iso_Fpath =  f"/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/{yearDir[year]}/2J1T1/{year}_{channel}_Apply_all_{lep}.root"
                 print(channel, " ", Data_Iso_Fpath)
                 print(channel, " ", Fpaths_DNN_apply_data[channel])
                 infiles[channel] = rt.TFile.Open(Data_Iso_Fpath, 'READ')
@@ -292,7 +301,6 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
         hs[channel] = rt.TH1F('hs' + channel, '', Num_bin, lest_bin, max_bin)
         #rt.gROOT.cd()
         if(channel=="QCD"):
-            print(type(QCDcut),type(DNNcut_str))
             intree[channel].Project('hs' + channel, Variable,QCDcut+DNNcut_str)
         else:
             intree[channel].Project('hs' + channel, Variable,Datacut+DNNcut_str)
@@ -349,8 +357,52 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
         hist_to_return.append(hist_copy_EWK)
         del hist_copy_EWK
 
+     #################### ALternate ttbar centralyy produced mass samples ########################################
+    if(isAltCentrallyMassSample):
+        print("creating histogram for the centrally produced Alt mass samples .............")
+        Alt_mass_sample_name = ["ttbar_SemiLeptonic_mtop1695", "ttbar_SemiLeptonic_mtop1715", "ttbar_SemiLeptonic_mtop1735", "ttbar_SemiLeptonic_mtop1755", "ttbar_FullyLeptonic_mtop1695", "ttbar_FullyLeptonic_mtop1715","ttbar_FullyLeptonic_mtop1735", "ttbar_FullyLeptonic_mtop1755"]
+        Fpaths_DNN_apply_ttbarMass={}
+        File_with_mtwMassFit_weight_Iso_ttbarMass = {}
+        for channel in Alt_mass_sample_name:
+            Fpaths_DNN_apply_ttbarMass[channel] = applydir+year+'_'+channel+'_Apply_all_'+lep+'.root' 
+            File_with_mtwMassFit_weight_Iso_ttbarMass[channel] = "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"+yearDir[year]+"/2J1T1/"+year+'_'+channel+'_Apply_all_'+lep+'.root'    
+        
+        if(Variable=="TMath::Log(topMass)"): Variable="lntopMass"
+        # get histogram with DNN cut
+        ttbar_hists_corr,ttbar_hists_wron =  get_histogram_with_DNN_cut(lep,year,Variable, Alt_mass_sample_name, MCcut ,QCDcut, Datacut , DNNCut ,File_with_mtwMassFit_weight_Iso_ttbarMass,Fpaths_DNN_apply_ttbarMass)
+        
+        if(Variable=="lntopMass"):   Variable="TMath::Log(topMass)"
+        
+        del Fpaths_DNN_apply_ttbarMass,File_with_mtwMassFit_weight_Iso_ttbarMass
+        hist_ttbar_corr_assig = {} # only correectly assigned will chage the mass hypothesis
+        for channel_no,channel in enumerate(Alt_mass_sample_name):
+            hist_ttbar_corr_assig[channel] = ttbar_hists_corr[channel_no].Clone()
+            propagate_rate_uncertainity(hist_ttbar_corr_assig[channel], top_bkg_cons)
+        del ttbar_hists_corr,ttbar_hists_wron
+        
+        mass_arr = ["1695", "1715", "1735", "1755"]
 
+        # add semileptonic and fully leptonic histograms
+        for mass in mass_arr:
+            hist_ttbar_corr_assig["ttbar_SemiLeptonic_mtop"+mass].Add(hist_ttbar_corr_assig["ttbar_FullyLeptonic_mtop"+mass])
+            hist_ttbar_corr_assig["ttbar_Mtop"+mass] = hist_ttbar_corr_assig["ttbar_SemiLeptonic_mtop"+mass]
+            del hist_ttbar_corr_assig["ttbar_SemiLeptonic_mtop"+mass]
+            del hist_ttbar_corr_assig["ttbar_FullyLeptonic_mtop"+mass] 
 
+        Alt_mass_weights_singletop = ["Mtop1695","Mtop1715", "Mtop1735","Mtop1755"]
+        channels_alt_singletop = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel']
+        weight_file_singletop = {}
+        for Channel_alt in channels_alt_singletop:
+            weight_file_singletop[Channel_alt] = "/nfs/home/mintu/work/private/Nanoaod/CMSSW_14_1_9/src/Run2UL_Analysis/NanoGen/GenWeight/GenWeight_"+Channel_alt+"_"+lep+"_"+year+"_new.root"
+        for weight,Alt_mass in zip(Alt_mass_weights_singletop,Alt_mass_weights_singletop):
+            print("\n #################  ", weight, "############## \n")
+            hist_mass_singletop = alt_hypotheis_sample(lepton,Variable,MCcut,DNNcut_str,weight,weight_file_singletop,File_with_mtwMassFit_weight_Iso,Fpaths_DNN_apply,top_sig_DNNfitrescale,top_bkg_DNNfitrescale,top_sig_cons,top_bkg_cons, use_single_top_only_channels=True)
+            hist_mass_singletop.Add(hist_ttbar_corr_assig["ttbar_"+Alt_mass])
+            hist_mass_singletop.SetName("top_sig_"+weight.split("top")[1]+tag+gt_or_lt_tag)
+            hist_mass_singletop.Print()
+            hist_to_return.append(hist_mass_singletop)
+
+        del hist_mass_singletop, channels_alt_singletop, Alt_mass_weights_singletop, hist_ttbar_corr_assig    
     #################### ALternate mass and width  #################################################### 
 
     #top_sig_DNNfitrescale=1 ; top_bkg_DNNfitrescale = 1
@@ -366,7 +418,8 @@ def Create_Workspace_input_file(lep="mu",year="UL2017",Variable="lntopMass"):
         weight_file = {}
         for Channel_alt in channels_alt:
             #weight_file[Channel_alt] = "/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/Run2UL_Analysis/NanoGen/GenWeight/GenWeight_"+Channel_alt+"_"+lep+"_"+year+".root"
-            weight_file[Channel_alt] = "/feynman/home/dphp/mk277705/work/HiggsCombine/CMSSW_12_3_4/src/Run2UL_Analysis/NanoGen/GenWeight/GenWeight_"+Channel_alt+"_"+lep+"_"+year+"_new.root"
+            #weight_file[Channel_alt] = "/feynman/home/dphp/mk277705/work/HiggsCombine/CMSSW_12_3_4/src/Run2UL_Analysis/NanoGen/GenWeight/GenWeight_"+Channel_alt+"_"+lep+"_"+year+"_new.root"
+            weight_file[Channel_alt] = "/nfs/home/mintu/work/private/Nanoaod/CMSSW_14_1_9/src/Run2UL_Analysis/NanoGen/GenWeight/GenWeight_"+Channel_alt+"_"+lep+"_"+year+"_new.root"
 
         for weight in Alt_mass_weights:
             print("\n #################  ", weight, "############## \n")
@@ -603,7 +656,9 @@ if __name__ == "__main__":
     elif(">=" in DNNCut):
         DNNCut_vlaue = "0p"+DNNCut.split('.')[1].split(')')[0]
     
-    output_file = "Hist_for_workspace/Combine_Input_"+Variable+"_histograms_"+year+"_"+lep+"_gteq"+DNNCut_vlaue+"_withoutDNNfit_rebin.root"
+    out_dir = "Hist_for_workspace"
+    os.makedirs(out_dir, exist_ok=True)
+    output_file = f"{out_dir}/Combine_Input_{Variable}_histograms_{year}_{lep}_gteq{DNNCut_vlaue}_withoutDNNfit_rebin.root"
     print(output_file)
     hists = Create_Workspace_input_file(lep,year,Variable) 
     outfile = rt.TFile(output_file,"recreate")

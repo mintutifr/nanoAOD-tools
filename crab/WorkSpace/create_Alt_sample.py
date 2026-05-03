@@ -12,11 +12,14 @@ def propagate_rate_uncertainity(hist, uncert):
         if hist.GetBinContent(i) != 0:
             hist.SetBinError(i, hist.GetBinContent(i) * uncert * 0.01)
 
-def alt_hypotheis_sample(lepton,Variable,MCcut,DNNcut_str,weight,weight_file,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply,top_sig_DNNfitrescale,top_bkg_DNNfitrescale,top_sig_cons,top_bkg_cons):
+def alt_hypotheis_sample(lepton,Variable,MCcut,DNNcut_str,weight,weight_file,EvtWeight_Fpaths_Iso,Fpaths_DNN_apply,top_sig_DNNfitrescale,top_bkg_DNNfitrescale,top_sig_cons,top_bkg_cons,use_single_top_only_channels=False):
     if(Variable=="TMath::Log(topMass)"): Variable="lntopMass"
     Variable,X_axies,Y_axies,lest_bin,max_bin,Num_bin = get_histogram_distciption(Variable)
     if(Variable=="lntopMass"): Variable= "TMath::Log(topMass)"
-    channels_alt = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic']
+    if(use_single_top_only_channels):
+        channels_alt = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel']
+    else:
+        channels_alt = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic']
 
     Arr_Hist_Alt_with_genweight = []
     rt.gROOT.cd()

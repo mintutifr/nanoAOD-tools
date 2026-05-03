@@ -117,10 +117,10 @@ ML_DIR='dataframe_saved_without_mtwCut/'+region+'/' ; wightfolder = 'weight_with
 
 #if not os.path.exists(MainOutputDir): os.mkdir(MainOutputDir)
 #if not os.path.exists(MainOutputDir+'Apply_all/'): os.mkdir(MainOutputDir+'Apply_all/')
-if not os.path.exists(MainOutputDir+'Apply_all/sys_N_Alt'): os.makedirs(MainOutputDir+'Apply_all/sys_N_Alt')
+if not os.path.exists(MainOutputDir+'Train_test_Valid/sys_N_Alt'): os.makedirs(MainOutputDir+'Train_test_Valid/sys_N_Alt')
 
 #if(sample=="Mc_Nomi"):
-common_path = "/nfs/home/common/RUN2_UL/Minitree_corr_bweight_with_mtwMassFit_Scale/"
+common_path = "/nfs/home/common/RUN2_UL/DNN_Training_files/2J1T/"
 OriginalFileDir = {
         "UL2016preVFP" :   common_path+"/SIXTEEN_preVFP/2J1T1/",
         "UL2016postVFP" :  common_path+"/SIXTEEN_postVFP/2J1T1/",
@@ -128,14 +128,23 @@ OriginalFileDir = {
         "UL2018" :         common_path+"/EIGHTEEN/2J1T1/",
  }
 
+OriginalFileDir = {
+        "ULpreVFP2016" :   common_path+"",
+        "ULpostVFP2016" :  common_path+"",
+        "UL2017" :         common_path+"",
+        "UL2018" :         common_path+"",
+ }
 #channels = ['Tchannel']
+if(year=="UL2016preVFP"): year = "ULpreVFP2016"
+if(year=="UL2016postVFP"): year = "ULpostVFP2016"
 for channel in channels:
     if(sample=="Mc_Nomi"):
         for typ in types:
             files.append(f'{OriginalFileDir[year]}{year}_{channel}_{typ}_{lep}.root')
     elif(sample=="Mc_Alt" or sample=="Mc_sys"):
             files.append(f'{OriginalFileDir[year]}sys_N_Alt/{year}_{channel}_{typ}_{lep}.root')
-
+if(year=="ULpreVFP2016"): year = "UL2016preVFP"
+if(year=="ULpostVFP2016"): year = "UL2016postVFP"
 #files = ['/home/mikumar/t3store/workarea/Nanoaod_tools/CMSSW_10_2_28/src/PhysicsTools/NanoAODTools/crab/DNN/dataframe_saved_without_mtwCut/sys_N_Alt/UL2017_Tchannel_TuneCP5CR2_Apply_all_mu.root']
 print(files)
 m = nn.LogSoftmax(dim=1)
@@ -201,9 +210,9 @@ for fil in files:
 	y_arr = y_arr.ravel().view(dtype = np.dtype([('t_ch_WAsi', np.double), ('t_ch_CAsi', np.double), ('ttbar_CAsi', np.double), ('ttbar_WAsi', np.double), ('EWK', np.double), ('QCD', np.double)]))
 	fname, ext = os.path.splitext(fil)
 
-	if(sample == "Mc_Nomi"):outputfile = MainOutputDir+'Apply_all/'+ fname.rsplit('/')[-1] + '.root'
-	else: outputfile =  MainOutputDir+'Apply_all/sys_N_Alt/'+ fname.rsplit('/')[-1] + '.root'
-	print("writing out put file : ", MainOutputDir+'Apply_all/'+fname.rsplit('/')[-1],"_apply.root")
+	if(sample == "Mc_Nomi"):outputfile = MainOutputDir+'Train_test_Valid/'+ fname.rsplit('/')[-1] + '.root'
+	else: outputfile =  MainOutputDir+'Train_test_Valid/sys_N_Alt/'+ fname.rsplit('/')[-1] + '.root'
+	print("writing out put file : ", MainOutputDir+'Train_test_Valid/'+fname.rsplit('/')[-1],"_apply.root")
 
 	#root_numpy.array2root(y_arr, outputfile, treename='Events',mode='recreate')
 	file_out = uproot.recreate(outputfile)
