@@ -41,6 +41,10 @@ class gen_info(Module):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         # Get the desired arrays from the data
         Genparts = Collection(event,"GenPart")
+        ptop_Ngenpart = -9
+        top_mass = -999
+        patop_Ngenpart = -9
+        atop_mass = -999
         Ngenpart_counter = -1
         for genpart in Genparts:
             Ngenpart_counter += 1

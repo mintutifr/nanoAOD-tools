@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
 	year_folder = {'SIXTEEN_preVFP':'UL2016preVFP', 'SIXTEEN_postVFP':'UL2016postVFP', 'SEVENTEEN':'UL2017', 'EIGHTEEN':'UL2018'}
 	#print("year : ",year_folder[LocalDir.split('/')[-3]])
-	year = year_folder[LocalDir.split('/')[6]] 
+	year = year_folder[LocalDir.split('/')[12]] 
 
 	lep = args.leptons[0]
 	sample = args.samples[0]
@@ -71,7 +71,7 @@ if __name__ == '__main__':
 	root_file = []
 	cwd = os.getcwd()
 
-	#Channels = ['ttbar_SemiLeptonic','ttbar_FullyLeptonic']
+	Channels = ['ttbar_FullyLeptonic_mtop1695','ttbar_FullyLeptonic_mtop1715','ttbar_FullyLeptonic_mtop1735','ttbar_FullyLeptonic_mtop1755','ttbar_SemiLeptonic_mtop169','ttbar_SemiLeptonic_mtop1715','ttbar_SemiLeptonic_mtop1735','ttbar_SemiLeptonic_mtop1755']
 	Error = "Skim"
 	if(MC_Data=="mc"): No_of_file_per_job = 1
 	elif(MC_Data=="data"): No_of_file_per_job = 1 # though the number of file per job are 5 but still when number of file are not desial of 5 then file less 5 are submitted 

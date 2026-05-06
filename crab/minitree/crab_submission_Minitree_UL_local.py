@@ -49,8 +49,8 @@ if __name__ == '__main__':
                        'ttbar_SemiLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'ttbar_SemiLeptonic_erdON', 'ttbar_SemiLeptonic_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5down'
         ]
         Channels = Channels_commom + Channel_QCD #+Channel_sys
-        Channels = ['ttbar_SemiLeptonic','ttbar_FullyLeptonic']
-        Channels = Channel_sys 
+        Channels = ['ttbar_SemiLeptonic_mtop169','ttbar_SemiLeptonic_mtop1715','ttbar_SemiLeptonic_mtop1735','ttbar_SemiLeptonic_mtop1755','ttbar_FullyLeptonic_mtop1695','ttbar_FullyLeptonic_mtop1715','ttbar_FullyLeptonic_mtop1735','ttbar_FullyLeptonic_mtop1755']
+        #Channels = Channel_sys 
 
     elif(MC_Data=="data"):
         if(year=='UL2016preVFP'): Channels = [ 'Run2016B_ver1_'+Lep, 'Run2016B_ver2_'+Lep, 'Run2016C_HIPM_'+Lep, 'Run2016D_HIPM_'+Lep, 'Run2016E_HIPM_'+Lep, 'Run2016F_HIPM_'+Lep]
@@ -73,8 +73,8 @@ if __name__ == '__main__':
         os.makedirs(local_script_output_dir+'log/', exist_ok = True)
 
         if(MC_Data=="mc"):
-            in_files_path = '/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root'
-            #in_files_path = '/eos/home-m/mikumar/RUN2_UL/' + Channel + '/**/**/**/**/*.root'
+            in_files_path = '/nfs/home/Lokesh/crab/MC/' + Channel + '/**/**/**/**/*.root'
+            #in_files_path = '/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root'
         elif(MC_Data=="data"):
             in_files_path = '/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/Data_' + Lep + '/' + Channel + '/**/**/**/**/*.root'
 
@@ -111,6 +111,7 @@ if __name__ == '__main__':
     print(run_commands,"\n")
     #print(Hadd_N_createoutfile_cmd[Channel])
 
+     
     pool = mp.Pool(processes=15)
     pool.map(run_cmd, run_commands)
     del run_commands
@@ -127,3 +128,4 @@ if __name__ == '__main__':
                 else: exit(0)
         print("runing....", Hadd_N_createoutfile_cmd[Channel],"\n")
         os.system(Hadd_N_createoutfile_cmd[Channel])
+    

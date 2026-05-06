@@ -50,7 +50,7 @@ else:
 
 
 #Minitree_module = getattr(mt , 'MinitreeModuleConstr' + args.tag)
-treecut = getattr(cs, 'cut_' + region + '_' + lep + '_' + year) #+ " && event>=182500 && event <= 182721 " + " && Entry$<500"
+treecut = getattr(cs, 'cut_' + region + '_' + lep + '_' + year) #+ " && Entry$<500" #+ " && event>=182500 && event <= 182721 " + " && Entry$<500"
 btvmodule = getattr(btv,'btagSF'+year)
 jmeCorrection = getattr(JME,'jmeCorrections'+year+'_MC_AK4CHS')
 hdampmodule = getattr(hdamp,'hdamp_vari_mainModule')
@@ -69,7 +69,7 @@ else:
 	jmeCorrection = getattr(JME,'jmeCorrections'+year+'_MC_AK4CHS')
 
 if( (dataset in ['ttbar_SemiLeptonic','ttbar_FullyLeptonic']) and region == "2J1T1"):
-	runmodules = [btvmodule(),minitreemodule(dataset),jmeCorrection(),hdampmodule(),geninfomodule()]
+	runmodules = [btvmodule(),minitreemodule(dataset),jmeCorrection(),geninfomodule()]
 elif((dataset in ['Tchannel' , 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel']) and region == "2J1T1"):
 	runmodules = [btvmodule(),minitreemodule(dataset),jmeCorrection(),geninfomodule()]
 elif('Run' in dataset):
