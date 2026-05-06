@@ -1,6 +1,6 @@
 # Define the arrays
 YEARS=("UL2018") #"UL2016preVFP" "UL2016postVFP" "UL2017" )
-LEP=("el") # "mu")
+LEP=("mu") #"el" "mu")
 
 
 
@@ -33,7 +33,7 @@ for year in "${YEARS[@]}"; do
 				-l "$lepton" \
 				-DC "(t_ch_CAsi>=${threshold})" \
 				-v lntopMass \
-				-Alt_center_mass #-Alt # -pdf_sys -muR_muF_sys
+				#-Alt_center_mass #-Alt # -pdf_sys -muR_muF_sys
 		done
 	done
 done
