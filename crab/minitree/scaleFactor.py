@@ -51,7 +51,94 @@ def elScaleFactor(pt, scEta, wp, syst,ID_fSFName,Trigger_fSFName,dataYear):
         elSF = -999
         #print("WP is nither 'Tight' nor 'Veto'")    
     return elSF    
-   
+
+def elScaleFactor_v2(pt, scEta, wp, syst, ID_fSFName, Trigger_fSFName, dataYear):
+    from correctionlib import _core
+
+    ROOT.gStyle.SetOptStat(0)
+
+    RECO_WPS = ("RecoBelow20", "RecoAbove20", "Reco20to75", "Reco75plus")
+    ID_ONLY_WPS = ("Loose", "Medium", "Tight", "Veto",
+                   "wp80iso", "wp80noiso", "wp90iso", "wp90noiso")
+
+    if wp not in RECO_WPS and wp not in ID_ONLY_WPS:
+        print(f"[elScaleFactor_v2] Unknown WP: {wp}")
+        return -999
+
+    year_map = {
+        "UL2016preVFP"  : "2016preVFP",
+        "UL2016postVFP" : "2016postVFP",
+        "UL2017"        : "2017",
+        "UL2018"        : "2018",
+        "2016"          : "2016postVFP",
+        "2017"          : "2017",
+        "2018"          : "2018",
+    }
+    cvmfs_base = "/cvmfs/cms-griddata.cern.ch/cat/metadata/EGM"
+    corr_file_map = {
+        "UL2016preVFP"  : f"{cvmfs_base}/Run2-2016preVFP-UL-NanoAODv9/latest/electron.json.gz",
+        "UL2016postVFP" : f"{cvmfs_base}/Run2-2016postVFP-UL-NanoAODv9/latest/electron.json.gz",
+        "UL2017"        : f"{cvmfs_base}/Run2-2017-UL-NanoAODv9/latest/electron.json.gz",
+        "UL2018"        : f"{cvmfs_base}/Run2-2018-UL-NanoAODv9/2024-07-02/electron.json.gz",
+        "2016"          : f"{cvmfs_base}/Run2-2016postVFP-UL-NanoAODv9/latest/electron.json.gz",
+        "2017"          : f"{cvmfs_base}/Run2-2017-UL-NanoAODv9/latest/electron.json.gz",
+        "2018"          : f"{cvmfs_base}/Run2-2018-UL-NanoAODv9/2024-07-02/electron.json.gz",
+    }
+
+    if dataYear not in corr_file_map:
+        print(f"[elScaleFactor_v2] Unknown dataYear: {dataYear}")
+        return -999
+
+    year_str  = year_map[dataYear]
+    corr_file = corr_file_map[dataYear]
+
+    vt_map = {
+        "noSyst"  : "sf",
+        "IDUp"    : "sfup",
+        "IDDown"  : "sfdown",
+        "TrigUp"  : "sf",   # trigger syst → nominal ID
+        "TrigDown": "sf",
+    }
+    vt = vt_map.get(syst, "sf")
+
+    pt_cl = max(pt, 10.01)
+
+    evaluator = _core.CorrectionSet.from_file(corr_file)
+    corr      = evaluator["UL-Electron-ID-SF"]
+
+    try:
+        id_sf = corr.evaluate(year_str, vt, wp, float(scEta), float(pt_cl))
+    except Exception as e:
+        print(f"[elScaleFactor_v2] correctionlib evaluate failed: {e}")
+        return -999
+
+    if wp in RECO_WPS:
+        return id_sf
+
+    fSFTrig = ROOT.TFile(Trigger_fSFName, "Read")
+    hSFTrig = fSFTrig.Get("EGamma_SF2D")
+
+    scEta_trig = scEta
+    if scEta_trig > hSFTrig.GetXaxis().GetXmax(): scEta_trig = hSFTrig.GetXaxis().GetXmax() - 0.01
+    if scEta_trig < hSFTrig.GetXaxis().GetXmin(): scEta_trig = hSFTrig.GetXaxis().GetXmin() + 0.01
+    pt_trig = pt
+    if pt_trig > hSFTrig.GetYaxis().GetXmax(): pt_trig = hSFTrig.GetYaxis().GetXmax() - 1.0
+
+    xbin = hSFTrig.GetXaxis().FindBin(scEta_trig)
+    ybin = hSFTrig.GetYaxis().FindBin(pt_trig)
+
+    if syst == "TrigUp":
+        trig_sf = hSFTrig.GetBinContent(xbin, ybin) + hSFTrig.GetBinErrorUp(xbin, ybin)
+    elif syst == "TrigDown":
+        trig_sf = hSFTrig.GetBinContent(xbin, ybin) - hSFTrig.GetBinErrorLow(xbin, ybin)
+    else:
+        trig_sf = hSFTrig.GetBinContent(xbin, ybin)
+
+    hSFTrig.Delete()
+    fSFTrig.Delete()
+
+    return id_sf * trig_sf
+
 def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
     eta = abs(eta)
     if(iso >0.06 and iso<0.2): return -999
@@ -347,7 +434,8 @@ def create_elSF(dataYear,pt_, scEta_, wp_, syst_):
         Trigger_fSFName_ = el_InFiles[dataYear]['TRI_Veto']
         ID_fSFName_ = el_InFiles[dataYear]['vetoID']
     #`print(Trigger_fSFName_,ID_fSFName_)
-    elSF = elScaleFactor(pt_, scEta_, wp_, syst_,ID_fSFName_,Trigger_fSFName_,dataYear)
+    #elSF = elScaleFactor(pt_, scEta_, wp_, syst_,ID_fSFName_,Trigger_fSFName_,dataYear)
+    elSF = elScaleFactor_v2(pt_, scEta_, wp_, syst_, ID_fSFName_, Trigger_fSFName_, dataYear)
     return elSF 
 
 mu_InFiles = {'2016' : [
