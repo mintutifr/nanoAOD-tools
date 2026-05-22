@@ -56,8 +56,6 @@ def elScaleFactor_v2(pt, scEta, wp, syst, ID_fSFName, Trigger_fSFName,corrlib_fi
     from correctionlib import _core
 
     ROOT.gStyle.SetOptStat(0)
-
-    RECO_WPS   = ( "RecoAbove20")
     evaluator = _core.CorrectionSet.from_file(corrlib_file)
     corr      = evaluator["UL-Electron-ID-SF"]
 
