@@ -58,35 +58,10 @@ def elScaleFactor_v2(pt, scEta, wp, syst, ID_fSFName, Trigger_fSFName,corrlib_fi
     ROOT.gStyle.SetOptStat(0)
 
     RECO_WPS   = ( "RecoAbove20")
-    ID_ONLY_WPS = ("Loose", "Medium", "Tight", "Veto",
-                   "wp80iso", "wp80noiso", "wp90iso", "wp90noiso")
-
-    if wp not in RECO_WPS and wp not in ID_ONLY_WPS:
-        print(f"[elScaleFactor_v2] Unknown WP: {wp}")
-        return -999
-
-    vt_map = {
-        "noSyst"  : "sf",
-        "IDUp"    : "sfup",
-        "IDDown"  : "sfdown",
-        "TrigUp"  : "sf",
-        "TrigDown": "sf",
-    }
-    vt    = vt_map.get(syst, "sf")
-    pt_cl = max(pt, 10.01)
-
     evaluator = _core.CorrectionSet.from_file(corrlib_file)
     corr      = evaluator["UL-Electron-ID-SF"]
 
-    try:
-        id_sf = corr.evaluate(corrlib_year, vt, wp, float(scEta), float(pt_cl))
-    except Exception as e:
-        print(f"[elScaleFactor_v2] correctionlib evaluate failed: {e}")
-        return -999
-
-    if wp in RECO_WPS:
-        return id_sf
-
+    
     # Trigger SF — ROOT, unchanged
     fSFTrig = ROOT.TFile(Trigger_fSFName, "Read")
     hSFTrig = fSFTrig.Get("EGamma_SF2D")
@@ -100,17 +75,16 @@ def elScaleFactor_v2(pt, scEta, wp, syst, ID_fSFName, Trigger_fSFName,corrlib_fi
     xbin = hSFTrig.GetXaxis().FindBin(scEta_trig)
     ybin = hSFTrig.GetYaxis().FindBin(pt_trig)
 
-    if syst == "TrigUp":
-        trig_sf = hSFTrig.GetBinContent(xbin, ybin) + hSFTrig.GetBinErrorUp(xbin, ybin)
-    elif syst == "TrigDown":
-        trig_sf = hSFTrig.GetBinContent(xbin, ybin) - hSFTrig.GetBinErrorLow(xbin, ybin)
-    else:
-        trig_sf = hSFTrig.GetBinContent(xbin, ybin)
+    ele_recons_sf = corr.evaluate(corrlib_year, syst, "RecoBelow20", scEta, pt)
+    ID_SF = corr.evaluate(corrlib_year, syst, wp, scEta, pt)
+    if(syst == "TrigUp"):trig_sf = hSFTrig.GetBinContent(xbin, ybin) + hSFTrig.GetBinErrorUp(xbin, ybin)
+    elif(syst == "TrigDown"):trig_sf = hSFTrig.GetBinContent(xbin, ybin) - hSFTrig.GetBinErrorLow(xbin, ybin)
+    else: trig_sf = hSFTrig.GetBinContent(xbin, ybin)
 
     hSFTrig.Delete()
     fSFTrig.Delete()
 
-    return id_sf * trig_sf
+    return id_sf * ID_SF * trig_sf, ele_recons_sf
 
 def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
     eta = abs(eta)
