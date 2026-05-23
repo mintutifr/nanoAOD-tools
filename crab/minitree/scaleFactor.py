@@ -59,6 +59,21 @@ def elScaleFactor_v2(pt, scEta, wp, syst, ID_fSFName, Trigger_fSFName,corrlib_fi
     evaluator = _core.CorrectionSet.from_file(corrlib_file)
     corr      = evaluator["UL-Electron-ID-SF"]
 
+    vt_map = {
+        "noSyst"  : "sf",
+        "IDUp"    : "sfup",
+        "IDDown"  : "sfdown",
+        "TrigUp"  : "sf",
+        "TrigDown": "sf",
+        "RecoUp"  : "sf",    
+        "RecoDown": "sf",
+    }
+    reco_vt_map = {
+        "RecoUp"  : "sfup",
+        "RecoDown": "sfdown",
+    }
+    vt = vt_map.get(syst, "sf")
+    reco_vt = reco_vt_map.get(syst, "sf")
     
     # Trigger SF — ROOT, unchanged
     fSFTrig = ROOT.TFile(Trigger_fSFName, "Read")
@@ -73,8 +88,9 @@ def elScaleFactor_v2(pt, scEta, wp, syst, ID_fSFName, Trigger_fSFName,corrlib_fi
     xbin = hSFTrig.GetXaxis().FindBin(scEta_trig)
     ybin = hSFTrig.GetYaxis().FindBin(pt_trig)
 
-    ele_recons_sf = corr.evaluate(corrlib_year, syst, "RecoBelow20", scEta, pt)
-    ID_SF = corr.evaluate(corrlib_year, syst, wp, scEta, pt)
+    reco_wp = "RecoBelow20" if pt < 20.0 else "RecoAbove20"
+    ele_recons_sf = corr.evaluate(corrlib_year, reco_vt, reco_wp, scEta, pt)
+    ID_SF = corr.evaluate(corrlib_year, vt, wp, scEta, pt)
     if(syst == "TrigUp"):trig_sf = hSFTrig.GetBinContent(xbin, ybin) + hSFTrig.GetBinErrorUp(xbin, ybin)
     elif(syst == "TrigDown"):trig_sf = hSFTrig.GetBinContent(xbin, ybin) - hSFTrig.GetBinErrorLow(xbin, ybin)
     else: trig_sf = hSFTrig.GetBinContent(xbin, ybin)
@@ -82,7 +98,7 @@ def elScaleFactor_v2(pt, scEta, wp, syst, ID_fSFName, Trigger_fSFName,corrlib_fi
     hSFTrig.Delete()
     fSFTrig.Delete()
 
-    return id_sf * ID_SF * trig_sf, ele_recons_sf
+    return  ID_SF * trig_sf, ele_recons_sf
 
 def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
     eta = abs(eta)
@@ -493,4 +509,4 @@ def create_muSF(dataYear,pt_,eta_,iso_,lumiTotal_,syst_):
 #print create_muSF('UL2018',29.2907962799,0.0283164978027,0.297331474721,59222,'IDUp')#19521,16812,41520,59222
 #print(create_elSF('UL2017',50,-1.3,'Tight','noSyst'))
 #print(create_elSF('UL2017',50,-1.3,'Veto','noSyst'))
-#print "-------------------------------------------------------"                        
+#print "-------------------------------------------------------"  
