@@ -48,7 +48,7 @@ class btagSFProducer(Module):
         self.jesSystsForShape = jesSystsForShape
         # CV: Return value of BTagCalibrationReader::eval_auto_bounds() is zero
         # in case jet abs(eta) > 2.4 !!
-        self.max_abs_eta = 2.4
+        self.max_abs_eta = 2.5
         # define measurement type for each flavor
         self.inputFilePath = "/cvmfs/cms.cern.ch/rsync/cms-nanoAOD/jsonpog-integration/POG/BTV/"
         self.inputFileName = sfFileName

@@ -570,12 +570,12 @@ class MinitreeProducer(Module):
             #print jet.btagDeepFlavB," ",jet.eta
         #print getattr(event,'event');
         
-        for jet in filter(lambda j:(j.btagDeepFlavB>Tight_b_tag_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
+        for jet in filter(lambda j:(j.btagDeepFlavB>Tight_b_tag_crite[self.dataYear] and abs(j.eta)<2.5), jet_id):
             btagjet_id.append(jet) 
         #print("btagJet_id = ", btagjet_id)
         #if(len(btagjet_id)):   return True
         if(self.Total_Njets == 2 and  self.BTag_Njets == 1 and len(btagjet_id)==0):
-                for jet in filter(lambda j:(j.btagDeepFlavB>Lose_b_tag_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
+                for jet in filter(lambda j:(j.btagDeepFlavB>Lose_b_tag_crite[self.dataYear] and abs(j.eta)<2.5), jet_id):
                         btagjet_id.append(jet)
                 #print len(btagjet_id)
 
