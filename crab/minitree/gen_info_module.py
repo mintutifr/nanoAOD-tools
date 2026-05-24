@@ -42,6 +42,8 @@ class gen_info(Module):
         # Get the desired arrays from the data
         Genparts = Collection(event,"GenPart")
         Ngenpart_counter = -1
+        ptop_Ngenpart,patop_Ngenpart = -1,-1
+        top_mass,atop_mass = -99,-99
         for genpart in Genparts:
             Ngenpart_counter += 1
             if (genpart.pdgId == 6 and ((genpart.statusFlags >> 13) & 0x1) > 0):

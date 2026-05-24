@@ -147,7 +147,7 @@ def Probability_2(syst,selected_jet):
 #print b
 #print c
 #print "Weight = ",c/b
-sys_names = ['jesAbsoluteStat', 'jesAbsoluteMPFBias', 'jesFragmentation', 'jesSinglePionECAL', 'jesSinglePionHCAL', 'jesTimePtEta', 'jesRelativeJEREC1', 'jesRelativeJEREC2', 'jesRelativeJERHF', 'jesRelativePtBB', 'jesRelativePtEC1', 'jesRelativePtEC2', 'jesRelativePtHF', 'jesRelativeBal', 'jesRelativeSample' , 'jesRelativeFSR' , 'jesRelativeStatEC', 'jesRelativeStatHF' , 'jesPileUpDataMC', 'jesPileUpPtRef', 'jesPileUpPtBB', 'jesPileUpPtEC1' , 'jesPileUpPtEC2', 'jesPileUpPtHF']
+sys_names = ['jesAbsoluteStat', 'jesAbsoluteMPFBias', 'jesFragmentation', 'jesSinglePionECAL', 'jesSinglePionHCAL', 'jesTimePtEta', 'jesRelativeJEREC1', 'jesRelativeJEREC2', 'jesRelativeJERHF', 'jesRelativePtBB', 'jesRelativePtEC1', 'jesRelativePtEC2', 'jesRelativePtHF', 'jesRelativeBal', 'jesRelativeSample' , 'jesRelativeFSR' , 'jesRelativeStatEC', 'jesRelativeStatHF' , 'jesPileUpDataMC', 'jesPileUpPtRef', 'jesPileUpPtBB', 'jesPileUpPtEC1' , 'jesPileUpPtEC2', 'jesPileUpPtHF', 'jesAbsoluteScale', 'jesFlavorQCD', 'jesRelativeStatFSR']
  
 def get_battagging_jes_sys(jet,variation):
     btagging_jes_sys={}
@@ -177,6 +177,9 @@ def get_battagging_jes_sys(jet,variation):
         'jesPileUpPtEC1':jet.btagSF_deepjet_shape,
         'jesPileUpPtEC2':jet.btagSF_deepjet_shape,
         'jesPileUpPtHF':jet.btagSF_deepjet_shape,
+        'jesAbsoluteScale':jet.btagSF_deepjet_shape,
+        'jesFlavorQCD':jet.btagSF_deepjet_shape,
+        'jesRelativeStatFSR':jet.btagSF_deepjet_shape
         }
     elif(variation=="up"):
         btagging_jes_sys={
@@ -204,6 +207,9 @@ def get_battagging_jes_sys(jet,variation):
         'jesPileUpPtEC1':jet.btagSF_deepjet_shape_up_jesPileUpPtEC1,
         'jesPileUpPtEC2':jet.btagSF_deepjet_shape_up_jesPileUpPtEC2,
         'jesPileUpPtHF':jet.btagSF_deepjet_shape_up_jesPileUpPtHF,
+        'jesAbsoluteScale':jet.btagSF_deepjet_shape_up_jesAbsoluteScale,
+        'jesFlavorQCD':jet.btagSF_deepjet_shape_up_jesFlavorQCD,
+        'jesRelativeStatFSR':jet.btagSF_deepjet_shape_up_jesRelativeStatFSR,
         }
     elif(variation=="down"):
         btagging_jes_sys={
@@ -231,6 +237,9 @@ def get_battagging_jes_sys(jet,variation):
         'jesPileUpPtEC1':jet.btagSF_deepjet_shape_down_jesPileUpPtEC1,
         'jesPileUpPtEC2':jet.btagSF_deepjet_shape_down_jesPileUpPtEC2,
         'jesPileUpPtHF':jet.btagSF_deepjet_shape_down_jesPileUpPtHF,
+        'jesAbsoluteScale':jet.btagSF_deepjet_shape_down_jesAbsoluteScale,
+        'jesFlavorQCD':jet.btagSF_deepjet_shape_down_jesFlavorQCD,
+        'jesRelativeStatFSR':jet.btagSF_deepjet_shape_down_jesRelativeStatFSR,
         }
     sys_SF = []
     for sys in sys_names:
