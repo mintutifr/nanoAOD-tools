@@ -51,7 +51,51 @@ def elScaleFactor(pt, scEta, wp, syst,ID_fSFName,Trigger_fSFName,dataYear):
         elSF = -999
         #print("WP is nither 'Tight' nor 'Veto'")    
     return elSF    
-   
+
+def elScaleFactor_v2(pt, scEta, wp, syst, Trigger_fSFName,corrlib_file, corrlib_year):
+    from correctionlib import _core
+
+    ROOT.gStyle.SetOptStat(0)
+    evaluator = _core.CorrectionSet.from_file(corrlib_file)
+    corr      = evaluator["UL-Electron-ID-SF"]
+
+    syst_to_ID_valtype = {
+        "IDUp"    : "sfup", 
+        "IDDown"  : "sfdown",
+    }
+    syst_to_Reco_valtype = {
+        "RecoUp"  : "sfup",  
+        "RecoDown": "sfdown",
+    }
+    ID_corrlib   = syst_to_ID_valtype.get(syst, "sf")
+    Reco_corrlib = syst_to_Reco_valtype.get(syst, "sf")
+    
+    # Trigger SF — ROOT, unchanged
+    fSFTrig = ROOT.TFile(Trigger_fSFName, "Read")
+    hSFTrig = fSFTrig.Get("EGamma_SF2D")
+
+    scEta_trig = scEta
+    if scEta_trig > hSFTrig.GetXaxis().GetXmax(): scEta_trig = hSFTrig.GetXaxis().GetXmax() - 0.01
+    if scEta_trig < hSFTrig.GetXaxis().GetXmin(): scEta_trig = hSFTrig.GetXaxis().GetXmin() + 0.01
+    pt_trig = pt
+    if pt_trig > hSFTrig.GetYaxis().GetXmax(): pt_trig = hSFTrig.GetYaxis().GetXmax() - 1.0
+
+    xbin = hSFTrig.GetXaxis().FindBin(scEta_trig)
+    ybin = hSFTrig.GetYaxis().FindBin(pt_trig)
+
+    if pt < 20.0:
+        return -999, -999  
+    ele_recons_sf = corr.evaluate(corrlib_year, Reco_corrlib, "RecoAbove20", scEta, pt)
+    ID_SF = corr.evaluate(corrlib_year, ID_corrlib, wp, scEta, pt)
+    if(syst == "TrigUp"):trig_sf = hSFTrig.GetBinContent(xbin, ybin) + hSFTrig.GetBinErrorUp(xbin, ybin)
+    elif(syst == "TrigDown"):trig_sf = hSFTrig.GetBinContent(xbin, ybin) - hSFTrig.GetBinErrorLow(xbin, ybin)
+    else: trig_sf = hSFTrig.GetBinContent(xbin, ybin)
+
+    hSFTrig.Delete()
+    fSFTrig.Delete()
+
+    return  ID_SF * trig_sf * ele_recons_sf, ele_recons_sf
+
 def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
     eta = abs(eta)
     if(iso >0.06 and iso<0.2): return -999
@@ -313,28 +357,36 @@ el_InFiles = {
                         'TRI'    : 'ElectronSF/2017/HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned_OR_HLT_Ele35_WPTight_Gsf.root' 
                 },
                 'UL2016preVFP':{
-                        'TightID': 'ElectronSF/2016preVFP/UL/egammaEffi.txt_Ele_Tight_preVFP_EGM2D.root',
-                        'vetoID' : 'ElectronSF/2016preVFP/UL/egammaEffi.txt_Ele_Veto_preVFP_EGM2D.root',
+                        # 'TightID': 'ElectronSF/2016preVFP/UL/egammaEffi.txt_Ele_Tight_preVFP_EGM2D.root',
+                        # 'vetoID' : 'ElectronSF/2016preVFP/UL/egammaEffi.txt_Ele_Veto_preVFP_EGM2D.root',
                         'TRI_Tight'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_preVFP_Tight.root',
-                        'TRI_Veto'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_preVFP_Veto.root'
+                        'TRI_Veto'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_preVFP_Veto.root',
+                        'corrlib'    : '/cvmfs/cms-griddata.cern.ch/cat/metadata/EGM/Run2-2016preVFP-UL-NanoAODv9/latest/electron.json.gz',
+                        'corrlib_year': '2016preVFP',
                 },
                 'UL2016postVFP':{
-                        'TightID': 'ElectronSF/2016postVFP/UL/egammaEffi.txt_Ele_Tight_postVFP_EGM2D.root',
-                        'vetoID' : 'ElectronSF/2016postVFP/UL/egammaEffi.txt_Ele_Veto_postVFP_EGM2D.root',
+                        # 'TightID': 'ElectronSF/2016postVFP/UL/egammaEffi.txt_Ele_Tight_postVFP_EGM2D.root',
+                        # 'vetoID' : 'ElectronSF/2016postVFP/UL/egammaEffi.txt_Ele_Veto_postVFP_EGM2D.root',
                         'TRI_Tight'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_postVFP_Tight.root',
-                        'TRI_Veto'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_postVFP_Veto.root'
+                        'TRI_Veto'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2016_postVFP_Veto.root',
+                        'corrlib'    : '/cvmfs/cms-griddata.cern.ch/cat/metadata/EGM/Run2-2016postVFP-UL-NanoAODv9/latest/electron.json.gz',
+                        'corrlib_year': '2016postVFP',
                 },
                 'UL2017':{
-                        'TightID': 'ElectronSF/2017/UL/egammaEffi.txt_EGM2D_Tight_UL17.root',
-                        'vetoID' : 'ElectronSF/2017/UL/egammaEffi.txt_EGM2D_Veto_UL17.root',
+                        # 'TightID': 'ElectronSF/2017/UL/egammaEffi.txt_EGM2D_Tight_UL17.root',
+                        # 'vetoID' : 'ElectronSF/2017/UL/egammaEffi.txt_EGM2D_Veto_UL17.root',
                         'TRI_Tight'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2017_Tight.root',
-                        'TRI_Veto'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2017_Veto.root'
+                        'TRI_Veto'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2017_Veto.root',
+                        'corrlib'    : '/cvmfs/cms-griddata.cern.ch/cat/metadata/EGM/Run2-2017-UL-NanoAODv9/latest/electron.json.gz',
+                        'corrlib_year': '2017',
                 },
                 'UL2018':{
-                        'TightID': 'ElectronSF/2018/UL/egammaEffi.txt_Ele_Tight_EGM2D.root',
-                        'vetoID' : 'ElectronSF/2018/UL/egammaEffi.txt_Ele_Veto_EGM2D.root',
+                        # 'TightID': 'ElectronSF/2018/UL/egammaEffi.txt_Ele_Tight_EGM2D.root',
+                        # 'vetoID' : 'ElectronSF/2018/UL/egammaEffi.txt_Ele_Veto_EGM2D.root',
                         'TRI_Tight'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2018_Tight.root',
-                        'TRI_Veto'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2018_Veto.root'
+                        'TRI_Veto'    : 'ElectronSF/Run2_UL_TRI_SF_by_Mukund/UL2018_Veto.root',
+                        'corrlib'    : '/cvmfs/cms-griddata.cern.ch/cat/metadata/EGM/Run2-2018-UL-NanoAODv9/2024-07-02/electron.json.gz',
+                        'corrlib_year': '2018',
                 },
              }
 def create_elSF(dataYear,pt_, scEta_, wp_, syst_):
@@ -342,12 +394,16 @@ def create_elSF(dataYear,pt_, scEta_, wp_, syst_):
     
     if(wp_=="Tight"):
         Trigger_fSFName_ = el_InFiles[dataYear]['TRI_Tight']
-        ID_fSFName_ = el_InFiles[dataYear]['TightID']
+        # ID_fSFName_ = el_InFiles[dataYear]['TightID']
     if(wp_=="Veto"):
         Trigger_fSFName_ = el_InFiles[dataYear]['TRI_Veto']
-        ID_fSFName_ = el_InFiles[dataYear]['vetoID']
+        # ID_fSFName_ = el_InFiles[dataYear]['vetoID']
     #`print(Trigger_fSFName_,ID_fSFName_)
-    elSF = elScaleFactor(pt_, scEta_, wp_, syst_,ID_fSFName_,Trigger_fSFName_,dataYear)
+    #elSF = elScaleFactor(pt_, scEta_, wp_, syst_,ID_fSFName_,Trigger_fSFName_,dataYear)
+    corrlib_file_ = el_InFiles[dataYear]['corrlib']
+    corrlib_year_ = el_InFiles[dataYear]['corrlib_year']
+
+    elSF = elScaleFactor_v2(pt_, scEta_, wp_, syst_, Trigger_fSFName_,corrlib_file_, corrlib_year_)
     return elSF 
 
 mu_InFiles = {'2016' : [
@@ -449,4 +505,20 @@ def create_muSF(dataYear,pt_,eta_,iso_,lumiTotal_,syst_):
 #print create_muSF('UL2018',29.2907962799,0.0283164978027,0.297331474721,59222,'IDUp')#19521,16812,41520,59222
 #print(create_elSF('UL2017',50,-1.3,'Tight','noSyst'))
 #print(create_elSF('UL2017',50,-1.3,'Veto','noSyst'))
-#print "-------------------------------------------------------"                        
+#print "-------------------------------------------------------"  
+
+if __name__ == "__main__":
+
+    pt    = 40.0
+    scEta = 2.0
+    year  = "UL2018"
+
+    print(f"\nTesting year={year}, pt={pt}, scEta={scEta}")
+    print(f"{'WP':<8} {'syst':<16} {'ID*Trig SF':>12} {'Reco SF':>10}")
+    print("-" * 50)
+
+    for wp in ["Tight", "Veto"]:
+        for syst in ["noSyst", "IDUp", "IDDown", "TrigUp", "TrigDown", "RecoUp", "RecoDown"]:
+            id_trig_sf, reco_sf = create_elSF(year, pt, scEta, wp, syst)
+            print(f"{wp:<8} {syst:<16} {id_trig_sf:>12.4f} {reco_sf:>10.4f}")
+        print()
