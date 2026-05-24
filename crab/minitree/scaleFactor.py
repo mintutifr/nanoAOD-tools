@@ -60,7 +60,6 @@ def elScaleFactor_v2(pt, scEta, wp, syst, Trigger_fSFName,corrlib_file, corrlib_
     corr      = evaluator["UL-Electron-ID-SF"]
 
     syst_to_ID_valtype = {
-        "noSyst"  : "sf",
         "IDUp"    : "sfup", 
         "IDDown"  : "sfdown",
     }
