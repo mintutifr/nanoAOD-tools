@@ -59,21 +59,17 @@ def elScaleFactor_v2(pt, scEta, wp, syst, ID_fSFName, Trigger_fSFName,corrlib_fi
     evaluator = _core.CorrectionSet.from_file(corrlib_file)
     corr      = evaluator["UL-Electron-ID-SF"]
 
-    vt_map = {
+    syst_to_ID_valtype = {
         "noSyst"  : "sf",
-        "IDUp"    : "sfup",
+        "IDUp"    : "sfup", 
         "IDDown"  : "sfdown",
-        "TrigUp"  : "sf",
-        "TrigDown": "sf",
-        "RecoUp"  : "sf",    
-        "RecoDown": "sf",
     }
-    reco_vt_map = {
-        "RecoUp"  : "sfup",
+    syst_to_Reco_valtype = {
+        "RecoUp"  : "sfup",  
         "RecoDown": "sfdown",
     }
-    vt = vt_map.get(syst, "sf")
-    reco_vt = reco_vt_map.get(syst, "sf")
+    ID_corrlib   = syst_to_ID_valtype.get(syst, "sf")
+    Reco_corrlib = syst_to_Reco_valtype.get(syst, "sf")
     
     # Trigger SF — ROOT, unchanged
     fSFTrig = ROOT.TFile(Trigger_fSFName, "Read")
@@ -88,9 +84,10 @@ def elScaleFactor_v2(pt, scEta, wp, syst, ID_fSFName, Trigger_fSFName,corrlib_fi
     xbin = hSFTrig.GetXaxis().FindBin(scEta_trig)
     ybin = hSFTrig.GetYaxis().FindBin(pt_trig)
 
-    reco_wp = "RecoBelow20" if pt < 20.0 else "RecoAbove20"
-    ele_recons_sf = corr.evaluate(corrlib_year, reco_vt, reco_wp, scEta, pt)
-    ID_SF = corr.evaluate(corrlib_year, vt, wp, scEta, pt)
+    if pt < 20.0:
+        return -999, -999  
+    ele_recons_sf = corr.evaluate(corrlib_year, Reco_corrlib, "RecoAbove20", scEta, pt)
+    ID_SF = corr.evaluate(corrlib_year, ID_corrlib, wp, scEta, pt)
     if(syst == "TrigUp"):trig_sf = hSFTrig.GetBinContent(xbin, ybin) + hSFTrig.GetBinErrorUp(xbin, ybin)
     elif(syst == "TrigDown"):trig_sf = hSFTrig.GetBinContent(xbin, ybin) - hSFTrig.GetBinErrorLow(xbin, ybin)
     else: trig_sf = hSFTrig.GetBinContent(xbin, ybin)
@@ -98,7 +95,7 @@ def elScaleFactor_v2(pt, scEta, wp, syst, ID_fSFName, Trigger_fSFName,corrlib_fi
     hSFTrig.Delete()
     fSFTrig.Delete()
 
-    return  ID_SF * trig_sf, ele_recons_sf
+    return  ID_SF * trig_sf * ele_recons_sf, ele_recons_sf
 
 def muonScaleFactor(files,pt,eta,iso,lumiTotal,syst,dataYear):
     eta = abs(eta)
@@ -510,3 +507,19 @@ def create_muSF(dataYear,pt_,eta_,iso_,lumiTotal_,syst_):
 #print(create_elSF('UL2017',50,-1.3,'Tight','noSyst'))
 #print(create_elSF('UL2017',50,-1.3,'Veto','noSyst'))
 #print "-------------------------------------------------------"  
+
+if __name__ == "__main__":
+
+    pt    = 40.0
+    scEta = 2.0
+    year  = "UL2018"
+
+    print(f"\nTesting year={year}, pt={pt}, scEta={scEta}")
+    print(f"{'WP':<8} {'syst':<16} {'ID*Trig SF':>12} {'Reco SF':>10}")
+    print("-" * 50)
+
+    for wp in ["Tight", "Veto"]:
+        for syst in ["noSyst", "IDUp", "IDDown", "TrigUp", "TrigDown", "RecoUp", "RecoDown"]:
+            id_trig_sf, reco_sf = create_elSF(year, pt, scEta, wp, syst)
+            print(f"{wp:<8} {syst:<16} {id_trig_sf:>12.4f} {reco_sf:>10.4f}")
+        print()
