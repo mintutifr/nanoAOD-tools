@@ -149,6 +149,8 @@ class MinitreeProducer(Module):
                 self.out.branch("Electron_SF_Veto_IDDown",  "F")
                 self.out.branch("Electron_SF_Veto_TrigUp",  "F")
                 self.out.branch("Electron_SF_Veto_TrigDown",  "F")
+                self.out.branch("Electron_SF_Reco",        "F")
+                self.out.branch("Electron_SF_Veto_Reco", "F")
         self.out.branch("Px_nu","F")
         self.out.branch("Py_nu","F")
         self.out.branch("Pz_nu","F")
@@ -337,11 +339,11 @@ class MinitreeProducer(Module):
                     nElectron_sel = nElectron_sel+1
                     if(  (self.Isolation==True) and lep.pt>pt_Thes_el[self.dataYear] and abs(lep.eta)<2.1 and lep.cutBased==4 and (abs(lep.EtaSC)<1.4442 or abs(lep.EtaSC)>1.5660) and ((abs(lep.EtaSC)<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(lep.EtaSC)> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10)) ):
                         
-                        Electron_SF_Iso = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","noSyst")
-                        Electron_SF_Iso_IDUp = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","IDUp")
-                        Electron_SF_Iso_IDDown = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","IDDown")
-                        Electron_SF_Iso_TrigUp = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","TrigUp")
-                        Electron_SF_Iso_TrigDown = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","TrigDown")
+                        Electron_SF_Iso,        Electron_SF_Reco = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","noSyst")
+                        Electron_SF_Iso_IDUp, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","IDUp")
+                        Electron_SF_Iso_IDDown, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","IDDown")
+                        Electron_SF_Iso_TrigUp, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","TrigUp")
+                        Electron_SF_Iso_TrigDown, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","TrigDown")
 
                         lepton4v=lep.p4()
                         leptonCharge = lep.charge
@@ -358,14 +360,15 @@ class MinitreeProducer(Module):
                         self.out.fillBranch("Electron_SF_Iso_IDDown",Electron_SF_Iso_IDDown)
                         self.out.fillBranch("Electron_SF_Iso_TrigUp",Electron_SF_Iso_TrigUp)
                         self.out.fillBranch("Electron_SF_Iso_TrigDown",Electron_SF_Iso_TrigDown)
+                        self.out.fillBranch("Electron_SF_Reco",         Electron_SF_Reco)
 
                     elif( (self.Isolation==False) and lep.pt>pt_Thes_el[self.dataYear] and abs(lep.eta)<2.1 and lep.cutBased!=4 and lep.cutBased>=1 and (abs(lep.EtaSC)<1.4442 or abs(lep.EtaSC)>1.5660) and ((abs(lep.EtaSC)<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(lep.EtaSC)> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10)) ):
 
-                        Electron_SF_Veto = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","noSyst")
-                        Electron_SF_Veto_IDUp = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","IDUp")
-                        Electron_SF_Veto_IDDown = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","IDDown")
-                        Electron_SF_Veto_TrigUp = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","TrigUp")
-                        Electron_SF_Veto_TrigDown = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","TrigDown")
+                        Electron_SF_Veto,        Electron_SF_Veto_Reco = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","noSyst")
+                        Electron_SF_Veto_IDUp, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","IDUp")
+                        Electron_SF_Veto_IDDown, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","IDDown")
+                        Electron_SF_Veto_TrigUp, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","TrigUp")
+                        Electron_SF_Veto_TrigDown, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","TrigDown")
                 
         
                         lepton4v=lep.p4()
@@ -382,6 +385,7 @@ class MinitreeProducer(Module):
                         self.out.fillBranch("Electron_SF_Veto_IDDown",Electron_SF_Veto_IDDown)
                         self.out.fillBranch("Electron_SF_Veto_TrigUp",Electron_SF_Veto_TrigUp)
                         self.out.fillBranch("Electron_SF_Veto_TrigDown",Electron_SF_Veto_TrigDown)
+                        self.out.fillBranch("Electron_SF_Veto_Reco", Electron_SF_Veto_Reco)
 
             if(self.letopn_flv=="mu"):
                  nMuon_sel = -1
