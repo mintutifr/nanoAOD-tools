@@ -348,8 +348,8 @@ class MinitreeProducer(Module):
                         Electron_SF_Iso_IDDown, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","IDDown")
                         Electron_SF_Iso_TrigUp, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","TrigUp")
                         Electron_SF_Iso_TrigDown, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","TrigDown")
-                        _, Electron_SF_Iso_RecoUp  = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","RecoUp")
-                        _, Electron_SF_Iso_RecoDown = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","RecoDown")
+                        Electron_SF_Iso_RecoUp,_  = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","RecoUp")
+                        Electron_SF_Iso_RecoDown, _  = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","RecoDown")
 
 
                         lepton4v=lep.p4()
@@ -379,8 +379,8 @@ class MinitreeProducer(Module):
                         Electron_SF_Veto_IDDown, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","IDDown")
                         Electron_SF_Veto_TrigUp, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","TrigUp")
                         Electron_SF_Veto_TrigDown, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","TrigDown")
-                        _, Electron_SF_Veto_RecoUp  = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","RecoUp")
-                        _, Electron_SF_Veto_RecoDown= create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","RecoDown")
+                        Electron_SF_Veto_RecoUp, _  = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","RecoUp")
+                        Electron_SF_Veto_RecoDown,_ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","RecoDown")
 
         
                         lepton4v=lep.p4()
