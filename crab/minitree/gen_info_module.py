@@ -38,7 +38,8 @@ class gen_info(Module):
         self.out.branch("atop_mass","F")
         self.out.branch("top_pt","F")
         self.out.branch("atop_pt","F")
-        self.out.branch("top_pt_weight","F")
+        self.out.branch("top_pt_SF_up","F")
+        self.out.branch("top_pt_SF_down","F")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -66,7 +67,8 @@ class gen_info(Module):
         if top_pt > 0 and atop_pt > 0:
             sf_t          = top_pt_sf(top_pt)
             sf_tbar       = top_pt_sf(atop_pt)
-            top_pt_weight = math.sqrt(sf_t * sf_tbar)
+            top_pt_SF_down = math.sqrt(sf_t * sf_tbar)
+            top_pt_SF_up = 2 - math.sqrt(sf_t * sf_tbar)
         else:
             top_pt_weight = 1.0 
 
@@ -76,7 +78,8 @@ class gen_info(Module):
         self.out.fillBranch("atop_mass",atop_mass)
         self.out.fillBranch("top_pt",top_pt)
         self.out.fillBranch("atop_pt",atop_pt)
-        self.out.fillBranch("top_pt_weight", top_pt_weight)
+        self.out.fillBranch("top_pt_SF_down", top_pt_SF_down)
+        self.out.fillBranch("top_pt_SF_up", top_pt_SF_up)
 
         return True
 
