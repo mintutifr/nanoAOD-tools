@@ -19,6 +19,9 @@ def mk_safe(fct, *args):
         else:
             raise e
 
+def top_pt_sf(pt):
+    return 0.103 * math.exp(-0.0118 * pt) - 0.000134 * pt + 0.973
+
 
 class gen_info(Module):
     def __init__(self):
@@ -33,6 +36,9 @@ class gen_info(Module):
         self.out.branch("top_mass","F")
         self.out.branch("atop_Ngenpart","F")
         self.out.branch("atop_mass","F")
+        self.out.branch("top_pt","F")
+        self.out.branch("atop_pt","F")
+        self.out.branch("top_pt_weight","F")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -44,19 +50,33 @@ class gen_info(Module):
         Ngenpart_counter = -1
         ptop_Ngenpart,patop_Ngenpart = -1,-1
         top_mass,atop_mass = -99,-99
+        top_pt           = -99
+        atop_pt          = -99
         for genpart in Genparts:
             Ngenpart_counter += 1
             if (genpart.pdgId == 6 and ((genpart.statusFlags >> 13) & 0x1) > 0):
                     ptop_Ngenpart = Ngenpart_counter
                     top_mass = genpart.mass
+                    top_pt        = genpart.pt
             if (genpart.pdgId == -6 and ((genpart.statusFlags >> 13) & 0x1) > 0):
                     patop_Ngenpart = Ngenpart_counter
                     atop_mass = genpart.mass
+                    atop_pt        = genpart.pt
+
+        if top_pt > 0 and atop_pt > 0:
+            sf_t          = top_pt_sf(top_pt)
+            sf_tbar       = top_pt_sf(atop_pt)
+            top_pt_weight = math.sqrt(sf_t * sf_tbar)
+        else:
+            top_pt_weight = 1.0 
 
         self.out.fillBranch("top_Ngenpart",ptop_Ngenpart)
         self.out.fillBranch("atop_Ngenpart",patop_Ngenpart)
         self.out.fillBranch("top_mass",top_mass)
         self.out.fillBranch("atop_mass",atop_mass)
+        self.out.fillBranch("top_pt",top_pt)
+        self.out.fillBranch("atop_pt",atop_pt)
+        self.out.fillBranch("top_pt_weight", top_pt_weight)
 
         return True
 
