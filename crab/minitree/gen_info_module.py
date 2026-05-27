@@ -68,7 +68,7 @@ class gen_info(Module):
             sf_tbar       = top_pt_sf(atop_pt)
             top_pt_SF = math.sqrt(sf_t * sf_tbar)
         else:
-            top_pt_weight = 1.0 
+            top_pt_SF = 1.0 
 
         self.out.fillBranch("top_Ngenpart",ptop_Ngenpart)
         self.out.fillBranch("atop_Ngenpart",patop_Ngenpart)
