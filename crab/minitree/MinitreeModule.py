@@ -269,7 +269,7 @@ class MinitreeProducer(Module):
             self.out.branch("Event_wgt","F")
             self.out.branch("LHEWeightSign","F")
             self.shape_systs = ["Central","lf","hf","cferr1","cferr2","lfstats1","lfstats2","hfstats1","hfstats2","jes"]
-            self.B_tag_jes_variation = ['jesAbsoluteStat', 'jesAbsoluteMPFBias', 'jesFragmentation', 'jesSinglePionECAL', 'jesSinglePionHCAL', 'jesTimePtEta', 'jesRelativeJEREC1', 'jesRelativeJEREC2', 'jesRelativeJERHF', 'jesRelativePtBB', 'jesRelativePtEC1', 'jesRelativePtEC2', 'jesRelativePtHF', 'jesRelativeBal', 'jesRelativeSample' , 'jesRelativeFSR' , 'jesRelativeStatEC', 'jesRelativeStatHF' , 'jesPileUpDataMC', 'jesPileUpPtRef', 'jesPileUpPtBB', 'jesPileUpPtEC1' , 'jesPileUpPtEC2', 'jesPileUpPtHF', 'jesAbsoluteScale', 'jesFlavorQCD', 'jesRelativeStatFSR']
+            self.B_tag_jes_variation = ["jes","jesAbsoluteStat",'jesAbsoluteMPFBias','jesFragmentation','jesSinglePionECAL','jesSinglePionHCAL','jesTimePtEta','jesRelativeJEREC1','jesRelativeJEREC2','jesRelativeJERHF','jesRelativePtBB','jesRelativePtEC1','jesRelativePtEC2','jesRelativePtHF','jesRelativeBal','jesRelativeSample','jesRelativeFSR','jesRelativeStatEC','jesRelativeStatHF','jesPileUpDataMC','jesPileUpPtRef','jesPileUpPtBB','jesPileUpPtEC1','jesPileUpPtEC2','jesPileUpPtHF',"jesAbsoluteScale", "jesFlavorQCD", "jesRelativeStatFSR"]
             for syst in self.shape_systs:
                 if(syst == "Central"):self.out.branch("bWeight","F")
                 else: self.out.branch("bWeight_"+syst,  "F",lenVar="2")
