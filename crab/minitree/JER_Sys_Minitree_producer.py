@@ -38,14 +38,14 @@ def process_channel(args):
 
     tree = root_file.Get("Events")
 
-    sys_names = ["jesAbsoluteStat",'jesAbsoluteMPFBias','jesFragmentation','jesSinglePionECAL','jesSinglePionHCAL',
+    jes_names = ["jesAbsoluteStat",'jesAbsoluteMPFBias','jesFragmentation','jesSinglePionECAL','jesSinglePionHCAL',
                 'jesTimePtEta','jesRelativeJEREC1','jesRelativeJEREC2','jesRelativeJERHF','jesRelativePtBB','jesRelativePtEC1',
                 'jesRelativePtEC2','jesRelativePtHF','jesRelativeBal','jesRelativeSample','jesRelativeFSR','jesRelativeStatEC',
                 'jesRelativeStatHF','jesPileUpDataMC','jesPileUpPtRef','jesPileUpPtBB','jesPileUpPtEC1','jesPileUpPtEC2',
-                'jesPileUpPtHF',"jesAbsoluteScale", "jesFlavorQCD", "jesRelativeStatFSR", 'jer0', 'jer1', 'jer2', 'jer3',
+                'jesPileUpPtHF',"jesAbsoluteScale", "jesFlavorQCD", "jesRelativeStatFSR"]
+    jer_names = ['jer0', 'jer1', 'jer2', 'jer3',
                 'jer4', 'jer5']
-
-    jes_names = sys_names[:27]
+    sys_names = jes_names+jer_names 
     
     # Disable all branches initially
     tree.SetBranchStatus("*", 0)
