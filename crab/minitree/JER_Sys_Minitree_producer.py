@@ -38,15 +38,15 @@ def process_channel(args):
 
     tree = root_file.Get("Events")
 
-    sys_names = ['jesAbsoluteScale','jesFlavorQCD','jesRelativeStatFSR',
-                'jer','jesAbsoluteStat', 'jesAbsoluteMPFBias', 'jesFragmentation', 'jesSinglePionECAL', 'jesSinglePionHCAL',
-                'jesTimePtEta', 'jesRelativeJEREC1', 'jesRelativeJEREC2', 'jesRelativeJERHF', 'jesRelativePtBB',
-                'jesRelativePtEC1', 'jesRelativePtEC2', 'jesRelativePtHF', 'jesRelativeBal', 'jesRelativeSample',
-                'jesRelativeFSR', 'jesRelativeStatEC', 'jesRelativeStatHF', 'jesPileUpDataMC', 'jesPileUpPtRef',
-                'jesPileUpPtBB', 'jesPileUpPtEC1', 'jesPileUpPtEC2', 'jesPileUpPtHF',"jesAbsoluteScale", "jesFlavorQCD", 
-                "jesRelativeStatFSR" ]
-
-
+    jes_names = ["jesAbsoluteStat",'jesAbsoluteMPFBias','jesFragmentation','jesSinglePionECAL','jesSinglePionHCAL',
+                'jesTimePtEta','jesRelativeJEREC1','jesRelativeJEREC2','jesRelativeJERHF','jesRelativePtBB','jesRelativePtEC1',
+                'jesRelativePtEC2','jesRelativePtHF','jesRelativeBal','jesRelativeSample','jesRelativeFSR','jesRelativeStatEC',
+                'jesRelativeStatHF','jesPileUpDataMC','jesPileUpPtRef','jesPileUpPtBB','jesPileUpPtEC1','jesPileUpPtEC2',
+                'jesPileUpPtHF',"jesAbsoluteScale", "jesFlavorQCD", "jesRelativeStatFSR"]
+    jer_names = ['jer0', 'jer1', 'jer2', 'jer3',
+                'jer4', 'jer5']
+    sys_names = jes_names+jer_names 
+    
     # Disable all branches initially
     tree.SetBranchStatus("*", 0)
 
@@ -63,6 +63,9 @@ def process_channel(args):
             required_branches.append(f"Jet_mass_{sys}{direction}")
             required_branches.append(f"MET_T1_pt_{sys}{direction}")
             required_branches.append(f"MET_T1_phi_{sys}{direction}")
+
+    required_branches.append("bWeight_jes_variation_up")
+    required_branches.append("bWeight_jes_variation_down")
 
     # Enable the required branches
     for branch in required_branches:
@@ -88,6 +91,11 @@ def process_channel(args):
             output_tree.Branch(f"topMass{suffix}", branches[f"topMass{suffix}"], f"topMass{suffix}/D")
             output_tree.Branch(f"topEnergy{suffix}", branches[f"topEnergy{suffix}"], f"topEnergy{suffix}/D")
     
+    for jes in jes_names:
+        branches[f"bWeight_{jes}_up"]   = np.zeros(1, dtype=float)
+        branches[f"bWeight_{jes}_down"] = np.zeros(1, dtype=float)
+        output_tree.Branch(f"bWeight_{jes}_up",   branches[f"bWeight_{jes}_up"],   f"bWeight_{jes}_up/D")
+        output_tree.Branch(f"bWeight_{jes}_down", branches[f"bWeight_{jes}_down"], f"bWeight_{jes}_down/D")
 
     for i, event in enumerate(tree):
         # if i >= 10:  # Process only the first 10 entries
@@ -117,6 +125,11 @@ def process_channel(args):
                 branches[f"topMass{suffix}"][0] = top4v.M()
                 branches[f"topEnergy{suffix}"][0] = top4v.E()
 
+        bwgt_up   = list(event.bWeight_jes_variation_up)
+        bwgt_down = list(event.bWeight_jes_variation_down)
+        for idx, jes in enumerate(jes_names):
+            branches[f"bWeight_{jes}_up"][0]   = bwgt_up[idx]
+            branches[f"bWeight_{jes}_down"][0] = bwgt_down[idx]
 
         output_tree.Fill()
 
