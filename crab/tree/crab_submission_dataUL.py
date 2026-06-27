@@ -4,7 +4,7 @@ import re
 from tqdm import tqdm
 
 parser = arg.ArgumentParser(description='inputs discription')
-parser.add_argument('-y', '--year', dest='years', type=str, nargs=1, help="Year [ UL2016preVFP , UL2016postVFP , UL2017 , UL2018, UL2022EEpre, UL2022EEpost]")
+parser.add_argument('-y', '--year', dest='years', type=str, nargs=1, help="Year [ UL2016preVFP , UL2016postVFP , UL2017 , UL2018, UL2022EEpre, UL2022EEpost, 2024]")
 parser.add_argument('-l', '--lep', dest='leptons', type=str, nargs=1, help="lepton [ el , mu, emu ]")
 
 
@@ -14,7 +14,7 @@ if (args.years == None or args.leptons == None):
         print ("USAGE: %s [-h] [-y <Data year> -l <lepton>]"%(sys.argv [0]))
         sys.exit (1)
 
-if args.years[0] not in ['UL2016preVFP','UL2016postVFP','UL2017','UL2018', 'UL2022EEpre', 'UL2022EEpost']:
+if args.years[0] not in ['UL2016preVFP','UL2016postVFP','UL2017','UL2018', 'UL2022EEpre', 'UL2022EEpost', '2024']:
     print('Error: Incorrect choice of year, use -h for help')
     exit()
 
@@ -71,6 +71,12 @@ if(year == 'UL2022EEpre'):
     if(lep=="emu"):  
         Datasets = Datasets_MuonEG_data_2022pre
 
+if(year == '2024'):
+    outputDir = "/store/user/lbhatt/crab/DataAA_"+lep+"/"
+    from dataset_2024 import *
+    if(lep=="mu"):
+        Datasets = Datasets_Muon_data_2024
+
 #if(year == 'UL2022EEpost'):
 #    outputDir = "/store/user/lbhatt/crab/Data_"+lep+"/"
 #    from dataset_UL2022EEpost import *
@@ -111,12 +117,31 @@ for RequestName in tqdm(RequestNames):
             update_Golgonjsonfile = "config.Data.lumiMask ='CGolden.json'\n"
         if(RequestName =="Run2022C_v2"):
             update_Golgonjsonfile = "config.Data.lumiMask ='CGolden.json'\n"
+        if(RequestName =="Run2022C_v3"):
+            update_Golgonjsonfile = "config.Data.lumiMask ='CGolden.json'\n"
         if(RequestName =="Run2022D_v1"):
             update_Golgonjsonfile = "config.Data.lumiMask = 'DGolden.json'\n"
         if(RequestName =="Run2022C"):
             update_Golgonjsonfile = "config.Data.lumiMask ='CGolden.json'\n"
         if(RequestName =="Run2022D"):
             update_Golgonjsonfile = "config.Data.lumiMask = 'DGolden.json'\n"
+    elif(year=='2024'):
+        if(RequestName == "Run2024C_Muon0" or RequestName == "Run2024C_Muon1"):
+            update_Golgonjsonfile = "config.Data.lumiMask = 'Golden2024C.json'\n"
+        if(RequestName == "Run2024D_Muon0" or RequestName == "Run2024D_Muon1"):
+            update_Golgonjsonfile = "config.Data.lumiMask = 'Golden2024D.json'\n"
+        if(RequestName == "Run2024E_Muon0" or RequestName == "Run2024E_Muon1"):
+            update_Golgonjsonfile = "config.Data.lumiMask = 'Golden2024E.json'\n"
+        if(RequestName == "Run2024F_Muon0" or RequestName == "Run2024F_Muon1"):
+            update_Golgonjsonfile = "config.Data.lumiMask = 'Golden2024F.json'\n"
+        if(RequestName == "Run2024G_Muon0" or RequestName == "Run2024G_Muon1"):
+            update_Golgonjsonfile = "config.Data.lumiMask = 'Golden2024G.json'\n"
+        if(RequestName == "Run2024H_Muon0" or RequestName == "Run2024H_Muon1"):
+            update_Golgonjsonfile = "config.Data.lumiMask = 'Golden2024H.json'\n"
+        if(RequestName == "Run2024I_Muon0" or RequestName == "Run2024I_Muon1"):
+            update_Golgonjsonfile = "config.Data.lumiMask = 'Golden2024I.json'\n"
+        if(RequestName == "Run2024J_Muon1"):
+            update_Golgonjsonfile = "config.Data.lumiMask = 'Golden2024J.json'\n"
     #elif(year=='UL2022EEpost'):
     #    if(RequestName =="Run2022E_v1"):
     #        update_Golgonjsonfile = "config.Data.lumiMask ='EGolden.json'\n"

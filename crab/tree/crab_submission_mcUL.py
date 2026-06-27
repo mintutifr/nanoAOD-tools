@@ -3,7 +3,7 @@ import argparse as arg
 from tqdm import tqdm
 
 parser = arg.ArgumentParser(description='inputs discription')
-parser.add_argument('-y', '--year', dest='inputs', type=str, nargs=1, help="Year [UL2016preVFP, UL2016postVFP, UL2017, UL2018, UL2022EEpre, UL2022EEpost]")
+parser.add_argument('-y', '--year', dest='inputs', type=str, nargs=1, help="Year [UL2016preVFP, UL2016postVFP, UL2017, UL2018, UL2022EEpre, UL2022EEpost, 2024]")
 args = parser.parse_args()
 
 
@@ -11,7 +11,7 @@ if args.inputs == None:
         print("USAGE: %s [-h] [-y <Data year>]"%(sys.argv [0]))
         sys.exit (1)
 
-if args.inputs[0] not in ['UL2016preVFP', 'UL2016postVFP','UL2017','UL2018', 'UL2022EEpre', 'UL2022EEpost']:
+if args.inputs[0] not in ['UL2016preVFP', 'UL2016postVFP','UL2017','UL2018', 'UL2022EEpre', 'UL2022EEpost', '2024']:
     print('Error: Incorrect choice of year, use -h for help')
     exit()
 
@@ -42,6 +42,11 @@ if(year == 'UL2022EEpre'):
     from dataset_UL2022EEpre import *
     outputDir = "/store/user/lbhatt/crab/model_unc/RUN3_UL/Tree_crab/2022EEpre/MC/"
     Datasets = Datasets_MC_var_UL2022EEpre    
+
+if(year == '2024'):
+    from dataset_2024 import *
+    outputDir = "/store/user/lbhatt/crab/model2024/RUN3_UL/Tree_crab/2024/MC/"
+    Datasets = Datasets_MC_2024    
 
 #if(year == 'UL2022EEpost'):
 #    from dataset_UL2022EEpost import *

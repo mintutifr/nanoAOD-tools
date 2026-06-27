@@ -5,7 +5,7 @@ config = Configuration()
 
 config.section_("General")
 
-config.General.requestName = 'TTtoLNu2Q_MT-175p5_Tree_UL2022EEpre'
+config.General.requestName = 'Run2024H_Muon1_Tree_2024'
 
 config.General.transferLogs=True
 config.section_("JobType")
@@ -17,20 +17,20 @@ config.JobType.inputFiles = ['crab_script_skimTree.py','../../scripts/haddnano.p
 #config.JobType.sendPythonFolder=True
 config.section_("Data")
 
-config.Data.inputDataset = '/TTtoLNu2Q_MT-175p5_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer22NanoAODv12-130X_mcRun3_2022_realistic_v5-v2/NANOAODSIM'
+config.Data.inputDataset = '/Muon1/Run2024H-MINIv6NANOv15-v2/NANOAOD'
 
 config.Data.inputDBS = 'global'
-config.Data.splitting = 'FileBased'
-config.Data.unitsPerJob = 1
+config.Data.splitting = 'LumiBased'
+config.Data.unitsPerJob = 150
 config.Data.allowNonValidInputDataset = True
 
-"""config.Data.lumiMask ="""
+config.Data.lumiMask = 'Golden2024H.json'
 
-config.Data.outLFNDirBase = '/store/user/lbhatt/crab/model_unc/RUN3_UL/Tree_crab/2022EEpre/MC/TTtoLNu2Q_MT-175p5'
+config.Data.outLFNDirBase = '/store/user/lbhatt/crab/DataAA_mu/Run2024H_Muon1'
 
 config.Data.publication = False
 
-config.Data.outputDatasetTag = 'Tree_10_Apr26_MCUL2022EEpre_TTtoLNu2Q_MT-175p5'
+config.Data.outputDatasetTag = 'Tree_26_Jun26_Run2024H_Muon1'
 
 config.section_("Site")
 config.Site.storageSite = 'T3_CH_CERNBOX'
