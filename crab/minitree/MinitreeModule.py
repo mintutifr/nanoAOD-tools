@@ -582,21 +582,26 @@ class MinitreeProducer(Module):
                 'UL2016postVFP' :0.0480,
                 'UL2017' : 0.0532,
                 'UL2018' : 0.0490}
+        Tight_b_tag_eta_cut = {
+            "UL2016preVFP": 2.4,
+            "UL2016postVFP": 2.4,
+            "UL2017": 2.5,
+            "UL2018": 2.5,
+        }
         for jet in jet_id:
             njet4v.SetPtEtaPhiM(jet.pt,jet.eta,jet.phi,jet.mass)
             #print lepton4v.DeltaR(njet4v)
             #print jet.btagDeepFlavB," ",jet.eta
         #print getattr(event,'event');
         
-        for jet in filter(lambda j:(j.btagDeepFlavB>Tight_b_tag_crite[self.dataYear] and abs(j.eta)<2.5), jet_id):
+        for jet in filter(lambda j:(j.btagDeepFlavB>Tight_b_tag_crite[self.dataYear] and abs(j.eta)<Tight_b_tag_eta_cut[self.dataYear]), jet_id):
             btagjet_id.append(jet) 
         #print("btagJet_id = ", btagjet_id)
         #if(len(btagjet_id)):   return True
         if(self.Total_Njets == 2 and  self.BTag_Njets == 1 and len(btagjet_id)==0):
-                for jet in filter(lambda j:(j.btagDeepFlavB>Lose_b_tag_crite[self.dataYear] and abs(j.eta)<2.5), jet_id):
+                for jet in filter(lambda j:(j.btagDeepFlavB>Lose_b_tag_crite[self.dataYear] and abs(j.eta)<Tight_b_tag_eta_cut[self.dataYear]), jet_id):
                         btagjet_id.append(jet)
                 #print len(btagjet_id)
-
         #print len(jet_id)," ",len(btagjet_id)
         #print "--------------------------------------2 J 1 T-----------------------------"
         if( self.Total_Njets == 2 and  self.BTag_Njets == 1):
