@@ -46,8 +46,10 @@
 #python Train_NN_pytorch.py -y ULpreVFP2016 -l el
 #python Train_NN_pytorch.py -y ULpostVFP2016 -l mu
 #python Train_NN_pytorch.py -y ULpostVFP2016 -l el
-#python Train_NN_pytorch.py -y UL2017 -l mu
-#python Train_NN_pytorch.py -y UL2017 -l el
+#python3 Train_NN_pytorch.py -y UL2017 -l mu
+#python3 Train_NN_pytorch.py -y UL2017 -l el
+python3 -u Train_NN_pytorch.py -y UL2018 -l mu &> log_Train_NN_pytorch_UL2018_mu.out
+python3 -u Train_NN_pytorch.py -y UL2018 -l el &> log_Train_NN_pytorch_UL2018_el.out
 #python Train_NN_pytorch_check_droplJetdeepJet.py -y UL2018 -l mu
 #python Train_NN_pytorch_check_droplJetdeepJet.py -y UL2018 -l el
 
@@ -57,21 +59,21 @@
 #python Test_NN_pytorch.py -y ULpreVFP2016 -l el
 #python Test_NN_pytorch.py -y ULpostVFP2016 -l mu
 #python Test_NN_pytorch.py -y ULpostVFP2016 -l el
-#python Test_NN_pytorch.py -y UL2017 -l mu
+#python3 Test_NN_pytorch.py -y UL2017 -l mu
 #python Test_NN_pytorch.py -y UL2017 -l el
 #python Test_NN_pytorch_check_deoplJetdeepJet.py -y UL2018 -l mu
 #python Test_NN_pytorch_check_deoplJetdeepJet.py -y UL2018 -l el
 
 
 #torch needed
-python3 Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2016preVFP -s Mc_Nomi -r 2J1T
-python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2016preVFP -s Mc_Nomi -r 2J1T
-python3 Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2016postVFP -s Mc_Nomi -r 2J1T
-python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2016postVFP -s Mc_Nomi -r 2J1T
-python3 Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2017 -s Mc_Nomi -r 2J1T
-python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2017 -s Mc_Nomi -r 2J1T
-python3 Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2018 -s Mc_Nomi -r 2J1T
-python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2018 -s Mc_Nomi -r 2J1T
+#python3 Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2016preVFP -s Mc_Nomi -r 2J1T
+#python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2016preVFP -s Mc_Nomi -r 2J1T
+#python3 Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2016postVFP -s Mc_Nomi -r 2J1T
+#python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2016postVFP -s Mc_Nomi -r 2J1T
+#python3 Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2017 -s Mc_Nomi -r 2J1T
+#python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2017 -s Mc_Nomi -r 2J1T
+#python3 Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2018 -s Mc_Nomi -r 2J1T
+#python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2018 -s Mc_Nomi -r 2J1T
 
 #python Apply_NN_pytorch_FullMC_N_Data_droplJetdeepjet.py -l mu -y UL2018 -s Mc_Nomi -r 2J1T
 #python Apply_NN_pytorch_FullMC_N_Data_droplJetdeepjet.py -l el -y UL2018 -s Mc_Nomi -r 2J1T
@@ -83,6 +85,17 @@ python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2018 -s Mc_Nomi -r 2J1T
 #python Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2017 -s Mc_Alt
 #python Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2017 -s Mc_Alt
 
+#python3 Apply_NN_pytorch_train_test_valid_samples.py  -l mu -y UL2017 -s Mc_Nomi -r 2J1T
+#python3 Apply_NN_pytorch_train_test_valid_samples.py  -l el -y UL2017 -s Mc_Nomi -r 2J1T
+# run sft (defined in bashrc)
+#python Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2016preVFP -s Mc_sys  -r 2J1T
+#python Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2016preVFP -s Mc_sys -r 2J1T
+#python Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2016postVFP -s Mc_sys -r 2J1T
+#python Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2016postVFP -s Mc_sys -r 2J1T
+# python Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2017 -s Mc_sys -r 2J1T
+# python Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2017 -s Mc_sys -r 2J1T
+# python Apply_NN_pytorch_FullMC_N_Data.py -l mu -y UL2018 -s Mc_sys -r 2J1T
+# python Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2018 -s Mc_sys -r 2J1T
 
 #python Apply_NN_pytorch_FullMC_N_Data.py -l el -y ULpreVFP2016 -s Mc_Nomi -r 2J1L0T
 #python Apply_NN_pytorch_FullMC_N_Data.py -l el -y ULpreVFP2016 -s Mc_Nomi -r 3J2T
@@ -119,25 +132,25 @@ python3 Apply_NN_pytorch_FullMC_N_Data.py -l el -y UL2018 -s Mc_Nomi -r 2J1T
 #python roc_creater_from_full_sample_withweights.py -y UL2018 -l el
 
 # cmseenv needed
-#python Efficiency_creater.py -y UL2016preVFP -l mu
-#python Efficiency_creater.py -y ULpreVFP2016 -l el
-#python Efficiency_creater.py -y ULpostVFP2016 -l mu
-#python Efficiency_creater.py -y ULpostVFP2016 -l el
-#python Efficiency_creater.py -y UL2017 -l mu
-#python Efficiency_creater.py -y UL2017 -l el
-#python Efficiency_creater.py -y UL2018 -l mu
-#python Efficiency_creater.py -y UL2018 -l el
+#python3 Efficiency_creater.py -y UL2016preVFP -l mu
+#python3 Efficiency_creater.py -y UL2016preVFP -l el
+#python3 Efficiency_creater.py -y UL2016postVFP -l mu
+#python3 Efficiency_creater.py -y UL2016postVFP -l el
+#python3 Efficiency_creater.py -y UL2017 -l mu
+#python3 Efficiency_creater.py -y UL2017 -l el
+#python3 Efficiency_creater.py -y UL2018 -l mu
+#python3 Efficiency_creater.py -y UL2018 -l el
 
 
 # cmseenv needed
-#python Efficiency_ploter.py -y UL2016preVFP -l mu
-#python Efficiency_ploter.py -y ULpreVFP2016 -l el
-#python Efficiency_ploter.py -y ULpostVFP2016 -l mu
-#python Efficiency_ploter.py -y ULpostVFP2016 -l el
-#python Efficiency_ploter.py -y UL2017 -l mu
-#python Efficiency_ploter.py -y UL2017 -l el
-#python Efficiency_ploter.py -y UL2018 -l mu
-#python Efficiency_ploter.py -y UL2018 -l el
+# python3 Efficiency_ploter.py -y UL2016preVFP -l mu
+# python3 Efficiency_ploter.py -y UL2016preVFP -l el
+# python3 Efficiency_ploter.py -y UL2016postVFP -l mu
+# python3 Efficiency_ploter.py -y UL2016postVFP -l el
+# python3 Efficiency_ploter.py -y UL2017 -l mu
+# python3 Efficiency_ploter.py -y UL2017 -l el
+# python3 Efficiency_ploter.py -y UL2018 -l mu
+# python3 Efficiency_ploter.py -y UL2018 -l el
 
 # cmseenv needed
 #python Efficiency_optomization_2D.py -y ULpreVFP2016 -l mu

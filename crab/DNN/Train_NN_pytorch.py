@@ -169,7 +169,8 @@ y_val_ch = {}
 
 #n_tr = 50000
 #n_val = 10000
-dir='/nfs/home/mintu/work/private/Nanoaod/CMSSW_12_1_1/src/Run2UL_Analysis/QCD_SFs/DNN_test_train_dataset/2J1T1/'
+#dir='/nfs/home/mintu/work/private/Nanoaod/CMSSW_12_1_1/src/Run2UL_Analysis/QCD_SFs/DNN_test_train_dataset/2J1T1/'
+dir='/nfs/home/common/RUN2_UL/DNN_Training_files/2J1T/'
 for count, channel in enumerate(train_ch):	
     print("Events",dir+year+'_' + channel + '_train_'+lep+'.root')
     with uproot.open(dir+year+'_' + channel + '_train_'+lep+'.root') as file:
