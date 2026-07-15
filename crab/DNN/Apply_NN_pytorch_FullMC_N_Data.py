@@ -108,8 +108,8 @@ data_channels = {
 	}
 if(sample=="Mc_Nomi"):
         channels = ['Tchannel', 'Tbarchannel','tw_top', 'tw_antitop', 'Schannel', 'ttbar_SemiLeptonic', 'ttbar_FullyLeptonic', 'WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'DYJetsToLL', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L', 'QCD']
-        channels.append("Data"+year) 
-        channels = ['ttbar_SemiLeptonic']
+        channels.append("Data")#+year) 
+        #channels = ['ttbar_SemiLeptonic']
 elif(sample=="Mc_Alt"):
         channels = ["ttbar_SemiLeptonic_mtop1695", "ttbar_SemiLeptonic_mtop1715", "ttbar_SemiLeptonic_mtop1735", "ttbar_SemiLeptonic_mtop1755", "ttbar_FullyLeptonic_mtop1695", "ttbar_FullyLeptonic_mtop1715","ttbar_FullyLeptonic_mtop1735", "ttbar_FullyLeptonic_mtop1755"]
         #channels = ['Tbarchannel_mtop1695', 'ttbar_SemiLeptonic_mtop1695',   'ttbar_FullyLeptonic_mtop1695',   'Tbarchannel_mtop1735',   'ttbar_FullyLeptonic_widthx0p55',   'ttbar_FullyLeptonic_widthx0p7',   'ttbar_FullyLeptonic_mtop1735',   'Tbarchannel_mtop1715',   'ttbar_FullyLeptonic_widthx1p3',   'ttbar_FullyLeptonic_mtop1755',   'ttbar_FullyLeptonic_widthx1p45',   'ttbar_FullyLeptonic_mtop1715',   'Tchannel_mtop1715',   'ttbar_SemiLeptonic_mtop1755',   'ttbar_SemiLeptonic_mtop1735',   'ttbar_SemiLeptonic_mtop1715',   'ttbar_FullyLeptonic_widthx0p85',   'Tbarchannel_mtop1755',   'Tchannel_mtop1695',   'ttbar_FullyLeptonic_widthx1p15',   'Tchannel_mtop1735',   'Tchannel_mtop1755']
@@ -121,8 +121,13 @@ print(channels)
 types = ['Apply_all']#,'train']
 files = []
 
-#ML_DIR='dataframe_saved_with_mtwCut/'+region+'1/' ; wightfolder = 'weight_with_mtwCut/' ; MainOutputDir = 'DNN_output_with_mtwCut/'
-ML_DIR='dataframe_saved_without_mtwCut/'+region+'/' ; wightfolder = 'weight_without_mtwCut/' ; MainOutputDir = 'DNN_output_without_mtwCut/'+region+'1/'
+# ML_DIR='dataframe_saved_with_mtwCut/'+region+'1/' 
+# wightfolder = 'weight_with_mtwCut/' 
+# MainOutputDir = 'DNN_output_with_mtwCut/'
+
+ML_DIR='dataframe_saved_without_mtwCut/'+region+'1/'
+wightfolder = 'weight/' #_without_mtwCut/' 
+MainOutputDir = 'DNN_output_without_mtwCut/'+region+'1/'
 
 #if not os.path.exists(MainOutputDir): os.mkdir(MainOutputDir)
 #if not os.path.exists(MainOutputDir+'Apply_all/'): os.mkdir(MainOutputDir+'Apply_all/')
