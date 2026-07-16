@@ -280,7 +280,7 @@ for epoch in range(EPOCHS):
     # Track best performance, and save the model's state
     if avg_vloss < best_vloss:
         best_vloss = avg_vloss
-        wightpath = 'weight/'+year+'/'+lep
+        wightpath = 'weight_without_mtwCut/'+year+'/'+lep
         if not os.path.exists(wightpath): 
             os.makedirs(wightpath)
         model_path = wightpath+'/model_{}_{}'.format(timestamp, epoch_number)

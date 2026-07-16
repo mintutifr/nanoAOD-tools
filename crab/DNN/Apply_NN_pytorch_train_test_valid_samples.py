@@ -112,8 +112,10 @@ if(sample=="Mc_Nomi"):
 types = ['test','train','valid']
 files = []
 
-#ML_DIR='dataframe_saved_with_mtwCut/'+region+'1/' ; wightfolder = 'weight_with_mtwCut/' ; MainOutputDir = 'DNN_output_with_mtwCut/'
-ML_DIR='dataframe_saved_without_mtwCut/'+region+'/' ; wightfolder = 'weight_without_mtwCut/' ; MainOutputDir = 'DNN_output_without_mtwCut/'+region+'1/'
+#ML_DIR='dataframe_saved_with_mtwCut/'+region+'1/' ; wightfolder = 'weight_with_mtwCut/' ; MainOutputDir = 'DNN_output_with_mtwCut/' (with mtwMass cut the roc will be smaller)
+ML_DIR='/nfs/home/common/RUN2_UL/DNN_outputs_without_mtwCut_corr_bweight/EIGHTEEN/2J1T1/Train_test_Valid/'
+wightfolder = 'weight_without_mtwCut/'
+MainOutputDir = 'DNN_output_without_mtwCut/'+region+'1/'
 
 #if not os.path.exists(MainOutputDir): os.mkdir(MainOutputDir)
 #if not os.path.exists(MainOutputDir+'Apply_all/'): os.mkdir(MainOutputDir+'Apply_all/')

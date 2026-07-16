@@ -32,12 +32,12 @@ elif(lep=="el"):
 print(lepton)
 
 files = {
-	'sig': 		year+'_Top_signal_test_'+lep+'_apply.root',
-	'tbkg': 	year+'_Top_bkg_test_'+lep+'_apply.root', 
-	'obkg': 	year+'_EWK_BKG_test_'+lep+'_apply.root', 
-	'sig_ws':	year+ '_WS_Top_signal_test_'+lep+'_apply.root', 
-	'tbkg_ws':	year+ '_WS_Top_bkg_test_'+lep+'_apply.root', 
-	'qcd': 		year+'_QCD_BKG_test_'+lep+'_apply.root'
+	'sig': 		year+'_Top_signal_test_'+lep+'.root',
+	'tbkg': 	year+'_Top_bkg_test_'+lep+'.root',
+	'obkg': 	year+'_EWK_BKG_test_'+lep+'.root',
+	'sig_ws':	year+ '_WS_Top_signal_test_'+lep+'.root',
+	'tbkg_ws':	year+ '_WS_Top_bkg_test_'+lep+'.root',
+	'qcd': 		year+'_QCD_BKG_test_'+lep+'.root'
 	}
 classes = ['sig', 'tbkg', 'obkg', 'sig_ws', 'tbkg_ws', 'qcd']
 discriminators = {
@@ -56,12 +56,12 @@ n_sel_sig = np.zeros(n_bins+1)
 n_sel_bkg = np.zeros(n_bins+1)
 
 
-applydir = '/nfs/home/common/RUN2_UL/DNN_Training_files/2J1T/'#'DNN_output_without_mtwCut/2J1T1/' ; 
+applydir = '/nfs/home/common/RUN2_UL/DNN_outputs_without_mtwCut_corr_bweight/EIGHTEEN/2J1T1/Train_test_Valid/'
 output_fileName = "ROC_TGraphs/ROC_info_"+year+"_"+lep+"_without_weights.root"
 
 for key in classes:
     infiles[key] = rt.TFile.Open(applydir +files[key], 'READ')
-    intree[key] = infiles[key].Get('tree')
+    intree[key] = infiles[key].Get('Events')
     rt.gROOT.cd()
     hs[key] = rt.TH1F('hs' + key, '', n_bins, 0.0, 1.0)
     intree[key].Project('hs' + key, discriminators[signal])

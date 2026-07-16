@@ -5,12 +5,31 @@ from Hist_style import *
 import argparse as arg
 
 parser = arg.ArgumentParser(description='inputs discription')
-parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1, help="lepton [ el  mu ]")
+parser.add_argument('-l', '--lepton', dest='lepton', type=str, nargs=1,
+                     help="lepton [ el  mu ]")
+parser.add_argument('-e', '--eras', dest='eras', type=str, nargs='+',
+                     default=['ULpreVFP2016', 'ULpostVFP2016', 'UL2017', 'UL2018'],
+                     choices=['ULpreVFP2016', 'ULpostVFP2016', 'UL2017', 'UL2018'],
+                     help="one or more eras to plot, e.g. -e UL2018 "
+                          "or -e ULpreVFP2016 ULpostVFP2016. Default: all four.")
 
 args = parser.parse_args()
 
 lep = args.lepton[0]
- 
+eras_selected = args.eras
+
+# ---------------------------------------------------------------------
+# Master lookup table: era key -> (file tag, legend text, color, marker)
+# Colors/markers stay fixed per era regardless of which subset is chosen,
+# so e.g. UL2018 always shows up in the same color even if plotted alone.
+# ---------------------------------------------------------------------
+era_info = {
+    'ULpreVFP2016':  {'legend': 'UL2016preVFP',  'color': 2, 'marker': 87},
+    'ULpostVFP2016': {'legend': 'UL2016postVFP', 'color': 3, 'marker': 20},
+    'UL2017':        {'legend': 'UL2017',        'color': 4, 'marker': 21},
+    'UL2018':        {'legend': 'UL2018',        'color': 6, 'marker': 22},
+}
+
 x2 = np.linspace(0, 1, 40)
 y2 = x2
 
@@ -31,26 +50,23 @@ std.GetYaxis().SetTitleSize(0.05)
 std.SetTitle("")
 filedir = "ROC_TGraphs/"
 
-with_or_withoutweights = 'with'
+with_or_withoutweights = 'without'
 
-files_to_read_roc = [
-                        'ROC_info_ULpreVFP2016_'+lep+'_'+with_or_withoutweights+'_weights.root',
-                        #'ROC_info_ULpreVFP2016_el_'+with_or_withoutweights+'_weights.root',
-                        'ROC_info_ULpostVFP2016_'+lep+'_'+with_or_withoutweights+'_weights.root',
-                        #'ROC_info_ULpostVFP2016_el_'+with_or_withoutweights+'_weights.root',
-                        'ROC_info_UL2017_'+lep+'_'+with_or_withoutweights+'_weights.root',
-                        #'ROC_info_UL2017_el_'+with_or_withoutweights+'_weights.root',
-                        'ROC_info_UL2018_'+lep+'_'+with_or_withoutweights+'_weights.root',
-                        #'ROC_info_UL2018_el_'+with_or_withoutweights+'_weights.root'
-]
+# Build file list, colors, markers, and legend text only for the
+# eras the user asked for, in the order given on the command line.
+files_to_read_roc = []
+colors = []
+makerstyle = []
+legend_txt = []
 
-#files_to_read_roc = ['ROC_info_ULpreVFP2016_mu.root','ROC_info_ULpreVFP2016_el.root','ROC_info_ULpostVFP2016_mu.root','ROC_info_ULpostVFP2016_el.root','ROC_info_UL2017_mu.root','ROC_info_UL2017_el.root'] #These files are created using only test output files
-colors = [2,3,4,6]#,7,8,209,216]
-makerstyle = [87,20,21,22]#,23,34,43,47]
+for era in eras_selected:
+    info = era_info[era]
+    fname = 'ROC_info_' + era + '_' + lep + '_' + with_or_withoutweights + '_weights.root'
+    files_to_read_roc.append(fname)
+    colors.append(info['color'])
+    makerstyle.append(info['marker'])
+    legend_txt.append(info['legend'])
 
-
-legend_txt = ["UL2016preVFP","UL2016postVFP","UL2017","UL2018"]
-    
 roc_array = []
 rocInt_array = []
 for i in range(len(files_to_read_roc)):
@@ -67,9 +83,9 @@ for i in range(len(files_to_read_roc)):
         roc_temp.SetMarkerColor(colors[i])
         roc_temp.SetMarkerSize(1)
         roc_array.append(roc_temp)
-	
 
-print(rocInt_array)        
+
+print(rocInt_array)
 print("here----------------")
 c1 = rt.TCanvas('c1', '', 800, 700)#, 800, 800)
 c1.cd()
@@ -89,12 +105,11 @@ std.Draw()
 roc_array[0].Draw("same")
 for i in range(1,len(files_to_read_roc)):
      roc_array[i].Draw("P;same")
-     x =np
 
 getCMSIntrenal_tag = getCMSIntrenal_tag(0.20, 0.80, 0.40, 0.87)
 getCMSIntrenal_tag.Draw("same")
 
-leptonjet_tag = leptonjet_tag(lep,0.20, 0.75, 0.38, 0.83)
+leptonjet_tag = leptonjet_tag(lep, 0.20, 0.75, 0.38, 0.83)
 leptonjet_tag.Draw("same")
 
 #region_tag = getregion_tag("2J1T", 0.20, 0.75, 0.30, 0.83)
@@ -119,5 +134,10 @@ for i in range(1,len(files_to_read_roc)):
 
 legend.Draw("same")
 c1.Update()
-c1.Print('Plots/ROC_'+with_or_withoutweights+'_weight_'+lep+'.png')
-c1.Print('Plots/ROC_'+with_or_withoutweights+'_weight_'+lep+'.pdf') 
+
+# Build an output-file suffix that reflects which eras were plotted,
+# so different subsets don't overwrite each other's output.
+eras_suffix = '_'.join(eras_selected)
+
+c1.Print('Plots/ROC_'+with_or_withoutweights+'_weight_'+lep+'_'+eras_suffix+'.png')
+c1.Print('Plots/ROC_'+with_or_withoutweights+'_weight_'+lep+'_'+eras_suffix+'.pdf')
