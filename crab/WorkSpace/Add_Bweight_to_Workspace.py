@@ -21,8 +21,12 @@ def process_bjet_systematics(lep,
     Process B jet weight systematics.
     """
     print("\n  ================    B jet weight systemtics   ==============\n")
+    jes_missing = [jesAbsoluteScale, jesFlavorQCD, jesRelativeStatFSR]
+    jes_spliting = ["jes","jesAbsoluteStat",'jesAbsoluteMPFBias','jesFragmentation','jesSinglePionECAL','jesSinglePionHCAL','jesTimePtEta','jesRelativeJEREC1',
+                    'jesRelativeJEREC2','jesRelativeJERHF','jesRelativePtBB','jesRelativePtEC1','jesRelativePtEC2','jesRelativePtHF','jesRelativeBal','jesRelativeSample',
+                    'jesRelativeFSR','jesRelativeStatEC','jesRelativeStatHF','jesPileUpDataMC','jesPileUpPtRef','jesPileUpPtBB','jesPileUpPtEC1','jesPileUpPtEC2','jesPileUpPtHF']
     sys_bWeight = ["bWeight_lf", "bWeight_hf", "bWeight_cferr1", "bWeight_cferr2",
-                   "bWeight_lfstats1", "bWeight_lfstats2", "bWeight_hfstats1", "bWeight_hfstats2", "bWeight_jes"]
+                   "bWeight_lfstats1", "bWeight_lfstats2", "bWeight_hfstats1", "bWeight_hfstats2", "bWeight_jes", "bWeight_jes_variation_up", "bWeight_jes_variation_down"]
     sys_variation = ["Up", "Down"]
     for sys in sys_bWeight:
         for variation_no, variation in enumerate(sys_variation):

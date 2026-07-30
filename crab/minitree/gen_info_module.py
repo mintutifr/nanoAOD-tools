@@ -19,6 +19,9 @@ def mk_safe(fct, *args):
         else:
             raise e
 
+def top_pt_sf(pt):
+    return 0.103 * math.exp(-0.0118 * pt) - 0.000134 * pt + 0.973
+
 
 class gen_info(Module):
     def __init__(self):
@@ -33,51 +36,47 @@ class gen_info(Module):
         self.out.branch("top_mass","F")
         self.out.branch("atop_Ngenpart","F")
         self.out.branch("atop_mass","F")
-        ## create inference session using ort.InferenceSession from a given model
-        
-       
+        self.out.branch("top_pt","F")
+        self.out.branch("atop_pt","F")
+        self.out.branch("top_pt_SF","F")
+
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
-    ##Def of rapidity
-    
+
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         # Get the desired arrays from the data
         Genparts = Collection(event,"GenPart")
-        GenPart_pdgId,GenPart_statusFlags,GenPart_pt,GenPart_phi,GenPart_eta,GenPart_mass = ([] for i in range(6))
+        Ngenpart_counter = -1
+        ptop_Ngenpart,patop_Ngenpart = -1,-1
+        top_mass,atop_mass = -99,-99
+        top_pt           = -99
+        atop_pt          = -99
         for genpart in Genparts:
-            GenPart_statusFlags.append(genpart.statusFlags)
-            GenPart_pt.append(genpart.pt)
-            GenPart_phi.append(genpart.phi)
-            GenPart_eta.append(genpart.eta)
-            GenPart_mass.append(genpart.mass)
-            GenPart_pdgId.append(genpart.pdgId)
+            Ngenpart_counter += 1
+            if (genpart.pdgId == 6 and ((genpart.statusFlags >> 13) & 0x1) > 0):
+                    ptop_Ngenpart = Ngenpart_counter
+                    top_mass = genpart.mass
+                    top_pt        = genpart.pt
+            if (genpart.pdgId == -6 and ((genpart.statusFlags >> 13) & 0x1) > 0):
+                    patop_Ngenpart = Ngenpart_counter
+                    atop_mass = genpart.mass
+                    atop_pt        = genpart.pt
 
-        #print(GenPart_pdgId)
-        countTop = 0
-        ptop = ROOT.TLorentzVector()
-        patop = ROOT.TLorentzVector()
-        ptop_Ngenpart = -99
-        patop_Ngenpart = -99
-        for i in range(0, len(GenPart_pdgId)):
-            if GenPart_pdgId[i] == 6:
+        if top_pt > 0 and atop_pt > 0:
+            sf_t          = top_pt_sf(top_pt)
+            sf_tbar       = top_pt_sf(atop_pt)
+            top_pt_SF = math.sqrt(sf_t * sf_tbar)
+        else:
+            top_pt_SF = 1.0 
 
-                if (((GenPart_statusFlags[i] >> 12) & 0x1) > 0):
-                    countTop += 1
-                    ptop.SetPtEtaPhiM(GenPart_pt[i], GenPart_eta[i], GenPart_phi[i], GenPart_mass[i])
-                    ptop_Ngenpart = i  
-            if GenPart_pdgId[i] == -6:
-                if (((GenPart_statusFlags[i] >> 12) & 0x1) > 0):
-                    countTop += 1
-                    patop.SetPtEtaPhiM(GenPart_pt[i], GenPart_eta[i], GenPart_phi[i], GenPart_mass[i])
-                    patop_Ngenpart = i
-        
-            # Creating the array with all info needed to pass to the NN model, already normalised
-        #print(ptop.M())
         self.out.fillBranch("top_Ngenpart",ptop_Ngenpart)
         self.out.fillBranch("atop_Ngenpart",patop_Ngenpart)
-        self.out.fillBranch("top_mass",ptop.M())
-        self.out.fillBranch("atop_mass",patop.M())
+        self.out.fillBranch("top_mass",top_mass)
+        self.out.fillBranch("atop_mass",atop_mass)
+        self.out.fillBranch("top_pt",top_pt)
+        self.out.fillBranch("atop_pt",atop_pt)
+        self.out.fillBranch("top_pt_SF", top_pt_SF)
 
         return True
 

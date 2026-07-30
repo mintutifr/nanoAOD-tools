@@ -22,21 +22,22 @@ date   = datetime.datetime.now()
 if(year == 'UL2016preVFP'):
     from dataset_UL2016preVFP import *
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP/"
-    Datasets = Datasets_MC_UL2016APV
+    Datasets = Datasets_sys_MC_UL2016APV
 if(year == 'UL2016postVFP'):
     from dataset_UL2016postVFP import *
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/MC_postVFP/"
-    Datasets = Datasets_MC_UL2016
+    Datasets = Datasets_sys_MC_UL2016
 
 if(year == 'UL2017'):
     from dataset_UL2017 import *
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/SEVENTEEN/MC/"
-    Datasets = Datasets_MC_UL2017
+    Datasets = Datasets_sys_MC_UL2017
 
 if(year == 'UL2018'):
     from dataset_UL2018 import *
     outputDir = "/store/user/mikumar/RUN2_UL/Tree_crab/EIGHTEEN/MC/"
-    Datasets = Datasets_MC_UL2018
+    #Datasets = Datasets_MC_UL2018
+    Datasets = Datasets_sys_MC_UL2018
 
 RequestNames = Datasets.keys()
 print(RequestNames)
@@ -56,7 +57,7 @@ def replacemachine(fileName, sourceText, replaceText):
 
 #print RequestName
 for RequestName in tqdm(RequestNames):
-#for RequestName in ["DYJetsToLL"]:
+#for RequestName in ["ttbar_SemiLeptonic_erdON"]: #","WJetsToLNu_0J_v2","WJetsToLNu_2J"]:
     Dataset = Datasets[RequestName]
     print(RequestName, " : ",Dataset)
     update_RequestName = "config.General.requestName = '"+RequestName+"_Tree_"+year+"'\n" 
@@ -89,7 +90,7 @@ for RequestName in tqdm(RequestNames):
     replacemachine(scriptfile,'modules=', update_module ) 
 
     cmd_crab_submit = "crab submit -c "+cfgfile
-    os.system(cmd_crab_submit)
+    #os.system(cmd_crab_submit)
  
     #cmd_crab_kill = "crab kill -d crab_"+RequestName
     #os.system(cmd_crab_kill)

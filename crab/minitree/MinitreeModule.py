@@ -149,6 +149,12 @@ class MinitreeProducer(Module):
                 self.out.branch("Electron_SF_Veto_IDDown",  "F")
                 self.out.branch("Electron_SF_Veto_TrigUp",  "F")
                 self.out.branch("Electron_SF_Veto_TrigDown",  "F")
+                self.out.branch("Electron_SF_Reco",        "F")
+                self.out.branch("Electron_SF_Veto_Reco", "F")
+                self.out.branch("Electron_SF_Iso_RecoUp", "F")
+                self.out.branch("Electron_SF_Iso_RecoDown","F")
+                self.out.branch("Electron_SF_Veto_RecoUp",   "F")
+                self.out.branch("Electron_SF_Veto_RecoDown",  "F")
         self.out.branch("Px_nu","F")
         self.out.branch("Py_nu","F")
         self.out.branch("Pz_nu","F")
@@ -263,7 +269,7 @@ class MinitreeProducer(Module):
             self.out.branch("Event_wgt","F")
             self.out.branch("LHEWeightSign","F")
             self.shape_systs = ["Central","lf","hf","cferr1","cferr2","lfstats1","lfstats2","hfstats1","hfstats2","jes"]
-            self.B_tag_jes_variation = ['jesAbsoluteStat', 'jesAbsoluteMPFBias', 'jesFragmentation', 'jesSinglePionECAL', 'jesSinglePionHCAL', 'jesTimePtEta', 'jesRelativeJEREC1', 'jesRelativeJEREC2', 'jesRelativeJERHF', 'jesRelativePtBB', 'jesRelativePtEC1', 'jesRelativePtEC2', 'jesRelativePtHF', 'jesRelativeBal', 'jesRelativeSample' , 'jesRelativeFSR' , 'jesRelativeStatEC', 'jesRelativeStatHF' , 'jesPileUpDataMC', 'jesPileUpPtRef', 'jesPileUpPtBB', 'jesPileUpPtEC1' , 'jesPileUpPtEC2', 'jesPileUpPtHF']
+            self.B_tag_jes_variation = ["jesAbsoluteStat",'jesAbsoluteMPFBias','jesFragmentation','jesSinglePionECAL','jesSinglePionHCAL','jesTimePtEta','jesRelativeJEREC1','jesRelativeJEREC2','jesRelativeJERHF','jesRelativePtBB','jesRelativePtEC1','jesRelativePtEC2','jesRelativePtHF','jesRelativeBal','jesRelativeSample','jesRelativeFSR','jesRelativeStatEC','jesRelativeStatHF','jesPileUpDataMC','jesPileUpPtRef','jesPileUpPtBB','jesPileUpPtEC1','jesPileUpPtEC2','jesPileUpPtHF',"jesAbsoluteScale", "jesFlavorQCD", "jesRelativeStatFSR"]
             for syst in self.shape_systs:
                 if(syst == "Central"):self.out.branch("bWeight","F")
                 else: self.out.branch("bWeight_"+syst,  "F",lenVar="2")
@@ -337,11 +343,14 @@ class MinitreeProducer(Module):
                     nElectron_sel = nElectron_sel+1
                     if(  (self.Isolation==True) and lep.pt>pt_Thes_el[self.dataYear] and abs(lep.eta)<2.1 and lep.cutBased==4 and (abs(lep.EtaSC)<1.4442 or abs(lep.EtaSC)>1.5660) and ((abs(lep.EtaSC)<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(lep.EtaSC)> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10)) ):
                         
-                        Electron_SF_Iso = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","noSyst")
-                        Electron_SF_Iso_IDUp = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","IDUp")
-                        Electron_SF_Iso_IDDown = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","IDDown")
-                        Electron_SF_Iso_TrigUp = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","TrigUp")
-                        Electron_SF_Iso_TrigDown = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","TrigDown")
+                        Electron_SF_Iso, Electron_SF_Reco = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","noSyst")
+                        Electron_SF_Iso_IDUp, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","IDUp")
+                        Electron_SF_Iso_IDDown, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","IDDown")
+                        Electron_SF_Iso_TrigUp, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","TrigUp")
+                        Electron_SF_Iso_TrigDown, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","TrigDown")
+                        Electron_SF_Iso_RecoUp,_  = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","RecoUp")
+                        Electron_SF_Iso_RecoDown, _  = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Tight","RecoDown")
+
 
                         lepton4v=lep.p4()
                         leptonCharge = lep.charge
@@ -358,15 +367,21 @@ class MinitreeProducer(Module):
                         self.out.fillBranch("Electron_SF_Iso_IDDown",Electron_SF_Iso_IDDown)
                         self.out.fillBranch("Electron_SF_Iso_TrigUp",Electron_SF_Iso_TrigUp)
                         self.out.fillBranch("Electron_SF_Iso_TrigDown",Electron_SF_Iso_TrigDown)
+                        self.out.fillBranch("Electron_SF_Reco",         Electron_SF_Reco)
+                        self.out.fillBranch("Electron_SF_Iso_RecoUp",  Electron_SF_Iso_RecoUp)
+                        self.out.fillBranch("Electron_SF_Iso_RecoDown",Electron_SF_Iso_RecoDown)
+
 
                     elif( (self.Isolation==False) and lep.pt>pt_Thes_el[self.dataYear] and abs(lep.eta)<2.1 and lep.cutBased!=4 and lep.cutBased>=1 and (abs(lep.EtaSC)<1.4442 or abs(lep.EtaSC)>1.5660) and ((abs(lep.EtaSC)<=1.479 and abs(lep.dz)< 0.10 and abs(lep.dxy)< 0.05) or (abs(lep.EtaSC)> 1.479 and abs(lep.dz)< 0.20 and abs(lep.dxy)< 0.10)) ):
 
-                        Electron_SF_Veto = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","noSyst")
-                        Electron_SF_Veto_IDUp = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","IDUp")
-                        Electron_SF_Veto_IDDown = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","IDDown")
-                        Electron_SF_Veto_TrigUp = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","TrigUp")
-                        Electron_SF_Veto_TrigDown = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","TrigDown")
-                
+                        Electron_SF_Veto, Electron_SF_Veto_Reco = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","noSyst")
+                        Electron_SF_Veto_IDUp, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","IDUp")
+                        Electron_SF_Veto_IDDown, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","IDDown")
+                        Electron_SF_Veto_TrigUp, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","TrigUp")
+                        Electron_SF_Veto_TrigDown, _ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","TrigDown")
+                        Electron_SF_Veto_RecoUp, _  = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","RecoUp")
+                        Electron_SF_Veto_RecoDown,_ = create_elSF(self.dataYear,lep.pt,lep.EtaSC,"Veto","RecoDown")
+
         
                         lepton4v=lep.p4()
                         leptonCharge = lep.charge
@@ -382,6 +397,9 @@ class MinitreeProducer(Module):
                         self.out.fillBranch("Electron_SF_Veto_IDDown",Electron_SF_Veto_IDDown)
                         self.out.fillBranch("Electron_SF_Veto_TrigUp",Electron_SF_Veto_TrigUp)
                         self.out.fillBranch("Electron_SF_Veto_TrigDown",Electron_SF_Veto_TrigDown)
+                        self.out.fillBranch("Electron_SF_Veto_Reco", Electron_SF_Veto_Reco)
+                        self.out.fillBranch("Electron_SF_Veto_RecoUp",   Electron_SF_Veto_RecoUp)
+                        self.out.fillBranch("Electron_SF_Veto_RecoDown",  Electron_SF_Veto_RecoDown)
 
             if(self.letopn_flv=="mu"):
                  nMuon_sel = -1
@@ -564,21 +582,26 @@ class MinitreeProducer(Module):
                 'UL2016postVFP' :0.0480,
                 'UL2017' : 0.0532,
                 'UL2018' : 0.0490}
+        Tight_b_tag_eta_cut = {
+            "UL2016preVFP": 2.4,
+            "UL2016postVFP": 2.4,
+            "UL2017": 2.5,
+            "UL2018": 2.5,
+        }
         for jet in jet_id:
             njet4v.SetPtEtaPhiM(jet.pt,jet.eta,jet.phi,jet.mass)
             #print lepton4v.DeltaR(njet4v)
             #print jet.btagDeepFlavB," ",jet.eta
         #print getattr(event,'event');
         
-        for jet in filter(lambda j:(j.btagDeepFlavB>Tight_b_tag_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
+        for jet in filter(lambda j:(j.btagDeepFlavB>Tight_b_tag_crite[self.dataYear] and abs(j.eta)<Tight_b_tag_eta_cut[self.dataYear]), jet_id):
             btagjet_id.append(jet) 
         #print("btagJet_id = ", btagjet_id)
         #if(len(btagjet_id)):   return True
         if(self.Total_Njets == 2 and  self.BTag_Njets == 1 and len(btagjet_id)==0):
-                for jet in filter(lambda j:(j.btagDeepFlavB>Lose_b_tag_crite[self.dataYear] and abs(j.eta)<2.4), jet_id):
+                for jet in filter(lambda j:(j.btagDeepFlavB>Lose_b_tag_crite[self.dataYear] and abs(j.eta)<Tight_b_tag_eta_cut[self.dataYear]), jet_id):
                         btagjet_id.append(jet)
                 #print len(btagjet_id)
-
         #print len(jet_id)," ",len(btagjet_id)
         #print "--------------------------------------2 J 1 T-----------------------------"
         if( self.Total_Njets == 2 and  self.BTag_Njets == 1):

@@ -38,8 +38,8 @@ class hdampproducer(Module):
         self.out.branch("hdamp_Down","F")
         self.out.branch("Top_quark_count","I")
         ## create inference session using ort.InferenceSession from a given model
-        self.ort_sess_Down = ort.InferenceSession('Onnx_Model/model12Down.onnx')
-        self.ort_sess_Up = ort.InferenceSession('Onnx_Model/model12Up.onnx')
+        self.ort_sess_Down = ort.InferenceSession('Onnx_Model/model12Down.onnx',providers=['CPUExecutionProvider'])
+        self.ort_sess_Up = ort.InferenceSession('Onnx_Model/model12Up.onnx',providers=['CPUExecutionProvider'])
         self.input_name = self.ort_sess_Down.get_inputs()[0].name
         self.label_name = self.ort_sess_Down.get_outputs()[0].name
         
