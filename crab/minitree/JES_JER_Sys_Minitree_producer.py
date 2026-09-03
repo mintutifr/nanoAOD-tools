@@ -1,3 +1,4 @@
+import os
 import math
 import ROOT
 import numpy as np
@@ -70,6 +71,7 @@ def process_channel(args):
     # Enable the required branches
     for branch in required_branches:
         tree.SetBranchStatus(branch, 1)
+    os.makedirs(out_dir, exist_ok=True)
     output_file_name = f"{out_dir}/JERtree_{year}_{channel}_2J1T1_{lep}_v2.root"
     output_file = ROOT.TFile(output_file_name, "RECREATE")
     output_tree = ROOT.TTree("Events", "JER systematics")
@@ -153,9 +155,10 @@ if __name__ == "__main__":
     out_dir = args.out_dir
     lep = args.lepton
 
-    channels = ['Tchannel','Tbarchannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','tw_antitop', 
-                'tw_top','Schannel','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WZTo2Q2L', 
-                'ZZTo2Q2L','DYJetsToLL','QCD'] # 'WWTolnulnu',
+    channels = ['WJetsToLNu_0J']
+    # ['Tchannel','Tbarchannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','tw_antitop', 
+    #             'tw_top','Schannel','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WZTo2Q2L', 
+    #             'ZZTo2Q2L','DYJetsToLL','QCD'] # 'WWTolnulnu',
 
     tasks = [(year, channel, out_dir, lep) for channel in channels]
     with mp.Pool(processes=len(channels)) as pool:
