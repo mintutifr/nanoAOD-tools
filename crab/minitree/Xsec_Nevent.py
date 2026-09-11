@@ -69,6 +69,10 @@ MCsample_Nevent_Xsec = {
 		'ttbar_SemiLeptonic_mtop1735': ['198238779','366.3'],
 		'ttbar_SemiLeptonic_mtop1755': ['181938682','366.3'],
 
+		'ttbar_SemiLeptonic_widthx0p85' : ['195723610','366.3'],
+		'ttbar_SemiLeptonic_widthx1p15' : ['194833003','366.3'],
+		'ttbar_SemiLeptonic_widthx1p45' : ['194169292','366.3'],
+
 	},
 
 	'UL2017' : {
