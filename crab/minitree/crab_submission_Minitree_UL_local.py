@@ -14,7 +14,7 @@ def replacemachine(fileName, sourceText, replaceText):
         sys.stdout.write(line)
     print("All went well, the modifications are done")
 
-def fix_hadd_cmd_with_split_postfix(hadd_cmd, base_output_dir, Channel):
+def fix_hadd_cmd_with_split_postfix_old(hadd_cmd, base_output_dir, Channel):
     """
     crab_script_Minitree_local.py actually names its outputs
     tree_<num><postfix>.root, where <postfix> (e.g. "_0_123456") comes from
@@ -69,6 +69,60 @@ def fix_hadd_cmd_with_split_postfix(hadd_cmd, base_output_dir, Channel):
 
     return hadd_cmd
 
+def fix_hadd_cmd_with_split_postfix(hadd_cmd, base_output_dir, Channel):
+    """
+    Same purpose as fix_hadd_cmd_with_split_postfix_old, but handles jobs that
+    batch multiple input files behind a single "-p" (data runs 5 files per
+    job; MC runs 1). The old version's regex only captured the first filename
+    after "-p", so for a batched job only that one file's placeholder got
+    patched to its real tree_<num><postfix>.root name(s) -- the other files
+    in the same job kept their never-created tree_<num>_Skim.root placeholder,
+    which made hadd abort as soon as it reached one of them. This version
+    captures every filename following "-p" and applies the job's postfix(es)
+    (shared across all files in that job, since the splitting cut is applied
+    uniformly to the whole job) to each one individually.
+
+    A log with no "-p" files or no "postfix :" line at all means that job
+    crashed or never finished -- deliberately left as the original
+    _Skim.root placeholder(s) (which will never exist) instead of being
+    dropped, so hadd fails loudly on it rather than silently hadding fewer
+    files.
+    """
+    import re
+
+    local_script_output_dir = base_output_dir + Channel + '/'
+    log_dir = local_script_output_dir + 'log/'
+    log_files = glob.glob(log_dir + 'log_*.txt')
+
+    missing_logs = []
+    for log_file in log_files:
+        with open(log_file) as f:
+            content = f.read()
+
+        p_match = re.search(r'-p\s+((?:\S+\.root\s+)+)', content)
+        if not p_match:
+            missing_logs.append(log_file)
+            continue
+        input_paths = p_match.group(1).split()
+
+        postfixes = re.findall(r'postfix\s*:\s*(_\d+_\d+)', content)
+        if not postfixes:
+            missing_logs.append(log_file)
+            continue
+
+        for input_path in input_paths:
+            num = input_path.split('/')[-1].split('.')[0].split('_')[-1]
+            placeholder = local_script_output_dir + 'tree_' + num + '_Skim.root '
+            real_files = ''.join(local_script_output_dir + 'tree_' + num + pf + '.root ' for pf in postfixes)
+            hadd_cmd = hadd_cmd.replace(placeholder, real_files)
+
+    if missing_logs:
+        print(f"WARNING: {len(missing_logs)} job(s) never printed a postfix (crashed or still running) -- their tree_<num>_Skim.root placeholder(s) were left in place so hadd will fail on them instead of silently skipping:")
+        for lf in missing_logs:
+            print("  ", lf)
+
+    return hadd_cmd
+
 if __name__ == '__main__':
     import argparse
 
@@ -102,11 +156,12 @@ if __name__ == '__main__':
                        'Tchannel_QCDinspired', 'Tchannel_Gluonmove', 'Tchannel_TuneCP5up', 'Tchannel_TuneCP5down', 'Tchannel_erdON',  
                        'Tbarchannel_QCDinspired', 'Tbarchannel_Gluonmove', 'Tbarchannel_TuneCP5up', 'Tbarchannel_TuneCP5down', 'Tbarchannel_erdON',  
                        'ttbar_FullyLeptonic_QCDinspired', 'ttbar_FullyLeptonic_Gluonmove', 'ttbar_FullyLeptonic_erdON', 'ttbar_FullyLeptonic_TuneCP5up', 'ttbar_FullyLeptonic_TuneCP5down',
-                       'ttbar_SemiLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'ttbar_SemiLeptonic_erdON', 'ttbar_SemiLeptonic_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5down'
+                       #'ttbar_SemiLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'ttbar_SemiLeptonic_erdON', 'ttbar_SemiLeptonic_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5down'
         ]
-        Channels = Channels_commom + Channel_QCD + Channel_sys
+        Channels = Channels_commom + Channel_QCD #+ Channel_sys
         # Channels = ['ttbar_SemiLeptonic','ttbar_FullyLeptonic']
         # Channels = Channel_sys 
+        #Channels = ['ttbar_SemiLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'ttbar_SemiLeptonic_erdON', 'ttbar_SemiLeptonic_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5down']
 
     elif(MC_Data=="data"):
         if(year=='UL2016preVFP'): Channels = [ 'Run2016B_ver1_'+Lep, 'Run2016B_ver2_'+Lep, 'Run2016C_HIPM_'+Lep, 'Run2016D_HIPM_'+Lep, 'Run2016E_HIPM_'+Lep, 'Run2016F_HIPM_'+Lep]
@@ -144,10 +199,10 @@ if __name__ == '__main__':
        	Hadd_N_createoutfile_cmd[Channel] = 'python3 ../../scripts/haddnano.py ' + Out_dir +year_folder[year]+'/'+region+'/'+Hadded_out_file_name
         i=0
        	if(MC_Data=="mc"): 
-            commom_run_cmd = 'pwd; cmsenv; python3 crab_script_Minitree_local.py  -d ' + Channel + ' -t ' + tag + ' -o ' + local_script_output_dir
+            commom_run_cmd = 'pwd; cmsenv; python3 -u crab_script_Minitree_local.py  -d ' + Channel + ' -t ' + tag + ' -o ' + local_script_output_dir
             total_file_in_set = 1
         elif(MC_Data=="data"): 
-            commom_run_cmd = 'pwd; cmsenv; python3 crab_script_Minitree_local.py  -data -d ' + Channel + ' -t ' + tag + ' -o ' + local_script_output_dir
+            commom_run_cmd = 'pwd; cmsenv; python3 -u crab_script_Minitree_local.py  -data -d ' + Channel + ' -t ' + tag + ' -o ' + local_script_output_dir
        	    total_file_in_set = 5
         fileSetcounter = 0
         infils = ''
@@ -168,10 +223,10 @@ if __name__ == '__main__':
     print(run_commands,"\n")
     # print(Hadd_N_createoutfile_cmd[Channel])
 
-    # pool = mp.Pool(processes=20)
-    # pool.map(run_cmd, run_commands)
-    # del run_commands
-    # pool.close()
+    pool = mp.Pool(processes=15)
+    pool.map(run_cmd, run_commands)
+    del run_commands
+    pool.close()
 
     for Channel in Channels:
         Hadd_N_createoutfile_cmd[Channel] = fix_hadd_cmd_with_split_postfix(Hadd_N_createoutfile_cmd[Channel], base_output_dir, Channel)
@@ -180,8 +235,8 @@ if __name__ == '__main__':
         print("check if exists "+Out_dir + year_folder[year]+'/'+region+'/'+ Hadded_out_file_name)
         print(os.path.isfile(Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name))
         if(os.path.isfile(Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name)):
-                keyinput = input(Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name+ '  is exit should delete and recreate enter "yes" other wise press eneter key i will skip the hadd command' )
-                if(keyinput=='yes'):os.system('rm ' + Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name)
-                else: exit(0)
+               keyinput = input(Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name+ '  is exit should delete and recreate enter "yes" other wise press eneter key i will skip the hadd command' )
+               if(keyinput=='yes'):os.system('rm ' + Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name)
+               else: exit(0)
         print("runing....", Hadd_N_createoutfile_cmd[Channel],"\n")
         os.system(Hadd_N_createoutfile_cmd[Channel])

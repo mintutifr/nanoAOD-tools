@@ -88,7 +88,12 @@ if __name__ == '__main__':
 	SPLIT_RE = re.compile(r'Splitting into (\d+) chunks')
 	NO_SPLIT_RE = re.compile(r'No splitting needed\.')
 	POSTFIX_RE = re.compile(r'postfix\s*:\s*(_\d+_\d+)')
-	INPUT_FILE_RE = re.compile(r'-p\s+(\S+\.root)')
+	# Captures every filename after "-p", not just the first: data jobs batch
+	# 5 input files behind one "-p" (MC batches 1), and each of those files
+	# gets the job's postfix(es) applied to it independently, so each needs
+	# its own on-disk check -- checking only the first silently misses a job
+	# that crashed partway through writing the rest of its batch.
+	INPUT_FILE_RE = re.compile(r'-p\s+((?:\S+\.root\s+)+)')
 	RERUN_CMD_RE = re.compile(r'^\s*python3 crab_script_Minitree_local\.py.*$', re.MULTILINE)
 
 	for channel in Channels:
@@ -124,13 +129,14 @@ if __name__ == '__main__':
 				if not input_match:
 					failed_reason = "could not find the '-p <input_file>' line to verify outputs"
 				else:
-					input_path = input_match.group(1)
-					num = input_path.split('/')[-1].split('.')[0].split('_')[-1]
-					for pf in postfixes:
-						out_file = channel_dir + 'tree_' + num + pf + '.root'
-						if not os.path.isfile(out_file):
-							missing_output_files.append(out_file)
-							failed_reason = f"output file missing on disk: {out_file}"
+					input_paths = input_match.group(1).split()
+					for input_path in input_paths:
+						num = input_path.split('/')[-1].split('.')[0].split('_')[-1]
+						for pf in postfixes:
+							out_file = channel_dir + 'tree_' + num + pf + '.root'
+							if not os.path.isfile(out_file):
+								missing_output_files.append(out_file)
+								failed_reason = f"output file missing on disk: {out_file}"
 
 			if failed_reason is not None:
 				print(log_file, " -- FAILED:", failed_reason)
@@ -146,5 +152,5 @@ if __name__ == '__main__':
 		print(f"\n{len(missing_output_files)} expected output file(s) missing on disk:")
 		for f in missing_output_files:
 			print("  ", f)
-	#pool = mp.Pool(processes=4)
-	#pool.map(run_cmd, rerun_list)
+	# pool = mp.Pool(processes=3)
+	# pool.map(run_cmd, rerun_list)
