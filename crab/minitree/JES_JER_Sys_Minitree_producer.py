@@ -46,7 +46,8 @@ def process_channel(args):
                 'jesPileUpPtHF',"jesAbsoluteScale", "jesFlavorQCD", "jesRelativeStatFSR"]
     jer_names = ['jer0', 'jer1', 'jer2', 'jer3',
                 'jer4', 'jer5']
-    sys_names = jes_names+jer_names 
+    unclustered_energy_names = ['unclustEn']
+    sys_names = jes_names+jer_names+unclustered_energy_names
     
     # Disable all branches initially
     tree.SetBranchStatus("*", 0)
@@ -54,14 +55,16 @@ def process_channel(args):
     # Enable only the branches you need
     required_branches_el = ["ElectronPt", "ElectronEta", "ElectronPhi", "ElectronMass"]
     required_branches_mu = ["MuonPt", "MuonEta", "MuonPhi", "MuonMass"]
-    required_branches= [ "nbjet_sel", "Jet_eta", "Jet_phi" ] + required_branches_el if "el" in lep else [ "nbjet_sel", "Jet_eta", "Jet_phi" ] + required_branches_mu
+    required_branches_jet_nomi = [ "nbjet_sel", "Jet_eta", "Jet_phi","Jet_pt", "Jet_mass"]
+    required_branches= required_branches_jet_nomi + required_branches_el if "el" in lep else required_branches_jet_nomi + required_branches_mu
     #print(required_branches)
 
     # Add systematic-specific branches
     for sys in sys_names:
         for direction in ['Up', 'Down']:
-            required_branches.append(f"Jet_pt_{sys}{direction}")
-            required_branches.append(f"Jet_mass_{sys}{direction}")
+            if sys not in unclustered_energy_names:
+                required_branches.append(f"Jet_pt_{sys}{direction}")
+                required_branches.append(f"Jet_mass_{sys}{direction}")
             required_branches.append(f"MET_T1_pt_{sys}{direction}")
             required_branches.append(f"MET_T1_phi_{sys}{direction}")
 
@@ -110,11 +113,18 @@ def process_channel(args):
         b_jet_idx = event.nbjet_sel
         bJet_eta = getattr(event, f"Jet_eta")[b_jet_idx]
         bJet_phi = getattr(event, f"Jet_phi")[b_jet_idx]
+        bJet_pt_nom = getattr(event, "Jet_pt")[b_jet_idx]
+        bJet_mass_nom = getattr(event, "Jet_mass")[b_jet_idx]
+
         for isys,sys in enumerate(sys_names):
             for direction in ['Up', 'Down']:
                 suffix = f"_{sys}{direction}"
-                bJet_pt = getattr(event, f"Jet_pt_{sys}{direction}")[b_jet_idx]
-                bJet_mass = getattr(event, f"Jet_mass_{sys}{direction}")[b_jet_idx]
+                if sys in unclustered_energy_names:
+                    bJet_pt = bJet_pt_nom
+                    bJet_mass = bJet_mass_nom
+                else:
+                    bJet_pt = getattr(event, f"Jet_pt_{sys}{direction}")[b_jet_idx]
+                    bJet_mass = getattr(event, f"Jet_mass_{sys}{direction}")[b_jet_idx]
 
                 met = getattr(event, f"MET_T1_pt_{sys}{direction}")
                 metphi = getattr(event, f"MET_T1_phi_{sys}{direction}")
@@ -155,9 +165,10 @@ if __name__ == "__main__":
     out_dir = args.out_dir
     lep = args.lepton
 
-    channels = ['Tchannel','Tbarchannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','tw_antitop', 
-                'tw_top','Schannel','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WZTo2Q2L', 
-                'ZZTo2Q2L','DYJetsToLL','QCD'] # 'WWTolnulnu',
+    channels = ['WJetsToLNu_1J']
+                #'Tchannel','Tbarchannel','ttbar_SemiLeptonic','ttbar_FullyLeptonic','tw_antitop', 
+                # 'tw_top','Schannel','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WZTo2Q2L', 
+                # 'ZZTo2Q2L','DYJetsToLL','QCD'] # 'WWTolnulnu',
 
     tasks = [(year, channel, out_dir, lep) for channel in channels]
     with mp.Pool(processes=len(channels)) as pool:
