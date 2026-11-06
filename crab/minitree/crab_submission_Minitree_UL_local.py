@@ -3,6 +3,7 @@ import glob
 import multiprocessing as mp
 import fileinput, string, sys, time, datetime
 
+
 def run_cmd(run_command):
     os.system(run_command)
 
@@ -125,19 +126,27 @@ def fix_hadd_cmd_with_split_postfix(hadd_cmd, base_output_dir, Channel):
 
 if __name__ == '__main__':
     import argparse
-
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('-l', '--lepton', dest='lepton', type=str, default='mu', help="lepton flavor [ el , mu ]")
     parser.add_argument('-r', '--region', dest='region', type=str, default='2J1T1', help="region of caluation [ 2J1T1 , 2J1T0 ]")
     parser.add_argument('-y', '--year', dest='year', type=str, default='UL2017', help=" UL2017 UL2016preVFP UL2016postVFP UL2018 ")
     parser.add_argument('-data',"--ISDATA", action="store_true", help="enbale this feature to run on data")
     parser.add_argument('-o', '--out_dir', dest='out_dir', type=str, default='/nfs/home/common/RUN2_UL/Minitree_trial/', help="Set Dir for the output files")
+    parser.add_argument('-hadd', '--hadd', action="store_true", help="enbale this feature to hadd the output files")
+    parser.add_argument('-channel', '--channel', dest='channel', type=str, nargs='+', default=[], help="Set channel(s) to run on, e.g. --channel Tchannel Tbarchannel")
+    parser.add_argument('-processing', '--processing', action="store_true", help="enbale this feature to process the files")
+    parser.add_argument('-exclude_ttbar_fromhadd', '--exclude_ttbar_fromhadd', action="store_true", help="enbale this feature to exclude ttbar from hadd")
 
     args = parser.parse_args()
-
     Lep = args.lepton
     region = args.region
     year = args.year
+    ishadd = args.hadd
+    isprocessing = args.processing
+    input_channel = args.channel
+    exclude_ttbar_fromhadd = args.exclude_ttbar_fromhadd
+
+
     MC_Data = "data" if args.ISDATA else "mc"
     year_folder = {'UL2016preVFP': 'SIXTEEN_preVFP', 'UL2016postVFP': 'SIXTEEN_postVFP', 'UL2017': 'SEVENTEEN', 'UL2018': 'EIGHTEEN'}
     tag =   region+'_'+Lep + '_' + MC_Data + '_' + year
@@ -145,10 +154,7 @@ if __name__ == '__main__':
     print(f'{Out_dir = }')
     print(args.ISDATA," ",MC_Data)
     if(MC_Data=="mc"):
-        #'ttbar_SemiLeptonic','ttbar_FullyLeptonic'
         Channels_commom = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L','DYJetsToLL','ttbar_SemiLeptonic','ttbar_FullyLeptonic']
-        #'WWTolnulnu',
-        #if(year=='UL2017'): Channels_commom = Channels_commom + ['WJetsToLNu_0J_lagecy','WJetsToLNu_2J_lagecy','WJetsToLNu_2J_ext_lagecy']
         if(year=='UL2017'): Channels_commom = Channels_commom + ['WJetsToLNu_0J_v2']
         if(Lep=="mu"): Channel_QCD = ['QCD_Pt-15To20_MuEnriched', 'QCD_Pt-20To30_MuEnriched', 'QCD_Pt-30To50_MuEnriched', 'QCD_Pt-50To80_MuEnriched', 'QCD_Pt-80To120_MuEnriched', 'QCD_Pt-120To170_MuEnriched', 'QCD_Pt-170To300_MuEnriched', 'QCD_Pt-300To470_MuEnriched', 'QCD_Pt-470To600_MuEnriched', 'QCD_Pt-600To800_MuEnriched', 'QCD_Pt-800To1000_MuEnriched', 'QCD_Pt-1000_MuEnriched']
         elif(Lep=="el"): Channel_QCD = ['QCD_Pt-15to20_EMEnriched', 'QCD_Pt-20to30_EMEnriched', 'QCD_Pt-30to50_EMEnriched', 'QCD_Pt-50to80_EMEnriched', 'QCD_Pt-80to120_EMEnriched', 'QCD_Pt-120to170_EMEnriched' , 'QCD_Pt-170to300_EMEnriched', 'QCD_Pt-300toInf_EMEnriched' ]
@@ -156,22 +162,19 @@ if __name__ == '__main__':
                        'Tchannel_QCDinspired', 'Tchannel_Gluonmove', 'Tchannel_TuneCP5up', 'Tchannel_TuneCP5down', 'Tchannel_erdON',  
                        'Tbarchannel_QCDinspired', 'Tbarchannel_Gluonmove', 'Tbarchannel_TuneCP5up', 'Tbarchannel_TuneCP5down', 'Tbarchannel_erdON',  
                        'ttbar_FullyLeptonic_QCDinspired', 'ttbar_FullyLeptonic_Gluonmove', 'ttbar_FullyLeptonic_erdON', 'ttbar_FullyLeptonic_TuneCP5up', 'ttbar_FullyLeptonic_TuneCP5down',
-                       #'ttbar_SemiLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'ttbar_SemiLeptonic_erdON', 'ttbar_SemiLeptonic_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5down'
+                       'ttbar_SemiLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'ttbar_SemiLeptonic_erdON', 'ttbar_SemiLeptonic_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5down'
         ]
         Channels = Channels_commom + Channel_QCD #+ Channel_sys
-        # Channels = ['ttbar_SemiLeptonic','ttbar_FullyLeptonic']
-        # Channels = Channel_sys 
-        #Channels = ['ttbar_SemiLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'ttbar_SemiLeptonic_erdON', 'ttbar_SemiLeptonic_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5down']
+        if(input_channel): Channels = input_channel
 
     elif(MC_Data=="data"):
         if(year=='UL2016preVFP'): Channels = [ 'Run2016B_ver1_'+Lep, 'Run2016B_ver2_'+Lep, 'Run2016C_HIPM_'+Lep, 'Run2016D_HIPM_'+Lep, 'Run2016E_HIPM_'+Lep, 'Run2016F_HIPM_'+Lep]
         if(year=='UL2016postVFP'): Channels = [ 'Run2016F_'+Lep, 'Run2016G_'+Lep, 'Run2016H_'+Lep]
         if(year=='UL2017'): Channels = [ 'Run2017B_'+Lep, 'Run2017C_'+Lep, 'Run2017D_'+Lep, 'Run2017E_'+Lep, 'Run2017F_'+Lep]
-        if(year=='UL2018'): Channels = [ 'Run2018A_'+Lep,'Run2018B_'+Lep, 'Run2018C_'+Lep, 'Run2018D_'+Lep] 
+        if(year=='UL2018'): Channels = [ 'Run2018A_'+Lep,'Run2018B_'+Lep, 'Run2018C_'+Lep, 'Run2018D_'+Lep]
 
+        if(input_channel): Channels = input_channel
 
-    #
-    #Channels = ['Tchannel']
     print(Channels)
 
     run_commands = []
@@ -190,11 +193,11 @@ if __name__ == '__main__':
         elif(MC_Data=="data"):
             in_files_path = '/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/Data_' + Lep + '/' + Channel + '/**/**/**/**/*.root'
 
-       	print(' files beeing read from '+in_files_path)
+       	print(' files being read from '+in_files_path)
         in_files = glob.glob(in_files_path)
        	print("total file selected : ",len(in_files))
        	Hadded_out_file_name = 'Minitree_'+ Channel+'_'+region+'_'+Lep+ '.root '
-       	print(in_files)
+       	# print(in_files)
        	inputFiles = [i for i in in_files if i != '']
        	Hadd_N_createoutfile_cmd[Channel] = 'python3 ../../scripts/haddnano.py ' + Out_dir +year_folder[year]+'/'+region+'/'+Hadded_out_file_name
         i=0
@@ -219,24 +222,31 @@ if __name__ == '__main__':
                 infils = ''
             i=i+1
             #if(i==total_file_in_set): break #switch of test perpose take only two file and the scripts
-    
-    print(run_commands,"\n")
-    # print(Hadd_N_createoutfile_cmd[Channel])
 
-    pool = mp.Pool(processes=15)
-    pool.map(run_cmd, run_commands)
-    del run_commands
-    pool.close()
+    if(isprocessing):
+        # print(run_commands,"\n")
+        total_num_cores = mp.cpu_count()
+        num_cores_Touse = 15
+        # print(f"running the processing commands in parallel using {num_cores_Touse} cores out of {total_num_cores}")
+        # pool = mp.Pool(processes=num_cores_Touse)
+        # pool.map(run_cmd, run_commands)
+        # del run_commands
+        # pool.close()
 
-    for Channel in Channels:
-        Hadd_N_createoutfile_cmd[Channel] = fix_hadd_cmd_with_split_postfix(Hadd_N_createoutfile_cmd[Channel], base_output_dir, Channel)
-        #print("with real split postfixes:\n", Hadd_N_createoutfile_cmd[Channel])
-        Hadded_out_file_name = 'Minitree_'+ Channel+'_'+region+'_'+Lep+ '.root '
-        print("check if exists "+Out_dir + year_folder[year]+'/'+region+'/'+ Hadded_out_file_name)
-        print(os.path.isfile(Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name))
-        if(os.path.isfile(Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name)):
-               keyinput = input(Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name+ '  is exit should delete and recreate enter "yes" other wise press eneter key i will skip the hadd command' )
-               if(keyinput=='yes'):os.system('rm ' + Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name)
-               else: exit(0)
-        print("runing....", Hadd_N_createoutfile_cmd[Channel],"\n")
-        os.system(Hadd_N_createoutfile_cmd[Channel])
+    if(ishadd):
+        for Channel in Channels:
+            if(exclude_ttbar_fromhadd and (Channel=='ttbar_SemiLeptonic' or Channel=='ttbar_FullyLeptonic')):
+                print(f"Skipping hadd for {Channel} as per exclude_ttbar_fromhadd flag","\n")
+                continue
+            print(f"runing hadd for {Channel} ","\n")
+            # Hadd_N_createoutfile_cmd[Channel] = fix_hadd_cmd_with_split_postfix(Hadd_N_createoutfile_cmd[Channel], base_output_dir, Channel)
+            # #print("with real split postfixes:\n", Hadd_N_createoutfile_cmd[Channel])
+            # Hadded_out_file_name = 'Minitree_'+ Channel+'_'+region+'_'+Lep+ '.root '
+            # print("check if exists "+Out_dir + year_folder[year]+'/'+region+'/'+ Hadded_out_file_name)
+            # print(os.path.isfile(Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name))
+            # if(os.path.isfile(Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name)):
+            #     keyinput = input(Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name+ '  is exit should delete and recreate enter "yes" other wise press eneter key i will skip the hadd command' )
+            #     if(keyinput=='yes'):os.system('rm ' + Out_dir + year_folder[year]+'/'+region+'/'+Hadded_out_file_name)
+            #     else: exit(0)
+            # print("runing....", Hadd_N_createoutfile_cmd[Channel],"\n")
+            # os.system(Hadd_N_createoutfile_cmd[Channel])

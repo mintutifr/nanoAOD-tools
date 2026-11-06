@@ -14,6 +14,7 @@ if __name__ == '__main__':
 	parser.add_argument('-s', '--sample', dest='samples', type=str, default=['Mc_Nomi'], nargs=1, help="sample [ Mc_Nomi , Mc_Alt , Mc_sys , Data ]")
 	parser.add_argument('-l', '--lepton', dest='leptons', type=str, default=['mu'], nargs=1, help="sample [ mu , el ]")
 	parser.add_argument('-data',"--ISDATA", action="store_true", help="enbale this feature to run on data")
+	parser.add_argument('-run_missing',"--run_missing", action="store_true", help="enbale this feature to run on missing jobs")
 
 	args = parser.parse_args()
 
@@ -152,5 +153,6 @@ if __name__ == '__main__':
 		print(f"\n{len(missing_output_files)} expected output file(s) missing on disk:")
 		for f in missing_output_files:
 			print("  ", f)
-	# pool = mp.Pool(processes=3)
-	# pool.map(run_cmd, rerun_list)
+	if(args.run_missing):
+		pool = mp.Pool(processes=3)
+		pool.map(run_cmd, rerun_list)
