@@ -164,7 +164,7 @@ if __name__ == '__main__':
                        'ttbar_FullyLeptonic_QCDinspired', 'ttbar_FullyLeptonic_Gluonmove', 'ttbar_FullyLeptonic_erdON', 'ttbar_FullyLeptonic_TuneCP5up', 'ttbar_FullyLeptonic_TuneCP5down',
                        'ttbar_SemiLeptonic_QCDinspired', 'ttbar_SemiLeptonic_Gluonmove', 'ttbar_SemiLeptonic_erdON', 'ttbar_SemiLeptonic_TuneCP5up', 'ttbar_SemiLeptonic_TuneCP5down'
         ]
-        Channels = Channels_commom + Channel_QCD #+ Channel_sys
+        Channels = Channels_commom + Channel_QCD + Channel_sys
         if(input_channel): Channels = input_channel
 
     elif(MC_Data=="data"):
