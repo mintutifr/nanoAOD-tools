@@ -5,7 +5,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import *
 #this takes care of converting the input files from CRAB
 from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputFiles,runsAndLumis
 sys.path.insert(0, '../minitree/')
-import cut_strings  as cs
+import cut_strings_cutflow  as cs
 import btv_readfromJson as btv
 
 import cutflowModule as cf
@@ -45,7 +45,14 @@ else:
 
 
 #Minitree_module = getattr(mt , 'MinitreeModuleConstr' + args.tag)
-treecut = ""#event==118517315"#nGenJet>0" #Entry$<500" nGenDressedLepton>0
+# treecut = ""#event==118517315"#nGenJet>0" #Entry$<500" nGenDressedLepton>0
+treecut = getattr(cs, f'cut_{lep}_{year}')
+
+Met_filter_UL16 = " && (Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter)==1"
+Met_filter_UL17_UL18 = " && (Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilter)==1"
+if(year in ["UL2017", "UL2018"]): treecut = treecut+Met_filter_UL17_UL18	
+elif(year in ["UL2016preVFP", "UL2016postVFP"]): treecut = treecut+Met_filter_UL16
+
 btvmodule = getattr(btv,'btagSF'+year)
 
 if(args.ISDATA):

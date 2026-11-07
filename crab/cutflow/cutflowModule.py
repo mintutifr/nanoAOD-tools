@@ -303,13 +303,31 @@ class cutflow(Module):
                     return True
         #print '--------------------------------------------------another lepton veto  --3------------'
 
+        ##################################
+        # MET filter  --4--
+        ##################################
+        MET_filetr_flag = 1
+        Met_filter_UL16 = ['Flag_goodVertices', 'Flag_globalSuperTightHalo2016Filter', 'Flag_HBHENoiseFilter', 'Flag_HBHENoiseIsoFilter' , 'Flag_EcalDeadCellTriggerPrimitiveFilter', 'Flag_BadPFMuonFilter' , 'Flag_BadPFMuonDzFilter', 'Flag_eeBadScFilter']
+        Met_filter_UL17_UL18 = ['Flag_goodVertices', 'Flag_globalSuperTightHalo2016Filter', 'Flag_HBHENoiseFilter' , 'Flag_HBHENoiseIsoFilter', 'Flag_EcalDeadCellTriggerPrimitiveFilter', 'Flag_BadPFMuonFilter', 'Flag_BadPFMuonDzFilter', 'Flag_eeBadScFilter', 'Flag_ecalBadCalibFilter']
+        if(self.dataYear in ['UL2016preVFP', 'UL2016postVFP']):
+            for filter in Met_filter_UL16:
+                MET_filetr_flag = MET_filetr_flag*getattr(event,filter)
+        elif(self.dataYear in ['UL2017', 'UL2018']):
+            for filter in Met_filter_UL17_UL18:
+                MET_filetr_flag = MET_filetr_flag*getattr(event,filter) 
+        if(MET_filetr_flag==1 and self.isMC == False):
+            if(self.lepflavour=="mu"): self.MET_filter_npvs.Fill(PV_npvs)
+            if(self.lepflavour=="el"): self.MET_filter_npvs.Fill(PV_npvs)
+        elif(MET_filetr_flag==1 and self.isMC == True):
+            if(self.lepflavour=="mu"): self.MET_filter_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF)
+            if(self.lepflavour=="el"): self.MET_filter_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF)
+        else:
+            return True
 
         ##################################
-        #jet selection  --4--
+        #jet selection  --5--
         ##################################  
 
-
-        
         jets = Collection(event, "Jet")
         muon4v = ROOT.TLorentzVector(0.,0.,0.,0.)
         electron4v = ROOT.TLorentzVector(0.,0.,0.,0.)
@@ -432,27 +450,6 @@ class cutflow(Module):
             #print "jet selection  --4--"
             return True
         #print '---------------------------------------------------------------jet selection  --4--
-        
-        ##################################
-        # MET filter  --5--
-        ##################################
-        MET_filetr_flag = 1
-        Met_filter_UL16 = ['Flag_goodVertices', 'Flag_globalSuperTightHalo2016Filter', 'Flag_HBHENoiseFilter', 'Flag_HBHENoiseIsoFilter' , 'Flag_EcalDeadCellTriggerPrimitiveFilter', 'Flag_BadPFMuonFilter' , 'Flag_BadPFMuonDzFilter', 'Flag_eeBadScFilter']
-        Met_filter_UL17_UL18 = ['Flag_goodVertices', 'Flag_globalSuperTightHalo2016Filter', 'Flag_HBHENoiseFilter' , 'Flag_HBHENoiseIsoFilter', 'Flag_EcalDeadCellTriggerPrimitiveFilter', 'Flag_BadPFMuonFilter', 'Flag_BadPFMuonDzFilter', 'Flag_eeBadScFilter', 'Flag_ecalBadCalibFilter']
-        if(self.dataYear in ['UL2016preVFP', 'UL2016postVFP']):
-            for filter in Met_filter_UL16:
-                MET_filetr_flag = MET_filetr_flag*getattr(event,filter)
-        elif(self.dataYear in ['UL2017', 'UL2018']):
-            for filter in Met_filter_UL17_UL18:
-                MET_filetr_flag = MET_filetr_flag*getattr(event,filter) 
-        if(MET_filetr_flag==1 and self.isMC == False):
-            if(self.lepflavour=="mu"): self.MET_filter_npvs.Fill(PV_npvs)
-            if(self.lepflavour=="el"): self.MET_filter_npvs.Fill(PV_npvs)
-        elif(MET_filetr_flag==1 and self.isMC == True):
-            if(self.lepflavour=="mu"): self.MET_filter_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*muSF*JetPUJetID_SF)
-            if(self.lepflavour=="el"): self.MET_filter_npvs.Fill(PV_npvs,(self.Xsec_wgt)*LHEWeightSign*PuWeight*PreFireWeight*elSF*JetPUJetID_SF)
-        else:
-            return True
         
         ##################################
         #b tag jet  --6--

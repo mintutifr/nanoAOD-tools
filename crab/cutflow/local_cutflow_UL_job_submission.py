@@ -56,7 +56,7 @@ if __name__ == '__main__':
         if(year=='UL2017'): Channels = [ 'Run2017B_'+Lep, 'Run2017C_'+Lep, 'Run2017D_'+Lep, 'Run2017E_'+Lep, 'Run2017F_'+Lep]
         if(year=='UL2018'): Channels = [ 'Run2018A_'+Lep,'Run2018B_'+Lep, 'Run2018C_'+Lep, 'Run2018D_'+Lep] 
 
-    #Channels = ['Tchannel']#,'tw_antitop','ttbar_FullyLeptonic','ttbar_SemiLeptonic']#,'WWTo2L2Nu']# + Channel_QCD #[]#, 'ttbar_SemiLeptonic']
+    Channels = ['WJetsToLNu_1J']#,'tw_antitop','ttbar_FullyLeptonic','ttbar_SemiLeptonic']#,'WWTo2L2Nu']# + Channel_QCD #[]#, 'ttbar_SemiLeptonic']
 
     print(Channels)
 
