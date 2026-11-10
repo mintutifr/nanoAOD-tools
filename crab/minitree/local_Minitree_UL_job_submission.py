@@ -136,7 +136,7 @@ if __name__ == '__main__':
     parser.add_argument('-channel', '--channel', dest='channel', type=str, nargs='+', default=[], help="Set channel(s) to run on, e.g. --channel Tchannel Tbarchannel")
     parser.add_argument('-processing', '--processing', action="store_true", help="enbale this feature to process the files")
     parser.add_argument('-exclude_ttbar_fromhadd', '--exclude_ttbar_fromhadd', action="store_true", help="enbale this feature to exclude ttbar from hadd")
-    parser.add_argument('-i', '--jvm_in', dest='jvm_in', type=str, default='/nfs/disk3/lokesh/Tree_crab_lok_jvm/', help="base dir of the JVM-preprocessed trees (output of run_jvm_preprocess.py)")
+    parser.add_argument('-i', '--input_file_base', dest='input_file_base', type=str, default='/nfs/disk3/lokesh/Tree_crab_lok_jvm/', help="base dir of the JVM-preprocessed trees (output of run_jvm_preprocess.py)")
 
     args = parser.parse_args()
     Lep = args.lepton
@@ -152,9 +152,9 @@ if __name__ == '__main__':
     year_folder = {'UL2016preVFP': 'SIXTEEN_preVFP', 'UL2016postVFP': 'SIXTEEN_postVFP', 'UL2017': 'SEVENTEEN', 'UL2018': 'EIGHTEEN'}
     tag =   region+'_'+Lep + '_' + MC_Data + '_' + year
     Out_dir = args.out_dir
-    JVM_IN_BASE = args.jvm_in   # must equal JVM_OUT_BASE in run_jvm_preprocess.py
+    Input_file_BASE = args.input_file_base   # must equal JVM_OUT_BASE in run_jvm_preprocess.py
     print(f'{Out_dir = }')
-    print(f'{JVM_IN_BASE = }')
+    print(f'{Input_file_BASE = }')
     print(args.ISDATA," ",MC_Data)
     if(MC_Data=="mc"):
         Channels_commom = ['Tchannel','Tbarchannel','tw_antitop', 'tw_top','Schannel','WJetsToLNu_0J', 'WJetsToLNu_1J', 'WJetsToLNu_2J', 'WWTo2L2Nu', 'WZTo2Q2L', 'ZZTo2Q2L','DYJetsToLL','ttbar_SemiLeptonic','ttbar_FullyLeptonic']
@@ -194,11 +194,11 @@ if __name__ == '__main__':
             #in_files_path = '/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root'
             #in_files_path = '/nfs/disk4/Tree_crab_lok/'+year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root'
             # read the output of run_jvm_preprocess.py (same dir structure, Jet_jetVetoed already stored)
-            in_files_path = JVM_IN_BASE + year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root'
+            in_files_path = input_file_base_BASE + year_folder[year]+'/MC/' + Channel + '/**/**/**/**/*.root'
             #in_files_path = '/eos/home-m/mikumar/RUN2_UL/' + Channel + '/**/**/**/**/*.root'
         elif(MC_Data=="data"):
             #in_files_path = '/nfs/home/common/RUN2_UL/Tree_crab/'+year_folder[year]+'/Data_' + Lep + '/' + Channel + '/**/**/**/**/*.root'
-            in_files_path = JVM_IN_BASE + year_folder[year]+'/Data_' + Lep + '/' + Channel + '/**/**/**/**/*.root'
+            in_files_path = input_file_base_BASE + year_folder[year]+'/Data_' + Lep + '/' + Channel + '/**/**/**/**/*.root'
 
        	print(' files being read from '+in_files_path)
         in_files = glob.glob(in_files_path)
