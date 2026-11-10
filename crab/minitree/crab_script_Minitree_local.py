@@ -151,7 +151,6 @@ for evts in range(len(Events_split[:-1])):
     print('\n treecut : ',treecut)
     print('\n postfix : ',postfix)
 
-    # Jet_jetVetoed is now produced ONCE by run_jvm_preprocess.py (shared by el and mu),
     p=PostProcessor(args.out_dir,
     	inputFiles,
 		treecut,
