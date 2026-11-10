@@ -141,17 +141,20 @@ for evts in range(len(Events_split[:-1])):
     print('--------------------')
 
     print(f'\n{Events_split[evts]}:{Events_split[evts+1]}')
+	
     #treecut = treecut+f" && Entry$>={Events_split[evts]} && Entry$<{Events_split[evts+1]}"
     entry_cut = f"Entry$>={Events_split[evts]} && Entry$<{Events_split[evts+1]}"
+	treecut = f"{treecut} &&  {entry_cut}",
     postfix = f"_{Events_split[evts]}_{Events_split[evts+1]}"
-    print('\n treecut : ',treecut)
+
     print('\n entry range : ',entry_cut)
+    print('\n treecut : ',treecut)
     print('\n postfix : ',postfix)
 
     # Jet_jetVetoed is now produced ONCE by run_jvm_preprocess.py (shared by el and mu),
     p=PostProcessor(args.out_dir,
     	inputFiles,
-		"(" + treecut + ") && " + entry_cut,
+		treecut,
         postfix = postfix,
 		modules=runmodules,
         outputbranchsel="keep_and_drop_"+lep+"_Minitree.txt",
