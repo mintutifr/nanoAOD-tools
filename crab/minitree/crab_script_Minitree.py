@@ -18,15 +18,9 @@ treecut = cut_2J1T1_mu_UL2017 #+ "&& Entry$<100"
 #inputFiles=["root://se01.indiacms.res.in//store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Data_preVFP_mu/Run2016D-HIPM_mu/SingleMuon/Tree_04_Jun22_Run2016D-HIPM_mu/220604_165834/0000/tree_1.root"]
 inputFiles=['/nfs/home/common/RUN2_UL/Tree_crab/SEVENTEEN/MC/ttbar_FullyLeptonic/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Tree_13_May23_MCUL2017_ttbar_FullyLeptonic/230513_180158/0000/tree_1.root']
 
-jvm_dir = "jvm_tmp"
-jvm_inputs = inputFiles() if callable(inputFiles) else inputFiles   # CRAB gives a function, condor/local give a list
-p_jvm = PostProcessor(jvm_dir, jvm_inputs, None, postfix="", modules=[jvmModule], compression="LZ4:1", provenance=False, fwkJobReport=False, jsonInput=runsAndLumis())
-p_jvm.run()
-jvmFiles = [os.path.join(jvm_dir, os.path.basename(f)) for f in jvm_inputs]
-print("jet-veto-map files (pass 1 output) : %s" % jvmFiles)
 
 p=PostProcessor(".",
-		jvmFiles,
+		inputFiles,
 		treecut,
 		modules=[btagSFUL2017(),MinitreeModuleConstr2J1T1_mu_mc_UL2016preVFP(), jmeCorrectionsULRun2016C_preVFP_DATA_AK4CHS()],#hdamp_vari_mainModule()],
 		outputbranchsel="keep_and_drop_mu_Minitree.txt",
@@ -36,7 +30,5 @@ p=PostProcessor(".",
 		
 p.run()
 
-for f in jvmFiles:
-    if os.path.exists(f): os.remove(f)
 
 print("DONE")
