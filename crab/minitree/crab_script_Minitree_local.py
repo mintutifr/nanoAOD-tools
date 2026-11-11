@@ -88,8 +88,15 @@ else:
 	poststing = ""
 
 
-split_jobs_perfile = 2 
-Events_split = check_and_rerun(inputFiles[0],splitting=split_jobs_perfile) 
+
+# safety: fail loudly if the input was not produced by run_jvm_preprocess.py
+for _f in inputFiles:
+    with uproot.open(_f) as _rf:
+        if "Jet_jetVetoed" not in _rf["Events"].keys():
+            raise RuntimeError(f"{_f} has no Jet_jetVetoed branch -> run run_jvm_preprocess.py first and point -p to its output")
+
+split_jobs_perfile = 2
+Events_split = check_and_rerun(inputFiles[0],splitting=split_jobs_perfile)
 print(f'{Events_split = }')
 
 for evts in range(len(Events_split[:-1])):
@@ -134,8 +141,13 @@ for evts in range(len(Events_split[:-1])):
     print('--------------------')
 
     print(f'\n{Events_split[evts]}:{Events_split[evts+1]}')
-    treecut = treecut+f" && Entry$>={Events_split[evts]} && Entry$<{Events_split[evts+1]}"
+	
+    #treecut = treecut+f" && Entry$>={Events_split[evts]} && Entry$<{Events_split[evts+1]}"
+    entry_cut = f"Entry$>={Events_split[evts]} && Entry$<{Events_split[evts+1]}"
+	treecut = f"{treecut} &&  {entry_cut}",
     postfix = f"_{Events_split[evts]}_{Events_split[evts+1]}"
+
+    print('\n entry range : ',entry_cut)
     print('\n treecut : ',treecut)
     print('\n postfix : ',postfix)
 
