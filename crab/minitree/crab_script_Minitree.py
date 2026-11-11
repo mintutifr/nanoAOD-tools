@@ -17,8 +17,6 @@ treecut = cut_2J1T1_mu_UL2017 #+ "&& Entry$<100"
 #inputFiles=["root://se01.indiacms.res.in//store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP_v2/Tbarchannel/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/Tree_06_Aug22_MCUL2016preVFP_Tbarchannel/220806_112911/0000/tree_14.root"]
 #inputFiles=["root://se01.indiacms.res.in//store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/Data_preVFP_mu/Run2016D-HIPM_mu/SingleMuon/Tree_04_Jun22_Run2016D-HIPM_mu/220604_165834/0000/tree_1.root"]
 inputFiles=['/nfs/home/common/RUN2_UL/Tree_crab/SEVENTEEN/MC/ttbar_FullyLeptonic/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/Tree_13_May23_MCUL2017_ttbar_FullyLeptonic/230513_180158/0000/tree_1.root']
-
-
 p=PostProcessor(".",
 		inputFiles,
 		treecut,
@@ -29,6 +27,5 @@ p=PostProcessor(".",
 		jsonInput=runsAndLumis())
 		
 p.run()
-
 
 print("DONE")
