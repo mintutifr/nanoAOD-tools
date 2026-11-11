@@ -12,7 +12,6 @@ from MinitreeModule import *
 from cut_strings import *
 from hdamp_variation_module import *
 from btv_readfromJson import *
-from jetVetoMapProducer import *
 
 treecut = cut_2J1T1_mu_UL2017 #+ "&& Entry$<100"
 #inputFiles=["root://se01.indiacms.res.in//store/user/mikumar/RUN2_UL/Tree_crab/SIXTEEN/MC_preVFP_v2/Tbarchannel/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/Tree_06_Aug22_MCUL2016preVFP_Tbarchannel/220806_112911/0000/tree_14.root"]

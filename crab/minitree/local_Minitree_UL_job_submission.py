@@ -152,7 +152,7 @@ if __name__ == '__main__':
     year_folder = {'UL2016preVFP': 'SIXTEEN_preVFP', 'UL2016postVFP': 'SIXTEEN_postVFP', 'UL2017': 'SEVENTEEN', 'UL2018': 'EIGHTEEN'}
     tag =   region+'_'+Lep + '_' + MC_Data + '_' + year
     Out_dir = args.out_dir
-    Input_file_BASE = args.input_file_base   # must equal JVM_OUT_BASE in run_jvm_preprocess.py
+    input_file_base_BASE = args.input_file_base   # must equal JVM_OUT_BASE in run_jvm_preprocess.py
     print(f'{Out_dir = }')
     print(f'{Input_file_BASE = }')
     print(args.ISDATA," ",MC_Data)
